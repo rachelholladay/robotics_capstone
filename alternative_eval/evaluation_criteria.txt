@@ -1,0 +1,5 @@
+Mechanical Feasibility (mechanisms to design, complexity of mechanisms)
+Algorithmic Interest (number of problems to solve, known solutions)
+Time to build (estimate per phase)
+Usability (number of use cases, ease of use)
+Durability (number of parts, likelihood to fail, repairs needed)
