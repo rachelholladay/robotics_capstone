@@ -1,0 +1,8 @@
+# Ignore latex stuff
+*.aux
+*.log
+*.out
+*.bbl
+*.blg
+*.pdf
+latexSuite*:
