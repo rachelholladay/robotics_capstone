@@ -24,7 +24,7 @@
 \newcounter{mynfrctr}
 \newenvironment{nonfunctional_requirement}[2]{ % 2 input arguments - name, priority
  \refstepcounter{mynfrctr} % increment the environment's counter
- {\bf NFR\themyfrctr : #1} \hfill {Priority #2} % Bold company name and date on the right
+ {\bf NFR\themynfrctr : #1} \hfill {Priority #2} % Bold company name and date on the right
   \smallskip
   \begin{list}{$\cdot$}{\leftmargin=0em} % \cdot used for bullets, no indentation
    \itemsep -0.5em \vspace{-0.5em} % Compress items in list together for aesthetics
