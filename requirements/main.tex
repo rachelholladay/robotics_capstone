@@ -1,0 +1,54 @@
+%\documentclass[a4paper,10pt]{article}
+\documentclass{spec} 
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage[margin=1in]{geometry}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{ifthen,version}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{amsmath}
+\newcounter{qcounter}
+
+% Labels in IEEE format
+\newcommand{\eref}[1]{(\ref{#1})} % Equation
+\newcommand{\sref}[1]{Sec. \ref{#1}} % Section
+\newcommand{\figref}[1]{Fig.\ref{#1}} % Figure
+\newcommand{\tref}[1]{Table \ref{#1}} %Table
+
+\begin{document}
+
+\begin{titlepage}
+	\centering
+	{\scshape\LARGE Carnegie Mellon University \par}
+	\vspace{1cm}
+	{\scshape\Large Robotics Capstone Project\par}
+	\vspace{1.5cm}
+	{\huge\bfseries Requirement Specifications and Analysis\par}
+	\vspace{2cm}
+	{\Large\itshape Don Zheng\par}
+	{\Large\itshape Neil Jassal\par}
+	{\Large\itshape Rachel Holladay\par}
+	\vfill
+	supervised by\par
+	Dr.~David \textsc{Wettergreen}
+
+	\vfill
+
+% Bottom of the page
+	{\large \today\par}
+\end{titlepage}
+
+\tableofcontents
+\listoffigures
+\listoftables
+\newpage
+
+\input{executive_summary.tex}
+\input{project_description.tex}
+\input{requirements.tex}
+\input{use_cases.tex}
+
+\end{document}
+
