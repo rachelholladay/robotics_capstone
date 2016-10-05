@@ -14,15 +14,15 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \end{functional_requirement}
 
 \begin{functional_requirement}{Autonomous}{6}
-\item Given an input image to draw, robot agents must be able to autonomously complete the drawing. This includes the following steps: Processing the input, planning and commanding individual agents, and having robots move and draw without external input.
+\item Given an input image to draw, robot agents must be able to autonomously complete the drawing. This includes the following steps: processing the input, planning and commanding individual agents, and having robots move and draw without external input.
 \end{functional_requirement}
 
 \begin{functional_requirement}{Robots Localize Globally and Locally}{7}
-\item All drawing robots can determine their location and orientation on a global and local scale. Global scale is relative to the localization markers and the specified drawing surface. Local scale is relative to other robot agents. This requirement is necessary so the robot system can coordinate planning together to avoid collisions or an inefficient spread of work.
+\item All drawing robots can determine their locations and orientations on a global and local scale. Global scale is relative to the localization markers and the specified drawing surface. Local scale is relative to other robot agents. This requirement is necessary so the robot system can coordinate planning together to avoid collisions or an inefficient spread of work.
 \end{functional_requirement}
 
 \begin{functional_requirement}{Safe}{4}
-\item Robots must maintain safety with respect to each other, and the external world at all times. This requires all robot agents must avoid collisions. Robot agents must have an enforced maximum speed limit to avoid damage to themselves or human bystanders in case of collision.
+\item Robots must maintain safety with respect to each other and the external world at all times. This requires all robot agents must avoid collisions. Robot agents must also have an enforced maximum speed limit to avoid damage to themselves or human bystanders in case of collision. 
 \end{functional_requirement}
 
 \begin{functional_requirement}{Within Bounds}{3}
@@ -34,7 +34,7 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \end{functional_requirement}
 
 \begin{functional_requirement}{Drive Control System}{5}
-\item Robot agents must have a controller to ensure motions made are accurate. Accurate motions is paramount to ensuring an accurate drawing.
+\item Robot agents must have a controller to ensure motions made are accurate. Accurate motions is paramount to ensure an accurate drawing.
 \end{functional_requirement}
 
 \begin{functional_requirement}{Turn on or off writing tool}{1}
