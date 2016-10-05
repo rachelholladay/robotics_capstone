@@ -1,4 +1,4 @@
-\ProvidesClass{resume}[2010/07/10 v0.9 Resume class]
+\ProvidesClass{spec}[2010/07/10 v0.9 Resume class]
 \LoadClass[11pt,letterpaper]{article} % Font size and paper type
 
 \usepackage[parfill]{parskip} % Remove paragraph indentation
