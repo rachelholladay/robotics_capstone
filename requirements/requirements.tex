@@ -9,98 +9,91 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \subsection{Functional Requirements}
 \label{sec:functional_requirements}
 
-\begin{functional_requirement}{Move in 4 Directions}{1}
-\item Fill in more details 
+\begin{functional_requirement}{Move in Specified Directions}{7}
+\item Robot must be able to autonomously move in a commanded direction on a flat plane. Omnidirectional movement is necessary to ensure robot agents can adequately and efficiently cover the drawing workspace.
 \end{functional_requirement}
 
-\begin{functional_requirement}{Autonomous}{1}
-\item Fill in more details 
+\begin{functional_requirement}{Autonomous}{6}
+\item Given an input image to draw, robot agents must be able to autonomously complete the drawing. This includes the following steps: Processing the input, planning and commanding individual agents, and having robots move and draw without external input.
 \end{functional_requirement}
 
-\begin{functional_requirement}{Robots Localize Globally and Locally}{1}
-\item Fill in more details 
+\begin{functional_requirement}{Robots Localize Globally and Locally}{7}
+\item All drawing robots can determine their location and orientation on a global and local scale. Global scale is relative to the localization markers and the specified drawing surface. Local scale is relative to other robot agents. This requirement is necessary so the robot system can coordinate planning together to avoid collisions or an inefficient spread of work.
 \end{functional_requirement}
 
-\begin{functional_requirement}{Safe}{1}
-\item Doesnt run into things. No dangerous external parts
+\begin{functional_requirement}{Safe}{4}
+\item Robots must maintain safety with respect to each other, and the external world at all times. This requires all robot agents must avoid collisions. Robot agents must have an enforced maximum speed limit to avoid damage to themselves or human bystanders in case of collision.
 \end{functional_requirement}
 
-\begin{functional_requirement}{Within Bounds}{1}
-\item Stay within bounds of drawing
+\begin{functional_requirement}{Within Bounds}{3}
+\item While in operation, all robot agents must stay within bounds of the workspace. This is important to minimize external collisions, as well as to ensure localization maintains accuracy while drawing occurs.
 \end{functional_requirement}
 
-\begin{functional_requirement}{Change Tools}{1}
-\item Easy to swap out tools
+\begin{functional_requirement}{Change Writing Tools}{2}
+\item Inserting, removing, and replacing writing implements must be convenient and fast. 
 \end{functional_requirement}
 
-\begin{functional_requirement}{Drive Control System}{1}
-\item Details
+\begin{functional_requirement}{Drive Control System}{5}
+\item Robot agents must have a controller to ensure motions made are accurate. Accurate motions is paramount to ensuring an accurate drawing.
 \end{functional_requirement}
 
 \begin{functional_requirement}{Turn on or off writing tool}{1}
-\item So lift pencil up and down while moving. That way doesn't have to be continuous lines
+\item All robot agents need to be able to enable or disable use of the writing implement. The robot must also have the ability to move safely and accurately regardless of the state of the writing implement. Not all drawings are contiguous lines, and as such the robots must be able to disable the writing tool to move to a new drawing location.
 \end{functional_requirement}
 
-\begin{functional_requirement}{Input drawing Plan}{1}
-\item how well can you give it commands
+\begin{functional_requirement}{Input drawing Plan}{6}
+\item The main controller system must be able to receive an input that allows it to command the robot agents to draw an appropriate image. The system must be able to parse the input into a state usable for robot planning and control in order to draw the input.
 \end{functional_requirement}
 
-\begin{functional_requirement}{Robots Know Progress}{1}
-\item Keep track of how much you have drawn
+\begin{functional_requirement}{Robots Know Progress}{2}
+\item All robot agents are required to understand how much of the drawing each one has completed, and which sections are left to be drawn. This is necessary to ensure an equal spread of workload across all robot agents.
 \end{functional_requirement}
 
-\begin{functional_requirement}{Kill Switch}{1}
-\item immediately powers off robots for safety
+\begin{functional_requirement}{Kill Switch}{3}
+\item Human bystanders must be able to end all robot operation instantaneously with a kill switch or power button. This is necessary to ensure that the system can be shut down in case of an unsafe error or problem.
 \end{functional_requirement}
 
 \begin{functional_requirement}{User Interface to robot}{1}
-\item how it gets controlled
+\item An intuitive an useful user experience is necessary for efficient usage of the system. Having a simple to operate system also reduces the likelihood of user error during the input or operation stage. For industrial or commercial applications, accessibility becomes important as well. 
 \end{functional_requirement}
 
-\begin{functional_requirement}{Be In Budget}{1}
-\item how it gets controlled
+\begin{functional_requirement}{Be In Budget}{7}
+\item Design and implementation of this robotic system is limited by budget, which must be strictly adhered to.
 \end{functional_requirement}
 
-\begin{functional_requirement}{Documentation}{1}
-\item Keep code and design documentation
+\begin{functional_requirement}{Documentation}{3}
+\item Documentation of the design process, software, and hardware implementation is important for debugging, recreation, and general understanding of this project.
 \end{functional_requirement}
 
 
 \subsection{Non-Functional Requirements}
 \label{sec:nonfunctional_requirements}
 
-\begin{nonfunctional_requirement}{Portable}{1}
-\item Small, can be carried, easy to move around. Weight less than 50 pounds. Size: bigger than 2 foot cube
+\begin{nonfunctional_requirement}{Portable}{4}
+\item Individiual robot agents must be easy to move between locations. Portability can be measured by physical dimensions and weight.
 \end{nonfunctional_requirement}
 
-\begin{nonfunctional_requirement}{Completes Task in Timely manner}{1}
-\item Details
+\begin{nonfunctional_requirement}{Efficiency}{2}
+\item Robot system must be efficient and complete drawing tasks quickly. Timeliness can be meausured by the amount of time taken to complete drawings. Robot planning must also exist in such a manner that evenly splits the workload among all robot agents working in the system.
 \end{nonfunctional_requirement}
 
-\begin{nonfunctional_requirement}{Quality}{1}
-\item Matches input well. 
+\begin{nonfunctional_requirement}{Quality}{4}
+\item The drawing that results from the robotic system must closely match the input image. Quality can be qualitatively measured by visual comparison, or using software via a number of image difference metrics.
 \end{nonfunctional_requirement}
 
 \begin{nonfunctional_requirement}{Mobile App}{1}
-\item Neil go nuts on your bullshit
+\item User interface and experience will be done using a mobile application. This application will allow users to remotely input images for drawing, enable, disable, and pause the robot system's operation. The app will also be able to track and display current progress.
 \end{nonfunctional_requirement}
 
-\begin{nonfunctional_requirement}{Reliability}{1}
-\item Percent up time
+\begin{nonfunctional_requirement}{Reliability}{6}
+\item Robot system must be robust, and be resilient to breaking down or failing to operate properly. Reliability can be measured by percent uptime relative to total time spent in use.
 \end{nonfunctional_requirement}
 
-\begin{nonfunctional_requirement}{Battery Life}{1}
-\item Needs to last
+\begin{nonfunctional_requirement}{Battery Life}{2}
+\item Individual robot agents must have a battery life capable of completing a minimum of a single drawing. Battery life can be measured by duration for which robot agents are in use before needing battery recharging or replacement.
 \end{nonfunctional_requirement}
 
-\begin{nonfunctional_requirement}{Fault Tolerance}{1}
-\item Needs to last
+\begin{nonfunctional_requirement}{Coordination}{4}
+\item The key to a multi-robot agent system is to reduce the individual workload, meaning having coordinated and efficient work is vital. Robots must be able to work together to minimize overlap in the drawings, and to avoid duplicating work.
 \end{nonfunctional_requirement}
 
-\begin{nonfunctional_requirement}{Coordination}{1}
-\item dont duplicate work or overlap
-\end{nonfunctional_requirement}
-
-\begin{nonfunctional_requirement}{Efficiency}{1}
-\item split up work evenly
-\end{nonfunctional_requirement}
