@@ -9,7 +9,34 @@
 \usepackage{ifthen,version}
 \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{array,longtable}
 \newcounter{qcounter}
+\newcounter{question}
+\newcounter{row}
+
+% Create Pretty Priority Table
+\makeatletter
+\newtoks\@tabtoks
+\newcommand\addtabtoks[1]{\@tabtoks\expandafter{\the\@tabtoks#1}}
+\newcommand*\resettabtoks{\@tabtoks{}}
+\newcommand*\printtabtoks{\the\@tabtoks}
+\makeatother
+
+\newcommand\CheckTable[1]{%
+  \setcounter{question}{0}
+  \setcounter{row}{0}
+  \resettabtoks
+  \loop\ifnum\therow<#1\relax
+    \stepcounter{row}
+    \addtabtoks{& $\square$ & $\square$ & $\square$ & $\square$ & $\square$ & $\square$ & $\square$ \\}%
+  \repeat
+  \begin{longtable}{>{\stepcounter{question}Priority}l*{7}{c}}
+    \multicolumn{1}{c}{} & Lowest (1) & Low & Medium-Low & Neutral (4) & Medium-High & High & Highest (7) \\
+    \printtabtoks
+  \end{longtable}%
+}
+
 
 % Labels in IEEE format
 \newcommand{\eref}[1]{(\ref{#1})} % Equation
@@ -25,12 +52,10 @@
  {\textcolor{red}{\textbf{NJ: #1}}}{}}
 \newcommand{\rhnote}[1]{\ifthenelse{\boolean{include-notes}}%
  {\textcolor{blue}{\textbf{RH: #1}}}{}}
-
 \newcommand{\dznote}[1]{\ifthenelse{\boolean{include-notes}}%
  {\textcolor{green}{\textbf{DZ: #1}}}{}}
 \newcommand{\yjnote}[1]{\ifthenelse{\boolean{include-notes}}
  {\textcolor{orange}{\textbf{YJ: #1}}}{}}
-
 
 \begin{document}
 
