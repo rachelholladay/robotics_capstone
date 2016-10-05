@@ -4,7 +4,7 @@
 \contentsline {section}{\numberline {2}Project Description}{2}
 \contentsline {subsection}{\numberline {2.1}Product Goal}{2}
 \contentsline {subsection}{\numberline {2.2}Motivation}{2}
-\contentsline {subsection}{\numberline {2.3}Product Scope}{2}
+\contentsline {subsection}{\numberline {2.3}Product Scope}{3}
 \contentsline {subsection}{\numberline {2.4}Assumptions}{3}
 \contentsline {section}{\numberline {3}Requirements}{3}
 \contentsline {subsection}{\numberline {3.1}Functional Requirements}{3}
@@ -13,9 +13,9 @@
 \contentsline {subsection}{\numberline {4.1}Chalk Drawing}{5}
 \contentsline {subsection}{\numberline {4.2}Parking Lot Lines}{5}
 \contentsline {subsection}{\numberline {4.3}Sport Lines}{5}
-\contentsline {section}{\numberline {5}Use Cases}{5}
-\contentsline {subsection}{\numberline {5.1}Reload writing implement}{5}
-\contentsline {subsection}{\numberline {5.2}Process input image}{5}
+\contentsline {section}{\numberline {5}Use Cases}{6}
+\contentsline {subsection}{\numberline {5.1}Reload writing implement}{6}
+\contentsline {subsection}{\numberline {5.2}Process input image}{6}
 \contentsline {subsection}{\numberline {5.3}Localization}{6}
 \contentsline {subsection}{\numberline {5.4}Scheduling and Robot Planning/Coordination}{6}
 \contentsline {subsection}{\numberline {5.5}Move robot}{6}

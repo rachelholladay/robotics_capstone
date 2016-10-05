@@ -17,6 +17,21 @@
 \newcommand{\figref}[1]{Fig.\ref{#1}} % Figure
 \newcommand{\tref}[1]{Table \ref{#1}} %Table
 
+\usepackage{ifthen}
+\usepackage[usenames,dvipsnames]{xcolor}
+\newboolean{include-notes}
+\setboolean{include-notes}{true}
+\newcommand{\njnote}[1]{\ifthenelse{\boolean{include-notes}}%
+ {\textcolor{red}{\textbf{NJ: #1}}}{}}
+\newcommand{\rhnote}[1]{\ifthenelse{\boolean{include-notes}}%
+ {\textcolor{blue}{\textbf{RH: #1}}}{}}
+
+\newcommand{\dznote}[1]{\ifthenelse{\boolean{include-notes}}%
+ {\textcolor{green}{\textbf{DZ: #1}}}{}}
+\newcommand{\yjnote}[1]{\ifthenelse{\boolean{include-notes}}
+ {\textcolor{orange}{\textbf{YJ: #1}}}{}}
+
+
 \begin{document}
 
 \begin{titlepage}
