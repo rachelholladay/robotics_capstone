@@ -69,38 +69,31 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \subsection{Non-Functional Requirements}
 \label{sec:nonfunctional_requirements}
 
-\begin{nonfunctional_requirement}{Portable}{1}
-\item Small, can be carried, easy to move around. Weight less than 50 pounds. Size: bigger than 2 foot cube
+\begin{nonfunctional_requirement}{Portable}{4}
+\item Individiual robot agents must be easy to move between locations. Portability can be measured by physical dimensions and weight.
 \end{nonfunctional_requirement}
 
-\begin{nonfunctional_requirement}{Completes Task in Timely manner}{1}
-\item Details
+\begin{nonfunctional_requirement}{Efficiency}{2}
+\item Robot system must be efficient and complete drawing tasks quickly. Timeliness can be meausured by the amount of time taken to complete drawings. Robot planning must also exist in such a manner that evenly splits the workload among all robot agents working in the system.
 \end{nonfunctional_requirement}
 
-\begin{nonfunctional_requirement}{Quality}{1}
-\item Matches input well. 
+\begin{nonfunctional_requirement}{Quality}{4}
+\item The drawing that results from the robotic system must closely match the input image. Quality can be qualitatively measured by visual comparison, or using software via a number of image difference metrics.
 \end{nonfunctional_requirement}
 
 \begin{nonfunctional_requirement}{Mobile App}{1}
-\item Neil go nuts on your bullshit
+\item User interface and experience will be done using a mobile application. This application will allow users to remotely input images for drawing, enable, disable, and pause the robot system's operation. The app will also be able to track and display current progress.
 \end{nonfunctional_requirement}
 
-\begin{nonfunctional_requirement}{Reliability}{1}
-\item Percent up time
+\begin{nonfunctional_requirement}{Reliability}{6}
+\item Robot system must be robust, and be resilient to breaking down or failing to operate properly. Reliability can be measured by percent uptime relative to total time spent in use.
 \end{nonfunctional_requirement}
 
-\begin{nonfunctional_requirement}{Battery Life}{1}
-\item Needs to last
+\begin{nonfunctional_requirement}{Battery Life}{2}
+\item Individual robot agents must have a battery life capable of completing a minimum of a single drawing. Battery life can be measured by duration for which robot agents are in use before needing battery recharging or replacement.
 \end{nonfunctional_requirement}
 
-\begin{nonfunctional_requirement}{Fault Tolerance}{1}
-\item Needs to last
+\begin{nonfunctional_requirement}{Coordination}{4}
+\item The key to a multi-robot agent system is to reduce the individual workload, meaning having coordinated and efficient work is vital. Robots must be able to work together to minimize overlap in the drawings, and to avoid duplicating work.
 \end{nonfunctional_requirement}
 
-\begin{nonfunctional_requirement}{Coordination}{1}
-\item dont duplicate work or overlap
-\end{nonfunctional_requirement}
-
-\begin{nonfunctional_requirement}{Efficiency}{1}
-\item split up work evenly
-\end{nonfunctional_requirement}
