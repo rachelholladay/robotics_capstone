@@ -4,53 +4,53 @@
 \label{sec:use_cases}
 
 \subsection{Reload writing implement}
-Summary: The robot's main consumable, the writing implement, must be reloaded or replaced when empty or when a different implement (with different color or stroke) is desired.
-Actors:  Writing tool, human
-Precondition: no writing tool in the system, or one that is no longer desired
-Postcondition: system has desired writing tool
-Alternative: - improper loading results in robot alerting user.
-             - other robot agents know broken robot cannot draw and replan accordingly
-Description: When the robot is working on a large or intricate drawing that requires a large amount of consumable writing material, the robot may not be able to carry enough material to complete its allocation of the drawing. Additionally, some drawings may involve a variety of colors, strokes, or other properties that necessitate the use of different writing materials. Thus, the robot must be able to replace its writing implement with human assistance. The robot must be able to recognize reloading failures and alert the human operator of their occurences. If the failure is not corrected, The robot must communicate its inability to perform to other robot agents in the system so they can replan drawing paths accordingly.
+\textbf{Summary:} The robot's main consumable, the writing implement, must be reloaded or replaced when empty or when a different implement (with different color or stroke) is desired. \\
+\textbf{Actors:}  Writing tool, human \\
+\textbf{Precondition:} no writing tool in the system, or one that is no longer desired \\
+\textbf{Postcondition:} system has desired writing tool \\
+\textbf{Alternative:} - improper loading results in robot alerting user. \\
+             - other robot agents know broken robot cannot draw and replan accordingly \\
+\textbf{Description:} When the robot is working on a large or intricate drawing that requires a large amount of consumable writing material, the robot may not be able to carry enough material to complete its allocation of the drawing. Additionally, some drawings may involve a variety of colors, strokes, or other properties that necessitate the use of different writing materials. Thus, the robot must be able to replace its writing implement with human assistance. The robot must be able to recognize reloading failures and alert the human operator of their occurences. If the failure is not corrected, The robot must communicate its inability to perform to other robot agents in the system so they can replan drawing paths accordingly. \\
 
 \subsection{Process input image}
-Summary: The robot must take in a human-produced image and interpret where the robot system is required to draw.
-Actors: image, human
-Precondition:  no existing image being actively drawn by the robot system
-Postcondition: image processed and ready for work distribution between agents
-Alternative: report error on image processing failure.
-Description: The robot's task will be input using a human-produced image following specific guidelines. From the image, the robot can determine where to place markings in the real world, and how the work should be distributed amongst the workers.
+\textbf{Summary:} The robot must take in a human-produced image and interpret where the robot system is required to draw. \\
+\textbf{Actors:} image, human \\
+\textbf{Precondition:}  no existing image being actively drawn by the robot system \\
+\textbf{Postcondition:} image processed and ready for work distribution between agents \\
+\textbf{Alternative:} report error on image processing failure. \\
+\textbf{Description:} The robot's task will be input using a human-produced image following specific guidelines. From the image, the robot can determine where to place markings in the real world, and how the work should be distributed amongst the workers. \\
 
 \subsection{Localization}
-Summary: The robot must be able to determine where it is in the world.
-Actors: environment
-Precondition: large amount of uncertainty about current location and orientation of the robot
-Postcondition: little uncertainty about the current location and orientation of the robot
-Alternative: report to human operator, alert other robots of inability to localize and orient itself.
-Description: In order to create an accurate reproduction of the input image, the robot know how its location maps to a location on the input image. If it is unable to do so, it cannot continue drawing and must alert other robots to the fact so that they can replan and reschedule the workload.
+\textbf{Summary:} The robot must be able to determine where it is in the world. \\
+\textbf{Actors:} environment \\
+\textbf{Precondition:} large amount of uncertainty about current location and orientation of the robot \\
+\textbf{Postcondition:} little uncertainty about the current location and orientation of the robot \\
+\textbf{Alternative:} report to human operator, alert other robots of inability to localize and orient itself. \\
+\textbf{Description:} In order to create an accurate reproduction of the input image, the robot know how its location maps to a location on the input image. If it is unable to do so, it cannot continue drawing and must alert other robots to the fact so that they can replan and reschedule the workload. \\
 
 \subsection{Scheduling and Robot Planning/Coordination}
-Summary: The robot workers must determine an efficient allocation of the work.
-Actors: robot workers, input image
-Precondition: no plan or schedule exists
-Postcondition: each robot has an allocation of work and a planned path
-Alternative: A human user is alerted and the operation is aborted
-Description: The work required must be determined from the input image, and analysed to determine an efficient allocation of work, as well as a path schedule for each of the robots. Additionally, robots must communicate work completed and failure states to each other in case replanning is required.
+\textbf{Summary:} The robot workers must determine an efficient allocation of the work. \\
+\textbf{Actors:} robot workers, input image \\
+\textbf{Precondition:} no plan or schedule exists \\
+\textbf{Postcondition:} each robot has an allocation of work and a planned path \\
+\textbf{Alternative:} A human user is alerted and the operation is aborted \\
+\textbf{Description:} The work required must be determined from the input image, and analysed to determine an efficient allocation of work, as well as a path schedule for each of the robots. Additionally, robots must communicate work completed and failure states to each other in case replanning is required. \\
 
 \subsection{Move robot}
-Summary: The robot moves across flat terrain.
-Actors: ground
-Precondition: robot is stationary
-Postcondition: robot is not stationary
-Alternative: A human user is alerted and work is redistributed between remaining robots.
-Summary: The robot moves across the writing surface, using its writing implement when required.
+\textbf{Summary:} The robot moves across flat terrain. \\
+\textbf{Actors:} ground \\
+\textbf{Precondition:} robot is stationary \\
+\textbf{Postcondition:} robot is not stationary \\
+\textbf{Alternative:} A human user is alerted and work is redistributed between remaining robots. \\
+\textbf{Summary:} The robot moves across the writing surface, using its writing implement when required. \\
 
 \subsection{Use writing implement}
-Summary: The robot creates a mark on the writing surface
-Actors: writing surface, writing implement
-Precondition: no mark exists on writing surface
-Postcondition: mark exists on writing surface
-Alternative: Robot alerts user that the writing implement must be replaced (or inserted if one does not exist).
-Summary: The robot creates markings on the surface with the given writing implement, and ensures that its movements do not disrupt drawing accuracy.
+\textbf{Summary:} The robot creates a mark on the writing surface \\
+\textbf{Actors:} writing surface, writing implement \\
+\textbf{Precondition:} no mark exists on writing surface \\
+\textbf{Postcondition:} mark exists on writing surface \\
+\textbf{Alternative:} Robot alerts user that the writing implement must be replaced (or inserted if one does not exist). \\
+\textbf{Summary:} The robot creates markings on the surface with the given writing implement, and ensures that its movements do not disrupt drawing accuracy. \\
 
 Referring to the image below, \figref{fig:example_figure}.
 
