@@ -14,7 +14,7 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \end{functional_requirement}
 
 \begin{functional_requirement}{Autonomous}{6}
-\item Given an input image to draw, robot agents must be able to autonomously complete the drawing. This includes the following steps: processing the input, planning and commanding individual agents, and having robots move and draw without external input.
+\item Given an input image to draw, robot agents must be able to autonomously complete the drawing. This includes the following steps: processing the input, planning and commanding individual agents, and having robots move and draw without external input. We allow for human intervention only in the case of system failure. 
 \end{functional_requirement}
 
 \begin{functional_requirement}{Robots Localize Globally and Locally}{7}
@@ -26,7 +26,7 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \end{functional_requirement}
 
 \begin{functional_requirement}{Within Bounds}{3}
-\item While in operation, all robot agents must stay within bounds of the workspace. This is important to minimize external collisions, as well as to ensure localization maintains accuracy while drawing occurs.
+\item While in operation, all robot agents must stay within bounds of the workspace. This is important to minimize external collisions, including possibly unsafe interactions with the world, as well as to ensure localization maintains accuracy while drawing occurs.
 \end{functional_requirement}
 
 \begin{functional_requirement}{Change Writing Tools}{2}
@@ -70,11 +70,11 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \label{sec:nonfunctional_requirements}
 
 \begin{nonfunctional_requirement}{Portable}{4}
-\item Individiual robot agents must be easy to move between locations. Portability can be measured by physical dimensions and weight.
+\item Individual robot agents must be easy to move between locations. Portability can be measured by physical dimensions and weight.
 \end{nonfunctional_requirement}
 
 \begin{nonfunctional_requirement}{Efficiency}{2}
-\item Robot system must be efficient and complete drawing tasks quickly. Timeliness can be meausured by the amount of time taken to complete drawings. Robot planning must also exist in such a manner that evenly splits the workload among all robot agents working in the system.
+\item Robot system must be efficient and complete drawing tasks quickly. Timeliness can be measured by the amount of time taken to complete drawings. Robot planning must also exist in such a manner that evenly splits the workload among all robot agents working in the system. Therefore, we expect to observe a noticeable speedup when using two robots as opposed to one. 
 \end{nonfunctional_requirement}
 
 \begin{nonfunctional_requirement}{Quality}{4}
