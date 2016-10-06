@@ -14,9 +14,10 @@ In detailing the various scenarios that our robot might encounter, described in 
 
 \begin{figure}
  \centering
- \caption{Model for reloading the writing implement}
-  \includegraphics{figs/airport_layout.jpg}
- \label{fig:Model: Reload Writing Implement}
+  \includegraphics[width=0.48\columnwidth]{figs/use_case-use_writing_implement.jpg}
+  \includegraphics[width=0.48\columnwidth]{figs/use_case-process_input_image.jpg}
+ \label{fig:reload_implement_and_image}
+ \caption{Model for reloading the writing implement (left) and model for processing the input image (right).}
 \end{figure}
 
 \subsection{Process Input Image}
@@ -27,12 +28,6 @@ In detailing the various scenarios that our robot might encounter, described in 
 \textbf{Alternative:} If this step fails the robotic system should report an image processing failure. \\
 \textbf{Description:} The robot's task will be input using a human-produced image following specific guidelines. From the image, the robot can determine where to place markings in the real world, and how the work should be distributed amongst the workers. \\
 
-\begin{figure}
- \centering
- \caption{Model for processing the input image}
-  \includegraphics{figs/use_case-process_input_image.jpg}
- \label{fig:Model: Reload Writing Implement}
-\end{figure}
 
 \subsection{Localization}
 \textbf{Summary:} The robot must be able to determine where it is in the world. \\
@@ -44,9 +39,9 @@ In detailing the various scenarios that our robot might encounter, described in 
 
 \begin{figure}
  \centering
- \caption{Model for localization}
-  \includegraphics{figs/use_case-localization.jpg}
- \label{fig:Model: Localization}
+  \includegraphics[width=0.48\columnwidth]{figs/use_case-localization.jpg}
+\caption{Model for localization}
+ \label{fig:localize}
 \end{figure}
 
 \subsection{Scheduling and Robot Planning/Coordination}
@@ -59,9 +54,10 @@ In detailing the various scenarios that our robot might encounter, described in 
 
 \begin{figure}
  \centering
- \caption{Model for scheduling and robot planning/coordination}
-  \includegraphics{figs/use_case-planning_coordination.jpg}
- \label{fig:Model: Scheduling and Robot Planning/Coordination}
+  \includegraphics[width=0.48\columnwidth]{figs/use_case-planning_coordination.jpg}
+	\includegraphics[width=0.48\columnwidth]{figs/use_case-moving.jpg}
+	\caption{Model for scheduling and robot planning/coordination (left) and Model for moving a robot (right)}
+ \label{fig:scheduling_moving}
 \end{figure}
 
 \subsection{Move Robot}
@@ -71,13 +67,6 @@ In detailing the various scenarios that our robot might encounter, described in 
 \textbf{Post-condition:} Robot is moving as commanded. \\
 \textbf{Alternative:} If the robot is unable to move, the the human user is alerted and work is redistributed between remaining robots. \\
 \textbf{Summary:} The robot moves across the writing surface, using its writing implement when required. \\
-
-\begin{figure}
- \centering
- \caption{Model for moving a robot}
-  \includegraphics{figs/use_case-moving.jpg}
- \label{fig:Model: Moving the Robot}
-\end{figure}
 
 \subsection{Use Writing Implement}
 \textbf{Summary:} The robot creates a mark on the writing surface. \\
@@ -89,8 +78,8 @@ In detailing the various scenarios that our robot might encounter, described in 
 
 \begin{figure}
  \centering
- \caption{Model for using the writing implement}
-  \includegraphics{figs/use_case-use_writing_implement.jpg}
- \label{fig:Model: Using Writing Implement}
+  \includegraphics[width=0.48\columnwidth]{figs/use_case-use_writing_implement.jpg}
+	 \caption{Model for using the writing implement}
+ \label{fig:use_tool}
 \end{figure}
 
