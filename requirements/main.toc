@@ -11,12 +11,12 @@
 \contentsline {subsection}{\numberline {3.2}Infrastructure Lane Drawing}{4}
 \contentsline {subsection}{\numberline {3.3}Sport Lines}{5}
 \contentsline {section}{\numberline {4}Use Cases}{6}
-\contentsline {subsection}{\numberline {4.1}Reload writing implement}{6}
-\contentsline {subsection}{\numberline {4.2}Process input image}{6}
-\contentsline {subsection}{\numberline {4.3}Localization}{6}
+\contentsline {subsection}{\numberline {4.1}Reload Writing Implement}{6}
+\contentsline {subsection}{\numberline {4.2}Process Input Image}{6}
+\contentsline {subsection}{\numberline {4.3}Localization}{7}
 \contentsline {subsection}{\numberline {4.4}Scheduling and Robot Planning/Coordination}{7}
-\contentsline {subsection}{\numberline {4.5}Move robot}{7}
-\contentsline {subsection}{\numberline {4.6}Use writing implement}{7}
-\contentsline {section}{\numberline {5}Requirements}{7}
+\contentsline {subsection}{\numberline {4.5}Move Robot}{7}
+\contentsline {subsection}{\numberline {4.6}Use Writing Implement}{7}
+\contentsline {section}{\numberline {5}Requirements}{8}
 \contentsline {subsection}{\numberline {5.1}Functional Requirements}{8}
 \contentsline {subsection}{\numberline {5.2}Non-Functional Requirements}{9}
