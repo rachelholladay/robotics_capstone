@@ -4,4 +4,5 @@
 *.out
 *.bbl
 *.blg
+.DS_Store
 latexSuite*:
