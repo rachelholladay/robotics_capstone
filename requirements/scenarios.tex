@@ -5,7 +5,7 @@
 Our drawing robotic system has many use cases, three of which are detailed below. These scenarios then informed our use cases, described in \sref{sec:use_cases}. 
 
 \subsection{Chalk Drawing}
-Chalk drawings are often used around campuses and different communities for aesthetic purpose, information sharing, and events announcements, as seen in \figref{fig:chalk1}. However, these drawings are often limited by size and complexity of the drawing. Therefore, we plan to design our robotic system to draw large scale items on blacktop or asphalt surfaces with chalks.
+Chalk drawings are often used around campuses and different communities for aesthetic purpose, information sharing, and events announcements, as seen in \figref{fig:chalk}. However, these drawings are often limited by size and complexity of the drawing. Therefore, we plan to design our robotic system to draw large scale items on blacktop or asphalt surfaces with chalks.
 
 Drawing designs will be loaded to the control hub which will then analyze the images and generate paths for each robot to follow. Each individual robot will receive commends from the control hub and proceed to complete its responsible section. If these robots encounter any errors or difficulties during the painting process, they need to notify the control hub to make further decisions. Since chalk is the main painting tool in this scenario and these robots may work outdoors, we need to design the robot to be ready for drawing on relative wet surfaces and be able to protect chalk from rain or excessive humidity. Chalk becomes shorter as it is used more; a mechanism that is insensible to chalk's length and can ensure chalk tip always be in contact with the ground is needed. 
 
@@ -16,11 +16,11 @@ Drawing designs will be loaded to the control hub which will then analyze the im
  \includegraphics[width=0.24\columnwidth]{figs/chalk2.jpg}
  \includegraphics[width=0.24\columnwidth]{figs/chalk3.png}
  \caption{Various Examples of outdoor chalk drawing for pure fun or more serious announcements.}
- \label{fig:airport}
+ \label{fig:chalk}
 \end{figure}
 
 \subsection{Infrastructure Lane Drawing}
-Drawing infrastructure lanes, such as those for parking lots, highways, streets, and airports, can often be dull and expensive. For example, in \figref{fig:airport}, we can see the massive amount of routing lines that aiport runway systems rely on. However, these lines are usually painted via a human operator. Therefore, we have the opportunity to improve this task through our robotic system. 
+Drawing infrastructure lanes, such as those for parking lots, highways, streets, and airports, can often be dull and expensive. For example, in \figref{fig:airport}, we can see the massive amount of routing lines that airport runway systems rely on. However, these lines are usually painted via a human operator. Therefore, we have the opportunity to improve this task through our robotic system. 
 
 Digital or physical engineering drawings of the intended lanes will be scanned and loaded into the control hub which then delegates tasks to different robots. Each robot will be in charge of drawing lanes within a bounded area defined by the control hub. When drawing lanes, each robot has to travel at a constant speed and deposit the ink evenly, because the drawn lanes need to be smooth and consistent. 
 

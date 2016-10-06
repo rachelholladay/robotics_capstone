@@ -1,3 +1,4 @@
+\contentsline {section}{List of Figures}{1}
 \contentsline {section}{\numberline {1}Executive Summary}{2}
 \contentsline {subsection}{\numberline {1.1}Project Overview}{2}
 \contentsline {subsection}{\numberline {1.2}Document Outline}{2}
@@ -17,6 +18,7 @@
 \contentsline {subsection}{\numberline {4.4}Scheduling and Robot Planning/Coordination}{7}
 \contentsline {subsection}{\numberline {4.5}Move Robot}{8}
 \contentsline {subsection}{\numberline {4.6}Use Writing Implement}{8}
-\contentsline {section}{\numberline {5}Requirements}{10}
-\contentsline {subsection}{\numberline {5.1}Functional Requirements}{10}
+\contentsline {section}{\numberline {5}Requirements}{9}
+\contentsline {subsection}{\numberline {5.1}Functional Requirements}{9}
 \contentsline {subsection}{\numberline {5.2}Non-Functional Requirements}{11}
+\contentsline {section}{References}{12}
