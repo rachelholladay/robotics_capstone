@@ -11,16 +11,7 @@ In detailing the various scenarios that our robot might encounter, described in 
 \textbf{Post-condition:} System has desired writing tool loaded. \\
 \textbf{Alternative:} If the robot is unable to load the implement then the system should report improper loading results to the user. Additionally, other robot agents should be told that the robot to be reloaded is broken, and therefore cannot draw. Hence, in order to complete the picture the other robots must re-plan accordingly. \\
 \textbf{Description:} When the robot is working on a large or intricate drawing that requires a large amount of consumable writing material, the robot may not be able to carry enough material to complete its allocation of the drawing. Additionally, some drawings may involve a variety of colors, strokes, or other properties that necessitate the use of different writing materials. Thus, the robot must be able to replace its writing implement with human assistance. The robot must be able to recognize reloading failures and alert the human operator of their occurrences. If the failure is not corrected, The robot must communicate its inability to perform to other robot agents in the system so they can re-plan drawing paths accordingly. \\
-\textbf{Model:} \figref{fig:reload_implement_and_image}.\\
-
-\begin{figure}
- \centering
-  \includegraphics[width=0.48\columnwidth]{figs/use_case-use_writing_implement.jpg}
-  \includegraphics[width=0.48\columnwidth]{figs/use_case-process_input_image.jpg}
- \label{fig:reload_implement_and_image}
- \caption{Model for reloading the writing implement (left) and model for processing the input image (right).}
-\end{figure}
-
+\textbf{Model:} \figref{fig:reload_process}.\\
 \subsection{Process Input Image}
 \textbf{Summary:} The robot must take in a human-provided image and interpret what the robot system is required to draw. \\
 \textbf{Actors:} Image, Human \\
@@ -28,7 +19,15 @@ In detailing the various scenarios that our robot might encounter, described in 
 \textbf{Post-condition:} The image is processed and ready for work distribution between agents. \\
 \textbf{Alternative:} If this step fails the robotic system should report an image processing failure. \\
 \textbf{Description:} The robot's task will be input using a human-produced image following specific guidelines. From the image, the robot can determine where to place markings in the real world, and how the work should be distributed amongst the workers. \\
-\textbf{Model:} \figref{fig:reload_implement_and_image}.\\
+\textbf{Model:} \figref{fig:reload_process}.\\
+
+\begin{figure}
+ \centering
+  \includegraphics[width=0.48\columnwidth]{figs/use_case-use_writing_implement.jpg}
+  \includegraphics[width=0.48\columnwidth]{figs/use_case-process_input_image.jpg}
+ \caption{Model for reloading the writing implement (left) and model for processing the input image (right).}
+ \label{fig:reload_process}
+\end{figure}
 
 
 \subsection{Localization}
