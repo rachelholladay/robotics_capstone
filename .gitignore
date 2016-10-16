@@ -7,5 +7,6 @@
 *.loc
 *.toc
 *.soc
+*.lof
 .DS_Store
 latexSuite*:
