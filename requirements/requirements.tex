@@ -2,7 +2,7 @@
 
 \section{Requirements}
 \label{sec:requirements}
-We outline our systems requirements, both functional and nonfunctional. For each requirement we provide a number, for each of reference, a short description and a longer explanation. We prioritize our system requirements on a Likert scale from 1 to 7, detailed below. To describe the scale, a 1 is considered a desirable but unnecessary requirement. On the other hand, a 7 is considered necessary for a minimum viable product.
+We outline our system's requirements, both functional and nonfunctional. A priority number is provided for each requirement. The system requirements are prioritized on a Likert scale from 1 to 7, detailed below. To describe the scale, a 1 is considered a desirable but unnecessary requirement, a 4 is considered a necessary requirement but open to significant changes, and a 7 is considered an uncompromisable requirement for a minimum viable product.
 
 \CheckTable{1}
 
@@ -21,7 +21,7 @@ We outline our systems requirements, both functional and nonfunctional. For each
 
 \begin{functional_requirement}{Robots Localize Globally and Locally}{7}
 \label{fr:localize}
-\item All drawing robots can determine their locations and orientations on a global and local scale. Global scale is relative to the localization markers and the specified drawing surface. Local scale is relative to other robot agents. This requirement is necessary so the robot system can coordinate planning together to avoid collisions or an inefficient spread of work. \added[remark={Specifies testability of localization}]{Robot localization should be accurate to within one inch - that is, each robot agent should know its position to within 1 inch of its true location.}
+\item All drawing robots can determine their locations and orientations on a global and local scale. Global scale is relative to the localization markers and the specified drawing surface. Local scale is relative to other robot agents. This requirement is necessary so the robot system can coordinate planning together to avoid collisions or an inefficient spread of work. \added[remark={Specifies testability of localization}]{Robot localization should be accurate to within one inch - that is, each robot agent should know its position to within 1 inch of its true location and within 10 degrees of its orientation.}
 \end{functional_requirement}
 
 \begin{functional_requirement}{Within Bounds}{3}
@@ -29,8 +29,10 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \item While in operation, all robot agents must stay within bounds of the workspace. This is important to minimize external collisions, including possibly unsafe interactions with the world, as well as to ensure localization maintains accuracy while drawing occurs.
 \end{functional_requirement}
 
-\deleted[remark={Split into multiple more detailed and specific requirements of insertion, removal, and replacement}]{
-\textbf{Change Writing Tools} \\ Inserting, removing, and replacing writing implements must be convenient and fast.} \\
+\begin{functional_requirement}{Change Writing Tools}{2}
+\item .\deleted[remark={Split into multiple more detailed and specific requirements of insertion, removal, and replacement}]{Inserting, removing, and replacing writing implements must be convenient and fast.}
+\end{functional_requirement}
+\rhnote{Need to deal with this one so it shows up as revision but not in final document}
 
 \begin{functional_requirement}{Insert Writing Tools}{2}
 \label{fr:insert_tool}
@@ -39,12 +41,12 @@ We outline our systems requirements, both functional and nonfunctional. For each
 
 \begin{functional_requirement}{Remove Writing Tools}{2}
 \label{fr:remove_tool}
-\item A \added[remark={New requirements to replace Change Writing Tools requirement}]{writing implement must be able to be removed from a single robot by a user in under 1 minute. Writing tools will need to be removed when the existing implement becomes unusable.}
+\item .\added[remark={New requirements to replace Change Writing Tools requirement}]{A writing implement must be able to be removed from a single robot by a user under 1 minute. Writing tools will need to be removed when the existing implement becomes unusable.}
 \end{functional_requirement}
 
 \begin{functional_requirement}{Replace Writing Tools}{2}
 \label{fr:replace_tool}
-\item A \added[remark={New requirements to replace Change Writing Tools requirement}]{user must be able to remove and then insert a writing implement. Following in accordance with Functional Requirements \frref{fr:insert_tool} and \frref{fr:remove_tool}, this process must be done in under 2 minutes. Tool replacement is necessary whenever an existing tool becomes unusable for system operation.}
+\item A\added[remark={New requirements to replace Change Writing Tools requirement}]{ user must be able to remove and then insert a writing implement. Following in accordance with Functional Requirements \frref{fr:insert_tool} and \frref{fr:remove_tool}, this process must be done in under 2 minutes. Tool replacement is necessary whenever an existing tool becomes unusable for system operation.}
 \end{functional_requirement}
 
 \begin{functional_requirement}{Reliable Communication}{7}
@@ -82,15 +84,17 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \item An intuitive and useful user experience is necessary for efficient usage of the system. Having a simple to operate system also reduces the likelihood of user error during the input or operation stage. For industrial or commercial applications, accessibility becomes important as well. \added[remark={Added testability}]{A quality user interface can be tested by running a user study or survey with potential users.}
 \end{functional_requirement}
 
-\deleted[remark={Moved to nonfunctional}]{
-\textbf{Documentation} \\
-Documentation of the design process, software, and hardware implementation is important for debugging, recreation, and general understanding of this project.}
+\begin{functional_requirement}{Documentation}{3}
+\item .\deleted[remark={Moved to nonfunctional}]{Documentation of the design process, software, and hardware implementation is important for debugging, recreation, and general understanding of this project.}
+\end{functional_requirement}
+\rhnote{Same as Change Writing Tool, Need to deal with this one so it shows up as revision but not in final document}
+
 
 \subsection{Non-Functional Requirements}
 \label{sec:nonfunctional_requirements}
 
 \begin{nonfunctional_requirement}{Documentation}{3}
-\item Documentation \added[remark={Moved from functional}]{of the design process, software, and hardware implementation is important for debugging, recreation, and general understanding of this project.}
+\item Documentation\added[remark={Moved from functional}]{ of the design process, software, and hardware implementation is important for debugging, recreation, and general understanding of this project.}
 \end{nonfunctional_requirement}
 
 \begin{nonfunctional_requirement}{Error Handling}{6}
