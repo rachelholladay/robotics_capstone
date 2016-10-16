@@ -45,8 +45,8 @@
 }
 
 % Tracking Changes
-%\usepackage[final]{changes}
-\usepackage{changes}
+\usepackage[final]{changes}
+%\usepackage{changes}
 %\definechangesauthor[name={Per cusse}, color=orange]{per}
 \setremarkmarkup{(#2)}
 
@@ -60,9 +60,9 @@
 \newboolean{include-notes}
 \setboolean{include-notes}{true}
 \newcommand{\njnote}[1]{\ifthenelse{\boolean{include-notes}}%
- {\textcolor{red}{\textbf{NJ: #1}}}{}}
+ {\textcolor{yellow}{\textbf{NJ: #1}}}{}}
 \newcommand{\rhnote}[1]{\ifthenelse{\boolean{include-notes}}%
- {\textcolor{blue}{\textbf{RH: #1}}}{}}
+ {\textcolor{red}{\textbf{RH: #1}}}{}}
 \newcommand{\dznote}[1]{\ifthenelse{\boolean{include-notes}}%
  {\textcolor{green}{\textbf{DZ: #1}}}{}}
 \newcommand{\yjnote}[1]{\ifthenelse{\boolean{include-notes}}
