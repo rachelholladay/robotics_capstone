@@ -4,5 +4,8 @@
 *.out
 *.bbl
 *.blg
+*.loc
+*.toc
+*.soc
 .DS_Store
 latexSuite*:
