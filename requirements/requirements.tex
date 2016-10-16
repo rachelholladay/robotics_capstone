@@ -122,7 +122,7 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \end{nonfunctional_requirement}
 
 \begin{nonfunctional_requirement}{Efficiency}{2}
-\item Robot system must be efficient and complete drawing tasks quickly. Timeliness can be measured by the amount of time taken to complete drawings. Robot planning must also exist in such a manner that evenly splits the workload among all robot agents working in the system. Therefore, we expect to observe a noticeable speedup when using two robots as opposed to one. 
+\item Robot system must be efficient and complete drawing tasks quickly. Timeliness can be measured by the amount of time taken to complete drawings. Robot planning must also exist in such a manner that evenly splits the workload among all robot agents working in the system. Therefore, a noticeable speedup is expected when using two robots as opposed to one. \added[remark={Added testability}]{The system should perform as fast or faster than a human attempting the same drawing task.}
 \end{nonfunctional_requirement}
 
 \begin{nonfunctional_requirement}{Quality}{4}
@@ -142,7 +142,7 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \end{nonfunctional_requirement}
 
 \begin{nonfunctional_requirement}{Coordination}{4}
-\item The key to a multi-robot agent system is to reduce the individual workload, meaning having coordinated and efficient work is vital. Robots must be able to work together to minimize overlap in the drawings, and to avoid duplicating work.
+\item The key to a multi-robot agent system is to reduce the individual workload, meaning having coordinated and efficient work is vital. Robots must be able to work together to minimize overlap in the drawings, and to avoid duplicating work. A two-robot system that coordinates must perform faster than a single robot performing the same task.
 \end{nonfunctional_requirement}
 
 \begin{comment}
