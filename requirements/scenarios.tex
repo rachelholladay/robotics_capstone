@@ -2,15 +2,15 @@
 
 \section{Scenarios}
 \label{sec:scenarios}
-Our drawing robotic system has many use cases, three of which are detailed below. These scenarios then informed our use cases, described in \sref{sec:use_cases}. 
+Our drawing robotic system has many use cases, three of which are detailed below. These scenarios then informed our use cases, described in \sref{sec:use_cases}. These are the scenarios that motivate us to work on this project and are the scenarios that a fully developed multi-agent autonomous robotic drawing system is expected to achieve. However, for the scope of this class, we are only focusing on the chalk drawing scenario, as detailed in \sref{sec:chalk_drawing}.
 \rhnote{Need to say that only planning on doing chalk drawing one, but a fully fleshed out system would do all of this}
-
 \rhnote{Remove some fluff from these}
 
 \subsection{Chalk Drawing}
-Chalk drawings are often used around campuses and different communities for aesthetic purpose, information sharing, and events announcements, as seen in \figref{fig:chalk}. However, these drawings are often limited by size and complexity of the drawing. Therefore, we plan to design our robotic system to draw large scale items on blacktop or asphalt surfaces with chalks.
+\label{sec:chalk_drawing}
+Chalk drawings are often used around campuses and different communities for aesthetic purpose, information sharing, and events announcements, as seen in \figref{fig:chalk}. However, these drawings are often limited by size and complexity of the drawing. Therefore, we plan to design our robotic system to draw large-scale items on blacktop or asphalt surfaces with chalks.
 
-Drawing designs will be loaded to the control hub which will then analyze the images and generate paths for each robot to follow. Each individual robot will receive commends from the control hub and proceed to complete its responsible section. If these robots encounter any errors or difficulties during the painting process, they need to notify the control hub to make further decisions. Since chalk is the main painting tool in this scenario and these robots may work outdoors, we need to design the robot to be ready for drawing on relative wet surfaces and be able to protect chalk from rain or excessive humidity. Chalk becomes shorter as it is used more; a mechanism that is insensible to chalk's length and can ensure chalk tip always be in contact with the ground is needed. 
+Since chalk will be the main painting tool in this scenario and these robots may work outdoors, we need to design the system to prepare for situations like drawing on relative wet surfaces and protecting chalk from rain or excessive humidity. We also need to design the system to accommodate the fact that chalk becomes shorter as it is used. 
 
 \begin{figure}
  \centering
@@ -23,13 +23,10 @@ Drawing designs will be loaded to the control hub which will then analyze the im
 \end{figure}
 
 \subsection{Infrastructure Lane Drawing}
+\label{sec:infrastructure_drawing}
 Drawing infrastructure lanes, such as those for parking lots, highways, streets, and airports, can often be dull and expensive. For example, in \figref{fig:airport}, we can see the massive amount of routing lines that airport runway systems rely on. However, these lines are usually painted via a human operator. Therefore, we have the opportunity to improve this task through our robotic system. 
 
-Digital or physical engineering drawings of the intended lanes will be scanned and loaded into the control hub which then delegates tasks to different robots. Each robot will be in charge of drawing lanes within a bounded area defined by the control hub. When drawing lanes, each robot has to travel at a constant speed and deposit the ink evenly, because the drawn lanes need to be smooth and consistent. 
-
-Therefore, motor control becomes critical during this process. During the drawing process, if any robot runs out of ink or experiences any sort of accident, it needs to report its status to control hub. The control hub will command it to return home base to change painting tool, call other robot to cover its task or call for human control. 
-
-When drawing is done, all robots will return to home base automatically. Since completing this scenario requires working outdoors, these robots need to be more robust both in hardware and in software. The mechanical parts need to be weather resistant to a certain extent and the programming scripts need to account for possible situations when working outdoor. 
+Since the drawn lanes need to be smooth and consistent, motor control becomes critical in this scenario. Completing this scenario requires working outdoors. Therefore, the robotic system needs to be more robust both in hardware and in software. The mechanical parts need to be weather resistant to a certain extent and the programming scripts need to account for unpredictable situations when working outdoor. 
 
 \begin{figure}
  \centering
@@ -43,4 +40,4 @@ When drawing is done, all robots will return to home base automatically. Since c
 \subsection{Sport Lines}
 Drawing lanes for sports fields, including soccer fields, football fields, basketball court, etc, could be another scenario for this robotic system. Similar to our infrastructure example, these lines are quite repetitive and must be redrawn often to ensure a quality field. 
 
-Also similarly to the infrastructure lanes drawing, engineering drawings of the designed lanes will be loaded into the control hub which will assign tasks to each individual robot. These robots will then proceed to painting the lanes with the goals of making lanes smooth and straight. If an error occurs with any robot, such error message will be reported to the control hub. The control hub will then makes decision on calling the robot back or calling for human control. Robots will return to home base automatically when finished painting. When painting certain sports fields, like soccer fields or football fields, these robots need to travel on uneven surfaces, such as grass fields. Therefore, better suspension and drive system will be designed to complete these tasks.
+When painting certain sports fields, like soccer fields or football fields, these robots need to travel on uneven surfaces, such as grass. Therefore, better suspension and drive system will be designed to complete these tasks. Similar to the infrastructure lane drawing scenario (\sref{sec:infrastructure_drawing}), the robotic system needs to guarantee the quality of drawing lanes and being weather resistant. 
