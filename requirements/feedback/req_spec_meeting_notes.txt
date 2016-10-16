@@ -1,0 +1,46 @@
+- Localization
+  - global solution - relative to markers probably best
+  - need to know types of markers (IR, vision-based, etc.)
+    - sensing tech
+- writing implement
+  - best for just 1, not ideal but easiest
+  - need to look at advantages to different implements and decide
+  - comparative analysis
+    - forces specific application to be chosen
+    - TODO this may go into requirements, potentially design
+- mobility
+  - custom movement solution vs. prebuilt
+    - see if prebuilt omnidirectional solution exists
+- error handling
+  - more specific - add more specifics into requirements
+- Scenarios
+  - break down nicely/templated well to describe, good detail
+  - somewhat wordy - being descriptive can constrain problem to that scenario
+- use cases
+  - Need general use-case model
+    - big one that encapsulates all/most use cases
+  - current use case diagrams are closer to architectural/software models
+    - 'motor control module', 'area map'=data structure, 'path planning module'=software
+  - diagram that explains how the use cases fit together, then describe
+    - the existing use-case diagrams explain how each use-case itself works
+    - update the existing ones by combining into one (simplify and have as diagram using use cases only)
+  - diagram explains relationship between use cases
+- requirements
+  - traceability/priorities well described
+  - well organized
+  - update some of the statements to be 'testable'
+    - FR6 change writing tool - define objectively how 'convenient' and 'fast'
+      - FR6 describing as fast is nonfunctional
+    - moving inserting replacing removing convenient fast all separate requirements (convenient/fast are nonfunctional, rest functional)
+    - may have to use a subjective measure of convenience (or others)
+      - measureable later by asking multiple users how 'convenient' they thought using product was
+  - for timing for aspects (total draw time, load time, etc.) should have some ~magnitude of 10 approximate for time
+  - further break up requirements into multiple
+  - covers various aspects well
+- general comments
+  - level of detail for requirements is good
+  - for requirements, add details to make them testable
+
+
+
+
