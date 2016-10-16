@@ -1,6 +1,4 @@
+\select@language {english}
 \contentsline {figure}{\numberline {1}{\ignorespaces Various Examples of outdoor chalk drawing for pure fun or more serious announcements.}}{5}
 \contentsline {figure}{\numberline {2}{\ignorespaces Airports rely on gridlines (left), which are currently painted and repainted by human operators (right).}}{6}
-\contentsline {figure}{\numberline {3}{\ignorespaces Model for reloading the writing implement (left) and model for processing the input image (right).}}{7}
-\contentsline {figure}{\numberline {4}{\ignorespaces Model for localization}}{8}
-\contentsline {figure}{\numberline {5}{\ignorespaces Model for scheduling and robot planning/coordination (left) and Model for moving a robot (right)}}{9}
-\contentsline {figure}{\numberline {6}{\ignorespaces Model for using the writing implement}}{10}
+\contentsline {figure}{\numberline {3}{\ignorespaces Diagram representing the relationship between use cases and actors in the system}}{7}
