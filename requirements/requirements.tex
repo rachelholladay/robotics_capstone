@@ -60,6 +60,7 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \end{functional_requirement}
 
 \begin{functional_requirement}{Reliable Communication}{7}
+\label{fr:reliable_comm}
 \item .\added[remark={Moved to requirement from assumption}]{Robot agents and any system controllers must have the consistent ability to communicate between each other. This is necessary to ensure accurate and timely planning, and status updates between agents. Connection strength must be such that send information to each other within 1 second.}
 \end{functional_requirement}
 
@@ -74,47 +75,46 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \end{functional_requirement}
 
 \begin{functional_requirement}{Input Drawing Plan}{6}
+\label{fr:input_plan}
 \item The main system controller must be able to receive an input that allows it to command the robot agents to draw an appropriate image. The system must be able to parse the input into a state usable for robot planning and control in order to draw the input. 
 \end{functional_requirement}
 
 \begin{functional_requirement}{Robots Know Progress}{2}
-\item All robot agents are required to understand how much of the drawing each one has completed, and which sections are left to be drawn. This is necessary to ensure an equal spread of workload across all robot agents. \added[remark={Added testability}]{The ability to communicate progress can be guaranteed by consisten inter-robot communication, as defined by functional requirement \njnote{RELIABLE COMMUNICATIONS FR LABEL}.}
+\label{fr:know_progress}
+\item All robot agents are required to understand how much of the drawing each one has completed, and which sections are left to be drawn. This is necessary to ensure an equal spread of workload across all robot agents. \added[remark={Added testability}]{The ability to communicate progress can be guaranteed by consistent inter-robot communication, as defined by \frref{fr:reliable_comm}.}
 \end{functional_requirement}
 
 \begin{functional_requirement}{Kill Switch}{3}
+\label{fr:kill_switch}
 \item Human bystanders must be able to end all system operation instantaneously with a kill switch or power button. This is necessary to ensure that the system can be shut down in case of an unsafe error or problem. 
 \end{functional_requirement}
 
 \begin{functional_requirement}{User Interface to robot}{1}
+\label{fr:user_interface}
 \item An intuitive and useful user experience is necessary for efficient usage of the system. Having a simple to operate system also reduces the likelihood of user error during the input or operation stage. For industrial or commercial applications, accessibility becomes important as well. \added[remark={Added testability}]{A quality user interface can be tested by running a user study or survey with potential users.}
 \end{functional_requirement}
 
 \begin{functional_requirement}{Be In Budget}{7}
+\label{fr:budget}
 \item Design and implementation of this robotic system is limited by budget, which must be strictly adhered to. \added[remark={Added testability}]{The budget is limited \$2500.}
 \end{functional_requirement}
+\njnote{Move to nonfunctional}
 
-\deleted[remark={Moved to nonfunctional}]{
 \begin{functional_requirement}{Documentation}{3}
-\item Documentation of the design process, software, and hardware implementation is important for debugging, recreation, and general understanding of this project.
+\item .\deleted[remark={Moved to nonfunctional}]{Documentation of the design process, software, and hardware implementation is important for debugging, recreation, and general understanding of this project.}
 \end{functional_requirement}
-}
-
-\rhnote{Need requirement for error handling}
 
 \subsection{Non-Functional Requirements}
 \label{sec:nonfunctional_requirements}
 
-\added[remark={Moved from functional}]{
 \begin{nonfunctional_requirement}{Documentation}{3}
-\item Documentation of the design process, software, and hardware implementation is important for debugging, recreation, and general understanding of this project.
+\item  .\added[remark={Moved from functional}]{Documentation of the design process, software, and hardware implementation is important for debugging, recreation, and general understanding of this project.}
 \end{nonfunctional_requirement}
-}
 
-\added[remark={Added error handling requirement}]{
+
 \begin{nonfunctional_requirement}{Error Handling}{6}
-\item The system must be able to handle errors appropriately. This includes problems that arise from localization, locomotion, planning, or using the writing tool. The system must be able to determine, based on conditions of the failure, whether to halt all operation or to continue without using broken subsystems. Errors can occur inside of any of the use cases listed in \njote{REFERENCE TO USE CASE SECTION}.
+\item .\added[remark={Added error handling requirement}]{The system must be able to handle errors appropriately. This includes problems that arise from localization, locomotion, planning, or using the writing tool. The system must be able to determine, based on conditions of the failure, whether to halt all operation or to continue without using broken subsystems. Errors can occur inside of any of the use cases listed in \sref{sec:use_cases}.}
 \end{nonfunctional_requirement}
-}
 
 \begin{nonfunctional_requirement}{Portable}{4}
 \item Individual robot agents must be easy to move between locations. Portability can be measured by physical dimensions and weight. Each robot must fit through a standard doorway, and be under 50 pounds.
