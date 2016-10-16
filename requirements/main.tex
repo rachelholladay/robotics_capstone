@@ -12,6 +12,7 @@
 \usepackage{amssymb}
 \usepackage{array,longtable}
 \usepackage[nottoc]{tocbibind}
+\usepackage{bibtex}
 \newcounter{qcounter}
 \newcounter{question}
 \newcounter{row}
@@ -108,18 +109,8 @@ This is \replaced[remark={bad wording}]{nice}{bad} text.
 \pagebreak
 \listofchanges
 \pagebreak
- 
-\begin{thebibliography}{9}
-\bibitem{buildfuture} 
-Building America's Future.
-http://bafuture.org/key-topics/transportation. 
-\textit{Accessed 6 Oct. 2016.}
- 
-\bibitem{bicyclist} 
-Bushell, Max; Poole, Bryan; Rodriguez, Daniel; Zegeer, Charles. 
-(July, 2013).
-\textit{Costs for Pedestrian and Bicyclist Infrastructure Improvements: A Resource for Researchers, Engineers, Planners and the General Public.}. 
-\end{thebibliography}
+
+\input{bibliography.tex}
 
 \end{document}
 
