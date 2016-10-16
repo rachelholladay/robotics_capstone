@@ -4,6 +4,7 @@
 \label{sec:requirements}
 We outline our systems requirements, both functional and nonfunctional. For each requirement we provide a number, for each of reference, a short description and a longer explanation. We prioritize our system requirements on a Likert scale from 1 to 7, detailed below. 
 
+\njnote{Likert scale needs more concrete descriptions at the high and low. for example, 7 could be -Necessary for basic functionality- and 1 could be a better-written form of -nice to have-}
 \rhnote{Need to better explain how the priorities map to our project, ie what is critical or optional.}
 \rhnote{For each requirement, explain why it has that priority level.}
 \rhnote{Some functional requirements like safe, cost and documentation are actually nonfunctional}
@@ -14,9 +15,10 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \label{sec:functional_requirements}
 
 \begin{functional_requirement}{Move in Specified Directions}{7}
-\item Robot must be able to autonomously move in a commanded direction on a flat plane. Omnidirectional movement is necessary to ensure robot agents can adequately and efficiently cover the drawing workspace.
+\item Robots must be able to autonomously move in a commanded direction on a flat plane. Omnidirectional movement is necessary to ensure agents can adequately and efficiently cover the drawing workspace. \added[remark=Added ability to test this requirement by objectively specifying accuracy]{Positional accuracy must be within a 1 inch radius for every 3 feet of motion. Orientation accuracy must be within 10 degrees for a given rotation.}
 \end{functional_requirement}
 
+\njnote{Rachel check this pagebreak sitting here}
 \pagebreak
 
 \begin{functional_requirement}{Autonomous}{6}
@@ -24,24 +26,48 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \end{functional_requirement}
 
 \begin{functional_requirement}{Robots Localize Globally and Locally}{7}
-\item All drawing robots can determine their locations and orientations on a global and local scale. Global scale is relative to the localization markers and the specified drawing surface. Local scale is relative to other robot agents. This requirement is necessary so the robot system can coordinate planning together to avoid collisions or an inefficient spread of work.
+\item All drawing robots can determine their locations and orientations on a global and local scale. Global scale is relative to the localization markers and the specified drawing surface. Local scale is relative to other robot agents. This requirement is necessary so the robot system can coordinate planning together to avoid collisions or an inefficient spread of work. \added[remark={Specifies testability of localization}]{Robot localization should be accurate to within one inch - that is, each robot agent should know its position to within 1 inch of its true location.}
 \end{functional_requirement}
 
 \begin{functional_requirement}{Safe}{4}
-\item Robots must maintain safety with respect to each other and the external world at all times. This requires all robot agents must avoid collisions. Robot agents must also have an enforced maximum speed limit to avoid damage to themselves or human bystanders in case of collision. 
+\item Robots must maintain safety with respect to each other and the external world at all times. This requires that all robot agents avoid collisions. Robot agents must also have an enforced maximum speed limit to avoid damage to themselves or human bystanders in case of collision. 
 \end{functional_requirement}
 
 \begin{functional_requirement}{Within Bounds}{3}
 \item While in operation, all robot agents must stay within bounds of the workspace. This is important to minimize external collisions, including possibly unsafe interactions with the world, as well as to ensure localization maintains accuracy while drawing occurs.
 \end{functional_requirement}
 
+\deleted[remark=Split into multiple more detailed and specific requirements of insertion, removal, and replacement]{
 \begin{functional_requirement}{Change Writing Tools}{2}
 \item Inserting, removing, and replacing writing implements must be convenient and fast. 
 \end{functional_requirement}
 \rhnote{Need to make this testable}
+}
+
+\added[remark=New requirements to replace Change Writing Tools requirement]{
+\begin{functional_requirement}{Insert Writing Tools}{2}
+\item A writing implement must be able to be inserted by a user into one robot under 1 minute. New writing implements will need to be inserted whenever existing ones become unusable, or upon first-time setup.
+\end{functional_requirement}
+
+\begin{functional_requirement}{Remove Writing Tools}{2}
+\item A writing implement must be able to be removed from a single robot by a user in under 1 minute. Writing tools will need to be removed when the existing implement becomes unusable.
+\end{functional_requirement}
+
+\begin{functional_requirement}{Replace Writing Tools}{2}
+\item A user must be able to remove and then insert a writing implement. Following in accordance with Functional Requirements \njnote{INSERT WRITING TOOL REQUIREMENT LABEL} and \njnote{REMOVE WRITING TOOL REQUIREMENT LABEL}, this process must be done in under 2 minutes. Tool replacement is necessary whenever an existing tool becomes unusable for system operation.
+\njnote{Reference Insert and Remove Writing Tools here}
+\end{functional_requirement}
+
+}
+
+\added[remark=Moved to requirement from assumption]{
+\begin{functional_requirement}{Reliable Communication}{7}
+\item Robot agents and any system controllers must have the consistent ability to communicate between each other. This is necessary to ensure accurate and timely planning, and status updates between agents. Connection strength must be such that send information to each other within 1 second.
+\end{functional_requirement}
+}
 
 \begin{functional_requirement}{Drive Control System}{5}
-\item Robot agents must have a controller to ensure motions made are accurate. Accurate motions is paramount to ensure an accurate drawing.
+\item Robot agents must have a controller to ensure motions made are accurate. Accurate motions is paramount to ensure an accurate drawing. \added[remark=Added testability]{The drive control system must be in compliance with motion accuracy parameters, as specified in functional requirement \njnote{MOVE IN SPECIFIED DIRECTION FR LABEL}.}
 \end{functional_requirement}
 
 \begin{functional_requirement}{Turn on or off writing tool}{1}
