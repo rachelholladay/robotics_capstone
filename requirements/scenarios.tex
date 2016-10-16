@@ -23,7 +23,7 @@ Since chalk will be the main painting tool in this scenario and these robots may
 
 \subsection{Infrastructure Lane Drawing}
 \label{sec:infrastructure_drawing}
-Drawing infrastructure lanes, such as those for parking lots, highways, streets, and airports, can often be dull and expensive. For example, in \figref{fig:airport}, we can see the massive amount of routing lines that airport runway systems rely on. However, these lines are usually painted via a human operator. Therefore, we have the opportunity to improve this task through our robotic system. 
+Drawing infrastructure lanes, such as those for parking lots, highways, streets, and airports, can often be dull and expensive \cite{airportdoc} \cite{linesalary}. For example, in \figref{fig:airport}, we can see the massive amount of routing lines that airport runway systems rely on. However, these lines are usually painted via a human operator. Therefore, we have the opportunity to improve this task through our robotic system. 
 
 \deleted[remark={too much details}] {Digital or physical engineering drawings of the intended lanes will be scanned and loaded into the control hub which then delegates tasks to different robots. Each robot will be in charge of drawing lanes within a bounded area defined by the control hub. When drawing lanes, each robot has to travel at a constant speed and deposit the ink evenly, because the drawn lanes need to be smooth and consistent. 
 Therefore, motor control becomes critical during this process. During the drawing process, if any robot runs out of ink or experiences any sort of accident, it needs to report its status to control hub. The control hub will command it to return home base to change painting tool, call other robot to cover its task or call for human control.
@@ -41,7 +41,7 @@ Since the drawn lanes need to be smooth and consistent, motor control becomes cr
 
 
 \subsection{Sport Lines}
-Drawing lanes for sports fields, including soccer fields, football fields, basketball court, etc, could be another scenario for this robotic system. Similar to our infrastructure example, these lines are quite repetitive and must be redrawn often to ensure a quality field. 
+Drawing lanes for sports fields, including soccer fields, football fields, basketball court, etc, could be another scenario for this robotic system. Similar to our infrastructure example, these lines are quite repetitive and must be redrawn often to ensure a quality field. Sports lines are especially motivating as labor can constitute around 95\% of their maintenance costs \cite{hamiltonsports}, which our system could help reduce.
 
 \deleted[remark={too much details}] {Also similarly to the infrastructure lanes drawing, engineering drawings of the designed lanes will be loaded into the control hub which will assign tasks to each individual robot. These robots will then proceed to painting the lanes with the goals of making lanes smooth and straight. If an error occurs with any robot, such error message will be reported to the control hub. The control hub will then makes decision on calling the robot back or calling for human control. Robots will return to home base automatically when finished painting. When painting certain sports fields, like soccer fields or football fields, these robots need to travel on uneven surfaces, such as grass fields. Therefore, better suspension and drive system will be designed to complete these tasks.}
 
