@@ -18,8 +18,7 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \item Robots must be able to autonomously move in a commanded direction on a flat plane. Omnidirectional movement is necessary to ensure agents can adequately and efficiently cover the drawing workspace. \added[remark=Added ability to test this requirement by objectively specifying accuracy]{Positional accuracy must be within a 1 inch radius for every 3 feet of motion. Orientation accuracy must be within 10 degrees for a given rotation.}
 \end{functional_requirement}
 
-\njnote{Rachel check this pagebreak sitting here}
-\pagebreak
+%\pagebreak
 
 \begin{functional_requirement}{Autonomous}{6}
 \item Given an input image to draw, robot agents must be able to autonomously complete the drawing. This includes the following steps: processing the input, planning and commanding individual agents, and having robots move and draw without external input. We allow for human intervention only in the case of system failure. 
@@ -37,22 +36,17 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \item While in operation, all robot agents must stay within bounds of the workspace. This is important to minimize external collisions, including possibly unsafe interactions with the world, as well as to ensure localization maintains accuracy while drawing occurs.
 \end{functional_requirement}
 
-\deleted[remark=Split into multiple more detailed and specific requirements of insertion, removal, and replacement]{
 \begin{functional_requirement}{Change Writing Tools}{2}
-\item Inserting, removing, and replacing writing implements must be convenient and fast. 
+\item \_ \deleted[remark={Split into multiple more detailed and specific requirements of insertion, removal, and replacement}]{Inserting, removing, and replacing writing implements must be convenient and fast.}
 \end{functional_requirement}
-\rhnote{Need to make this testable}
-}
 
 \added[remark=New requirements to replace Change Writing Tools requirement]{
 \begin{functional_requirement}{Insert Writing Tools}{2}
 \item A writing implement must be able to be inserted by a user into one robot under 1 minute. New writing implements will need to be inserted whenever existing ones become unusable, or upon first-time setup.
 \end{functional_requirement}
-
 \begin{functional_requirement}{Remove Writing Tools}{2}
 \item A writing implement must be able to be removed from a single robot by a user in under 1 minute. Writing tools will need to be removed when the existing implement becomes unusable.
 \end{functional_requirement}
-
 \begin{functional_requirement}{Replace Writing Tools}{2}
 \item A user must be able to remove and then insert a writing implement. Following in accordance with Functional Requirements \njnote{INSERT WRITING TOOL REQUIREMENT LABEL} and \njnote{REMOVE WRITING TOOL REQUIREMENT LABEL}, this process must be done in under 2 minutes. Tool replacement is necessary whenever an existing tool becomes unusable for system operation.
 \njnote{Reference Insert and Remove Writing Tools here}
@@ -66,11 +60,11 @@ We outline our systems requirements, both functional and nonfunctional. For each
 }
 
 \begin{functional_requirement}{Drive Control System}{5}
-\item Robot agents must have a controller to ensure motions made are accurate. Accurate motions is paramount to ensure an accurate drawing. \added[remark=Added testability]{The drive control system must be in compliance with motion accuracy parameters, as specified in functional requirement \njnote{MOVE IN SPECIFIED DIRECTION FR LABEL}.}
+\item Robot agents must have a controller to ensure motions made are accurate. Accurate motions is paramount to ensure an accurate drawing. \added[remark={Added testability}]{The drive control system must be in compliance with motion accuracy parameters, as specified in functional requirement.} \njnote{MOVE IN SPECIFIED DIRECTION FR LABEL}
 \end{functional_requirement}
 
 \begin{functional_requirement}{Turn on or off writing tool}{1}
-\item All robot agents need to be able to enable or disable use of the writing implement. The robot must also have the ability to move safely and accurately regardless of the state of the writing implement. Not all drawings are contiguous lines, and as such the robots must be able to disable the writing tool to move to a new drawing location. \added[remark=Added testability]{Individual robots must be able to enable or disable the writing implement within 10 seconds.}
+\item All robot agents need to be able to enable or disable use of the writing implement. The robot must also have the ability to move safely and accurately regardless of the state of the writing implement. Not all drawings are contiguous lines, and as such the robots must be able to disable the writing tool to move to a new drawing location. \added[remark={Added testability}]{Individual robots must be able to enable or disable the writing implement within 10 seconds.}
 \end{functional_requirement}
 
 \begin{functional_requirement}{Input Drawing Plan}{6}
@@ -84,7 +78,6 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \begin{functional_requirement}{Kill Switch}{3}
 \item Human bystanders must be able to end all robot operation instantaneously with a kill switch or power button. This is necessary to ensure that the system can be shut down in case of an unsafe error or problem.
 \end{functional_requirement}
-\rhnote{Need to clarify what the kill switch kills. All robots or one robot?}
 
 \begin{functional_requirement}{User Interface to robot}{1}
 \item An intuitive an useful user experience is necessary for efficient usage of the system. Having a simple to operate system also reduces the likelihood of user error during the input or operation stage. For industrial or commercial applications, accessibility becomes important as well. 
@@ -131,3 +124,5 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \item The key to a multi-robot agent system is to reduce the individual workload, meaning having coordinated and efficient work is vital. Robots must be able to work together to minimize overlap in the drawings, and to avoid duplicating work.
 \end{nonfunctional_requirement}
 
+\begin{comment}
+\end{comment}

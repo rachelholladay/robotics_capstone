@@ -12,15 +12,15 @@
 \contentsline {section}{\numberline {3}Scenarios}{4}
 \contentsline {subsection}{\numberline {3.1}Chalk Drawing}{4}
 \contentsline {subsection}{\numberline {3.2}Infrastructure Lane Drawing}{5}
-\contentsline {subsection}{\numberline {3.3}Sport Lines}{5}
+\contentsline {subsection}{\numberline {3.3}Sport Lines}{6}
 \contentsline {section}{\numberline {4}Use Cases}{6}
-\contentsline {subsection}{\numberline {4.1}Reload Writing Implement}{6}
+\contentsline {subsection}{\numberline {4.1}Reload Writing Implement}{7}
 \contentsline {subsection}{\numberline {4.2}Process Input Image}{7}
-\contentsline {subsection}{\numberline {4.3}Localization}{7}
+\contentsline {subsection}{\numberline {4.3}Localization}{8}
 \contentsline {subsection}{\numberline {4.4}Scheduling and Robot Planning/Coordination}{8}
-\contentsline {subsection}{\numberline {4.5}Move Robot}{9}
+\contentsline {subsection}{\numberline {4.5}Move Robot}{8}
 \contentsline {subsection}{\numberline {4.6}Use Writing Implement}{9}
-\contentsline {section}{\numberline {5}Requirements}{10}
-\contentsline {subsection}{\numberline {5.1}Functional Requirements}{10}
-\contentsline {subsection}{\numberline {5.2}Non-Functional Requirements}{12}
-\contentsline {section}{References}{15}
+\contentsline {section}{\numberline {5}Requirements}{9}
+\contentsline {subsection}{\numberline {5.1}Functional Requirements}{9}
+\contentsline {subsection}{\numberline {5.2}Non-Functional Requirements}{11}
+\contentsline {section}{References}{14}
