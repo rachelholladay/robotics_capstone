@@ -57,7 +57,6 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \item A user must be able to remove and then insert a writing implement. Following in accordance with Functional Requirements \njnote{INSERT WRITING TOOL REQUIREMENT LABEL} and \njnote{REMOVE WRITING TOOL REQUIREMENT LABEL}, this process must be done in under 2 minutes. Tool replacement is necessary whenever an existing tool becomes unusable for system operation.
 \njnote{Reference Insert and Remove Writing Tools here}
 \end{functional_requirement}
-
 }
 
 \added[remark=Moved to requirement from assumption]{
@@ -71,11 +70,11 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \end{functional_requirement}
 
 \begin{functional_requirement}{Turn on or off writing tool}{1}
-\item All robot agents need to be able to enable or disable use of the writing implement. The robot must also have the ability to move safely and accurately regardless of the state of the writing implement. Not all drawings are contiguous lines, and as such the robots must be able to disable the writing tool to move to a new drawing location.
+\item All robot agents need to be able to enable or disable use of the writing implement. The robot must also have the ability to move safely and accurately regardless of the state of the writing implement. Not all drawings are contiguous lines, and as such the robots must be able to disable the writing tool to move to a new drawing location. \added[remark=Added testability]{Individual robots must be able to enable or disable the writing implement within 10 seconds.}
 \end{functional_requirement}
 
-\begin{functional_requirement}{Input drawing Plan}{6}
-\item The main controller system must be able to receive an input that allows it to command the robot agents to draw an appropriate image. The system must be able to parse the input into a state usable for robot planning and control in order to draw the input.
+\begin{functional_requirement}{Input Drawing Plan}{6}
+\item The main system controller must be able to receive an input that allows it to command the robot agents to draw an appropriate image. The system must be able to parse the input into a state usable for robot planning and control in order to draw the input. 
 \end{functional_requirement}
 
 \begin{functional_requirement}{Robots Know Progress}{2}
