@@ -1,3 +1,8 @@
-\contentsline {subsection}{Added: \truncate {.3\textwidth }{new}}{2}
-\contentsline {subsection}{Deleted: \truncate {.3\textwidth }{unnecessary}}{2}
-\contentsline {subsection}{Replaced: \truncate {.3\textwidth }{nice}}{2}
+\contentsline {subsection}{Added: \truncate {.3\textwidth }{definitions,}}{2}
+\contentsline {subsection}{Added: \truncate {.3\textwidth }{ \def \let remark,\XKV@tempa@toks {remark,}\edef }\XKV@tempa@toks {remark}\edef }\futurelet \KV@toks@ {\XKV@tempa@toks {remark,,\XKV@tempa@toks {}\edef }\futurelet \KV@toks@ {\XKV@tempa@toks {remark,,\par }\edef remark,{}\edef }\edef remark,{}\edef }
+\contentsline {subsection}{Added: \truncate {.3\textwidth }{While a fully operational system would ideally be able to cover all of the above motivational examples, we do not expect our system to. We discuss the expected scope of our project in Sec. \ref {sec:project_scope}}}{3}
+\contentsline {subsection}{Deleted: \truncate {.3\textwidth }{robotic}}{3}
+\contentsline {subsection}{Deleted: \truncate {.3\textwidth }{spray paint,}}{4}
+\contentsline {subsection}{Added: \truncate {.3\textwidth }{We assume that our drawing surface is free of any obstacles.}}{4}
+\contentsline {subsection}{Added: \truncate {.3\textwidth }{We assume that our system functions inside, thus removing the need to handle various weather conditions.}}{4}
+\contentsline {subsection}{Deleted: \truncate {.3\textwidth }{\relax \let \reserved@d =[\def \let remark,\XKV@tempa@toks {remark,}\edef }\XKV@tempa@toks {remark}\edef }\futurelet \KV@toks@ {\XKV@tempa@toks {remark,,\XKV@tempa@toks {}\edef }\futurelet \KV@toks@ {\XKV@tempa@toks {remark,,{\@@par }}\edef remark,{}\edef }\edef remark,{}\edef }

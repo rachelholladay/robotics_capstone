@@ -1,12 +1,14 @@
+\select@language {english}
 \contentsline {section}{List of Figures}{1}
 \contentsline {section}{\numberline {1}Executive Summary}{2}
 \contentsline {subsection}{\numberline {1.1}Project Overview}{2}
 \contentsline {subsection}{\numberline {1.2}Document Outline}{2}
 \contentsline {section}{\numberline {2}Project Description}{2}
 \contentsline {subsection}{\numberline {2.1}Product Goal}{2}
-\contentsline {subsection}{\numberline {2.2}Motivation}{3}
-\contentsline {subsection}{\numberline {2.3}Product Scope}{3}
-\contentsline {subsection}{\numberline {2.4}Assumptions}{4}
+\contentsline {subsection}{\numberline {2.2}Definitions}{3}
+\contentsline {subsection}{\numberline {2.3}Motivation}{3}
+\contentsline {subsection}{\numberline {2.4}Product Scope}{3}
+\contentsline {subsection}{\numberline {2.5}Assumptions}{4}
 \contentsline {section}{\numberline {3}Scenarios}{4}
 \contentsline {subsection}{\numberline {3.1}Chalk Drawing}{4}
 \contentsline {subsection}{\numberline {3.2}Infrastructure Lane Drawing}{5}
@@ -14,7 +16,7 @@
 \contentsline {section}{\numberline {4}Use Cases}{6}
 \contentsline {subsection}{\numberline {4.1}Reload Writing Implement}{6}
 \contentsline {subsection}{\numberline {4.2}Process Input Image}{7}
-\contentsline {subsection}{\numberline {4.3}Localization}{8}
+\contentsline {subsection}{\numberline {4.3}Localization}{7}
 \contentsline {subsection}{\numberline {4.4}Scheduling and Robot Planning/Coordination}{8}
 \contentsline {subsection}{\numberline {4.5}Move Robot}{9}
 \contentsline {subsection}{\numberline {4.6}Use Writing Implement}{9}
