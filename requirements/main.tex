@@ -13,9 +13,16 @@
 \usepackage{array,longtable}
 \usepackage[nottoc]{tocbibind}
 \usepackage{bibtex}
+\usepackage{comment}
 \newcounter{qcounter}
 \newcounter{question}
 \newcounter{row}
+
+% Definition
+\usepackage[english]{babel}
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
 
 % Create Pretty Priority Table
 \makeatletter
@@ -40,16 +47,15 @@
 }
 
 % Tracking Changes
+%\usepackage[final]{changes}
 \usepackage{changes}
 \usepackage{lipsum}% <- For dummy text
 \definechangesauthor[name={Per cusse}, color=orange]{per}
 \setremarkmarkup{(#2)}
 
 % Labels in IEEE format
-\newcommand{\eref}[1]{(\ref{#1})} % Equation
 \newcommand{\sref}[1]{Sec. \ref{#1}} % Section
 \newcommand{\figref}[1]{Fig.\ref{#1}} % Figure
-\newcommand{\tref}[1]{Table \ref{#1}} %Table
 
 \usepackage{ifthen}
 \usepackage[usenames,dvipsnames]{xcolor}
@@ -92,13 +98,11 @@
 
 \tableofcontents
 \listoffigures
-\newpage
+\clearpage
 
-\rhnote{Need to create method for showing revision}
-
-This is \added[remark={has to be in it}]{new} text.
-This is \deleted[remark=obsolete]{unnecessary}text.
-This is \replaced[remark={bad wording}]{nice}{bad} text.
+%This is \added[remark={has to be in it}]{new} text.
+%This is \deleted[remark=obsolete]{unnecessary}text.
+%This is \replaced[remark={bad wording}]{nice}{bad} text.
 
 \input{executive_summary.tex}
 \input{project_description.tex}
@@ -113,4 +117,3 @@ This is \replaced[remark={bad wording}]{nice}{bad} text.
 \input{bibliography.tex}
 
 \end{document}
-
