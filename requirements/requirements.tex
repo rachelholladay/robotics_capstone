@@ -29,10 +29,8 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \item While in operation, all robot agents must stay within bounds of the workspace. This is important to minimize external collisions, including possibly unsafe interactions with the world, as well as to ensure localization maintains accuracy while drawing occurs.
 \end{functional_requirement}
 
-\begin{functional_requirement}{Change Writing Tools}{2}
-\item .\deleted[remark={Split into multiple more detailed and specific requirements of insertion, removal, and replacement}]{Inserting, removing, and replacing writing implements must be convenient and fast.}
-\end{functional_requirement}
-\rhnote{Need to deal with this one so it shows up as revision but not in final document}
+\deleted[remark={Split into multiple more detailed and specific requirements of insertion, removal, and replacement}]{
+\textbf{Change Writing Tools} \\ Inserting, removing, and replacing writing implements must be convenient and fast.} \\
 
 \begin{functional_requirement}{Insert Writing Tools}{2}
 \label{fr:insert_tool}
@@ -41,12 +39,12 @@ We outline our systems requirements, both functional and nonfunctional. For each
 
 \begin{functional_requirement}{Remove Writing Tools}{2}
 \label{fr:remove_tool}
-\item .\added[remark={New requirements to replace Change Writing Tools requirement}]{A writing implement must be able to be removed from a single robot by a user in under 1 minute. Writing tools will need to be removed when the existing implement becomes unusable.}
+\item A \added[remark={New requirements to replace Change Writing Tools requirement}]{writing implement must be able to be removed from a single robot by a user in under 1 minute. Writing tools will need to be removed when the existing implement becomes unusable.}
 \end{functional_requirement}
 
 \begin{functional_requirement}{Replace Writing Tools}{2}
 \label{fr:replace_tool}
-\item A\added[remark={New requirements to replace Change Writing Tools requirement}]{ user must be able to remove and then insert a writing implement. Following in accordance with Functional Requirements \frref{fr:insert_tool} and \frref{fr:remove_tool}, this process must be done in under 2 minutes. Tool replacement is necessary whenever an existing tool becomes unusable for system operation.}
+\item A \added[remark={New requirements to replace Change Writing Tools requirement}]{user must be able to remove and then insert a writing implement. Following in accordance with Functional Requirements \frref{fr:insert_tool} and \frref{fr:remove_tool}, this process must be done in under 2 minutes. Tool replacement is necessary whenever an existing tool becomes unusable for system operation.}
 \end{functional_requirement}
 
 \begin{functional_requirement}{Reliable Communication}{7}
@@ -84,17 +82,15 @@ We outline our systems requirements, both functional and nonfunctional. For each
 \item An intuitive and useful user experience is necessary for efficient usage of the system. Having a simple to operate system also reduces the likelihood of user error during the input or operation stage. For industrial or commercial applications, accessibility becomes important as well. \added[remark={Added testability}]{A quality user interface can be tested by running a user study or survey with potential users.}
 \end{functional_requirement}
 
-\begin{functional_requirement}{Documentation}{3}
-\item .\deleted[remark={Moved to nonfunctional}]{Documentation of the design process, software, and hardware implementation is important for debugging, recreation, and general understanding of this project.}
-\end{functional_requirement}
-\rhnote{Same as Change Writing Tool, Need to deal with this one so it shows up as revision but not in final document}
-
+\deleted[remark={Moved to nonfunctional}]{
+\textbf{Documentation} \\
+Documentation of the design process, software, and hardware implementation is important for debugging, recreation, and general understanding of this project.}
 
 \subsection{Non-Functional Requirements}
 \label{sec:nonfunctional_requirements}
 
 \begin{nonfunctional_requirement}{Documentation}{3}
-\item Documentation\added[remark={Moved from functional}]{ of the design process, software, and hardware implementation is important for debugging, recreation, and general understanding of this project.}
+\item Documentation \added[remark={Moved from functional}]{of the design process, software, and hardware implementation is important for debugging, recreation, and general understanding of this project.}
 \end{nonfunctional_requirement}
 
 \begin{nonfunctional_requirement}{Error Handling}{6}

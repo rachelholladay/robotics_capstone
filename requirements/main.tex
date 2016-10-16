@@ -104,8 +104,6 @@
 %This is \deleted[remark=obsolete]{unnecessary}text.
 %This is \replaced[remark={bad wording}]{nice}{bad} text.
 
-\rhnote{Need to fix reference with proper bib file}
-
 \input{executive_summary.tex}
 \input{project_description.tex}
 \input{scenarios.tex}
@@ -116,45 +114,8 @@
 \listofchanges
 \pagebreak
 
-\begin{thebibliography}
-
-\bibitem{linesalary}
-SalaryExpert: Line Painting Machine Operator Highways Salary in United States.
-\texttt{https://www.salaryexpert.com/salarysurveydata/job=line-painting-machine-operator-highways/salary}.
-\textit{Accessed 16 Oct. 2016.}
-
-\bibitem{airportdoc}
-Donna J. Speidel
-Michael W. Speidel
-Cynthia Randazzo
-H. Gene Hawkins
-Stephen M. Quilty
-Charles D. Carneal
-Fred C. Peil
-\textit{The Airfield Marking Handbook}.
-Innovative Pavement Research Foundation, Skokie, IL, 2008
-
-\bibitem{hamiltonsports}
-Scott Stewart
-Alan V. Dore
-\textit{Sports Field Line Marking Alternatives}.
-City of Hamilton Public Works Department, Hamilton, Ontario, 2008
-
-\bibitem{buildfuture} 
-Building America's Future.
-\testtt{http://bafuture.org/key-topics/transportation}. 
-\textit{Accessed 6 Oct. 2016.}
- 
-\bibitem{bicyclist} 
-Bushell, Max; Poole, Bryan; Rodriguez, Daniel; Zegeer, Charles. 
-(July, 2013).
-\textit{Costs for Pedestrian and Bicyclist Infrastructure Improvements: A Resource for Researchers, Engineers, Planners and the General Public.}. 
-
-\bibitem{homedepotdoor}
-Home Depot: How To Choose Exterior Doors.
-\texttt{http://www.homedepot.com/c/buying_exterior_doors_HT_BG_DW}.
-\textit{Accessed 16 Oct. 2016.}
-
-\end{thebibliography}
+{\footnotesize
+\bibliographystyle{ieeetr}
+\bibliography{references}}
 
 \end{document}
