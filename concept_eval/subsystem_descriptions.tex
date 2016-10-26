@@ -11,12 +11,12 @@
 
 \subsection{Locomotion}
 \label{sec:subsystem_locomotion}
-\textbf{Description:} The robot's locomotion system propels each individual robot across the working surface. If the robots use a holonomic locomotion systems, they are able to move in any direction, ensuring their ability to execute intricate designs. They also provide enough clearance for the writing implement to work effectively. In the case of a tread-based locomotion system, individual robots can rotate in place to move in all directions. A driving system that allows for multidirectional movement satisfies motion-related requirements (Requirements Specification, 5.1, FR7).\\
-\textbf{Critical Components:} Wheels or treads, motors.\\
+\textbf{Description:} The robot's locomotion system propels each individual robot across the working surface. If the robots use a holonomic locomotion systems, they are able to move in any direction, ensuring their ability to execute intricate designs. They also provide enough clearance for the writing implement to work effectively. In the case of a tread-based locomotion system, individual robots can rotate in place to move in all directions. A driving system that allows for multidirectional movement satisfies motion-related requirements (Requirements Specification, 5.1, FR7). Additionally, the locomotion system contains encoders whose data is used by the localization modle (\sref{sec:subsystem_localization}).\\
+\textbf{Critical Components:} Wheels or treads, motors, encoders.\\
 
 \subsection{Localization}
 \label{sec:subsystem_localization}
-\textbf{Description:} The localization system uses input from the sensor module to accurately determine an individual robot's position and orientation. It then communicates the information to the scheduling module (\sref{sec:subsystem_planner}). This module directly satisfies local and global localization requirements, as well as indirectly allows for safe motion from the robots (Requirements Specification, 5.1, FR3, FR4).
+\textbf{Description:} The localization system uses a hybrid infared and ultrasonic marker-based method (\sref{sec:trade_localization}) to determine a robot's position and orientation. By using the delay between the infared and ultrasonic pulses detected by the sensor module (\sref{sec:subsystem_sensors}) it computes the its distance to each marker. After performing some trigonometry, it can then accurately determine position. Orientation is determined by dead reckoning through the wheel encoders, and is constantly corrected by measuring changes in position. It then communicates the positions and orientations of the robots to the scheduling module (\sref{sec:subsystem_planner}). This module directly satisfies local and global localization requirements, as well as indirectly allows for safe motion from the robots (Requirements Specification, 5.1, FR3, FR4).
 \textbf{Critical Components:} Localization algorithm, sensor module, vision markers
 
 \subsection{Input Image Scanner}
@@ -41,13 +41,13 @@
 
 \subsection{User Interface}
 \label{sec:subsystem_ui}
-\textbf{Description:} The user interface provides a unified system for user input. This is the system with which the user specifies the input image and monitors the robots' progress. There will also be a system-wide kill switch in case of emergencies to satisfy requirement FR11 (Requirements Specification, 5.1, FR11).\\
+\textbf{Description:} The user interface provides a unified system for user input. This is the system with which the user specifies the input image and monitors the robots' progress. The system will also display any error messages or anomalies detected by the system, and how the user should address them. There will also be a system-wide kill switch in case of emergencies to satisfy requirement FR11 (Requirements Specification, 5.1, FR11).\\
 \textbf{Critical Components:} Screen, input device.\\
 
 \subsection{Sensor Module}
 \label{sec:subsystem_sensors}
 \textbf{Description:} The sensor module gathers data from environmental markers (\sref{sec:subsystem_markers}). This data is used by the localization module (\sref{sec:subsystem_localization}) to determine an individual robot's position and orientation in the workspace.\\
-\textbf{Critical Components:} Vision markers, onboard sensors.\\
+\textbf{Critical Components:} Environmental beacons, onboard sensors.\\
 
 \subsection{Power System}
 \label{sec:subsystem_power}
@@ -56,5 +56,5 @@
 
 \subsection{Environmental Markers}
 \label{sec:subsystem_markers}
-\textbf{Description:} The environmental markers must be set up by the user before the system can begin drawing. They provide the data needed by the localization subsystem (\sref{sec:subsystem_localization}) to determine the robot's position and orientation in the workspace. They will be mounted high enough as to be visible by every robot in the workspace at all times.
+\textbf{Description:} The environmental markers must be set up by the user before the system can begin drawing. The continuously output pings using both an infared light and ultrasonic transmitter. In doing so, they provide the data needed by the localization subsystem (\sref{sec:subsystem_localization}) to determine the robot's position and orientation in the workspace. They will be mounted high enough as to be visible by every robot in the workspace at all times.
 \textbf{Critical Components:} Beacons/markers, elevated stands.
