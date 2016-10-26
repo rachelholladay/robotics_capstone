@@ -10,45 +10,12 @@
 \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{array,longtable}
-\usepackage[nottoc]{tocbibind}
-\newcounter{qcounter}
-\newcounter{question}
-\newcounter{row}
-
-% Definition
-\usepackage[english]{babel}
-\usepackage{amsthm}
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[section]
-
-% Create Pretty Priority Table
-\makeatletter
-\newtoks\@tabtoks
-\newcommand\addtabtoks[1]{\@tabtoks\expandafter{\the\@tabtoks#1}}
-\newcommand*\resettabtoks{\@tabtoks{}}
-\newcommand*\printtabtoks{\the\@tabtoks}
-\makeatother
-
-\newcommand\CheckTable[1]{%
-  \setcounter{question}{0}
-  \setcounter{row}{0}
-  \resettabtoks
-  \loop\ifnum\therow<#1\relax
-    \stepcounter{row}
-    \addtabtoks{& $\square$ & $\square$ & $\square$ & $\square$ & $\square$ & $\square$ & $\square$ \\}%
-  \repeat
-  \begin{longtable}{>{\stepcounter{question}Priority}l*{7}{c}}
-    \multicolumn{1}{c}{} & Lowest (1) & Low & Medium-Low & Neutral (4) & Medium-High & High & Highest (7) \\
-    \printtabtoks
-  \end{longtable}%
-}
 
 % Tracking Changes
-\usepackage[final]{changes}
+%\usepackage[final]{changes}
 %\usepackage{changes}
 %\definechangesauthor[name={Per cusse}, color=orange]{per}
-\setremarkmarkup{(#2)}
+%\setremarkmarkup{(#2)}
 
 % Labels in IEEE format
 \newcommand{\sref}[1]{Sec. \ref{#1}} % Section
@@ -67,8 +34,8 @@
  {\textcolor{green}{\textbf{DZ: #1}}}{}}
 \newcommand{\yjnote}[1]{\ifthenelse{\boolean{include-notes}}
  {\textcolor{limegreen}{\textbf{YJ: #1}}}{}}
-\newcommand{\todo}[1]{\ifthenelse{\boolean{include-notes}}
- {\textcolor{blue}{\textbf{TODO: #1}}}{}}
+%\newcommand{\todo}[1]{\ifthenelse{\boolean{include-notes}}
+% {\textcolor{blue}{\textbf{TODO: #1}}}{}}
 
 \begin{document}
 
@@ -118,8 +85,8 @@
 %\listofchanges
 %\pagebreak
 
-%{\footnotesize
-%\bibliographystyle{ieeetr}
-%\bibliography{references}}
+{\footnotesize
+\bibliographystyle{ieeetr}
+\bibliography{references}}
 
 \end{document}
