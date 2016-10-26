@@ -8,6 +8,15 @@
 \rhnote{IDK what a trade study is so I looked it up. According to google: "A trade study or trade-off study is the activity of a multidisciplinary team to identify the most balanced technical solutions among a set of proposed viable solutions (FAA 2006). These viable solutions are judged by their satisfaction of a series of measures or cost functions."}
 
 \subsection{Localization Method}
+\njnote{This contains external references, wasn't sure how to cite}
+Localization is an important factor for multi-agent planning that must be accurate in both position and orientation. Keeping in mind limitations in price and ease of use, there are two major methods for localization: vision-based, and marker based. They are described below.
+
+Vision-based localization involves using cameras or other sensors to directly obtain information on the environment, and then localize the robots in the system based on found landmarks in that environment. One example of this is SLAM (Simultaneous Localization and Mapping), often used by autonomous vehicles to build a map and localize to it at the same time. In this system, robots could build a small map of their surroundings, then match their location to features they find in the environment. Benefits include being location agnostic, and requiring no additional parts or external setup. However, pure vision systems are difficult to calibrate and accuracy can depend heavily on static surroundings, which is not something this system can guarantee.
+
+The other main choice of methodology is marker-based. Using markers placed around the drawing surface, robot agents can quickly locate these markers and their position relative to each one, and consequently triangulate their position and orientation. While requiring additional setup and more parts to calibrate than vision-based localization, existing technology makes it convenient and cheap to get marker-based localization working quickly. One example of a marker-based localization system is AprilTags \njnote{cite https://april.eecs.umich.edu/wiki/AprilTags}, which can be described as 2D barcodes placed in a scene. Within marker localization, however, are two subcategories: passive and active. Passive markers do not output any information, and exist for the robot agent to observe and triangulate accordingly. AprilTags are an example of a passive marker system. On the other hand, active markers will \"look at\" robot agents to determine where the agents are, rather than the robots searching for markers. While less common, active systems behave well in conditions when the markers may not always be easily visible to robot agents \njnote{ cite http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.306.9479&rep=rep1&type=pdf}.
+
+Given the convenience and ease of use of marker-based localization, it is clearly the better choice. However, it is more difficult to determine whether using active or passive systems will be more effective. A prototype for each system should be made for further evaluation.
+
 \todo{Marker tags vs direct vision. NEIL. Have answer. Prototype for passive markers vs active beacons}
 
 \subsection{Locomotion Method}
