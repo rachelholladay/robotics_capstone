@@ -3,8 +3,14 @@
 \section{System Description}
 \label{sec:system_description}
 
-\rhnote{First a brief discussion introducing the project}
+\todo{ Brief discussion introducting project still not done}
 
-\todo{Add the systems diagram figure from neil. Then discuss the system by walking through the figure.}
+\njnote{Properly insert diagrams/systems_diagram.jpg}
 
-\todo{Reference to subsystem section}
+A description of the overall system diagram follows. Descriptions of individual subsystems can be found in \sref{sec:subsystem_descriptions}.
+
+The initial process begins offboard, where users will generate an input image and process it through a scanner. Image processing will then occur, where the input is processed into a format compatible by the planner and work distribution subsystem \sref{sec:subsystem_planner}. Moving forward, the planner module will take in updates to current robot progress and use it to update commands it sends to robot agents.
+
+Commands are sent to individual systems onboard robot agents. Communication protocols are able to send information both to and from the work planner to robot agents (\sref{sec:subsystem_communication}). From here, onboard systems are separated into three subsystems: Localization (\sref{sec:subsystem_localization}), Locomotion (\sref{sec:subsystem_locomotion}), and Paint Distribution (\sref{sec:subsystem_paint_distributor}). The paint distributor is involved with all commands regarding engaging and disengaging the writing implement to output paint onto the writing surface. Locomotion is the drive system, which engages wheels and motors used for movement. This subsystem also includes any motion-related safety mechanisms, such as quickly stopping. The Localization subsystem works to determine the position and orientation of an individual robot agent. This subsystem takes input from the sensor module (\sref{sec:subsystem_sensors}), which provides data about the surroundings for the localization system to process.
+
+The sensor module gets data from external vision markers (\sref{sec:subsystem_markers}) for processing by localization. It is important to note that the sensor module, along with the locomotion and paint distribution subsystems are all powered by an individual subsystem \sref{sec:subsystem_power}.
