@@ -27,7 +27,7 @@ drives individual robot. want to go sideways. have enough clearence for writing 
 
 \subsection{Input Image Scanner}
 \label{sec:subsystem_input_scanner}
-\textbf{Description:} The image scanner takes a user-provided image or generates one, and transfers it to the image processing module (\sref{subsystem_image_processor}). The image scanner, being a module requiring user interaction, will also incorporate a front-end user interface.\\
+\textbf{Description:} The image scanner takes a user-provided image or generates one, and transfers it to the image processing module (\sref{sec:subsystem_image_processor}). The image scanner, being a module requiring user interaction, will also incorporate a front-end user interface.\\
 \textbf{Critical Components:} User interface, image sensor.\\
 
 \subsection{Image Processor}
@@ -39,7 +39,7 @@ needs to process image. take image scanned by user and parse it into input regon
 \subsection{Work Scheduling, Distribution and Planning}
 \label{sec:subsystem_planner}
 see software architecture. couple small senteces.
-\textbf{Description:} Given the output from the image processor (\sref{subsystem_image_processor}), and parameters such as the number of robots and the size of the workspace, the module determines the work that will be distributed to each robot. See software architecture (\sref{sec:software_architecture}) for more information.\\
+\textbf{Description:} Given the output from the image processor (\sref{sec:subsystem_image_processor}), and parameters such as the number of robots and the size of the workspace, the module determines the work that will be distributed to each robot. See software architecture (\sref{sec:software_architecture}) for more information.\\
 \textbf{Critical Components:} Scheduling algorithm.\\
 
 \subsection{Communication}
@@ -56,7 +56,7 @@ antenna fit within requirements. have certain range. allow multi agent communica
 
 \subsection{Sensor Module}
 \label{sec:subsystem_sensors}
-\textbf{Description:} The sensor module gathers data from environmental markers (\sref{subsystem_markers}). This data is used by the localization module (\sref{subsystem_localization}) to determine an individual robot's position and orientation in the workspace.\\
+\textbf{Description:} The sensor module gathers data from environmental markers (\sref{sec:subsystem_markers}). This data is used by the localization module (\sref{sec:subsystem_localization}) to determine an individual robot's position and orientation in the workspace.\\
 \textbf{Critical Components:} Beacon sensors.\\
 
 \subsection{Power System}
@@ -68,5 +68,5 @@ Needs to onboard power. probably battery. Battery needs to small and light enoug
 \subsection{Environmental Markers}
 \label{sec:subsystem_markers}
 Fixed. Put markers on all 4 sides. Calibrated in initialization. Reference trade study
-\textbf{Description:} The environmental markers must be set up by the user before the system can begin drawing. They provide the data needed by the localization subsystem (\sref{subsystem_localization}) to determine the robot's position and orientation in the workspace. They will be mounted high enough as to be visible by every robot in the workspace at all times.
+\textbf{Description:} The environmental markers must be set up by the user before the system can begin drawing. They provide the data needed by the localization subsystem (\sref{sec:subsystem_localization}) to determine the robot's position and orientation in the workspace. They will be mounted high enough as to be visible by every robot in the workspace at all times.
 \textbf{Critical Components:} Beacons/markers, elevated stands.
