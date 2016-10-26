@@ -3,18 +3,32 @@
 \section{Trade Studies}
 \label{sec:trade_studies}
 
-\rhnote{Rubric: Conduct trade studies when there are significant alternatives. Describe trade studies (use comparative analysis techniques) and results. Trade studies present for all major design decisions and clearly identify reasons for choices. If no choice is made, a prototyping plan is identified.}
-
-\rhnote{IDK what a trade study is so I looked it up. According to google: "A trade study or trade-off study is the activity of a multidisciplinary team to identify the most balanced technical solutions among a set of proposed viable solutions (FAA 2006). These viable solutions are judged by their satisfaction of a series of measures or cost functions."}
+In creating our multi-agent drawing robot, we face design trade-off and decisions for many of our major subsystems detailed in \sref{sec:subsystem_descriptions}. We investigate four major decision points in the following brief trade studies. Our discussions led to a few technical solutions, when we feel we have enough data to make a reasonable decision. However, for some of our discussion points, further testing and prototyping is needed to evaluate our options fairly. For these points we lay out brief prototyping plans below. 
 
 \subsection{Localization Method}
-\todo{Marker tags vs direct vision. NEIL. Have answer. Prototype for passive markers vs active beacons}
+\njnote{Marker tags vs direct vision. Have answer. Prototype for passive markers vs active beacons}
 
 \subsection{Locomotion Method}
-\todo{driving, walking, flying. Rachel. Have answer}
+One of our functional requirement with the highest priority (FR1) is to be able to move in specified directions with a high degree of accuracy.  Additionally, a medium high priority functional requirement (FR 9) is a drive control system that enables this movement. 
+
+Therefore, it is clear from our requirements that locomotion is critical to our robot's performance. When considering locomotion options there are three large categories: flight, legged and wheeled. 
+
+Our drawing occurs on the two dimensional plane. Therefore, any flight based system would have to heavily constrain its third dimensional of position and two additional dimensions of orientation when drawing. Practically speaking, this seems to over-complicate the problem with little additional gain. 
+
+Therefore we are narrowed to a legged or wheeled system.  We are inspired by the wide spread success of wheeled robotic systems and especially appreciate their stability, a critical concern when carefully drawing images. While a legged system would have the ability to traverse uneven terrain, this is not necessary in our project due to our assumption (A3) that the drawing surface is flat and homogenous. 
+
+Therefore, in our analysis we have concluded that our agent's drive system should be wheeled. In our next analysis we further detail the type of drive train. 
 
 \subsection{Drive System}
 \todo{want holonomic so can do sideway. versus ackerman versus skid steering. RACHEL. Have answer}
+In continuing to priotize our functional requirement (FR1) of being able to in specified directions, we investigate possible drive systems. 
+
+Three similar drive systems first come to mind: differential drive, ackerman steering and four-wheel steering. Differential drive on a robot typically consists of two independently driven wheels and a non-driven wheel. Moving up in complexity and taking after some cars is ackerman steering, where the back pair of wheels is fixed in orientation but the front pair can pivot. In more complex is four-wheel steering, which is similar to ackerman steering but allows the back wheels to also pivot. However, these systems suffer from the fundamental issue of being nonholonomic. Therefore, while they could achieve full mobility, this might complicate drawing and path planning. 
+
+Therefore instead we want an omnidirectional base that is holonomic. This can be achieved with omniwheels, perhaps more commonly, with mecanum wheels. 
 
 \subsection{Drawing Tool}
 \todo{No sure. Need to prototype. }
+
+%Rubric: Conduct trade studies when there are significant alternatives. Describe trade studies (use comparative analysis techniques) and results. Trade studies present for all major design decisions and clearly identify reasons for choices. If no choice is made, a prototyping plan is identified.
+%According to google: "A trade study or trade-off study is the activity of a multidisciplinary team to identify the most balanced technical solutions among a set of proposed viable solutions (FAA 2006). These viable solutions are judged by their satisfaction of a series of measures or cost functions."
