@@ -9,8 +9,33 @@
 
 \rhnote{Here are possible subsystems}
 
-\subsection{Tool Manipulator}
-\subsection{Navigation and Localization}
-\subsection{Image Processing}
+\subsection{Paint Distributor}
+\subsection{Locomotion} 
+drives individual robot. want to go sideways. have enough clearence for writing tool. based on trade studies need wheels. 
+
+\subsection{Localization}
+take in input from sensory module and determine accurate position and orientation of individual robot. communicates through communicator to scheduler. 
+
+\subsection{Input Image Scanner}
+put in input image. probably take or generate picture then handoff to image processor. critical component: high enough resolution sensor to capture image. has user interaction. 
+
+\subsection{Image Processor}
+needs to process image. take image scanned by user and parse it into input regonizable by work scheduling, distribution and planning
+
 \subsection{Work Scheduling, Distribution and Planning}
+see software architecture. couple small senteces. 
+
 \subsection{Communication}
+antenna fit within requirements. have certain range. allow multi agent communication. want to be fairly speedy and realiable. possible communication protocols: bluetooth, wifi, serial communication (like mav link),  
+
+\subsection{User Interface}
+Insert flow chart for box "specify drawing settings" from concept operation
+
+\subsection{Sensor Module}
+interface to vision markers and localization. Allows for localization. Also needs to be small enough to fit in footprint. 
+
+\subsection{Power System}
+Needs to onboard power. probably battery. Battery needs to small and light enough to satisfy the size and weight requirement. 
+
+\subsection{Vision Markers}
+Fixed. Put markers on all 4 sides. Calibrated in initialization. Reference trade study

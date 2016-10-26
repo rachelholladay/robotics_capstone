@@ -56,7 +56,7 @@
 \newcommand{\frref}[1]{FR\ref{#1}} % Functional Requirement
 
 \usepackage{ifthen}
-\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[usenames, dvipsnames]{xcolor}
 \newboolean{include-notes}
 \setboolean{include-notes}{true}
 \newcommand{\njnote}[1]{\ifthenelse{\boolean{include-notes}}%
@@ -67,6 +67,8 @@
  {\textcolor{green}{\textbf{DZ: #1}}}{}}
 \newcommand{\yjnote}[1]{\ifthenelse{\boolean{include-notes}}
  {\textcolor{limegreen}{\textbf{YJ: #1}}}{}}
+\newcommand{\todo}[1]{\ifthenelse{\boolean{include-notes}}
+ {\textcolor{blue}{\textbf{TODO: #1}}}{}}
 
 \begin{document}
 
@@ -84,7 +86,6 @@
 	{\Large\itshape Neil Jassal\par}
 	{\Large\itshape Yichu Jin\par}
 	{\Large\itshape Rachel Holladay\par}
-  {\njnote{In class last week he mentioned a version number, we may want to consider putting it here}}
 	\vfill
 	supervised by\par
 	Dr.~David \textsc{Wettergreen}
