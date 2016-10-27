@@ -7,6 +7,7 @@
 \subsection{Writing Implement Actuator}
 \label{sec:subsystem_writing_implement_actuator}
 \textbf{Description:} The writing implement actuator deposits writing material onto the working surface. It manages reloading of the writing implement and ensures that the implement is properly secured. Additionally, it can extend writing material closer to the ground as the material is shortened through use, and it can rotate the writing material for variation in stroke. In the event of writing material depletion, its sensors will detect the occurence and alert the communication module (\sref{sec:subsystem_communication}). This subsystem satisfies writing tool related requirements (Requirements Specification, 5.1, FR6, FR8).\\
+The writing implement system is modular, in that various writing tools (such as chalk, markers, pens, etc.) can be easily inserted by users. This involves a fixed motor mechanism on the robot, with mounts for each tool that can be locked into place on the robot. The mounts can optionally connect to two motors: One for linear motion to raise and lower the writing implement, and another to rotate the writing material as described above.
 \textbf{Critical Components:} Writing implement holder, actuation mechanism, writing material levels sensor, reloading mechanism.\\
 
 \subsection{Locomotion}
@@ -26,7 +27,7 @@
 
 \subsection{Image Processor}
 \label{sec:subsystem_image_processor}
-\textbf{Description:} The image processor takes input from the image scanner (\sref{sec:subsystem_input_scanner}) and produces information that is recognizable by the planning module (\sref{sec:subsystem_planner}). 
+\textbf{Description:} The image processor takes input from the image scanner (\sref{sec:subsystem_input_scanner}) and produces information that is recognizable by the planning module (\sref{sec:subsystem_planner}).
 \textbf{Critical Components:} Image processing algorithm.
 
 \subsection{Work Scheduling, Distribution and Planning}
