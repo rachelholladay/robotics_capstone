@@ -29,19 +29,19 @@
 \textbf{Precondition:}  No existing image being actively drawn by the robot system. \\
 \textbf{Post-condition:} The image is processed and ready for work distribution between robots. \\
 \textbf{Alternative:} If this step fails the robotic system should report an image processing failure. The user must then address the error before the system can continue work.\\
-\textbf{Description:} The system's task will be input using a human-produced image following specific guidelines. From the image, the system can determine where to place markings in the real world, and how the work should be distributed amongst the robot workers. For further details, see the Input Image Scanner and Image Processor subsystem descriptions (\sref{sec:subsystem_input_scanner} and \sref{sec:subsystem_image_processor} respectively).\\
+\textbf{Description:} The system's task will be input using a human-produced image following specific guidelines. From the image, the system can determine where to place markings in the real world, and how the work should be distributed amongst the robot workers. Parameters such as the scale and orientation of the final drawing are also specified at this stage. For further details, see the Input Image Scanner and Image Processor subsystem descriptions (\sref{sec:subsystem_input_scanner} and \sref{sec:subsystem_image_processor} respectively).\\
 
 \subsection{Localization}
-\textbf{Summary:} The robot must be able to determine where it is in the world. \\
+\textbf{Summary:} The robot must determine where it is in the working area. \\
 \textbf{Actors:} Environment \\
-\textbf{Precondition:} If the robot needs to localize, then there must be a large amount of uncertainty about current location and orientation of the robot. \\
+\textbf{Precondition:} The robot is uncertain as to its position and orientation. \\
 \textbf{Post-condition:} Following localization we hope to have minimal uncertainty about the current location and orientation of the robot. \\
 \textbf{Alternative:} If the robot cannot localize then this should be reported to human user and the other robots should be alerted of the robot's inability to localize and orient itself. Additionally, any robot that cannot localize can potentially draw incorrectly or collide with another component of the system. Thus any robot that fails to localize should halt all movement until localization capability is reestablished.\\
 \textbf{Description:} In order to create an accurate reproduction of the input image, the robot needs to know how its location maps to a location on the input image. The system will use a beacon/marker system to determine a robot's position and orientation. If it is unable to do so with a particular robot, that robot cannot continue drawing and the system must alert other robots to the fact so that they can re-plan and reschedule the workload. For further details, see the Localization subsystem description (\sref{sec:subsystem_localization}).\\
 
 \subsection{Scheduling and Robot Planning/Coordination}
 \textbf{Summary:} The robot workers must determine an efficient allocation of the work. \\
-\textbf{Actors:} Robots, Input image \\
+\textbf{Actors:} None \\
 \textbf{Precondition:} No plan or schedule currently exists. \\
 \textbf{Post-condition:} Each robot has an allocation of work and a planned path. \\
 \textbf{Alternative:} If planning fails, the human user is alerted and the operation is aborted. The user must address the error before operation can continue.\\
@@ -53,7 +53,7 @@
 \textbf{Precondition:} Robot is stationary. \\
 \textbf{Post-condition:} Robot is moving as commanded. \\
 \textbf{Alternative:} If the robot is unable to move, the the human user is alerted and work is redistributed between remaining robots. \\
-\textbf{Summary:} The robot moves across the writing surface, using its writing implement when required. By using a holonomic drive mechanism, the robot can make sharp turns and intricate designs. For further details, see the Locomotion subsystem description (\sref{sec:subsystem_locomotion}).\\
+\textbf{Summary:} The robot moves across the writing surface. By using a holonomic drive mechanism, the robot can make sharp turns and intricate designs. For further details, see the Locomotion subsystem description (\sref{sec:subsystem_locomotion}).\\
 
 \subsection{Use Writing Implement}
 \textbf{Summary:} The robot creates a mark on the writing surface. \\
