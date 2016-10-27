@@ -1,61 +1,62 @@
 % !TEX root = main.tex
 
+\pagebreak
 \section{Subsystem Descriptions}
 \label{sec:subsystem_descriptions}
 %Rubric: All subsystem descriptions provide a clear idea of each subsystem and any critical component is identified.
 
 \subsection{Writing Implement Actuator}
 \label{sec:subsystem_writing_implement_actuator}
-\textbf{Description:} The writing implement actuator deposits writing material onto the working surface. It manages reloading of the writing implement and ensures that the implement is properly secured. Additionally, it can extend writing material closer to the ground as the material is shortened through use, and it can rotate the writing material for variation in stroke. In the event of writing material depletion, its sensors will detect the occurence and alert the communication module (\sref{sec:subsystem_communication}). This subsystem satisfies writing tool related requirements (Requirements Specification, 5.1, FR6, FR8).\\
-The writing implement system is modular, in that various writing tools (such as chalk, markers, pens, etc.) can be easily inserted by users. This involves a fixed motor mechanism on the robot, with mounts for each tool that can be locked into place on the robot. The mounts can optionally connect to two motors: One for linear motion to raise and lower the writing implement, and another to rotate the writing material as described above.
-\textbf{Critical Components:} Writing implement holder, actuation mechanism, writing material levels sensor, reloading mechanism.\\
+\textbf{Description:} The writing implement actuator deposits writing material onto the working surface. It manages reloading of the writing implement and ensures that the implement is properly secured. Additionally, it can extend writing material closer to the ground as the material is shortened through use, and it can rotate the writing material for variation in stroke. In the event of writing material depletion, its sensors will detect the occurrence and alert the communication module (\sref{sec:subsystem_communication}). This subsystem satisfies writing tool related requirements (Requirements Specification, 5.1, FR6, FR8).\\
+The writing implement system is modular, in that various writing tools (such as chalk, markers, pens, etc.) can be easily inserted by users. This involves a fixed motor mechanism on the robot, with mounts for each tool that can be locked into place on the robot. The mounts can optionally connect to two motors: One for linear motion to raise and lower the writing implement, and another to rotate the writing material as described above. \\
+\textbf{Critical Components:} Writing implement holder, actuation mechanism, writing material levels sensor, reloading mechanism. \\
 
 \subsection{Locomotion}
 \label{sec:subsystem_locomotion}
-\textbf{Description:} The robot's locomotion system propels each individual robot across the working surface. If the robots use a holonomic locomotion systems, they are able to move in any direction, ensuring their ability to execute intricate designs. They also provide enough clearance for the writing implement to work effectively. In the case of a tread-based locomotion system, individual robots can rotate in place to move in all directions. A driving system that allows for multidirectional movement satisfies motion-related requirements (Requirements Specification, 5.1, FR7). Additionally, the locomotion system contains encoders whose data is used by the localization modle (\sref{sec:subsystem_localization}).\\
-\textbf{Critical Components:} Wheels or treads, motors, encoders.\\
+\textbf{Description:} The robot's locomotion system propels each individual robot across the working surface. If the robots use a holonomic locomotion systems, they are able to move in any direction, ensuring their ability to execute intricate designs. They also provide enough clearance for the writing implement to work effectively. In the case of a tread-based locomotion system, individual robots can rotate in place to move in all directions. A driving system that allows for multidirectional movement satisfies motion-related requirements (Requirements Specification, 5.1, FR7). Additionally, the locomotion system contains encoders whose data is used by the localization module (\sref{sec:subsystem_localization}). \\
+\textbf{Critical Components:} Wheels or treads, motors, encoders. \\
 
 \subsection{Localization}
 \label{sec:subsystem_localization}
-\textbf{Description:} The localization system uses a hybrid infared and ultrasonic marker-based method (\sref{sec:trade_localization}) to determine a robot's position and orientation. By using the delay between the infared and ultrasonic pulses detected by the sensor module (\sref{sec:subsystem_sensors}) it computes the its distance to each marker. After performing some trigonometry, it can then accurately determine position. Orientation is determined by dead reckoning through the wheel encoders, and is constantly corrected by measuring changes in position. It then communicates the positions and orientations of the robots to the scheduling module (\sref{sec:subsystem_planner}). This module directly satisfies local and global localization requirements, as well as indirectly allows for safe motion from the robots (Requirements Specification, 5.1, FR3, FR4).
-\textbf{Critical Components:} Localization algorithm, sensor module, vision markers
+\textbf{Description:} The localization system uses a hybrid infared and ultrasonic marker-based method (\sref{sec:trade_localization}) to determine a robot's position and orientation. By using the delay between the infared and ultrasonic pulses detected by the sensor module (\sref{sec:subsystem_sensors}) it computes the its distance to each marker. After performing some trigonometry, it can then accurately determine position. Orientation is determined by dead reckoning through the wheel encoders, and is constantly corrected by measuring changes in position. It then communicates the positions and orientations of the robots to the scheduling module (\sref{sec:subsystem_planner}). This module directly satisfies local and global localization requirements, as well as indirectly allows for safe motion from the robots (Requirements Specification, 5.1, FR3, FR4). \\
+\textbf{Critical Components:} Localization algorithm, sensor module, vision markers. \\
 
 \subsection{Input Image Scanner}
 \label{sec:subsystem_input_scanner}
-\textbf{Description:} The image scanner takes a user-provided image or generates one, and transfers it to the image processing module (\sref{sec:subsystem_image_processor}). The image scanner, being a module requiring user interaction, will also incorporate a front-end user interface (\sref{sec:subsystem_ui}). This subsystem satisfies requirements for adding a drawing plan (Requirements Specification, 5.1, FR9).\\
-\textbf{Critical Components:} User interface, image sensor.\\
+\textbf{Description:} The image scanner takes a user-provided image or generates one, and transfers it to the image processing module (\sref{sec:subsystem_image_processor}). The image scanner, being a module requiring user interaction, will also incorporate a front-end user interface (\sref{sec:subsystem_ui}). This subsystem satisfies requirements for adding a drawing plan (Requirements Specification, 5.1, FR9). \\
+\textbf{Critical Components:} User interface, image sensor. \\
 
 \subsection{Image Processor}
 \label{sec:subsystem_image_processor}
-\textbf{Description:} The image processor takes input from the image scanner (\sref{sec:subsystem_input_scanner}) and produces information that is recognizable by the planning module (\sref{sec:subsystem_planner}).
-\textbf{Critical Components:} Image processing algorithm.
+\textbf{Description:} The image processor takes input from the image scanner (\sref{sec:subsystem_input_scanner}) and produces information that is recognizable by the planning module (\sref{sec:subsystem_planner}). \\
+\textbf{Critical Components:} Image processing algorithm. \\
 
 \subsection{Work Scheduling, Distribution and Planning}
 \label{sec:subsystem_planner}
-\textbf{Description:} Given the output from the image processor (\sref{sec:subsystem_image_processor}), and parameters such as the number of robots and the size of the workspace, the module determines the work that will be distributed to each robot. See software architecture (\sref{sec:software_architecture}) for more information. Planning between robots allows for coordination and efficiency, satisfying requirements for both (Requirements Specification, 5.2, NFR2, NFR7).\\
-\textbf{Critical Components:} Scheduling and distribution algorithm.\\
+\textbf{Description:} Given the output from the image processor (\sref{sec:subsystem_image_processor}), and parameters such as the number of robots and the size of the workspace, the module determines the work that will be distributed to each robot. See software architecture (\sref{sec:software_architecture}) for more information. Planning between robots allows for coordination and efficiency, satisfying requirements for both (Requirements Specification, 5.2, NFR2, NFR7). \\
+\textbf{Critical Components:} Scheduling and distribution algorithm. \\
 
 \subsection{Communication}
 \label{sec:subsystem_communication}
-\textbf{Description:} The communication module is the link between the offboard system and the individual robots. To facilitate real-time changes in the working schedule, communication will be speedy and reliable. Potential communication protocols include WiFi and Bluetooth. Communication between the offboard system will allow individual robots to know their progress relative to the entire drawing (Requirements Specification, 5.1, FR10).\\
-\textbf{Critical Components:} Antennae, wireless communication protocol.\\
+\textbf{Description:} The communication module is the link between the offboard system and the individual robots. To facilitate real-time changes in the working schedule, communication will be speedy and reliable. Potential communication protocols include WiFi and Bluetooth. Communication between the offboard system will allow individual robots to know their progress relative to the entire drawing (Requirements Specification, 5.1, FR10). \\
+\textbf{Critical Components:} Antennae, wireless communication protocol. \\
 
 \subsection{User Interface}
 \label{sec:subsystem_ui}
-\textbf{Description:} The user interface provides a unified system for user input. This is the system with which the user specifies the input image and monitors the robots' progress. The system will also display any error messages or anomalies detected by the system, and how the user should address them. There will also be a system-wide kill switch in case of emergencies to satisfy requirement FR11 (Requirements Specification, 5.1, FR11).\\
-\textbf{Critical Components:} Screen, input device.\\
+\textbf{Description:} The user interface provides a unified system for user input. This is the system with which the user specifies the input image and monitors the robots' progress. The system will also display any error messages or anomalies detected by the system, and how the user should address them. There will also be a system-wide kill switch in case of emergencies to satisfy requirement FR11 (Requirements Specification, 5.1, FR11). \\
+\textbf{Critical Components:} Screen, input device. \\
 
 \subsection{Sensor Module}
 \label{sec:subsystem_sensors}
-\textbf{Description:} The sensor module gathers data from environmental markers (\sref{sec:subsystem_markers}). This data is used by the localization module (\sref{sec:subsystem_localization}) to determine an individual robot's position and orientation in the workspace.\\
-\textbf{Critical Components:} Environmental beacons, onboard sensors.\\
+\textbf{Description:} The sensor module gathers data from environmental markers (\sref{sec:subsystem_markers}). This data is used by the localization module (\sref{sec:subsystem_localization}) to determine an individual robot's position and orientation in the workspace. \\
+\textbf{Critical Components:} Environmental beacons, onboard sensors. \\
 
 \subsection{Power System}
 \label{sec:subsystem_power}
-\textbf{Description:} The power system supplies power to the rest of the system. Each robot has an onboard battery that is small and light enough to satisfy the size and weight requirement, but also provides enough uptime to last a entire drawing session. The power system will satisfy battery life and contribute to portability requirements (Requirements Specification, 5.2, NFR1, NFR6).\\
-\textbf{Critical Components:} Battery, voltage regulator modules.\\
+\textbf{Description:} The power system supplies power to the rest of the system. Each robot has an onboard battery that is small and light enough to satisfy the size and weight requirement, but also provides enough uptime to last a entire drawing session. The power system will satisfy battery life and contribute to portability requirements (Requirements Specification, 5.2, NFR1, NFR6). \\
+\textbf{Critical Components:} Battery, voltage regulator modules. \\
 
 \subsection{Environmental Markers}
 \label{sec:subsystem_markers}
-\textbf{Description:} The environmental markers must be set up by the user before the system can begin drawing. The continuously output pings using both an infared light and ultrasonic transmitter. In doing so, they provide the data needed by the localization subsystem (\sref{sec:subsystem_localization}) to determine the robot's position and orientation in the workspace. They will be mounted high enough as to be visible by every robot in the workspace at all times.
-\textbf{Critical Components:} Beacons/markers, elevated stands.
+\textbf{Description:} The environmental markers must be set up by the user before the system can begin drawing. The continuously output pings using both an infared light and ultrasonic transmitter. In doing so, they provide the data needed by the localization subsystem (\sref{sec:subsystem_localization}) to determine the robot's position and orientation in the workspace. They will be mounted high enough as to be visible by every robot in the workspace at all times. \\
+\textbf{Critical Components:} Beacons/markers, elevated stands. \\
