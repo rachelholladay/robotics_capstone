@@ -8,23 +8,25 @@ RS = requirement spec
 Sec3 use cases
   Clarify: our CE use cases are nearly equivalent to the RS ones, how should they be different? Should we be making them specific to each subsystem? In which case, should this part of the doc be split by subsystem, and then by subsystem description/use cases? Or should use cases still all be together
 
-  load/switch writing implement is use case, also in requirements spec
+  3.1 load/switch writing implement is use case, also in requirements spec
     Since 'writing implement actuator' is a subsystem, should the use cases in the concept eval be more specific? If so, how? Not clear on how to make these concept eval use cases different/more specific from the one in the requirements spec
 
-  similar for concept eval:localization use case - how can we better describe the use cases for this doc? Trade study later on describes localization methods and chooses one, how does that tie in to the use case?
+  3.3 similar for concept eval:localization use case - how can we better describe the use cases for this doc? Trade study later on describes localization methods and chooses one, how does that tie in to the use case?
 
-  3.4 schedule/robot planning use case 
 
 Sec4 artistic sketch
   We chose mecanum wheels based on trade study, should those not be in the artistic sketch? How to make it more 'artistic' - current drawing includes parts on the robot we know we need, without specific details of sizes, weights, positions of each element. 
     Does the artistic sketch need to be 'dumbed down' to be simpler?
     Better to specify saying that some parts have been finalized? (like the wheels)
 
+
   Not quite sure what to change/update for this to fit the description of 'artistic sketch'
 
   It is clear that any drawings/models we do use need to be labeled
 
   How do we show that it's "good design"
+
+  ANS: this gets separated by subystem, and need to justify why individual design decisions. Example is why 4 wheels ,why mecanums, why square, justify 2 motors - some of these are trade studies so describe briefly and link to trade study section.
 
 Sec5 subsystem descriptions
   in general the notes said most descriptions weren't clear.
@@ -34,9 +36,14 @@ Sec5 subsystem descriptions
 trade studies
   so goal is to list a couple of metrics, and show that one better fits our needs based on a metric? almost want to have a priority system for metrics and then compare them accordingly
 
+  ANS: having 'conclusion' that specifies some metrics and why the one we chose fits those better
+
 7 sw arch
   7.1 image processing - "why?" comment on the image processing pipeline. how to explain why? the pipeline is what we best determined to work for the system at the moment, how do we describe why? what should we comparing or explaining?
 
+8 installation
+  installation for us is setup of vision camera, and putting robots on writing surface. We attempted to show how it fits in scope
+    comment says it was more of 'requirements description' - how to fix?
 
 NOTES/THINGS TO DO
 use case for marking ground = req
@@ -46,6 +53,9 @@ Add notes to doc in places saying prototyping in progress
 
 
 use case diagram shows how use cases fit together
+
+- REORGANIZE BY SUBSYSTEM
+- ADD REQUIREMENTS TO CONCEPT EVAL SECTION TABLE
 
 
 PROTOTYPE THINGS
