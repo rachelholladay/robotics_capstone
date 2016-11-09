@@ -9,11 +9,13 @@ We outline our system's requirements, both functional and nonfunctional. A prior
 \subsection{Functional Requirements}
 \label{sec:functional_requirements}
 
+\rhnote{Break this up into 1 function (omnidirectional) and 2 nonfunctional (position and rotational accuracy)} \\
 \begin{functional_requirement}{Move in Specified Directions}{7}
 \label{fr:move_in_direction}
-\item Robots must be able to autonomously move in a commanded direction on a flat plane. Omnidirectional movement is necessary to ensure agents can adequately and efficiently cover the drawing workspace. \added[remark={Added ability to test this requirement by objectively specifying accuracy}]{Positional accuracy must be within a 1 inch radius for every 3 feet of motion. Orientation accuracy must be within 10 degrees for a given rotation.}
+\item Robots must be able to autonomously move in a commanded direction on a flat plane. Omnidirectional movement is necessary to ensure agents can adequately and efficiently cover the drawing workspace. \added[remark={NJ, V2}]{Positional accuracy must be within a 1 inch radius for every 3 feet of motion. Orientation accuracy must be within 10 degrees for a given rotation.}
 \end{functional_requirement}
 
+\rhnote{I dont understand the feedback on this section} \\
 \begin{functional_requirement}{Autonomous}{6}
 \label{fr:autonomous}
 \item Given an input image to draw, robot agents must be able to autonomously complete the drawing. This includes the following steps: processing the input, planning and commanding individual agents, and having robots move and draw without external input. We allow for human intervention only in the case of system failure. 
@@ -21,7 +23,7 @@ We outline our system's requirements, both functional and nonfunctional. A prior
 
 \begin{functional_requirement}{Robots Localize Globally and Locally}{7}
 \label{fr:localize}
-\item All drawing robots can determine their locations and orientations on a global and local scale. Global scale is relative to the localization markers and the specified drawing surface. Local scale is relative to other robot agents. This requirement is necessary so the robot system can coordinate planning together to avoid collisions or an inefficient spread of work. \added[remark={Specifies testability of localization}]{Robot localization should be accurate to within one inch - that is, each robot agent should know its position to within 1 inch of its true location and within 10 degrees of its orientation.}
+\item All drawing robots can determine their locations and orientations on a global and local scale. Global scale is relative to the localization markers and the specified drawing surface. Local scale is relative to other robot agents. This requirement is necessary so the robot system can coordinate planning together to avoid collisions or an inefficient spread of work. \added[remark={NJ, V2}]{Robot localization should be accurate to within one inch - that is, each robot agent should know its position to within 1 inch of its true location and within 10 degrees of its orientation.}
 \end{functional_requirement}
 
 \begin{functional_requirement}{Within Bounds}{3}
@@ -29,38 +31,39 @@ We outline our system's requirements, both functional and nonfunctional. A prior
 \item While in operation, all robot agents must stay within bounds of the workspace. This is important to minimize external collisions, including possibly unsafe interactions with the world, as well as to ensure localization maintains accuracy while drawing occurs.
 \end{functional_requirement}
 
-\deleted[remark={
-\textbf{Change Writing Tools} \\
-Split into multiple more detailed and specific requirements of insertion, removal, and replacement}]{Inserting, removing, and replacing writing implements must be convenient and fast.}
+\deleted[remark={RH, V2}] {
+\textbf{Change Writing Tools}
+Split into multiple more detailed and specific requirements of insertion, removal, and replacement. Inserting, removing, and replacing writing implements must be convenient and fast.}
 
 \begin{functional_requirement}{Insert Writing Tools}{2}
 \label{fr:insert_tool}
-\item A\added[remark={New requirements to replace Change Writing Tools requirement}]{ writing implement must be able to be inserted by a user into one robot under 1 minute. New writing implements will need to be inserted whenever existing ones become unusable, or upon first-time setup.}
+\item A\added[remark={NJ, V2}]{ writing implement must be able to be inserted by a user into one robot under 1 minute. New writing implements will need to be inserted whenever existing ones become unusable, or upon first-time setup.}
 \end{functional_requirement}
 
 \begin{functional_requirement}{Remove Writing Tools}{2}
 \label{fr:remove_tool}
-\item .\added[remark={New requirements to replace Change Writing Tools requirement}]{A writing implement must be able to be removed from a single robot by a user under 1 minute. Writing tools will need to be removed when the existing implement becomes unusable.}
+\item .\added[remark={NJ, V2}]{A writing implement must be able to be removed from a single robot by a user under 1 minute. Writing tools will need to be removed when the existing implement becomes unusable.}
 \end{functional_requirement}
 
 \begin{functional_requirement}{Replace Writing Tools}{2}
 \label{fr:replace_tool}
-\item A\added[remark={New requirements to replace Change Writing Tools requirement}]{ user must be able to remove and then insert a writing implement. Following in accordance with Functional Requirements \frref{fr:insert_tool} and \frref{fr:remove_tool}, this process must be done in under 2 minutes. Tool replacement is necessary whenever an existing tool becomes unusable for system operation.}
+\item A\added[remark={NJ, V2}]{ user must be able to remove and then insert a writing implement. Following in accordance with Functional Requirements \frref{fr:insert_tool} and \frref{fr:remove_tool}, this process must be done in under 2 minutes. Tool replacement is necessary whenever an existing tool becomes unusable for system operation.}
 \end{functional_requirement}
 
 \begin{functional_requirement}{Reliable Communication}{7}
 \label{fr:reliable_comm}
-\item Robot\added[remark={Moved to requirement from assumption}]{ agents and any system controllers must have the consistent ability to communicate between each other. This is necessary to ensure accurate and timely planning, and status updates between agents. Connection strength must be such that send information to each other within 1 second.}
+\item Robot\added[remark={NJ, V2}]{ agents and any system controllers must have the consistent ability to communicate between each other. This is necessary to ensure accurate and timely planning, and status updates between agents. Connection strength must be such that send information to each other within 1 second.}
 \end{functional_requirement}
 
 \begin{functional_requirement}{Drive Control System}{5}
 \label{fr:drive_control}
-\item Robot agents must have a controller to ensure motions made are accurate. Accurate motions is paramount to ensure an accurate drawing. \added[remark={Added testability}]{The drive control system must be in compliance with motion accuracy parameters, as specified in functional requirement, \frref{fr:move_in_direction}.} 
+\item Robot agents must have a controller to ensure motions made are accurate. Accurate motions is paramount to ensure an accurate drawing. \added[remark={NJ, V2}]{The drive control system must be in compliance with motion accuracy parameters, as specified in functional requirement, \frref{fr:move_in_direction}.} 
 \end{functional_requirement}
 
+\rhnote{10 seconds is nonfunctional requirement. So is safely and accurately.}
 \begin{functional_requirement}{Turn on or off writing tool}{1}
 \label{fr:on_tool}
-\item All robot agents need to be able to enable or disable use of the writing implement. The robot must also have the ability to move safely and accurately regardless of the state of the writing implement. Not all drawings are contiguous lines, and as such the robots must be able to disable the writing tool to move to a new drawing location. \added[remark={Added testability}]{Individual robots must be able to enable or disable the writing implement within 10 seconds.}
+\item All robot agents need to be able to enable or disable use of the writing implement. The robot must also have the ability to move safely and accurately regardless of the state of the writing implement. Not all drawings are contiguous lines, and as such the robots must be able to disable the writing tool to move to a new drawing location. \added[remark={NJ, V2}]{Individual robots must be able to enable or disable the writing implement within 10 seconds.}
 \end{functional_requirement}
 
 \begin{functional_requirement}{Input Drawing Plan}{6}
@@ -70,7 +73,7 @@ Split into multiple more detailed and specific requirements of insertion, remova
 
 \begin{functional_requirement}{Robots Know Progress}{2}
 \label{fr:know_progress}
-\item All robot agents are required to understand how much of the drawing each one has completed, and which sections are left to be drawn. This is necessary to ensure an equal spread of workload across all robot agents. \added[remark={Added testability}]{The ability to communicate progress can be guaranteed by consistent inter-robot communication, as defined by \frref{fr:reliable_comm}.}
+\item All robot agents are required to understand how much of the drawing each one has completed, and which sections are left to be drawn. This is necessary to ensure an equal spread of workload across all robot agents. \added[remark={NJ, V2}]{The ability to communicate progress can be guaranteed by consistent inter-robot communication, as defined by \frref{fr:reliable_comm}.}
 \end{functional_requirement}
 
 \begin{functional_requirement}{Kill Switch}{3}
@@ -80,30 +83,36 @@ Split into multiple more detailed and specific requirements of insertion, remova
 
 \begin{functional_requirement}{User Interface to robot}{1}
 \label{fr:user_interface}
-\item An intuitive and useful user experience is necessary for efficient usage of the system. Having a simple to operate system also reduces the likelihood of user error during the input or operation stage. For industrial or commercial applications, accessibility becomes important as well. \added[remark={Added testability}]{A quality user interface can be tested by running a user study or survey with potential users.}
+\item An intuitive and useful user experience is necessary for efficient usage of the system. Having a simple to operate system also reduces the likelihood of user error during the input or operation stage. For industrial or commercial applications, accessibility becomes important as well. \added[remark={NJ, V2}]{A quality user interface can be tested by running a user study or survey with potential users.}
 \end{functional_requirement}
 
-\deleted[remark={Moved to nonfunctional}]{
+\deleted[remark={RH, V2}]{
 \textbf{Documentation} \\
 Documentation of the design process, software, and hardware implementation is important for debugging, recreation, and general understanding of this project.}
+
+\rhnote{Add functional requirement on battery power.}
 
 \subsection{Non-Functional Requirements}
 \label{sec:nonfunctional_requirements}
 
 \begin{nonfunctional_requirement}{Documentation}{3}
-\item Documentation\added[remark={Moved from functional}]{ of the design process, software, and hardware implementation is important for debugging, recreation, and general understanding of this project.}
+\item Documentation\added[remark={NJ, V2}]{ of the design process, software, and hardware implementation is important for debugging, recreation, and general understanding of this project.}
 \end{nonfunctional_requirement}
 
 \begin{nonfunctional_requirement}{Error Handling}{6}
-\item The\added[remark={Added error handling requirement}]{ system must be able to handle errors appropriately. This includes problems that arise from localization, locomotion, planning, or using the writing tool. The system must be able to determine, based on conditions of the failure, whether to halt all operation or to continue without using broken subsystems. Errors can occur inside of any of the use cases listed in \sref{sec:use_cases}.}
+\item The\added[remark={NJ, V2}]{ system must be able to handle errors appropriately. This includes problems that arise from localization, locomotion, planning, or using the writing tool. The system must be able to determine, based on conditions of the failure, whether to halt all operation or to continue without using broken subsystems. Errors can occur inside of any of the use cases listed in \sref{sec:use_cases}.}
 \end{nonfunctional_requirement}
 
+\rhnote{One requirement on weight. One on size. on on drop height.}
 \begin{nonfunctional_requirement}{Portable}{4}
 \item Individual robot agents must be easy to move between locations. Portability can be measured by physical dimensions and weight. Each robot must fit through a standard doorway (defined as 80 in. x 36 in. \cite{homedepotdoor}), and be under 50 pounds.
 \end{nonfunctional_requirement}
 
+
+\rhnote{From DW: Lots of variability in human performance. Maybe use rate of
+drawing implement consumption or \% of duty cycle drawing}
 \begin{nonfunctional_requirement}{Efficiency}{2}
-\item Robot system must be efficient and complete drawing tasks quickly. Timeliness can be measured by the amount of time taken to complete drawings. Robot planning must also exist in such a manner that evenly splits the workload among all robot agents working in the system. Therefore, a noticeable speedup is expected when using two robots as opposed to one. \added[remark={Added testability}]{The system should perform as fast or faster than a human attempting the same drawing task.}
+\item Robot system must be efficient and complete drawing tasks quickly. Timeliness can be measured by the amount of time taken to complete drawings. Robot planning must also exist in such a manner that evenly splits the workload among all robot agents working in the system. Therefore, a noticeable speedup is expected when using two robots as opposed to one. \added[remark={NJ, V2}]{The system should perform as fast or faster than a human attempting the same drawing task.}
 \end{nonfunctional_requirement}
 
 \begin{nonfunctional_requirement}{Quality}{4}
@@ -128,7 +137,7 @@ Documentation of the design process, software, and hardware implementation is im
 
 \begin{nonfunctional_requirement}{Budget}{7}
 \label{nfr:budget}
-\item Design and implementation of this robotic system is limited by budget, which must be strictly adhered to. \added[remark={Added testability}]{The budget is limited \$2500.}
+\item Design and implementation of this robotic system is limited by budget, which must be strictly adhered to. \added[remark={NJ, V2}]{The budget is limited \$2500.}
 \end{nonfunctional_requirement}
 
 \begin{nonfunctional_requirement}{Safe}{4}

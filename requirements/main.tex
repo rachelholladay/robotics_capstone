@@ -45,8 +45,8 @@
 }
 
 % Tracking Changes
-\usepackage[final]{changes}
-%\usepackage{changes}
+%\usepackage[final]{changes}
+\usepackage{changes}
 %\definechangesauthor[name={Per cusse}, color=orange]{per}
 \setremarkmarkup{(#2)}
 
@@ -91,7 +91,8 @@
 	\vfill
 
 % Bottom of the page
-	{\large \today\par}
+	{\large Version 2.2\par
+	\today\par}
 \end{titlepage}
 
 \tableofcontents
@@ -108,8 +109,6 @@
 \input{use_cases.tex}
 \input{requirements.tex}
 
-\pagebreak
-\listofchanges
 \pagebreak
 
 {\footnotesize
