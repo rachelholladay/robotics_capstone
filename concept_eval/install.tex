@@ -3,22 +3,20 @@
 \section{Installation}
 \label{sec:install}
 
-\replaced[remark={made section seem less like a requirements specification}]{}
+
 In addition to the robot system itself, the system installation will require:
 
 \begin{itemize}
-	\item Adequately sized indoor drawing surface
-	\item Localization markers
-	\item Overhead camera mount
-	\item Writing implement
+	\item \added[remark={DZ, V2}]{Adequately sized indoor drawing surface}
+	\item \added[remark={DZ, V2}]{Localization markers}
+	\item \added[remark={DZ, V2}]{Overhead camera mount}
+	\item \added[remark={DZ, V2}]{Writing implement}
 \end{itemize}
 
-We will be using an indoor obstacle-free surface in accordance with our requirements specification (Requirements Specification, 2.3, 2.4 A1) which placed outdoor, non-homogenous drawing surfaces and obstacles out of scope. 
+\added[remark={DZ, V2}]{We will be using an indoor obstacle-free surface in accordance with our requirements specification (Requirements Specification, 2.3, 2.4 A1) which placed outdoor, non-homogenous drawing surfaces and obstacles out of scope.}
 
-We will set up the localization markers on the corners of the working surface, as well as atop the robots themselves. The system can then identify and calibrate to the localization markers to track the working surface and the robots. We will also adjust the camera mount so that it allows the system's camera a full, unobstructed view of the working surface. Finally, we will place the robots at set locations on the working surface and generate the input image.
-}
-{
-The system's setup requires a drawing surface and vision markers under specific conditions. Conditions for setup must be in line with the scope and assumptions made for successful operation of the system. Maintaining scope of the project, as described in the requirements specification (Requirements Specification, 2.3), the drawing surface must be placed indoors and in an obstacle-free area. For compliance with surface requirements (Requirements Specification, 2.4, A1), the surface chosen must be a flat and homogenous surface.
+\added[remark={DZ, V2}]{We will set up the localization markers on the corners of the working surface, as well as atop the robots themselves. The system can then identify and calibrate to the localization markers to track the working surface and the robots. We will also adjust the camera mount so that it allows the system's camera a full, unobstructed view of the working surface. Finally, we will place the robots at set locations on the working surface and generate the input image.}
 
-Once the drawing surface has been placed indoors on a flat surface, vision markers must be set up and calibrated. As per \sref{sec:trade_localization}, localization markers must be placed around the edges of the drawing surface. These markers must then be calibrated by the user, who will input marker locations into the system. The localization markers serve as calibrated base points from which the robot agents will determine their position and orientation.
-}
+\deleted[remark={DZ, V2}]{The system's setup requires a drawing surface and vision markers under specific conditions. Conditions for setup must be in line with the scope and assumptions made for successful operation of the system. Maintaining scope of the project, as described in the requirements specification (Requirements Specification, 2.3), the drawing surface must be placed indoors and in an obstacle-free area. For compliance with surface requirements (Requirements Specification, 2.4, A1), the surface chosen must be a flat and homogenous surface.}
+
+\deleted[remark={DZ, V2}]{Once the drawing surface has been placed indoors on a flat surface, vision markers must be set up and calibrated. As per \sref{sec:trade_localization}, localization markers must be placed around the edges of the drawing surface. These markers must then be calibrated by the user, who will input marker locations into the system. The localization markers serve as calibrated base points from which the robot agents will determine their position and orientation.}
