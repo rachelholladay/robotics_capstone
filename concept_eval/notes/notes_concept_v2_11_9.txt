@@ -1,0 +1,36 @@
+GENERAL
+  RH: standardize 'critical components'
+  fix refs to requirements spec in all sections
+
+4 writing implement
+  ERIC: needs to talk about how fulfills requirements
+  ERIC: needs trade study/art (eric)
+  req fulfilled
+
+5 locomotion
+  DONE needs description of hardware - covered by trade study
+  ERIC: Trade study needs conclusion/cleanup
+  ERIC: artistic sketch/description needs to be added (eric)
+  req fulfilled
+
+6 Localization
+  DZ: Trade study needs conclusion
+  req fulfilled
+
+7 image processing
+  NJ: Description must be fixed
+  'why' @ software architecture - wtf do we do about this
+  req fufilled
+
+8 work scheduling
+  RH: Research section 8.2
+
+9 Communication
+  requirements fulfilled
+
+10 User interface
+  req fufilled
+
+11 power system
+  "all obvious how does it meet requirements what kind of battery/capacity"
+  req fulfilled
