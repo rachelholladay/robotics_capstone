@@ -60,7 +60,6 @@ use case diagram shows how use cases fit together
 
 PROTOTYPE THINGS
   - decomposition/communication of plan
-  - 
 
 
 MOON ROBOT EXAMPLE
