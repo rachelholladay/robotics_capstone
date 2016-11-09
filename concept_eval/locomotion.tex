@@ -5,15 +5,12 @@
 
 \subsection{Components}
 
-\subsubsection{Locomotion}
-\label{sec:subsystem_locomotion}
 \textbf{Description:} The robot's locomotion system propels each individual robot across the working surface. If the robots use a holonomic locomotion systems, they are able to move in any direction, ensuring their ability to execute intricate designs. They also provide enough clearance for the writing implement to work effectively. In the case of a tread-based locomotion system, individual robots can rotate in place to move in all directions. A driving system that allows for multidirectional movement satisfies motion-related requirements (Requirements Specification, 5.1, FR7). Additionally, the locomotion system contains encoders whose data is used by the localization module (\sref{sec:subsystem_localization}). \\
 \textbf{Critical Components:} Wheels or treads, motors, encoders. \\
 
-\subsubsection{Power System}
-\label{sec:subsystem_power}
-\textbf{Description:} The power system supplies power to the rest of the system. Each robot has an onboard battery that is small and light enough to satisfy the size and weight requirement, but also provides enough uptime to last a entire drawing session. The power system will satisfy battery life and contribute to portability requirements (Requirements Specification, 5.2, NFR1, NFR6). \\
-\textbf{Critical Components:} Battery, voltage regulator modules. \\
+\label{sec:subsystem_sensors}
+\textbf{Description:} The sensor module gathers data from environmental markers (\sref{sec:subsystem_markers}). This data is used by the localization module (\sref{sec:subsystem_localization}) to determine an individual robot's position and orientation in the workspace. \\
+\textbf{Critical Components:} Environmental beacons, onboard sensors. \\
 
 \subsection{Use Cases}
 

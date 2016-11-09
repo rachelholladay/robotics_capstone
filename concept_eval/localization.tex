@@ -2,11 +2,6 @@
 
 \section{Localization}
 \label{sec:localization}
-
-\subsection{Components}
-
-\subsubsection{Localization}
-\label{sec:subsystem_localization}
 \textbf{Description:} The localization system uses a hybrid infared and ultrasonic marker-based method (\sref{sec:trade_localization}) to determine a robot's position and orientation. By using the delay between the infared and ultrasonic pulses detected by the sensor module (\sref{sec:subsystem_sensors}) it computes the its distance to each marker. After performing some trigonometry, it can then accurately determine position. Orientation is determined by dead reckoning through the wheel encoders, and is constantly corrected by measuring changes in position. It then communicates the positions and orientations of the robots to the scheduling module (\sref{sec:subsystem_planner}). This module directly satisfies local and global localization requirements, as well as indirectly allows for safe motion from the robots (Requirements Specification, 5.1, FR3, FR4). \\
 \textbf{Critical Components:} Localization algorithm, sensor module, vision markers. \\
 
