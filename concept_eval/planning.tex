@@ -2,13 +2,40 @@
 
 \section{Work Scheduling, Distribution and Planning}
 \label{sec:planning}
-\textbf{Description:} Given the output from the image processor (\sref{sec:subsystem_image_processor}), and parameters such as the number of robots and the size of the workspace, the module determines the work that will be distributed to each robot. See software architecture (\sref{sec:software_architecture}) for more information. Planning between robots allows for coordination and efficiency, satisfying requirements for both (Requirements Specification, 5.2, NFR2, NFR7). \\
-\textbf{Critical Components:} Scheduling and distribution algorithm. \\
-
-
+Given the output from the image processor (\sref{sec:subsystem_image_processor}), and parameters such as the number of robots and the size of the workspace, the module determines the work that will be distributed to each robot. See software architecture (\sref{sec:software_architecture}) for more information. Planning between robots allows for coordination and efficiency, satisfying requirements for both (Requirements Specification, 5.2, NFR2, NFR7). \\
 
 \subsection{Use Cases}
+\rhnote{Insert use cases}
 
-\subsection{Trade Study}
+\subsection{Research}
 
-\subsection{Artistic Sketch}
+\subsection{Software Architecture}
+\label{sec:sw_arch_planner}
+
+\begin{figure}[h!]
+ \centering
+  \includegraphics[width=0.99\columnwidth]{diagrams/sw_arch_planning.jpg}
+	\caption{Planning and Scheduling Software Pipeline}
+ \label{fig:planning_processing}
+\end{figure}
+
+A key aspect of our software system is distributing and planning the work to the robot agents, modeled in \figref{fig:planning_processing}.
+Two of our nonfunctional requirements are to be efficient and have the robots coordinate with each other (NFR4, NFR9). These two objectives inform our planning pipeline. We split the planning and coordination into two separate problems, allowing us to frame coordination as a scheduling problem~\cite{o1989deadlock}. Hence our work distribution and planning can be handled offline while our coordinate occurs online. 
+
+From our image processing \sref{sec:sw_arch_image_processing}, we recieve processed image data. 
+Using this data, we compute the length of every individual line. 
+Guided by the assumption that line length correlates to amount of work done and the time to perform that work, we then use those lengths to load balance when assigning which lines should be drawn by each robot. 
+Once each line has been assigned to each robot, each robot has a complete picture of their work and assign an ordering to their lines. 
+To limit wasteful movement, the robots order lines greedily: having completed one lines, they pick their next lines (from their assigned set) based on which line has the closet endpoint to the lines they have just finished. 
+Having ordered lines, we now can determine each robot's set of paths. 
+
+Next, we briefly describe a sketch of our coordination mechanism. Each robot has a queue of paths, based on the set ordering, to execute.
+Given that a robot has not finished all of it's assigned paths, it removes a path from the queue.
+The path is then uniformly timed and converted into a trajectory.
+Given timing information, the system can check for path collision between any trajectories currently being executed.
+If the trajectory is not at risk of collision, then it can be executed - and is sent to the robot via the protocol mentioned in \sref{sec:sw_arch_communication}. 
+
+If the trajectory is in collision with a currently executing trajectory, then the trajectory being processed defers to the one being executed. 
+The timing of the processing trajectory is adjusted by adding a pause to avoid collision. Given this modified timing we can then execute it. 
+
+Once all paths have been drawn, the drawing is completed.

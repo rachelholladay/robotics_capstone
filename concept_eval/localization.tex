@@ -2,20 +2,16 @@
 
 \section{Localization}
 \label{sec:localization}
-\textbf{Description:} The localization system uses a hybrid infared and ultrasonic marker-based method (\sref{sec:trade_localization}) to determine a robot's position and orientation. By using the delay between the infared and ultrasonic pulses detected by the sensor module (\sref{sec:subsystem_sensors}) it computes the its distance to each marker. After performing some trigonometry, it can then accurately determine position. Orientation is determined by dead reckoning through the wheel encoders, and is constantly corrected by measuring changes in position. It then communicates the positions and orientations of the robots to the scheduling module (\sref{sec:subsystem_planner}). This module directly satisfies local and global localization requirements, as well as indirectly allows for safe motion from the robots (Requirements Specification, 5.1, FR3, FR4). \\
+The localization system uses a hybrid infared and ultrasonic marker-based method (\sref{sec:trade_localization}) to determine a robot's position and orientation. By using the delay between the infared and ultrasonic pulses detected by the sensor module (\sref{sec:subsystem_sensors}) it computes the its distance to each marker. After performing some trigonometry, it can then accurately determine position. Orientation is determined by dead reckoning through the wheel encoders, and is constantly corrected by measuring changes in position. It then communicates the positions and orientations of the robots to the scheduling module (\sref{sec:subsystem_planner}). This module directly satisfies local and global localization requirements, as well as indirectly allows for safe motion from the robots (Requirements Specification, 5.1, FR3, FR4). \\
+
 \textbf{Critical Components:} Localization algorithm, sensor module, vision markers. \\
 
-\subsubsection{Environmental Markers}
-\label{sec:subsystem_markers}
-\textbf{Description:} The environmental markers must be set up by the user before the system can begin drawing. The continuously output pings using both an infared light and ultrasonic transmitter. In doing so, they provide the data needed by the localization subsystem (\sref{sec:subsystem_localization}) to determine the robot's position and orientation in the workspace. They will be mounted high enough as to be visible by every robot in the workspace at all times. \\
-\textbf{Critical Components:} Beacons/markers, elevated stands. \\
+The environmental markers must be set up by the user before the system can begin drawing. The continuously output pings using both an infared light and ultrasonic transmitter. In doing so, they provide the data needed by the localization subsystem (\sref{sec:subsystem_localization}) to determine the robot's position and orientation in the workspace. They will be mounted high enough as to be visible by every robot in the workspace at all times. \\
 
-\subsubsection{Sensor Module}
-\label{sec:subsystem_sensors}
-\textbf{Description:} The sensor module gathers data from environmental markers (\sref{sec:subsystem_markers}). This data is used by the localization module (\sref{sec:subsystem_localization}) to determine an individual robot's position and orientation in the workspace. \\
-\textbf{Critical Components:} Environmental beacons, onboard sensors. \\
+The sensor module gathers data from environmental markers (\sref{sec:subsystem_markers}). This data is used by the localization module (\sref{sec:subsystem_localization}) to determine an individual robot's position and orientation in the workspace. \\
 
 \subsection{Use Cases}
+\rhnote{any use cases?}
 
 \subsection{Trade Study}
 \label{sec:trade_localization}
@@ -27,5 +23,4 @@ The other choice of methodology is marker based. Using markers placed around the
 
 Given the convenience and ease of use of marker-based localization, it is clearly the better choice. However, it is more difficult to determine whether using active or passive systems will be more effective. A prototype for each system should be made for further evaluation.
 
-
-\subsection{Artistic Sketch}
+\rhnote{Need to commit to overhead camera and description of it.}
