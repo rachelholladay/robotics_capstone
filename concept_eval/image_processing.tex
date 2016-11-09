@@ -1,0 +1,28 @@
+% !TEX root = main.tex
+
+\section{Image Processing}
+\label{sec:image_processing}
+Insert description here
+
+\subsection{Components}
+
+\subsubsection{Input Image Scanner}
+\label{sec:subsystem_input_scanner}
+\textbf{Description:} The image scanner takes a user-provided image or generates one, and transfers it to the image processing module (\sref{sec:subsystem_image_processor}). The image scanner, being a module requiring user interaction, will also incorporate a front-end user interface (\sref{sec:subsystem_ui}). This subsystem satisfies requirements for adding a drawing plan (Requirements Specification, 5.1, FR9). \\
+\textbf{Critical Components:} User interface, image sensor. \\
+
+\subsubsection{Image Processor}
+\label{sec:subsystem_image_processor}
+\textbf{Description:} The image processor takes input from the image scanner (\sref{sec:subsystem_input_scanner}) and produces information that is recognizable by the planning module (\sref{sec:subsystem_planner}). \\
+\textbf{Critical Components:} Image processing algorithm. \\
+
+\subsubsection{User Interface}
+\label{sec:subsystem_ui}
+\textbf{Description:} The user interface provides a unified system for user input. This is the system with which the user specifies the input image and monitors the robots' progress. The system will also display any error messages or anomalies detected by the system, and how the user should address them. There will also be a system-wide kill switch in case of emergencies to satisfy requirement FR11 (Requirements Specification, 5.1, FR11). \\
+\textbf{Critical Components:} Screen, input device. \\
+
+\subsection{Use Cases}
+
+\subsection{Trade Study}
+
+\subsection{Artistic Sketch}

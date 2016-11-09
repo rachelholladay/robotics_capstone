@@ -33,8 +33,6 @@
  {\textcolor{green}{\textbf{DZ: #1}}}{}}
 \newcommand{\yjnote}[1]{\ifthenelse{\boolean{include-notes}}
  {\textcolor{LimeGreen}{\textbf{YJ: #1}}}{}}
-%\newcommand{\todo}[1]{\ifthenelse{\boolean{include-notes}}
-% {\textcolor{blue}{\textbf{TODO: #1}}}{}}
 
 \begin{document}
 
@@ -59,7 +57,7 @@
 	\vfill
 
 % Bottom of the page
-	{\large Version 1\par
+	{\large Version 2\par
 	\today\par}
 \end{titlepage}
 
@@ -73,10 +71,19 @@
 
 \input{system_description.tex}
 \input{concept_operation.tex}
-\input{use_cases.tex}
-\input{artistic_sketch.tex}
-\input{subsystem_descriptions.tex}
-\input{trade_studies.tex}
+\input{subsystem_listing.tex}
+
+\input{locomotion.tex}
+\input{localization.tex}
+\input{image_processing.tex}
+\input{drawing.tex}
+\input{planning.tex}
+
+%\input{use_cases.tex}
+%\input{artistic_sketch.tex}
+
+%\input{subsystem_descriptions.tex}
+%\input{trade_studies.tex}
 \input{software_architecture.tex}
 \input{install.tex}
 

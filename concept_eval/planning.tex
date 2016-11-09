@@ -1,0 +1,23 @@
+% !TEX root = main.tex
+
+\section{Planning}
+\label{sec:planning}
+Insert description here
+
+\subsection{Components}
+
+\subsubsection{Work Scheduling, Distribution and Planning}
+\label{sec:subsystem_planner}
+\textbf{Description:} Given the output from the image processor (\sref{sec:subsystem_image_processor}), and parameters such as the number of robots and the size of the workspace, the module determines the work that will be distributed to each robot. See software architecture (\sref{sec:software_architecture}) for more information. Planning between robots allows for coordination and efficiency, satisfying requirements for both (Requirements Specification, 5.2, NFR2, NFR7). \\
+\textbf{Critical Components:} Scheduling and distribution algorithm. \\
+
+\subsubsection{Communication}
+\label{sec:subsystem_communication}
+\textbf{Description:} The communication module is the link between the offboard system and the individual robots. To facilitate real-time changes in the working schedule, communication will be speedy and reliable. Potential communication protocols include WiFi and Bluetooth. Communication between the offboard system will allow individual robots to know their progress relative to the entire drawing (Requirements Specification, 5.1, FR10). \\
+\textbf{Critical Components:} Antennae, wireless communication protocol. \\
+
+\subsection{Use Cases}
+
+\subsection{Trade Study}
+
+\subsection{Artistic Sketch}

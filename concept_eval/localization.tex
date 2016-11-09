@@ -1,0 +1,36 @@
+% !TEX root = main.tex
+
+\section{Localization}
+\label{sec:localization}
+
+\subsection{Components}
+
+\subsubsection{Localization}
+\label{sec:subsystem_localization}
+\textbf{Description:} The localization system uses a hybrid infared and ultrasonic marker-based method (\sref{sec:trade_localization}) to determine a robot's position and orientation. By using the delay between the infared and ultrasonic pulses detected by the sensor module (\sref{sec:subsystem_sensors}) it computes the its distance to each marker. After performing some trigonometry, it can then accurately determine position. Orientation is determined by dead reckoning through the wheel encoders, and is constantly corrected by measuring changes in position. It then communicates the positions and orientations of the robots to the scheduling module (\sref{sec:subsystem_planner}). This module directly satisfies local and global localization requirements, as well as indirectly allows for safe motion from the robots (Requirements Specification, 5.1, FR3, FR4). \\
+\textbf{Critical Components:} Localization algorithm, sensor module, vision markers. \\
+
+\subsubsection{Environmental Markers}
+\label{sec:subsystem_markers}
+\textbf{Description:} The environmental markers must be set up by the user before the system can begin drawing. The continuously output pings using both an infared light and ultrasonic transmitter. In doing so, they provide the data needed by the localization subsystem (\sref{sec:subsystem_localization}) to determine the robot's position and orientation in the workspace. They will be mounted high enough as to be visible by every robot in the workspace at all times. \\
+\textbf{Critical Components:} Beacons/markers, elevated stands. \\
+
+\subsubsection{Sensor Module}
+\label{sec:subsystem_sensors}
+\textbf{Description:} The sensor module gathers data from environmental markers (\sref{sec:subsystem_markers}). This data is used by the localization module (\sref{sec:subsystem_localization}) to determine an individual robot's position and orientation in the workspace. \\
+\textbf{Critical Components:} Environmental beacons, onboard sensors. \\
+
+\subsection{Use Cases}
+
+\subsection{Trade Study}
+\label{sec:trade_localization}
+In multi-agent planning, it is important to accurately localize robots' positions and orientations. Keeping in mind limitations in price and ease of use, we come up with two major methods for localization: vision based and marker based. They are described below.
+
+Vision-based localization involves using cameras or other visual sensors to directly obtain information of the environment and localize the robots based on found landmarks in that environment. One example of this is SLAM (Simultaneous Localization and Mapping), often used by autonomous vehicles to simultaneously build maps and localize~\cite{dissanayake2001solution}. With this approach, robots could build small maps of their surroundings and match their locations to features they find in the environment. Benefits of this method include being location agnostic and requiring no additional parts or external setup. However, pure vision systems are difficult to calibrate and localization accuracy can depend heavily on static surroundings, which is not something this system can guarantee.
+
+The other choice of methodology is marker based. Using markers placed around the drawing surface, robot agents can quickly locate these markers and their positions relative to each marker, and consequently triangulate their positions and orientations. While requiring additional setup and more parts to calibrate than vision based localization, existing technology makes it convenient and cheap to get marker based localization working. One example of a marker-based localization system is AprilTags~\cite{olson2011apriltag}, which can be described as 2D barcodes placed in a scene. Marker-based localization can be further classified into two subcategories: passive and active. Passive markers do not output any information and exist for the robot agents to observe and triangulate accordingly. AprilTags is an example of the passive marker system. On the other hand, active markers will \"look at\" robot agents to determine where the agents are, rather than the robots searching for markers. While less common, active systems behave well in conditions when the markers may not always be easily visible to robot agents~\cite{cassinis2005active}.
+
+Given the convenience and ease of use of marker-based localization, it is clearly the better choice. However, it is more difficult to determine whether using active or passive systems will be more effective. A prototype for each system should be made for further evaluation.
+
+
+\subsection{Artistic Sketch}
