@@ -2,13 +2,19 @@
 
 \section{Writing Implement}
 \label{sec:writing_implement}
-The writing implement actuator deposits writing material onto the working surface. It manages reloading of the writing implement and ensures that the implement is properly secured. Additionally, it can extend writing material closer to the ground as the material is shortened through use, and it can rotate the writing material for variation in stroke. In the event of writing material depletion, its sensors will detect the occurrence and alert the communication module (\sref{sec:subsystem_communication}). This subsystem satisfies writing tool related requirements (Requirements Specification, 5.1, FR6, FR8).\\
+The writing implement actuator deposits writing material onto the working surface. It manages reloading of the writing implement and ensures that the implement is properly secured. Additionally, it can extend writing material closer to the ground as the material is shortened through use, and it can rotate the writing material for variation in stroke. In the event of writing material depletion, its sensors will detect the occurrence and alert the communication module (\sref{sec:subsystem_communication}). This subsystem satisfies writing tool related requirements (Requirements Specification, 5.1, FR6, FR8). \rhnote{How does it fulfill these requirements?}\\
 The writing implement system is modular, in that various writing tools (such as chalk, markers, pens, etc.) can be easily inserted by users. This involves a fixed motor mechanism on the robot, with mounts for each tool that can be locked into place on the robot. The mounts can optionally connect to two motors: One for linear motion to raise and lower the writing implement, and another to rotate the writing material as described above. \\
 
-\textbf{Critical Components:} Writing implement holder, actuation mechanism, writing material levels sensor, reloading mechanism. \\
+\added[remark={RH, V2}]{Critical components to this system include} the writing implement holder, actuation mechanism, writing material levels sensor and reloading mechanism. \added[remark={RH, V2}]{We discuss these mechanical components in further detail in our trade study.}\\
+
 
 \subsection{Use Cases}
-\rhnote{insert from dons use cases}
+
+\subsubsection{Load/Switch Writing Implement}
+\textbf{Description:} \added[remark={DZ, V2}]{The robot has the ability to allow quick swapping of writing implements. This may be necessary when the current implement has been depleted, or a new  implement with different writing properties is desired. The writing implement actuator itself is modular and detachable, so different kinds of writing implements (markers, chalk, etc.) can be used in the same robot.}
+
+\subsubsection{Actuate Writing Implement}
+\textbf{Description:} \added[remark={DZ, V2}]{The robot can use its writing implement to make markings on the working surface. It can vary properties such as stroke size and thickness to a small degree by rotating or adjusting the pressure on the implement.}
 
 \subsection{Trade Study}
 \rhnote{Need to commit to chalk/liquid chalk}. 

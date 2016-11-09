@@ -5,7 +5,18 @@
 Given the output from the image processor (\sref{sec:subsystem_image_processor}), and parameters such as the number of robots and the size of the workspace, the module determines the work that will be distributed to each robot. See software architecture (\sref{sec:software_architecture}) for more information. Planning between robots allows for coordination and efficiency, satisfying requirements for both (Requirements Specification, 5.2, NFR2, NFR7). \\
 
 \subsection{Use Cases}
-\rhnote{Insert use cases}
+\subsubsection{Decompose Plan}
+\textbf{Description:} \added[remark={DZ, V2}]{The system generates an efficient distribution of work to each of the individual robots. The work distribution takes into account the amount of writing material needed, thereby limiting the need for reloading. It is also based on distance that the robots must cover and the speed at which they must travel to ensure that robots sit idle for as little time as possible.}
+
+\subsubsection{Schedule Lines}
+\textbf{Description:} \added[remark={DZ, V2}]{The system can divide each robot's specific tasks into subtasks, and determines the order in which they will be completed. This order ensures that the robot spends little time traversing unnecessary distance and completes its tasks in a short amount of time.}
+
+\subsubsection{Plan Movement}
+\textbf{Description:} \added[remark={DZ, V2}]{Each robot is capable of determining how to actuate its motors to get from its current location to a desired location. By using its motion model based on the properties of its locomotion system, it can queue motor values and adjust for noise and error along the way.}
+
+\subsubsection{Detect Collisions}
+\textbf{Description:} \added[remark={DZ, V2}]{The system can use a combination of localization sensors and motor encoders to determine if any robot has encountered an obstacle.} 
+
 
 \subsection{Research}
 
@@ -15,7 +26,7 @@ Given the output from the image processor (\sref{sec:subsystem_image_processor})
 \begin{figure}[h!]
  \centering
   \includegraphics[width=0.99\columnwidth]{diagrams/sw_arch_planning.jpg}
-	\caption{Planning and Scheduling Software Pipeline}
+	\caption{Planning and Scheduling Software Model}
  \label{fig:planning_processing}
 \end{figure}
 

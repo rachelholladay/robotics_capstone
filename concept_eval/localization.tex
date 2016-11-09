@@ -2,7 +2,7 @@
 
 \section{Localization}
 \label{sec:localization}
-The localization system uses a hybrid infared and ultrasonic marker-based method (\sref{sec:trade_localization}) to determine a robot's position and orientation. By using the delay between the infared and ultrasonic pulses detected by the sensor module (\sref{sec:subsystem_sensors}) it computes the its distance to each marker. After performing some trigonometry, it can then accurately determine position. Orientation is determined by dead reckoning through the wheel encoders, and is constantly corrected by measuring changes in position. It then communicates the positions and orientations of the robots to the scheduling module (\sref{sec:subsystem_planner}). This module directly satisfies local and global localization requirements, as well as indirectly allows for safe motion from the robots (Requirements Specification, 5.1, FR3, FR4). \\
+The localization system uses a hybrid infrared and ultrasonic marker-based method (\sref{sec:trade_localization}) to determine a robot's position and orientation. By using the delay between the infrared and ultrasonic pulses detected by the sensor module (\sref{sec:subsystem_sensors}) it computes the its distance to each marker. After performing some trigonometry, it can then accurately determine position. Orientation is determined by dead reckoning through the wheel encoders, and is constantly corrected by measuring changes in position. It then communicates the positions and orientations of the robots to the scheduling module (\sref{sec:subsystem_planner}). This module directly satisfies local and global localization requirements, as well as indirectly allows for safe motion from the robots (Requirements Specification, 5.1, FR3, FR4). \\
 
 \textbf{Critical Components:} Localization algorithm, sensor module, vision markers. \\
 
@@ -11,7 +11,8 @@ The environmental markers must be set up by the user before the system can begin
 The sensor module gathers data from environmental markers (\sref{sec:subsystem_markers}). This data is used by the localization module (\sref{sec:subsystem_localization}) to determine an individual robot's position and orientation in the workspace. \\
 
 \subsection{Use Cases}
-\rhnote{any use cases?}
+\subsubsection{Localize}
+\textbf{Description:} \added[remark={DZ, V2}]{The robot uses a combination of robot-mounted and static environmental markers, as well as a camera mounted above the working surface to determine the locations of each of the robots. This information is used to determine the motion plan of the robot.} 
 
 \subsection{Trade Study}
 \label{sec:trade_localization}
