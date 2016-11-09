@@ -1,0 +1,30 @@
+% !TEX root = main.tex
+
+\section{Image Processing}
+\label{sec:image_processing}
+\njnote{NEEDS TO BE FIXED. can't use the word scanner}
+The image scanner takes a user-provided image or generates one, and transfers it to the image processing module (\sref{sec:subsystem_image_processor}). The image scanner, being a module requiring user interaction, will also incorporate a front-end user interface (\sref{sec:subsystem_ui}). This subsystem satisfies requirements for adding a drawing plan (Requirements Specification, 5.1, FR9). \\
+
+The image processor takes input from the image scanner (\sref{sec:subsystem_input_scanner}) and produces information that is recognizable by the planning module (\sref{sec:subsystem_planner}). \\
+
+\subsection{Use Cases}
+\subsubsection{Input User Image}
+\textbf{Description:} \added[remark={DZ, V2}]{The system can take in an image provided by the user, and from it determine what the workspace should look like upon completion of the task. The user also inputs parameters such as scale, resolution, and possibly color.} 
+
+
+\subsection{Software Architecture}
+\label{sec:sw_arch_image_processing}
+\rhnote{Explain why?} \\
+
+\begin{figure}[h!]
+ \centering
+  \includegraphics[width=0.99\columnwidth]{diagrams/sw_arch_image_processing.jpg}
+	\caption{Image Processing Software Subsystem}
+ \label{fig:image_processing}
+\end{figure}
+
+The image processing pipeline (\figref{fig:image_processing}) takes the image scanned by the user, and parses it into a form readable by the work planner. The goal of this software system is to create a series of lines that describes the image. To do this, the system first creates an occupancy grid of the input via voxelization. For a black and white image, the occupancy grid determines black or white. In the case of color, voxels are assigned color based on the image values inside of the voxel.
+
+Once voxelization is complete, lines are formed from the voxels through a nearest-neighbor search. These lines are simply a series of voxel squares that pass through the image. In order to preserve curvature of lines from the input, the grid-delineated lines are reparamterized with splines into paths. These paths are then sent to the work planning module.
+
+\subsection{Requirements Fulfilled}

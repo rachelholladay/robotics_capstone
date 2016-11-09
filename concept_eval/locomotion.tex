@@ -1,0 +1,40 @@
+% !TEX root = main.tex
+
+\section{Locomotion}
+\label{sec:locomotion}
+
+\textbf{Description:} The robot's locomotion system propels each individual robot across the working surface. If the robots use a holonomic locomotion systems, they are able to move in any direction, ensuring their ability to execute intricate designs. They also provide enough clearance for the writing implement to work effectively. In the case of a tread-based locomotion system, individual robots can rotate in place to move in all directions. A driving system that allows for multidirectional movement satisfies motion-related requirements (Requirements Specification, 5.1, FR7). Additionally, the locomotion system contains encoders whose data is used by the localization module (\sref{sec:subsystem_localization}). \\
+Critical Components \added[remark={RH, V2}]{of this subsystem include} wheels or treads, motors and encoders. \added[remark={RH, V2}]{We discuss the choice of wheels in our trade study.} \\
+
+\rhnote{Comment from DW: "This description of the locomotion hardware is insufficient. How does it work? There is not enough information and analysis to move into a detailed design of how it would be built." Will the trade study address this?}
+
+\subsection{Use Cases}
+\subsubsection{Locomote}
+\textbf{Description:} \added[remark={DZ, V2}]{The robot can use its array of motors and wheels to propel itself across the flat working surface. It can make arbitrarily sharp turns and acute curves in order to allow input drawings that incorporate such components. }
+
+\subsection{Trade Study}
+\label{sec:trade_locomotion}
+\njnote{All Trade studies should be subsubsection}
+\rhnote{Locomotion} \\
+One of our functional requirements with the highest priority (FR1) is to be able to move in specified directions with a high degree of accuracy. Additionally, a medium high priority functional requirement (FR 9) is to have a drive control system that enables this movement. Therefore, it is clear from our requirements that locomotion is critical to our robot's performance. When considering locomotion options there are three large categories: aerial, legged and wheeled. 
+
+Our drawing occurs on the two dimensional plane. Therefore, any flight based system would have to constrain one translational degree of freedom and two rotational degrees of freedom. Doing so would require precise control algorithm and large power input. Practically speaking, this seems to over-complicate the problem with little additional gain. 
+
+Therefore, we are narrowed down to a legged or wheeled system. While a legged system would have the ability to traverse uneven terrain, such capability is not necessary for our project due to the assumption (A3) that the drawing surface is flat and homogenous. Compared to wheeled systems, legged systems usually involve more complicated control algorithms and more complex electrical and mechanical components. Furthermore, we are inspired by the wide spread success of wheeled robotic systems and especially appreciate their stability, a critical concern when precisely drawing images.
+
+Therefore, we have concluded that our agent's drive system should be wheeled. In our next analysis, we will further investigate different types of drive system. 
+
+\rhnote{Drive System}
+In continuing to prioritize our functional requirement (FR1) of being able to accurately move in specified directions, we further investigate possible drive systems. 
+
+Three different drive systems are evaluated in this section: differential drive, ackerman steering, and four-wheel steering. Differential drive on a robot typically consists of two independently driven wheels and a non-driven wheel. The non-driven wheel often creates unwanted resistence when turning which compromises the drawing accuracy. Occasionally, the non-driven wheel would create singularity and ruin the drawing mission. Moving up in complexity and taking after some cars is ackerman steering, where the back pair of wheels is fixed in orientation but the front pair can pivot. Such drive system does not suffer from singularities. However, turning with ackerman steering often requires large turning radius which means drawing shape corners extremely difficult. Another option is four-wheel steering, which is similar to ackerman steering but allows the back wheels to pivot. Even though such drive system can achieve in-place turn, doing so often requires dragging four wheels in their lateral directions which can potentially demage drawing surfaces.
+
+These systems all suffer from the fundamental issues of being nonholonomic. Therefore, we want to use a holonomic drive system to easiliy realize omnidirectional motion. This can be achieved with omniwheels, perhaps more commonly, with mecanum wheels. To eliminate singularities and large turning radius, we plan to use four-wheel steering system with mecanum wheels attached. To investigate potential drawbacks with this drive system, we plan to prototype a simple chassis with four mecanum wheels installed and test its mobility and motion accuracy. 
+\njnote{Need conclusion that selects mecanum wheels}
+
+\subsection{Artistic Sketch}
+\njnote{Description of sketch and how it relates to trade studies above}
+
+\subsection{Requirements Fulfilled}
+\njnote{Lists which requirements this subsystem fulfills}
+
