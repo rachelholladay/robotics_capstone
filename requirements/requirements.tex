@@ -9,13 +9,15 @@ We outline our system's requirements, both functional and nonfunctional. A prior
 \subsection{Functional Requirements}
 \label{sec:functional_requirements}
 
-\rhnote{Break this up into 1 function (omnidirectional) and 2 nonfunctional (position and rotational accuracy)} \\
-\begin{functional_requirement}{Move in Specified Directions}{7}
-\label{fr:move_in_direction}
-\item Robots must be able to autonomously move in a commanded direction on a flat plane. Omnidirectional movement is necessary to ensure agents can adequately and efficiently cover the drawing workspace. \added[remark={NJ, V2}]{Positional accuracy must be within a 1 inch radius for every 3 feet of motion. Orientation accuracy must be within 10 degrees for a given rotation.}
+
+\deleted[remark={NJ,V2.2}]{Move in Specified Directions(7): Robots must be able to autonomously move in a commanded direction on a flat plane. Omnidirectional movement is necessary to ensure agents can adequately and efficiently cover the drawing workspace. \added[remark={NJ, V2}]{Positional accuracy must be within a 1 inch radius for every 3 feet of motion. Orientation accuracy must be within 10 degrees for a given rotation.}
+
+\begin{functional_requirement}{Omnidirectional Movement}{7}
+\label{fr:omnidirectional}
+\item R\added[remark={NJ,V2.2}]{obots must be able to move instantaneously in any commanded direction on a 2D plane represented by the floor of motion. Omnidirectional movement is necessary to ensure agents can adequately and efficiently cover the drawing workspace, while simultaneously being able to draw lines of varying curvature.}
 \end{functional_requirement}
 
-\rhnote{I dont understand the feedback on this section} \\
+\njnote{Feedback underlines some words and has an X, not sure what to change}
 \begin{functional_requirement}{Autonomous}{6}
 \label{fr:autonomous}
 \item Given an input image to draw, robot agents must be able to autonomously complete the drawing. This includes the following steps: processing the input, planning and commanding individual agents, and having robots move and draw without external input. We allow for human intervention only in the case of system failure. 
@@ -60,10 +62,9 @@ Split into multiple more detailed and specific requirements of insertion, remova
 \item Robot agents must have a controller to ensure motions made are accurate. Accurate motions is paramount to ensure an accurate drawing. \added[remark={NJ, V2}]{The drive control system must be in compliance with motion accuracy parameters, as specified in functional requirement, \frref{fr:move_in_direction}.} 
 \end{functional_requirement}
 
-\rhnote{10 seconds is nonfunctional requirement. So is safely and accurately.}
 \begin{functional_requirement}{Turn on or off writing tool}{1}
 \label{fr:on_tool}
-\item All robot agents need to be able to enable or disable use of the writing implement. The robot must also have the ability to move safely and accurately regardless of the state of the writing implement. Not all drawings are contiguous lines, and as such the robots must be able to disable the writing tool to move to a new drawing location. \added[remark={NJ, V2}]{Individual robots must be able to enable or disable the writing implement within 10 seconds.}
+\item All robot agents need to be able to enable or disable use of the writing implement. The robot must also have the ability to move regardless of the state of the writing implement. Not all drawings are contiguous lines, and as such the robots must be able to disable the writing tool to move to a new drawing location.
 \end{functional_requirement}
 
 \begin{functional_requirement}{Input Drawing Plan}{6}
@@ -90,7 +91,11 @@ Split into multiple more detailed and specific requirements of insertion, remova
 \textbf{Documentation} \\
 Documentation of the design process, software, and hardware implementation is important for debugging, recreation, and general understanding of this project.}
 
-\rhnote{Add functional requirement on battery power.}
+\begin{functional_requirement}{Battery Power}{4}
+\label{fr:battery_power}
+\item I\added[remark={NJ,V2.2}]{ndividual robot agents must be able to run continuously for a minimum of 30 minutes before needing battery charging or replacement. This will provide enough time to complete a minimum of a single drawing.}
+\end{functional_requirement}
+
 
 \subsection{Non-Functional Requirements}
 \label{sec:nonfunctional_requirements}
@@ -103,16 +108,20 @@ Documentation of the design process, software, and hardware implementation is im
 \item The\added[remark={NJ, V2}]{ system must be able to handle errors appropriately. This includes problems that arise from localization, locomotion, planning, or using the writing tool. The system must be able to determine, based on conditions of the failure, whether to halt all operation or to continue without using broken subsystems. Errors can occur inside of any of the use cases listed in \sref{sec:use_cases}.}
 \end{nonfunctional_requirement}
 
-\rhnote{One requirement on weight. One on size. on on drop height.}
-\begin{nonfunctional_requirement}{Portable}{4}
-\item Individual robot agents must be easy to move between locations. Portability can be measured by physical dimensions and weight. Each robot must fit through a standard doorway (defined as 80 in. x 36 in. \cite{homedepotdoor}), and be under 50 pounds.
+\deleted[remark={NJ,V2.2}]{Portable(4): Individual robot agents must be easy to move between locations. Portability can be measured by physical dimensions and weight. Each robot must fit through a standard doorway (defined as 80 in. x 36 in. \cite{homedepotdoor}), and be under 50 pounds.}
+
+\begin{nonfunctional_requirement}{Weight Restriction}{4}
+\label{nfr:weight_limit}
+\item I\added[remark={NJ,V2.2}]{ndividual robot agent weight must be under 50 pounds. This is one step in ensuring portability of the individual agents.}
 \end{nonfunctional_requirement}
 
+\begin{nonfunctional_requirement}{Size Restriction}{5}
+\label{nfr:size_limit}
+\item I\added[remark={NJ,V2.2}]{ndividual robot agent size must be able to fit within a standard doorway. This is defined as 80 in. x 36 in. \cite{homedepotdoor}.}
+\end{nonfunctional_requirement}
 
-\rhnote{From DW: Lots of variability in human performance. Maybe use rate of
-drawing implement consumption or \% of duty cycle drawing}
 \begin{nonfunctional_requirement}{Efficiency}{2}
-\item Robot system must be efficient and complete drawing tasks quickly. Timeliness can be measured by the amount of time taken to complete drawings. Robot planning must also exist in such a manner that evenly splits the workload among all robot agents working in the system. Therefore, a noticeable speedup is expected when using two robots as opposed to one. \added[remark={NJ, V2}]{The system should perform as fast or faster than a human attempting the same drawing task.}
+\item Robot system must be efficient and complete drawing tasks quickly. Timeliness can be measured by the amount of time taken to complete drawings. Robot planning must also exist in such a manner that evenly splits the workload among all robot agents working in the system. Therefore, a speedup of a maximum of 2x the rate is expected when using two robots as opposed to one. \added[remark={NJ, V2}]{The system should perform as fast or faster than a human attempting the same drawing task.}
 \end{nonfunctional_requirement}
 
 \begin{nonfunctional_requirement}{Quality}{4}
@@ -127,9 +136,7 @@ drawing implement consumption or \% of duty cycle drawing}
 \item Robot system must be robust, and be resilient to breaking down or failing to operate properly. Reliability can be measured by percent uptime relative to total time spent in use.
 \end{nonfunctional_requirement}
 
-\begin{nonfunctional_requirement}{Battery Life}{2}
-\item Individual robot agents must have a battery life capable of completing a minimum of a single drawing. Battery life can be measured by duration for which robot agents are in use before needing battery recharging or replacement.
-\end{nonfunctional_requirement}
+\deleted[remark={NJ,V2.2}]{Battery Life(2): Individual robot agents must have a battery life capable of completing a minimum of a single drawing. Battery life can be measured by duration for which robot agents are in use before needing battery recharging or replacement.}
 
 \begin{nonfunctional_requirement}{Coordination}{4}
 \item The key to a multi-robot agent system is to reduce the individual workload, meaning having coordinated and efficient work is vital. Robots must be able to work together to minimize overlap in the drawings, and to avoid duplicating work. A two-robot system that coordinates must perform faster than a single robot performing the same task.
@@ -144,4 +151,20 @@ drawing implement consumption or \% of duty cycle drawing}
 \label{nfr:safe}
 \item Robots must maintain safety with respect to each other and the external world at all times. This requires that all robot agents avoid collisions. Robot agents must also have an enforced maximum speed limit to avoid damage to themselves or human bystanders in case of collision. 
 \end{nonfunctional_requirement}
+
+\begin{nonfunctional_requirement}{Positional Accuracy}{7}
+\label{nfr:pos_accuracy}
+\item R\added[remark={NJ,V2.2}]{obots must be able to move with a positional accuracy of a 1 inch radius for every 3 feet of motion. Tight positional accuracy is vital to ensuring the robots can accurately complete the drawing.}
+\end{nonfunctional_requirement}
+
+\begin{nonfunctional_requirement}{Rotational Accuracy}{7}
+\label{nfr:rot_accuracy}
+\item R\added[remark={NJ,V2.2}]{obots must be able to turn with a rotational accuracy of within 10 degrees per 90 degrees turned. Similar to \sref{nfr:rot_accuracy}, rotational accuracy is necessary for the robots to accurately complete the drawing.}
+\end{nonfunctional_requirement}
+
+\begin{nonfunctional_requirement}{Tool Switching Duration}{2}
+\label{nfr:tool_switch_duration}
+\item I\added[remark={NJ,V2.2}]{ndividual robots must be able to enable or disable the writing tool within 10 seconds.}
+\end{nonfunctional_requirement}
+
 
