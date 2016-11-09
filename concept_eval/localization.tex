@@ -16,6 +16,7 @@ The localization system uses an overhead camera and marker method (\sref{sec:tra
 
 \subsection{Trade Study}
 \label{sec:trade_localization}
+\njnote{Needs a conclusion that justifies overhead camera+markers}
 In multi-agent planning, it is important to accurately localize robots' positions and orientations. Keeping in mind limitations in price and ease of use, we come up with two major methods for localization: vision based and marker based. They are described below.
 
 Vision-based localization involves using cameras or other visual sensors to directly obtain information of the environment and localize the robots based on found landmarks in that environment. One example of this is SLAM (Simultaneous Localization and Mapping), often used by autonomous vehicles to simultaneously build maps and localize~\cite{dissanayake2001solution}. With this approach, robots could build small maps of their surroundings and match their locations to features they find in the environment. Benefits of this method include being location agnostic and requiring no additional parts or external setup. However, pure vision systems are difficult to calibrate and localization accuracy can depend heavily on static surroundings, which is not something this system can guarantee.
