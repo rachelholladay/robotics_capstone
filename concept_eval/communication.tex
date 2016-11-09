@@ -7,19 +7,17 @@ The communication module is the link between the offboard system and the individ
 
 \subsection{Use Cases}
 
-\subsection{Trade Study}
-
 \subsection{Software Architecture}
 \label{sec:sw_arch_communication}
 
 \begin{figure}[h!]
  \centering
   \includegraphics[width=0.99\columnwidth]{diagrams/sw_arch_communication.jpg}
-	\caption{Communication Software Pipeline}
+	\caption{Communication Software Diagram. Green are the motion commands, Blue are the writing tool commands, Red is the error handling system, and Yellow is the localization system}
  \label{fig:comm_processing}
 \end{figure}
 
-The communication diagram (\figref{fig:comm_processing}) describes how an individual robot communicates with the offboard path planning system. The system can be described by communciation in four categories: motion commands, writing tool commands, error handling, and localization.
+The communication diagram (\figref{fig:comm_processing}) describes how an individual robot communicates with the offboard path planning system. The system can be described by communication in four categories: motion commands \added[remark={RH, V2}]{(green)}, writing tool commands \added[remark={RH, V2}]{(blue)}, error handling \added[remark={RH, V2}]{(red)}, and localization \added[remark={RH, V2}]{(yellow)}.
 
 The offboard system will use the planning algorithm to determine motion plans for the robot systems. It determines and then sends velocity commands to the onboard system. The onboard system passes these commands to the drive motors for motion.
 
