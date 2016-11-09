@@ -2,14 +2,13 @@
 
 \section{Localization}
 \label{sec:localization}
-\njnote{THIS IS WRONG. Needs to talk about mounted camera+markers on drawing space corners and robots}
-The localization system uses a hybrid infrared and ultrasonic marker-based method (\sref{sec:trade_localization}) to determine a robot's position and orientation. By using the delay between the infrared and ultrasonic pulses detected by the sensor module (\sref{sec:subsystem_sensors}) it computes the its distance to each marker. After performing some trigonometry, it can then accurately determine position. Orientation is determined by dead reckoning through the wheel encoders, and is constantly corrected by measuring changes in position. It then communicates the positions and orientations of the robots to the scheduling module (\sref{sec:subsystem_planner}). This module directly satisfies local and global localization requirements, as well as indirectly allows for safe motion from the robots (Requirements Specification, 5.1, FR3, FR4). \\
+The localization system uses an overhead camera and marker method (\sref{sec:trade_localization}) to determine a robot's position and orientation. It uses an overhead-mounted camera with a full, unobstructed view of the workspace and robots. Static markers are mounted in the corners of the workspace, as well as atop the robot workers themselves. The corner markers determine the boundaries of the workspace, to which the input image can be scaled. The system use the robot-mounted markers to determine the position and orientation of each robot in relation to the workspace. It then communicates the positions and orientations of the robots to the scheduling module (\sref{sec:subsystem_planner}). This module directly satisfies local and global localization requirements, as well as indirectly allows for safe motion from the robots (Requirements Specification, 5.1, FR3, FR4). \\
 
-\textbf{Critical Components:} Localization algorithm, sensor module, vision markers. \\
+\textbf{Critical Components:} Localization algorithm, localization markers. \\
 
-The environmental markers must be set up by the user before the system can begin drawing. The continuously output pings using both an infared light and ultrasonic transmitter. In doing so, they provide the data needed by the localization subsystem (\sref{sec:subsystem_localization}) to determine the robot's position and orientation in the workspace. They will be mounted high enough as to be visible by every robot in the workspace at all times. \\
+\deleted[remark={DZ, V2}]{The environmental markers must be set up by the user before the system can begin drawing. The continuously output pings using both an infared light and ultrasonic transmitter. In doing so, they provide the data needed by the localization subsystem (\sref{sec:subsystem_localization}) to determine the robot's position and orientation in the workspace. They will be mounted high enough as to be visible by every robot in the workspace at all times. \\}
 
-The sensor module gathers data from environmental markers (\sref{sec:subsystem_markers}). This data is used by the localization module (\sref{sec:subsystem_localization}) to determine an individual robot's position and orientation in the workspace. \\
+\deleted[remark={DZ, V2}]{The sensor module gathers data from environmental markers (\sref{sec:subsystem_markers}). This data is used by the localization module (\sref{sec:subsystem_localization}) to determine an individual robot's position and orientation in the workspace. \\}
 
 \subsection{Use Cases}
 \subsubsection{Localize}
@@ -25,7 +24,5 @@ The other choice of methodology is marker based. Using markers placed around the
 
 Given the convenience and ease of use of marker-based localization, it is clearly the better choice. However, it is more difficult to determine whether using active or passive systems will be more effective. A prototype for each system should be made for further evaluation.
 
-\rhnote{Need to commit to overhead camera and description of it.}
 
 \subsection{Requirements Fulfilled}
-\njnote{TODO}
