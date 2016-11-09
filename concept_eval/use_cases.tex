@@ -11,6 +11,8 @@
 %  \label{fig:use-cases}
 % \end{figure}
 
+\subsection{Display Information}
+\textbf{Description:} The system is able to show a human user information pertinent to system operation, including but not limited to the location of the robots, their battery level, amount of task completed, estimated time of completion, and any existing obstructions or anomalies.
 
 \subsection{Load/Switch Writing Implement}
 \textbf{Description:} The robot has the ability to allow quick swapping of writing implements. This may be necessary when the current implement has been depleted, or a new  implement with different writing properties is desired. The writing implement actuator itself is modular and detachable, so different kinds of writing implements (markers, chalk, etc.) can be used in the same robot.
@@ -24,18 +26,23 @@
 \subsection{Schedule Lines}
 \textbf{Description:} The system can divide each robot's specific tasks into subtasks, and determines the order in which they will be completed. This order ensures that the robot spends little time traversing unnecessary distance and completes its tasks in a short amount of time.
 
-\subsection{Motion Planning}
+\subsection{Plan Movement}
 \textbf{Description:} Each robot is capable of determining how to actuate its motors to get from its current location to a desired location. By using its motion model based on the properties of its locomotion system, it can queue motor values and adjust for noise and error along the way.
 
-\subsection{Collision Detection}
+\subsection{Detect Collisions}
 \textbf{Description:} The system can use a combination of localization sensors and motor encoders to determine if any robot has encountered an obstacle. 
 
-\subsection{Driving}
+\subsection{Locomote}
 \textbf{Description:} The robot can use its array of motors and wheels to propel itself across the flat working surface. It can make arbitrarily sharp turns and acute curves in order to allow input drawings that incorporate such components. 
 
-\subsection{Writing Implement Actuation}
+\subsection{Actuate Writing Implement}
 \textbf{Description:} The robot can use its writing implement to make markings on the working surface. It can vary properties such as stroke size and thickness to a small degree by rotating or adjusting the pressure on the implement.
 
+\subsection{Localize}
+\textbf{Description:} The robot uses a combination of robot-mounted and static environmental markers, as well as a camera mounted above the working surface to determine the locations of each of the robots. This information is used to determine the 
+
+\subsection{Communicate and Parse Data}
+\textbf{Description:} Individual robots report sensor readings to the offboard central computer, and the central computer sends updated localization information and 
 % \subsection{Load/Switch Writing Implement}
 % \textbf{Summary:} A robot's main consumable, the writing implement, must be reloaded or replaced when empty or when a different implement (with different color stroke, or other properties) is desired. \\
 % \textbf{Actors:}  Writing implement, human \\
