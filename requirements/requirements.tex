@@ -9,11 +9,13 @@ We outline our system's requirements, both functional and nonfunctional. A prior
 \subsection{Functional Requirements}
 \label{sec:functional_requirements}
 
+\rhnote{Break this up into 1 function (omnidirectional) and 2 nonfunctional (position and rotational accuracy)} \\
 \begin{functional_requirement}{Move in Specified Directions}{7}
 \label{fr:move_in_direction}
 \item Robots must be able to autonomously move in a commanded direction on a flat plane. Omnidirectional movement is necessary to ensure agents can adequately and efficiently cover the drawing workspace. \added[remark={NJ, V2}]{Positional accuracy must be within a 1 inch radius for every 3 feet of motion. Orientation accuracy must be within 10 degrees for a given rotation.}
 \end{functional_requirement}
 
+\rhnote{I dont understand the feedback on this section} \\
 \begin{functional_requirement}{Autonomous}{6}
 \label{fr:autonomous}
 \item Given an input image to draw, robot agents must be able to autonomously complete the drawing. This includes the following steps: processing the input, planning and commanding individual agents, and having robots move and draw without external input. We allow for human intervention only in the case of system failure. 
@@ -58,6 +60,7 @@ Split into multiple more detailed and specific requirements of insertion, remova
 \item Robot agents must have a controller to ensure motions made are accurate. Accurate motions is paramount to ensure an accurate drawing. \added[remark={NJ, V2}]{The drive control system must be in compliance with motion accuracy parameters, as specified in functional requirement, \frref{fr:move_in_direction}.} 
 \end{functional_requirement}
 
+\rhnote{10 seconds is nonfunctional requirement. So is safely and accurately.}
 \begin{functional_requirement}{Turn on or off writing tool}{1}
 \label{fr:on_tool}
 \item All robot agents need to be able to enable or disable use of the writing implement. The robot must also have the ability to move safely and accurately regardless of the state of the writing implement. Not all drawings are contiguous lines, and as such the robots must be able to disable the writing tool to move to a new drawing location. \added[remark={NJ, V2}]{Individual robots must be able to enable or disable the writing implement within 10 seconds.}
@@ -87,6 +90,8 @@ Split into multiple more detailed and specific requirements of insertion, remova
 \textbf{Documentation} \\
 Documentation of the design process, software, and hardware implementation is important for debugging, recreation, and general understanding of this project.}
 
+\rhnote{Add functional requirement on battery power.}
+
 \subsection{Non-Functional Requirements}
 \label{sec:nonfunctional_requirements}
 
@@ -98,10 +103,14 @@ Documentation of the design process, software, and hardware implementation is im
 \item The\added[remark={NJ, V2}]{ system must be able to handle errors appropriately. This includes problems that arise from localization, locomotion, planning, or using the writing tool. The system must be able to determine, based on conditions of the failure, whether to halt all operation or to continue without using broken subsystems. Errors can occur inside of any of the use cases listed in \sref{sec:use_cases}.}
 \end{nonfunctional_requirement}
 
+\rhnote{One requirement on weight. One on size. on on drop height.}
 \begin{nonfunctional_requirement}{Portable}{4}
 \item Individual robot agents must be easy to move between locations. Portability can be measured by physical dimensions and weight. Each robot must fit through a standard doorway (defined as 80 in. x 36 in. \cite{homedepotdoor}), and be under 50 pounds.
 \end{nonfunctional_requirement}
 
+
+\rhnote{From DW: Lots of variability in human performance. Maybe use rate of
+drawing implement consumption or \% of duty cycle drawing}
 \begin{nonfunctional_requirement}{Efficiency}{2}
 \item Robot system must be efficient and complete drawing tasks quickly. Timeliness can be measured by the amount of time taken to complete drawings. Robot planning must also exist in such a manner that evenly splits the workload among all robot agents working in the system. Therefore, a noticeable speedup is expected when using two robots as opposed to one. \added[remark={NJ, V2}]{The system should perform as fast or faster than a human attempting the same drawing task.}
 \end{nonfunctional_requirement}
