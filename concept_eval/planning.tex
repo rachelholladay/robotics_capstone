@@ -2,25 +2,25 @@
 
 \section{Work Scheduling, Distribution, and Planning}
 \label{sec:planning}
-Given the output from the image processor (\sref{sec:image_processing}), and parameters such as the number of robots and the size of the workspace, the module determines the work that will be distributed to each robot. \added[remark={RH, V2}]{The} software architecture (\sref{sec:sw_arch_planner}) \replaced[remark={RH, V2}]{section explain the operational flow of the system.}{for more information}. \deleted[remark={RH, V2}]{Planning between robots allows for coordination and efficiency, satisfying requirements for both (Requirements Specification, 5.2, NFR2, NFR7)} \\
+Given the output from the image processor (\sref{sec:image_processing}), and parameters such as the number of robots and the size of the workspace, this module determines the work that will be distributed to each robot. \added[remark={RH, V2}]{The} software architecture (\sref{sec:sw_arch_planner}) \replaced[remark={RH, V2}]{section explains the operational flow of the system.}{for more information}. \deleted[remark={RH, V2}]{Planning between robots allows for coordination and efficiency, satisfying requirements for both NFR2 and NFR7.} \\
 
 \noindent
 \textbf{Critical Components:} Scheduling and distribution algorithm. \\
 \noindent
-\textbf{Further Research:} Scheduling multiple robots in a loosely coordinated joint task presents an interesting research question that we are continuing to research further. 
+\textbf{Further Research:} Scheduling multiple robots in a loosely coordinated joint task presents an interesting research question that we are continuing to look into.
 
 \subsection{Use Cases}
 \subsubsection{Decompose Plan}
-\textbf{Description:} \added[remark={DZ, V2}]{The system generates an efficient distribution of work to each of the individual robots. The work distribution takes into account the amount of writing material needed, thereby limiting the need for reloading. It is also based on distance that the robots must cover and the speed at which they must travel to ensure that robots sit idle for as little time as possible.}
+\textbf{Description:} \added[remark={DZ, V2}]{The system generates an efficient distribution of work to each of the individual robots. The work distribution takes into account the amount of writing material needed, thereby limiting the need for reloading. It is also based on distance that the robots must cover and the speed at which they must travel to ensure that robot agents idle for as little time as possible.}
 
 \subsubsection{Schedule Lines}
 \textbf{Description:} \added[remark={DZ, V2}]{The system can divide each robot's specific tasks into subtasks, and determines the order in which they will be completed. This order ensures that the robot spends little time traversing unnecessary distance and completes its tasks in a short amount of time.}
 
 \subsubsection{Plan Movement}
-\textbf{Description:} \added[remark={DZ, V2}]{Each robot is capable of determining how to actuate its motors to get from its current location to a desired location. By using its motion model based on the properties of its locomotion system, it can queue motor values and adjust for noise and error along the way.}
+\textbf{Description:} \added[remark={DZ, V2}]{Each robot is capable of determining how to actuate its motors to get from its current location to a desired location. By using its motion model based on the properties of the robot's locomotion system, the system can queue motor values and adjust for noise and error along the way.}
 
 \subsubsection{Detect Collisions}
-\textbf{Description:} \added[remark={DZ, V2}]{The system can use a combination of localization sensors and motor encoders to determine if any robot has encountered an obstacle.} 
+\textbf{Description:} \added[remark={DZ, V2}]{The system can use a combination of localization sensors and motor encoders to determine if any robot has encountered an obstacle.}
 
 \subsection{Software Architecture}
 \label{sec:sw_arch_planner}
@@ -33,25 +33,25 @@ Given the output from the image processor (\sref{sec:image_processing}), and par
 \end{figure}
 
 A key aspect of our software system is distributing and planning the work to the robot agents, modeled in \figref{fig:planning_processing}.
-Two of our nonfunctional requirements are to be efficient and have the robots coordinate with each other (NFR4, NFR9). These two objectives inform our planning pipeline. We split the planning and coordination into two separate problems, allowing us to frame coordination as a scheduling problem~\cite{o1989deadlock}. Hence our work distribution and planning can be handled offline while our coordinate occurs online. 
+Two of our nonfunctional requirements are to be efficient and have the robots coordinate with each other (NFR4, NFR9). These two objectives inform the planning pipeline. We split the planning and coordination into two separate problems, allowing us to frame coordination as a scheduling problem~\cite{o1989deadlock}. Hence our work distribution and planning can be handled offline while our coordinate occurs online.
 
-From our image processing \sref{sec:sw_arch_image_processing}, we recieve processed image data. 
-Using this data, we compute the length of every individual line. 
-Guided by the assumption that line length correlates to amount of work done and the time to perform that work, we then use those lengths to load balance when assigning which lines should be drawn by each robot. 
-Once each line has been assigned to each robot, each robot has a complete picture of their work and assign an ordering to their lines. 
-To limit wasteful movement, the robots order lines greedily: having completed one lines, they pick their next lines (from their assigned set) based on which line has the closet endpoint to the lines they have just finished. 
-Having ordered lines, we now can determine each robot's set of paths. 
+From our image processing \sref{sec:sw_arch_image_processing}, we recieve processed image data.
+Using this data, we compute the length of every individual line to be drawn.
+Guided by the assumption that line length correlates to amount of work done and the time to perform that work, we then use those lengths to load balance when assigning which lines should be drawn by each robot.
+Once each line has been assigned to each robot, each robot has a complete picture of their work and can be assigned an ordering to their lines.
+To limit wasteful movement, the robots order lines greedily: having completed one line, they pick their next lines (from their assigned set) based on which line has the closet endpoint to the line they have just finished.
+Having ordered lines, we now can determine each robot's set of paths.
 
 Next, we briefly describe a sketch of our coordination mechanism. Each robot has a queue of paths, based on the set ordering, to execute.
 Given that a robot has not finished all of it's assigned paths, it removes a path from the queue.
 The path is then uniformly timed and converted into a trajectory.
 Given timing information, the system can check for path collision between any trajectories currently being executed.
-If the trajectory is not at risk of collision, then it can be executed - and is sent to the robot via the protocol mentioned in \sref{sec:sw_arch_communication}. 
+If the trajectory is not at risk of collision, then it can be executed - and is sent to the robot via the protocol mentioned in \sref{sec:sw_arch_communication}.
 
-If the trajectory is in collision with a currently executing trajectory, then the trajectory being processed defers to the one being executed. 
-The timing of the processing trajectory is adjusted by adding a pause to avoid collision. Given this modified timing we can then execute it. 
+If the trajectory is in collision with a currently executing trajectory, then the trajectory being processed defers to the one being executed.
+The timing of the processing trajectory is adjusted by adding a pause to avoid collision. Given this modified timing we can then execute it.
 
 Once all paths have been drawn, the drawing is completed.
 
 \subsection{Requirements Fulfilled}
-\added[remark={RH, V2}]{Our planning framework allows the system to be autonomous (FR2) and will enforce that the robots stay within bounds (FR4). The planning framework will also control the writing implement on/off switch (FR10) and keep track of total system progress (FR12). Our planner is designed to parition work evenly for efficiency (NFR5) and carefully plan for quality (NFR6) and reliability (NFR8). The online component of \figref{fig:planning_processing} coordinates the robots (NFR9). Additionally as we flesh out the rest of the system we will build error handling into the software (NFR2).}
+\added[remark={RH, V2}]{Our planning framework allows the system to be autonomous (FR2) and will enforce that the robots stay within bounds (FR4). The planning framework will also control the writing implement on/off switch (FR10) and keep track of total system progress (FR12). Our planner is designed to parition work evenly for efficiency (NFR5) and carefully plan for quality (NFR6) and reliability (NFR8). The online component of \figref{fig:planning_processing} coordinates the robots to avoid collision(NFR9). Additionally as we flesh out the rest of the system we will build error handling into the software (NFR2).}
