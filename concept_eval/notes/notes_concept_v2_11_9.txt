@@ -1,30 +1,15 @@
 GENERAL
-  fix refs to requirements spec in all sections
 
 4 writing implement
-  ERIC: needs to talk about how fulfills requirements
   ERIC: needs trade study/art (eric)
-  req fulfilled
 
 5 locomotion
   ERIC: Trade study needs conclusion/cleanup
   ERIC: artistic sketch/description needs to be added (eric)
-  req fulfilled
 
 6 Localization
-  req fulfilled
-
 7 image processing
-  req fufilled
-
 8 work scheduling
-  RH: Research section 8.2
-
 9 Communication
-  req fulfilled
-
 10 User interface
-  req fufilled
-
 11 power system
-  req fulfilled

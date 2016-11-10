@@ -2,11 +2,12 @@
 
 \section{Writing Implement}
 \label{sec:writing_implement}
-The writing implement actuator deposits writing material onto the working surface. It manages reloading of the writing implement and ensures that the implement is properly secured. Additionally, it can extend writing material closer to the ground as the material is shortened through use, and it can rotate the writing material for variation in stroke. In the event of writing material depletion, its sensors will detect the occurrence and alert the communication module (\sref{sec:subsystem_communication}). This subsystem satisfies writing tool related requirements (Requirements Specification, 5.1, FR6, FR8). \rhnote{How does it fulfill these requirements?}\\
-The writing implement system is modular, in that various writing tools (such as chalk, markers, pens, etc.) can be easily inserted by users. This involves a fixed motor mechanism on the robot, with mounts for each tool that can be locked into place on the robot. The mounts can optionally connect to two motors: One for linear motion to raise and lower the writing implement, and another to rotate the writing material as described above. \\
+The writing implement mechanism deposits writing material onto the working surfaces. It manages reloading of the writing implement and ensures that the implement is properly secured. This subsystem can also draw discontinuous  strokes and draw in various widths. In the event of writing material depletion, its sensors will detect the occurrence and alert the communication module (\sref{sec:communication}). 
+
+The writing implement system is modular, so that various writing tools (such as chalk, markers, pens, etc.) can be easily inserted by users. This involves a fixed motor mechanism on the robot, with mounts for each tool that can be locked into place on the robot. The mounts can optionally connect to two motors: One for linear motion to raise and lower the writing implement, and another to rotate the writing material as described above.
 
 \noindent
-\textbf{Critical Components:} The writing implement holder, actuation mechanism, writing material levels sensor and reloading mechanism. 
+\textbf{Critical Components:} Writing implement housing, actuation mechanism, writing material levels sensor, and reloading mechanism. 
 
 
 \subsection{Use Cases}
@@ -15,14 +16,18 @@ The writing implement system is modular, in that various writing tools (such as 
 \textbf{Description:} \added[remark={DZ, V2}]{The robot has the ability to allow quick swapping of writing implements. This may be necessary when the current implement has been depleted, or a new  implement with different writing properties is desired. The writing implement actuator itself is modular and detachable, so different kinds of writing implements (markers, chalk, etc.) can be used in the same robot.}
 
 \subsubsection{Actuate Writing Implement}
-\textbf{Description:} \added[remark={DZ, V2}]{The robot can use its writing implement to make markings on the working surface. It can vary properties such as stroke size and thickness to a small degree by rotating or adjusting the pressure on the implement.}
+\textbf{Description:} \added[remark={DZ, V2}]{The robot can use its writing implement to make markings on the working surface. It can vary drawing properties such as line continuity and stroke thickness.}
 
 \subsection{Trade Study}
-\rhnote{ERIC: Need to commit to chalk/liquid chalk via trade study}. 
-\rhnote{Going to be prototyped.}
+To ensure the robot is suitable for a wide range of drawing applications, we considered three different drawing materials: chalks, markings, and paints. For applying chalk drawings, the robot can either utilize a traditional chalk or a liquid chalk marker. Markings are usually applied through markers, for example Sharpie Permanent Markers. Typical ways to apply paints are either using a roller or a brush or using spray paint can. The mentioned drawing materials will be evaluated against system requirements in the context below.
+
+As non-functional requirements NFR5 and NFR7 indicate, the robotic system needs to reliably paint drawings that are closely matched with the input image. Compared to chalks and markers, methods for applying paints are often more complex, which makes it difficult to ensure strokes quality. Also, drawing with paints often involve dripping and uneven amount of coating. Such drawbacks will further defeat our requirement on drawing quality (NFR5.) Therefore, we plan to merely pursue with chalks and markings for drawing materials.
+
+There are two ways of applying chalk drawings: using traditional chalk and using liquid chalk marker. These two methods are evaluated against criteria including mechanism complexity and drawing quality. Since traditional chalk shortens and flattens while drawing, the designed mechanism needs to account for this potential change in length and provides an extra rotational degree of freedom to unify line width. On the other hand, mechanism for liquid chalk markers does not need to concern with drawing implement’s length change and requires only one translational degree of freedom. Hence, in terms of mechanism complexity, liquid chalk marker is better than traditional chalk. However, in terms of drawing quality, both methods are unclear to us. Therefore, a prototype would be needed to reveal the difference in drawing quality between the two methods and to help us determine which method to use. 
 
 \subsection{Artistic Sketch}
 \rhnote{insert eric drawing}
 \njnote{Artistic drawing needs a text description to justify it}
 
 \subsection{Requirements Fulfilled}
+\added[remark={RH, V2}]{Our modular implement system allows us to easily insert (FR5), remove (FR6) and replace (FR7) tools quickly (NFR14). The motorized control allows the robot to turn the writing tool on and off (FR10). The size of the system is designed to be within weight (NFR3), size (NFR4) and budget (NFR10) restrictions. Through continued prototyping process, we will consider reliability (NFR8) and quality (NFR6) and how we can build in error handling (NFR2).}
