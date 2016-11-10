@@ -2,10 +2,13 @@
 
 \section{Image Processing}
 \label{sec:image_processing}
-\njnote{NEEDS TO BE FIXED. can't use the word scanner}
-The image scanner takes a user-provided image or generates one, and transfers it to the image processing module (\sref{sec:subsystem_image_processor}). The image scanner, being a module requiring user interaction, will also incorporate a front-end user interface (\sref{sec:subsystem_ui}). This subsystem satisfies requirements for adding a drawing plan (Requirements Specification, 5.1, FR9). \\
+\added[remark={NJ,V2}]{This subsystem takes a user-provided image as input, and processes in such a way that it can be read in and used by the work scheduling subsystem (\sref{sec:planning}). The input from the user incorporates a front-end user interface, satifying requirements related to user interaction, which are defined below in Section \sref{subsec:image_processing_req_fulfilled}.}
 
-The image processor takes input from the image scanner (\sref{sec:subsystem_input_scanner}) and produces information that is recognizable by the planning module (\sref{sec:subsystem_planner}). \\
+\deleted[remark={NJ,V2}]{The image scanner takes a user-provided image or generates one, and transfers it to the image processing module (\sref{sec:subsystem_image_processor}). The image scanner, being a module requiring user interaction, will also incorporate a front-end user interface (\sref{sec:subsystem_ui}). This subsystem satisfies requirements for adding a drawing plan (Requirements Specification, 5.1, FR9).} 
+The image processor takes input from the image scanner (\sref{sec:subsystem_input_scanner}) and produces information that is recognizable by the planning module (\sref{sec:subsystem_planner}). }
+
+\noindent
+\textbf{Critical Components:} User interface, image sensor, Image processing algorithm. 
 
 \subsection{Use Cases}
 \subsubsection{Input User Image}
@@ -14,7 +17,7 @@ The image processor takes input from the image scanner (\sref{sec:subsystem_inpu
 
 \subsection{Software Architecture}
 \label{sec:sw_arch_image_processing}
-\rhnote{Explain why?} \\
+\added[remark={NJ,V2}]{This software system was designed based around taking user input in the form of an image, and processing into a format best suited for use in the work scheduling system (\sref{sec:planner}).} \\
 
 \begin{figure}[h!]
  \centering
@@ -28,3 +31,4 @@ The image processing pipeline (\figref{fig:image_processing}) takes the image sc
 Once voxelization is complete, lines are formed from the voxels through a nearest-neighbor search. These lines are simply a series of voxel squares that pass through the image. In order to preserve curvature of lines from the input, the grid-delineated lines are reparamterized with splines into paths. These paths are then sent to the work planning module.
 
 \subsection{Requirements Fulfilled}
+\label{subsec:image_processing_req_fulfilled}

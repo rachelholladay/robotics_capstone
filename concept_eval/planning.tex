@@ -4,6 +4,9 @@
 \label{sec:planning}
 Given the output from the image processor (\sref{sec:subsystem_image_processor}), and parameters such as the number of robots and the size of the workspace, the module determines the work that will be distributed to each robot. See software architecture (\sref{sec:software_architecture}) for more information. Planning between robots allows for coordination and efficiency, satisfying requirements for both (Requirements Specification, 5.2, NFR2, NFR7). \\
 
+\noindent
+\textbf{Critical Components:} Scheduling and distribution algorithm. 
+
 \subsection{Use Cases}
 \subsubsection{Decompose Plan}
 \textbf{Description:} \added[remark={DZ, V2}]{The system generates an efficient distribution of work to each of the individual robots. The work distribution takes into account the amount of writing material needed, thereby limiting the need for reloading. It is also based on distance that the robots must cover and the speed at which they must travel to ensure that robots sit idle for as little time as possible.}
