@@ -7,7 +7,6 @@ GENERAL
   req fulfilled
 
 5 locomotion
-  DZ: fix locomotion
   ERIC: Trade study needs conclusion/cleanup
   ERIC: artistic sketch/description needs to be added (eric)
   req fulfilled
