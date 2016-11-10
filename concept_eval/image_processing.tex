@@ -4,8 +4,8 @@
 \label{sec:image_processing}
 \added[remark={NJ,V2}]{This subsystem takes a user-provided image as input, and processes in such a way that it can be read in and used by the work scheduling subsystem (\sref{sec:planning}). The input from the user incorporates a front-end user interface, satifying requirements related to user interaction, which are defined below in Section \sref{subsec:image_processing_req_fulfilled}.}
 
-\deleted[remark={NJ,V2}]{The image scanner takes a user-provided image or generates one, and transfers it to the image processing module (\sref{sec:subsystem_image_processor}). The image scanner, being a module requiring user interaction, will also incorporate a front-end user interface (\sref{sec:subsystem_ui}). This subsystem satisfies requirements for adding a drawing plan (Requirements Specification, 5.1, FR9).} 
-The image processor takes input from the image scanner (\sref{sec:subsystem_input_scanner}) and produces information that is recognizable by the planning module (\sref{sec:subsystem_planner}). }
+\deleted[remark={NJ,V2}]{The image scanner takes a user-provided image or generates one, and transfers it to the image processing module (\sref{sec:image_processing}). The image scanner, being a module requiring user interaction, will also incorporate a front-end user interface (\sref{sec:user_interface}). This subsystem satisfies requirements for adding a drawing plan (Requirements Specification, 5.1, FR9).} 
+The image processor takes input from the image scanner (\sref{sec:image_processing}) and produces information that is recognizable by the planning module (\sref{sec:planning}). }
 
 \noindent
 \textbf{Critical Components:} User interface, image sensor, Image processing algorithm. 
