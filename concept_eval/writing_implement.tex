@@ -4,7 +4,7 @@
 \label{sec:writing_implement}
 The writing implement mechanism deposits writing material onto the working surfaces. It manages reloading of the writing implement and ensures that the implement is properly secured. This subsystem can also draw discontinuous  strokes and draw in various widths. In the event of writing material depletion, its sensors will detect the occurrence and alert the communication module (\sref{sec:communication}).
 
-The writing implement system is modular, so that various writing tools (such as chalk, markers, pens, etc.) can be easily inserted by users. This involves a fixed motor mechanism on the robot, with mounts for each tool that can be locked into place on the robot. The mounts can optionally connect to two motors: One for linear motion to raise and lower the writing implement, and another to rotate the writing material as described above.
+The writing implement system is modular, so that various writing tools (such as chalk, markers, pens, etc.) can be easily inserted by users. This involves a fixed motor mechanism on the robot, with mounts for each tool that can be locked into place on the robot. The mounts can optionally connect to two motors: One for linear motion to raise and lower the writing implement, and another to rotate the writing material as described above. \\
 
 \noindent
 \textbf{Critical Components:} Writing implement housing, actuation mechanism, writing material levels sensor, and reloading mechanism.
@@ -25,9 +25,18 @@ As non-functional requirements NFR5 and NFR7 indicate, the robotic system needs 
 
 There are two ways of applying chalk drawings: using traditional chalk and using a liquid chalk marker. These two methods are evaluated against criteria including mechanism complexity and drawing quality. Since traditional chalk shortens and flattens while drawing, the designed mechanism needs to account for this potential change in length and provides an extra rotational degree of freedom to unify line width. On the other hand, the mechanism for liquid chalk markers does not need to account for the marker length and requires only one translational degree of freedom. Hence, in terms of mechanism complexity, a liquid chalk marker is better than traditional chalk. However, in terms of drawing quality, both methods are uncertain. Therefore, a prototype will be used to reveal the difference in drawing quality between the two methods and to help us determine which one to use.}
 
+\pagebreak
 \subsection{Artistic Sketch}
-\rhnote{insert eric drawing}
-\njnote{Artistic drawing needs a text description to justify it}
+
+\begin{figure}[!ht]
+ \centering
+  \includegraphics[width=0.95\columnwidth]{sketches/Writing_Implement1.jpg} \\
+	\includegraphics[width=0.95\columnwidth]{sketches/Writing_Implement2.jpg}
+	\caption{Writing Implement Sketch and Design Justifications}
+ \label{fig:writing_tool}
+\end{figure}
+\clearpage
+
 
 \subsection{Requirements Fulfilled}
 \added[remark={RH, V2}]{Our modular implement system allows us to easily insert (FR5), remove (FR6) and replace (FR7) tools quickly (NFR14). The motorized control allows the robot to turn the writing tool on and off (FR10). The size of the system is designed to be within weight (NFR3), size (NFR4) and budget (NFR10) restrictions. Through continued prototyping process, we will consider reliability (NFR8) and quality (NFR6) and how we can build in error handling (NFR2).}

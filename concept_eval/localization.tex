@@ -25,5 +25,15 @@ The other choice of methodology is marker based. Using markers placed around the
 
 \added[remark={DZ, V2}]{Given the convenience and ease of use of marker-based localization, it is clearly the better choice. Additionally, since the workspace is limited to an indoor, flat, and homogenous area in our requirements specification (Requirements Specification, 2.3, 2.4 A1) we can reliably count on overhead line-of-sight as opposed to having the robots observe or be observed by the passive or active markers. An indoor space also allows for easy mounting of an overhead camera. Consequently, we have decided to pursue a passive marker system observed from above by a single camera.}
 
+\subsection{Artistic Sketch}
+
+\begin{figure}[!ht]
+ \centering
+  \includegraphics[width=0.95\columnwidth]{sketches/Localization.jpg} 
+	\caption{Localization Sketch}
+ \label{fig:localization_sketch}
+\end{figure}
+\clearpage
+
 \subsection{Requirements Fulfilled}
 \added[remark={RH, V2}]{Our localization system allows the robot to be autonomous (FR2) and localize (FR3), which gives them the information to stay within workspace boundaries (FR4). Our localization will be refined to account for error handling (NFR2). Precision in localization will enable our robot to produce a quality image (NFR6) with positional (NFR12) and rotational accuracy (NFR13) that is coordinated with the rest of the system (NFR9). As we continue with our overhead camera system we will develop reliability (NFR8) and safety (NFR11) into the system. We believe that our simple overhead camera will be within budget (NFR1).}
