@@ -1,7 +1,7 @@
 '''
 Sketch of prototype planner
 '''
-import numpy, random
+import numpy, random, math
 
 def readPoints(dir_path, filename):
     '''
@@ -74,63 +74,122 @@ def assign_partitionHalf(points, boundx):
     one_pts = numpy.array(rob1)
     return (zero_pts, one_pts)        
 
-def createPlan(lineSegs, start):
+def ptsMatching(p0, p1, flagBool):
     '''
-    @param lineSegs list of lines for the robot
+    @param p0 Starting point pair
+    @param p1 End point pair
+    @param flagBool Flag on whether drawing
+    @return segPts interpolated path points
+    @return segFlag interpolate path flags
+    '''
+    sub = numpy.subtract(p0, p1)
+    dist = int(math.ceil(numpy.linalg.norm(sub)))
+    xvals = numpy.linspace(p0[0], p1[0], dist, endpoint=flagBool)
+    yvals = numpy.linspace(p0[1], p1[1], dist, endpoint=flagBool)
+    if not flagBool:
+        xvals = xvals[1:]
+        yvals = yvals[1:]
+    segPts = zip(xvals, yvals)
+    segFlag = [flagBool]*len(segPts)
+    return (segPts, segFlag)
+
+def createPlan(segs, start):
+    '''
+    @param segs list of lines for the robot
     @param start The (x, y) starting position of the robot
     @return planSegs Contigous set of lines from start to each of the robot's 
                      lines (including transit between) and back to the start.
-    @return planSegs Matching to planSegs that is boolean indicator on 
+    @return flagsList Matching to planSegs that is boolean indicator on 
                      whether to draw or not
     '''
-    numDrawSegs = len(lineSegs)
-    numSegs = (2*numDrawSegs) + 1
-    drawFlag = numpy.ones((numSegs)) * -1
-    planSegs = numpy.zeros((numSegs, 4))
-
+    numDrawSegs = len(segs)
+    pts = []
+    flags = []
     prev = start
     for i in xrange(numDrawSegs):
         # Plan from prev to actual (no point)
-        planSegs[(2*i)] = [prev[0], prev[1], lineSegs[i, 0], lineSegs[i, 1]]
-        drawFlag[(2*i)] = False
-        planSegs[(2*i)+1] = lineSegs[i, :]
-        drawFlag[(2*i)+1] = True
-        prev = [lineSegs[i, 2], lineSegs[i, 3]]
-    planSegs[(numSegs-1)] = [prev[0], prev[1], start[0], start[1]]
-    drawFlag[(numSegs-1)] = False
-    return (planSegs, drawFlag)
+        segPtsF, segFlagF = ptsMatching(prev, segs[i, 0:2], True)
+        pts.append(segPtsF)
+        flags.append(segFlagF)
+
+        # Plan through path
+        segPtsT, segFlagT = ptsMatching(segs[i, 0:2], segs[i, 2:], False)
+        pts.append(segPtsT)
+        flags.append(segFlagT)
+        prev = segs[i, 2:]
+
+    #TODO being counted?
+    segPtsL, segFlagL = ptsMatching(prev, start, False)
+    pts.append(segPtsF)
+    flags.append(segFlagF)
+    flagsList = numpy.array([item for sublist in flags for item in sublist]) 
+    ptsList = numpy.array([item for sublist in pts for item in sublist])
+    return (ptsList, flagsList)
 
 def computeTiming(pathSegs, flags):
     '''
     @param pathSegs path of the robot
     @param flags corresponding flags of when the robot is drawing along path
-    @return totalTime estimated time of path
+    @return timeList time stamps along path
     @return timeDrawing estimated time spent drawing
     '''
+    #TODO might need to double check timing
+    timeList = numpy.zeros((len(pathSegs)))
     totalTime = 0
     timeDrawing = 0
     timeFactor = 1
-    for i in xrange(len(pathSegs)):
-        p0 = pathSegs[i][0:1]
-        p1 = pathSegs[i][2:3]
-        dist = numpy.linalg.norm(p0-p1)
-        timeDuration = dist * timeFactor
-        totalTime += timeDuration
+    for i in xrange(1, len(pathSegs)):
+        sub = numpy.subtract(pathSegs[(i-1), :], pathSegs[i, :])
+        dist = numpy.linalg.norm(sub)
+        totalTime += (timeFactor*dist)
+        timeList[i] = totalTime
         if flags[i]:
-            timeDrawing += timeDuration
-    return (totalTime, timeDrawing)
+            timeDrawing += (timeFactor*dist)
+    return (timeList, timeDrawing)
 
-def computeCollisions(path0, path1):
-    return 0
+def computeCollisions(path0, time0, path1, time1, distCheck):
+    '''
+    @param path0 robot 0's path
+    @param time0 robot 0's time mapping
+    @param path1 robot 1's path
+    @param time1 robot 1's time mapping
+    @param distCheck Minimum allowable distance to be collision free
+    @returns Boolean Flag, true if in collision
+    '''
+    if time0[-1] > time1[-1]:
+        timeMaster = time1
+        pathMaster = path1
+        timeSlave = time0
+        pathSlave = path0
+    else:
+        timeMaster = time0
+        pathMaster = path0
+        timeSlave = time1
+        pathSlave = path1
+     
+    for t in xrange(len(timeMaster)):
+        t0 = timeMaster[t]
+        t1 = (numpy.abs(timeSlave-t0)).argmin()
+        sub = numpy.subtract(pathMaster[t], pathSlave[t1])
+        dist = numpy.linalg.norm(sub)
+        if dist < distCheck:
+            return True
+    return False
 
 if __name__ == "__main__":
     boundx = 10
     boundy = 10
+    safeDist = 1
     points = readPoints('drawingInputs/', 'test1')
     (rob0_pts, rob1_pts) = assign_partitionHalf(points, boundx)
     (p0, f0) = createPlan(rob0_pts, [0, 0])
     (p1, f1) = createPlan(rob1_pts, [boundx, boundy])
-    (total0, draw0) = computeTiming(p0, f0)
-    (total1, draw1) = computeTiming(p1, f1)
-    print 'R0: {}. (Draw {})'.format(total0, draw0)
-    print 'R1: {}. (Draw {})'.format(total1, draw1)
+    (t0, timeDraw0) = computeTiming(p0, f0)
+    (t1, timeDraw1) = computeTiming(p1, f1)
+    print 'R0: {} / {}'.format(timeDraw0, t0[-1])
+    print 'R1: {} / {}'.format(timeDraw1, t1[-1])
+    collision = computeCollisions(p0, t0, p1, t1, safeDist)
+    if collision: 
+        print 'Paths Collide'
+    else:
+        print 'Collision Free'
