@@ -100,6 +100,29 @@ def createPlan(lineSegs, start):
     drawFlag[(numSegs-1)] = False
     return (planSegs, drawFlag)
 
+def computeTiming(pathSegs, flags):
+    '''
+    @param pathSegs path of the robot
+    @param flags corresponding flags of when the robot is drawing along path
+    @return totalTime estimated time of path
+    @return timeDrawing estimated time spent drawing
+    '''
+    totalTime = 0
+    timeDrawing = 0
+    timeFactor = 1
+    for i in xrange(len(pathSegs)):
+        p0 = pathSegs[i][0:1]
+        p1 = pathSegs[i][2:3]
+        dist = numpy.linalg.norm(p0-p1)
+        timeDuration = dist * timeFactor
+        totalTime += timeDuration
+        if flags[i]:
+            timeDrawing += timeDuration
+    return (totalTime, timeDrawing)
+
+def computeCollisions(path0, path1):
+    return 0
+
 if __name__ == "__main__":
     boundx = 10
     boundy = 10
@@ -107,5 +130,7 @@ if __name__ == "__main__":
     (rob0_pts, rob1_pts) = assign_partitionHalf(points, boundx)
     (p0, f0) = createPlan(rob0_pts, [0, 0])
     (p1, f1) = createPlan(rob1_pts, [boundx, boundy])
-    print p0, f0
-    
+    (total0, draw0) = computeTiming(p0, f0)
+    (total1, draw1) = computeTiming(p1, f1)
+    print 'R0: {}. (Draw {})'.format(total0, draw0)
+    print 'R1: {}. (Draw {})'.format(total1, draw1)
