@@ -2,6 +2,9 @@
 Sketch of prototype planner
 '''
 import numpy, random, math
+import matplotlib
+from matplotlib import pyplot as plt
+from matplotlib import animation
 
 def readPoints(dir_path, filename):
     '''
@@ -113,15 +116,16 @@ def createPlan(segs, start):
         flags.append(segFlagF)
 
         # Plan through path
-        segPtsT, segFlagT = ptsMatching(segs[i, 0:2], segs[i, 2:], False)
+        segPtsT, segFlagT = ptsMatching(segs[i, 0:2], segs[i, 2:], True)
         pts.append(segPtsT)
         flags.append(segFlagT)
         prev = segs[i, 2:]
 
-    #TODO being counted?
     segPtsL, segFlagL = ptsMatching(prev, start, False)
-    pts.append(segPtsF)
-    flags.append(segFlagF)
+    pts.append(segPtsL)
+    flags.append(segFlagL)
+    pts.append([start])
+    flags.append([False])
     flagsList = numpy.array([item for sublist in flags for item in sublist]) 
     ptsList = numpy.array([item for sublist in pts for item in sublist])
     return (ptsList, flagsList)
@@ -176,11 +180,30 @@ def computeCollisions(path0, time0, path1, time1, distCheck):
             return True
     return False
 
+def animatePlanner(plan0, flag0, time0):
+    return 0
+
+def init():
+    for line in lines:
+        line.set_data([],[])
+    return lines
+
+def animate(i, path0, path1):
+    x0 = path0[0:i, 0]
+    y0 = path0[0:i, 1]
+    x1 = path1[0:i, 0]
+    y1 = path1[0:i, 1]
+    xlist = [x0, x1]
+    ylist = [y0, y1]
+    for lnum,line in enumerate(lines):
+        line.set_data(xlist[lnum], ylist[lnum]) # set data for each line separately. 
+    return lines    
+
 if __name__ == "__main__":
     boundx = 10
     boundy = 10
     safeDist = 1
-    points = readPoints('drawingInputs/', 'test1')
+    points = readPoints('drawingInputs/', 'test2')
     (rob0_pts, rob1_pts) = assign_partitionHalf(points, boundx)
     (p0, f0) = createPlan(rob0_pts, [0, 0])
     (p1, f1) = createPlan(rob1_pts, [boundx, boundy])
@@ -193,3 +216,25 @@ if __name__ == "__main__":
         print 'Paths Collide'
     else:
         print 'Collision Free'
+
+
+    # Animation
+    plt.rcParams['animation.ffmpeg_path'] ='/usr/bin/ffmpeg'
+    FFwriter = animation.FFMpegWriter()
+    fig = plt.figure()
+    ax = plt.axes(xlim=(0, boundx), ylim=(0, boundy))
+    for i in xrange(len(points)):
+        ax.plot([points[i, 0], points[i, 2]], [points[i, 1], points[i, 3]], lw=5, color='black') 
+    line, = ax.plot([], [], lw=2)
+
+    plotcols = ["orange", "red"]
+    lines = []
+    for index in range(2):
+        lobj = ax.plot([],[],lw=2, color=plotcols[index])[0]
+        lines.append(lobj)
+
+    count = max(len(p0), len(p1))+1
+    anim = animation.FuncAnimation(fig, animate, init_func=init, fargs=[p0, p1],
+                               frames=count, interval=500, blit=True)
+    anim.save('plannerOutput/basic_animation.mp4', writer=FFwriter) 
+    plt.show()
