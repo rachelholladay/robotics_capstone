@@ -1,0 +1,35 @@
+MEETING NOTES 11/10
+Met with DW as group to talk about concept eval and prototyping 
+
+for reqs like weight/size, best to approximate - basically a sanity check
+  ensure we won't fail the requirement
+
+image processing section
+  'why' comment - need to justify why do this instead of having user specify lines/points and doing that
+
+  make sure to reflect that line segments found by processing reported back to user, and user OKs those lines
+
+
+architecture diagrams
+  definitely need sw diagram
+
+installation section
+  talk about minutia of deployment - how to get into field
+    - need extension cords/tall mounts for top camera, etc.
+    - any calibration needed for anything
+    - how do robots get to working area (probably lifted)
+
+  "think about people, equipment, environment that system is part of"
+
+
+prototyping
+  - testing relationships of overhead camera
+  - writing implement testing (types - marker,chalk, etc.)
+    - force needed to make marks/quality of marks made
+
+
+
+
+TODO
+Add small sentence explaining what labels in requirements table at the end are
+
