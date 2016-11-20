@@ -3,15 +3,28 @@
 \subsection{Localization}
 \label{sec:verification_localization}
 
-\njnote{Fail: camera failure (due insufficient power, bad mounting aka falls)}
-\njnote{Fail: unusable localization}
-\njnote{Fail: object/person on surface, obscures vision tags causes bad localization}
 
 \subsubsection{Performance Tests}
 \label{sec:localization_pt}
 
+positional accuracy of each robot
+acceptance - requirements spec for localization accuracy
+metric - accuracy distance
+
+accuracy of detecting bounds of workspace
+acceptance - how close to actual drawing space the determined bounds are
+metric - accuracy distance
+
 \subsubsection{Functional Tests}
 \label{sec:localization_ft}
 
+bool - can localization find robot position
+
+bool - can localization detect bounds/workspace 
+
 \subsubsection{Failure Modes}
 \label{sec:localization_fm}
+
+\njnote{Fail: camera failure (due insufficient power, bad mounting aka falls)}
+\njnote{Fail: unusable localization}
+\njnote{Fail: object/person on surface, obscures vision tags causes bad localization}

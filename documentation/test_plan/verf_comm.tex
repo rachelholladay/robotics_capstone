@@ -3,14 +3,23 @@
 \subsection{Communication}
 \label{sec:verification_comm}
 
-\njnote{loss of connection - server side, robot/client side, no connection vs. intermittent are equivalent in handling}
-\njnote{Send garbage/incorect data}
 
 \subsubsection{Performance Tests}
 \label{sec:comm_pt}
 
+reliability - what is the uptime on our ability to communicate data to robots
+metric: percentage time running vs. bad connection
+acceptance criteria: requirements spec say perfect/near perfect uptime
+
 \subsubsection{Functional Tests}
 \label{sec:comm_ft}
 
+can data be sent to/from the robots and the server
+
+is data sent using the same communication protocol/can be parsed by both ends of the system
+
 \subsubsection{Failure Modes}
 \label{sec:comm_fm}
+
+\njnote{loss of connection - server side, robot/client side, no connection vs. intermittent are equivalent in handling}
+\njnote{Send garbage/incorect data}

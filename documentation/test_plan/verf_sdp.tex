@@ -3,13 +3,34 @@
 \subsection{Work Scheduling, Distribution and Planning}
 \label{sec:verification_sdp}
 
-\njnote{Fail: unable to generate plan}
 
 \subsubsection{Performance Tests}
 \label{sec:sdp_pt}
 
+how consistent is the planner at determining executable plans
+acceptance criteria: plans do not involve robot collision or out of bounds
+
+parallelism test - how efficiently is execution time distributed. Execution time is the total time robots spend moving to complete the drawing
+metric: min[ exec(r0), exec(r1) ] / max[ exec(r0), exec(r1) ]
+
+
+parallelism test - how efficiently is draw time distributed. Draw time is how long individual robots spend drawing on the ground vs. moving around
+metric: min[ draw(r0), draw(r1) ] / max[ draw(r0), draw(r1) ]
+
+how efficient are the two robots at working together.
+metric = (time, 2 robots) / (time, 1 robot)
+acceptance criteria - optimal speedup of 2x from requirements spec
+
 \subsubsection{Functional Tests}
 \label{sec:sdp_ft}
 
+are plans generated collision free
+
+autonomy test - does the system require no user input beyond adding the image to be drawn (exception being error handling)
+
+
+
 \subsubsection{Failure Modes}
 \label{sec:sdp_fm}
+\njnote{Fail: unable to generate plan}
+
