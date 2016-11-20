@@ -3,14 +3,37 @@
 \subsection{Writing Implement}
 \label{sec:verification_writing_implement}
 
-\njnote{Fail: out of ink}
-\njnote{Fail: mechanism failure - unable to raise/lower}
-
 \subsubsection{Performance Tests}
 \label{sec:writing_pt}
+able to load/move/replace tool within req time limit (10s)
+metric = duration
+
+test quality of mark made by writing implement
+metric TBD, could be thickness relative to person using tool(?)
+
 
 \subsubsection{Functional Tests}
 \label{sec:writing_ft}
+bool - able to load/move/replace tool
+metric = yes/no
+
+bool - can motors be actuated to move up/down, tests the motors
+metric = yes/no
+
+bool - can writing implement system be controlled, tests controllers
+metric = yes/no
+
+bool - does writing implement make mark when pushed down
+metric = yes/no
+
+bool - can locomote and draw with tool simultaneously
+need to make sure it doesn't get stuck
+speed threshold? aka how fast before poor drawing quality/tool breaks, etc.
+metric = yes/no
+
+bool - can force sensor measure force being applied well enough to distinguish between states (states = optimal, underactuated, overactuated)
 
 \subsubsection{Failure Modes}
 \label{sec:writing_fm}
+\njnote{Fail: out of ink}
+\njnote{Fail: mechanism failure - unable to raise/lower}
