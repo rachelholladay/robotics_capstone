@@ -16,15 +16,19 @@ metric - positional/rotational accuracy in distance units
 bool - can the robot achieve a desired speed
 
 
-\subsubsection{Failure Modes}
-\label{sec:locomotion_fm}
-\njnote{Robot unable to move accurately (both position and orientation)}
-\njnote{Robot unable to move omnidirectionally}
 
 \subsubsection{Failure Mode: Inaccurate Motion}
 \label{sec:locomotion_fm_motion}
-\textbf{Description:} \\
-\textbf{Cause:} \\
-\textbf{Effects:} \\
-\textbf{Criticality:}  \\
-\textbf{Safety Hazards:} \\
+\textbf{Description:} This failure mode describes the situation in which a robot agent is unable to accurately follow motion commands. An example of this is if the robot is commanded to move 10 inches, but localization detects it only moving 4.\\
+\textbf{Cause:} Inaccurate motion could be a result of slippage of the wheels or failed motor encoders.\\
+\textbf{Effects:} Inability to move accurately can cause a user-reported error, which the user can resolve to continue operation. \\
+\textbf{Criticality:}  This is a minor failure, as it does not end system operation and can be resolved by the user.\\
+\textbf{Safety Hazards:} The only safety hazard is with regard to the drawing surface; slippage could cause minor destruction of the surface.\\
+
+\subsubsection{Failure Mode: Failure to Move Omnidirectionally}
+\label{sec:locomotion_fm_omni}
+\textbf{Description:} Failure to make omnidirectional movement means a robot agent cannot move in an arbitrary direction on the flat plane represented by the drawing surface.\\
+\textbf{Cause:} Similar to \sref{sec:locomotion_fm_motion}, this could be caused by wheels causing slippage in some directions. Alternatively, a broken wheel or motor could have this effect as well.\\
+\textbf{Effects:} Failling to move omnidirectionally could result in incorrect drawings - the robot agent can no longer make arbitrarily sharp curves to faithfully recreate the input image. When detected, robot operation should halt and report to the user to be fixed.\\
+\textbf{Criticality:}  This is a critical error, as it has a direct relation on the quality of the drawing.\\
+\textbf{Safety Hazards:} As with \sref{sec:locomotion_fm_motion}, the only safety hazard is that a broken wheel could damage the drawing surface.\\
