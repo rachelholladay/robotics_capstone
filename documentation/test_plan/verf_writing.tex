@@ -33,7 +33,21 @@ metric = yes/no
 
 bool - can force sensor measure force being applied well enough to distinguish between states (states = optimal, underactuated, overactuated)
 
-\subsubsection{Failure Modes}
-\label{sec:writing_fm}
 \njnote{Fail: out of ink}
 \njnote{Fail: mechanism failure - unable to raise/lower}
+
+\subsubsection{Failure Mode: Out of Writing Material}
+\label{sec:writing_fm_ink}
+\textbf{Description:} This failure mode describes the situation when a writing implement is loaded inside a robot agent, and runs out of writing material. \\
+\textbf{Cause:} Overuse of the writing implement.\\
+\textbf{Effects:} The robot agent moves around and attempts to continue drawing, without making physical marks.\\
+\textbf{Criticality:} This is a critical failure, as it requires the user to replace the implement before drawing can continue. If the user fails to replace the implement, lines will be missing from the drawing.\\
+\textbf{Safety Hazards:} There are no safety hazards associated with this failure mode.\\
+
+\subsubsection{Failure Mode: Writing Mechanism Failure}
+\label{sec:writing_fm_mechanism}
+\textbf{Description:} This failure occurs when the mechanism that raises and lowers the writing implement does not work. This causes the robot to be incapable of either drawing a line, or moving on the writing surface without drawing a line.\\
+\textbf{Cause:} This is caused by a communication failure, as described by \sref{comm_fm_loss}, or more likely, by the raise/lowering mechanism breaking.\\
+\textbf{Effects:} The robot agent will be unable to alter whether or not it is writing as it moves. This can cause either missing lines or incorrect ones, depending on the state of the writing mechanism.\\
+\textbf{Criticality:} This is a critical error as it directly affects the quality of the lines being drawn. Users can resolve this issue after receiving an error report to continue operation. However, it is possible the drawing has been compromised.\\
+\textbf{Safety Hazards:} There are no safety hazards associated with this failure mode.\\
