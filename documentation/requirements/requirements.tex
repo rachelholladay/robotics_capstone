@@ -102,10 +102,12 @@ Documentation of the design process, software, and hardware implementation is im
 \label{sec:nonfunctional_requirements}
 
 \begin{nonfunctional_requirement}{Documentation}{3}
+\label{nfr:documentation}
 \item Documentation\added[remark={NJ, V2}]{ of the design process, software, and hardware implementation is important for debugging, recreation, and general understanding of this project.}
 \end{nonfunctional_requirement}
 
 \begin{nonfunctional_requirement}{Error Handling}{6}
+\label{nfr:errors}
 \item The\added[remark={NJ, V2}]{ system must be able to handle errors appropriately. This includes problems that arise from localization, locomotion, planning, or using the writing tool. The system must be able to determine, based on conditions of the failure, whether to halt all operation or to continue without using broken subsystems. Errors can occur inside of any of the use cases listed in \sref{sec:use_cases}.}
 \end{nonfunctional_requirement}
 
@@ -122,24 +124,29 @@ Documentation of the design process, software, and hardware implementation is im
 \end{nonfunctional_requirement}
 
 \begin{nonfunctional_requirement}{Efficiency}{2}
+\label{nfr:efficiency}
 \item Robot system must be efficient and complete drawing tasks quickly. Timeliness can be measured by the amount of time taken to complete drawings. Robot planning must also exist in such a manner that evenly splits the workload among all robot agents working in the system. Therefore, a speedup of a maximum of 2x the rate is expected when using two robots as opposed to one. \added[remark={NJ, V2}]{The system should perform as fast or faster than a human attempting the same drawing task.}
 \end{nonfunctional_requirement}
 
 \begin{nonfunctional_requirement}{Quality}{4}
+\label{nfr:quality}
 \item The drawing that results from the robotic system must closely match the input image. Quality can be qualitatively measured by visual comparison, or using software via a number of image difference metrics.
 \end{nonfunctional_requirement}
 
 \begin{nonfunctional_requirement}{Mobile App}{1}
+\label{nfr:mobileapp}
 \item User interface and experience will be done using a mobile application. This application will allow users to remotely input images for drawing, enable, disable, and pause the robot system's operation. The app will also be able to track and display current progress.
 \end{nonfunctional_requirement}
 
 \begin{nonfunctional_requirement}{Reliability}{6}
+\label{nfr:reliability}
 \item Robot system must be robust, and be resilient to breaking down or failing to operate properly. Reliability can be measured by percent uptime relative to total time spent in use.
 \end{nonfunctional_requirement}
 
 \deleted[remark={NJ,V2.2}]{Battery Life(2): Individual robot agents must have a battery life capable of completing a minimum of a single drawing. Battery life can be measured by duration for which robot agents are in use before needing battery recharging or replacement.}
 
 \begin{nonfunctional_requirement}{Coordination}{4}
+\label{nfr:coordination}
 \item The key to a multi-robot agent system is to reduce the individual workload, meaning having coordinated and efficient work is vital. Robots must be able to work together to minimize overlap in the drawings, and to avoid duplicating work. A two-robot system that coordinates must perform faster than a single robot performing the same task.
 \end{nonfunctional_requirement}
 
