@@ -4,22 +4,36 @@
 \label{sec:verification_comm}
 
 
-\subsubsection{Performance Tests}
-\label{sec:comm_pt}
+\subsubsection{Performance Test: Uptime}
+\label{sec:comm_pt_reliability}
+\textbf{Test Question:} What is the uptime on our ability to communicate data to between the robots and the offboard system?  \\
+\textbf{Operational Procedure:} Run the system for a significant period of time (several hours) and record any communication downtime or data loss during communication. \\
+\textbf{Metric:} Time duration of down communication and packet loss. \\
+\textbf{Acceptance Criteria:} Operational 95\% of the time.\\
+\textbf{Requirement(s) Verified:} \rhnote{Communication one}
 
-reliability - what is the uptime on our ability to communicate data to robots
-metric: percentage time running vs. bad connection
-acceptance criteria: requirements spec say perfect/near perfect uptime
+\subsubsection{Functional Test: Sending and Receiving Data}
+\label{sec:comm_ft_send}
+\textbf{Test Question:} Can the robot send and receive data from the off-board device and can the off-board device send and receive data to the robot?\\
+\textbf{Operational Procedure:} Send data from the off-board device to the robot and verify the robot received it. Send data from the robot to the off-board device and verify the off-board device received it. \\
+\textbf{Metric:} Four booleans on whether the data is successfully sent and recieved on both ends. \\
+\textbf{Acceptance Criteria:} We must succeed on all four accounts. \\
+\textbf{Requirement(s) Verified:} \rhnote{communication}
 
-\subsubsection{Functional Tests}
-\label{sec:comm_ft}
-
-can data be sent to/from the robots and the server
+\subsubsection{Functional Test: Data Parsing}
+\label{sec:comm_ft_parse}
+\textbf{Test Question:}  Can the data on each side (robot, off-board device) be parsed by each other? \\
+\textbf{Operational Procedure:} Send data from the off-board device to the robot and verify the robot received it and can execute it. Send data from the robot to the off-board device and verify the off-board device received it and can respond to it. \\
+\textbf{Metric:} Check whether the data was successfully parsed on all sides. \\
+\textbf{Acceptance Criteria:} We require all data be parsable. \\
+\textbf{Requirement(s) Verified:} \rhnote{communication}
 
 is data sent using the same communication protocol/can be parsed by both ends of the system
 
-\subsubsection{Failure Modes}
-\label{sec:comm_fm}
-
+\subsubsection{Failure Mode: Loss of Connection}
+\label{sec:comm_fm_loss}
 \njnote{loss of connection - server side, robot/client side, no connection vs. intermittent are equivalent in handling}
+
+\subsubsection{Failure Mode: Incorrect Data}
+\label{sec:comm_fm_incorrect}
 \njnote{Send garbage/incorect data}
