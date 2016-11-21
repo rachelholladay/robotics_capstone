@@ -9,7 +9,7 @@
 \textbf{Operational Procedure:} While the system is in use, press the emergency stop button and time how long it takes for everything to completely shut down.\\
 \textbf{Metric:} Elapsed time. \\
 \textbf{Acceptance Criteria:} It is vital to safety that our emergency stop shuts everything down within a second. \\
-\textbf{Requirement(s) Verified:} \rhnote{emergency stop one and safety} \\
+\textbf{Requirement(s) Verified:} \rhnote{emergency stop one and safety} 
 
 \subsubsection{Performance Test: Error Reporting Delay}
 \label{sec:ui_pt_error_delay}
@@ -17,7 +17,7 @@
 \textbf{Operational Procedure:} Given a list of known operational errors, intentionally trigger each error within the system and report the time between causing the error and it being reported to the user. \\
 \textbf{Metric:} Averaged elapsed time across error reporting. \\
 \textbf{Acceptance Criteria:} The average time to detect and report an error should be within 3 seconds. \\
-\textbf{Requirement(s) Verified:} \rhnote{safety and error reporting} \\
+\textbf{Requirement(s) Verified:} \rhnote{safety and error reporting} 
 
 \subsubsection{Performance Test: Error Understandability}
 \label{sec:ui_pt_error_understand}
@@ -25,7 +25,7 @@
 \textbf{Operational Procedure:} Given a list of known operational errors, intentionally trigger each error while a non-developer user is using the system (while masking the error cause) and evaluate how well the user can determine the error. For example, while the system is drawing the user could be in a different room with only the error reporting device, making the user unable to see what errors the robots are facing.\\
 \textbf{Metric:}  Determine if the user can determine the error and knows how to react to or correct the error. \\
 \textbf{Acceptance Criteria:}  The user should be able to determine and react effectively for 90\% of the errors.\\
-\textbf{Requirement(s) Verified:} \rhnote{error handling and ease of user use}\\
+\textbf{Requirement(s) Verified:} \rhnote{error handling and ease of user use}
 
 \subsubsection{Functional Test: Emergency Stop}
 \label{sec:ui_ft_emergency_stop}
@@ -33,7 +33,7 @@
 \textbf{Operational Procedure:} While the system is in use, press the emergency stop button and check if all systems halt their operation. \\
 \textbf{Metric:} Boolean on whether every subsystem stops or not. \\
 \textbf{Acceptance Criteria:} It is only successful if the boolean metric is true. \\
-\textbf{Requirement(s) Verified:} \rhnote{emergency stop one} \\
+\textbf{Requirement(s) Verified:} \rhnote{emergency stop one} 
 
 \subsubsection{Functional Test: Error Reporting}
 \label{sec:ui_ft_error_reporting}
@@ -41,7 +41,7 @@
 \textbf{Operational Procedure:} Given a list of known operational errors, intentionally trigger each error within the system and report whether the error caused it reported to the user. \\
 \textbf{Metric:} Each error must be reported correctly. Hence we can divide the number of correctly reported errors by the number of total errors caused to determine an error-reporting score.  \\
 \textbf{Acceptance Criteria:} Considering error handling is critical to performance, our system should have an error-reporting score of 90\%. \\
-\textbf{Requirement(s) Verified:} \rhnote{error handling one} \\
+\textbf{Requirement(s) Verified:} \rhnote{error handling one} 
 
 \subsubsection{Failure Mode: UI Navigation}
 \label{sec:ui_fm_navigation}
