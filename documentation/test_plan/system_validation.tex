@@ -3,9 +3,16 @@
 \section{Full System Validation}
 \label{sec:system_validation}
 
+\subsubsection{Performance Test: }
+\label{test:sys_pt_size}
+\textbf{Test Question:} \\
+\textbf{Operational Procedure:} \\
+\textbf{Acceptance Criteria:} \\
+\textbf{Requirement(s) Verified:} \nfrref{}
+
 \subsubsection{Functional Test: Size}
 \label{test:sys_ft_size}
-\textbf{Test Question:} How big is each robot agent?\\
+\textbf{Test Question:} Is the robot agent too big to be portable, i.e. carry the robot through a standard door?\\
 \textbf{Operational Procedure:} Measure the physical dimensions of the robot in terms of width, length, and height or in terms of diameter and height. \\
 \textbf{Metric:} Numeric value of each length measurement; robot footprint; robot volume.\\
 \textbf{Acceptance Criteria:} Must be less than 80 in. x 36 in. x 36 in. \\
@@ -13,26 +20,27 @@
 
 \subsubsection{Functional Test: Weight}
 \label{test:sys_ft_weight}
-\textbf{Test Question:} How heavy is each robot agent?\\
+\textbf{Test Question:} Is the robot agent too heavy to be portable, i.e. able to be lifted by a normal person?\\
 \textbf{Operational Procedure:} Measure the mass of the robot. \\
-\textbf{Metric:} Numeric value of each length measurement; robot footprint; robot volume.\\
-\textbf{Acceptance Criteria:} Must be less than 80 in. x 36 in. x 36 in. \\
+\textbf{Metric:} Numeric value of robot mass.\\
+\textbf{Acceptance Criteria:} Must be less than 50 pounds. \\
 \textbf{Requirement(s) Verified:} \nfrref{nfr:weight_limit}
 
+\subsubsection{Functional Test: Budget}
+\label{test:sys_ft_budget}
+\textbf{Test Question:} Does the cost for developing this robotic system exceed our budget?\\
+\textbf{Operational Procedure:} Document total amount of money spent for designing and constructing this robot system. This includes machining expense, part cost, and etc. \\
+\textbf{Metric:} Total amount of money spent.\\
+\textbf{Acceptance Criteria:} Total developing expense has to be less than \$2500. \\
+\textbf{Requirement(s) Verified:} \nfrref{nfr:budget}
 
-Test: do the drive commands respect physical robot capabilities. This relates to whether they robot can drive/draw at the same time w/o marker getting stuck. Also, is there a speed threshold at which drawing quality degrades - involves writing implement, locomotion
-
-Test: does an individual robot draw accurately relative to the commanded motion. This involves making sure line aren't jagged/squiggly, etc. come up with better words for this
-
-
-Test: does the robot fulfill weight requirements. CHECK REQ SPEC FOR VALUES
-
-Test: is the robot safe, aka does it not have pointy (sharp) edges on the outside
-
-Test/verification: Was robot system price within budget
-metric: dollars
-acceptance criteria: 2500 dollars
-
+\subsubsection{Functional Test: Safety}
+\label{test:sys_ft_safety}
+\textbf{Test Question:} Is the robot safe during operation? Specifically, when collision happens, will the robot harm other robots, external environment, or human?\\
+\textbf{Operational Procedure:} Count the number of sharp edges on the exterior of the robot. Also, measure the time it takes from the overhead camera detects collision to robot agent stops moving motors. Intermediate steps involved are: camera sends collision signal to system controller and system controller commands involved robot agent to stop its current action. \\
+\textbf{Metric:} Number of sharp edges; amount of time takes from detection to action.\\
+\textbf{Acceptance Criteria:} Values for these two metrics need to be as small as possible. The maximum number of sharp edges on the exterior is 4, assuming a rectangular chassis design. The maximum amount of time is 1.5 seconds. \\
+\textbf{Requirement(s) Verified:} \nfrref{nfr:safe}
 
 \njnote{Fail: out of bounds - uses localization, locomotion}
 \njnote{Fail: robot makes incorrect mark on ground - uses locomotion, localization, writing implement}
