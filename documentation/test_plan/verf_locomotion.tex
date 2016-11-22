@@ -3,19 +3,21 @@
 \subsection{Locomotion}
 \label{sec:verification_locomotion}
 
-\subsubsection{Performance Tests}
-\label{sec:locomotion_pt}
+\subsubsection{Performance Test: Accuracy}
+\label{sec:locomotion_pt_accuracy}
+\textbf{Test Question:} Is the robot able to drive with positional and rotational accuracy?\\
+\textbf{Operational Procedure:} The robot drives along a predetermined testing route consisting of at least 3 feet of linear distance and 90 degrees of turn.\\
+\textbf{Metric:} The difference of the robot's final position and orientation from the intended position and orientation. \\
+\textbf{Acceptance Criteria:} The robot's position must be less than 1 inch away from the intended position, and its orientation must be within 10 degrees of the intended orientation.\\
+\textbf{Requirement(s) Verified:} \dznote{positional accuracy, rot accuracy}
 
-test of accuracy of positional/rotational accuracy
-acceptance - based on requirements spec of pos/rot accuracy
-metric - positional/rotational accuracy in distance units
-
-\subsubsection{Functional Tests}
-\label{sec:locomotion_ft}
-
-bool - can the robot achieve a desired speed
-
-
+\subsubsection{Functional Test: Speed}
+\label{sec:locomotion_ft_speed}
+\textbf{Test Question:} Can the robot reach a desired speed? \\
+\textbf{Operational Procedure:} The robot will drive along a straight line for 5ft during a timed trial.\\
+\textbf{Metric:} The time required for the robot to reach the end of the line.\\
+\textbf{Acceptance Criteria:} The robot must reach the end of the 5ft line in 20 seconds. \\
+\textbf{Requirement(s) Verified:} \dznote{efficiency}
 
 \subsubsection{Failure Mode: Inaccurate Motion}
 \label{sec:locomotion_fm_motion}

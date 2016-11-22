@@ -3,25 +3,41 @@
 \subsection{Localization}
 \label{sec:verification_localization}
 
-
-\subsubsection{Performance Tests}
-\label{sec:localization_pt}
-
-positional accuracy of each robot
-acceptance - requirements spec for localization accuracy
-metric - accuracy distance
+\subsubsection{Performance Test: Robot Position Accuracy}
+\label{sec:localization_pt_accuracy}
+\textbf{Test Question:} Is the localization system able to accurately determine the position of each robot?\\
+\textbf{Operational Procedure:} Both robots sit stationary within the working bounds, and the localization system attempts to determine their locations.\\
+\textbf{Metric:} The difference of the robots' actual position from the position reported by the localization system. \\
+\textbf{Acceptance Criteria:} The reported position must be within 1/10in of the actual position.\\
+\textbf{Requirement(s) Verified:} \dznote{Quality, Within Bounds}
 
 accuracy of detecting bounds of workspace
 acceptance - how close to actual drawing space the determined bounds are
 metric - accuracy distance
 
-\subsubsection{Functional Tests}
-\label{sec:localization_ft}
+\subsubsection{Performance Test: Bounds Accuracy}
+\label{sec:localization_pt_bounds}
+\textbf{Test Question:} Is the localization system able to accurately determine the boundaries of the workspace?\\
+\textbf{Operational Procedure:} The localization system attempts to determine the bounds of the workspace.\\
+\textbf{Metric:} The total difference in distance between the reported corners of the workspace and the actual corners.\\
+\textbf{Acceptance Criteria:} The total difference must not exceed 1in.\\
+\textbf{Requirement(s) Verified:} \dznote{Within Bounds}
 
-bool - can localization find robot position
+\subsubsection{Functional Test: Robot Position}
+\label{sec:localization_ft_robopos}
+\textbf{Test Question:} Can the localization system find the robot?\\
+\textbf{Operational Procedure:} With a single robot within the working bounds, the localization system attempts to determine the robot's location.\\
+\textbf{Metric:} Whether or not a location is returned by the localization system.\\
+\textbf{Acceptance Criteria:} The system must return a location for the robot. \\
+\textbf{Requirement(s) Verified:} \dznote{Quality, Within Bounds}
 
-bool - can localization detect bounds/workspace
-
+\subsubsection{Functional Test: Bounds}
+\label{sec:localization_ft_bounds}
+\textbf{Test Question:} Can the localization system find the working bounds?\\
+\textbf{Operational Procedure:} The localization system attempts to find all four corners of the working bounds while they are all in its field of view.\\
+\textbf{Metric:} Whether or not locations are returned for all four corners.\\
+\textbf{Acceptance Criteria:} The system must return locations for all four corners of the working bounds.\\
+\textbf{Requirement(s) Verified:} \dznote{Quality, Within Bounds}
 
 \subsubsection{Failure Mode: Camera Failure}
 \label{sec:localization_fm_cam}
