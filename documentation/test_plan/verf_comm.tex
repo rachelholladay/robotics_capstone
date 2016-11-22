@@ -42,4 +42,4 @@
 \textbf{Cause:} Garbage data could be the result of a low-quality connection with high noise, or if data being sent becomes corrupted. It could also occur due to controller inability to parse the data being sent. \\
 \textbf{Effects:} Invalid and incorrect commands and information should be ignored by the robot agent or the off-board processor. \\
 \textbf{Criticality:} Incorrect data is noncritical to task completion as incorrect commands will be reacted to accordingly and resent. For example, if the off-board device sends a locomotion command to a robot, but the command becomes corrupt. The localization system will see the robot not move, and attempt to send a similar motion command again. \\
-\textbf{Safety Hazards:} There is no risk to unparseable data being sent between robot and off-board device. \\
+\textbf{Safety Hazards:} There is no risk to unparseable data being sent between robot and off-board device.

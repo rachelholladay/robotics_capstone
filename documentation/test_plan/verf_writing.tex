@@ -17,7 +17,7 @@
 \textbf{Operational Procedure:} Using a fully loaded writing tool, the robot attempts to draw along a route with at least 4ft of travel distance and 3 turns exceeding 50 degrees. Verify that the resulting drawing is of acceptable quality. \\
 \textbf{Metric:} Percent thickness of the route at its narrowest point compared to the maximum thickness of a line created with the writing tool, and whether or not there are complete breaks in the line. \\
 \textbf{Acceptance Criteria:} The percent thickness is at least 70\%, and there are no complete breaks in the line. \\
-\textbf{Requirement(s) Verified:} \nfrref{nfr:quality} \\
+\textbf{Requirement(s) Verified:} \nfrref{nfr:quality} 
 
 \subsubsection{Functional Test: Replace Writing Tool}
 \label{test:writing_ft_replace}
@@ -25,7 +25,7 @@
 \textbf{Operational Procedure:} A human test subject attempts to replace a writing tool already inside the robot.
 \textbf{Metric:} Whether or not the human succeeds in the task before giving up.\\
 \textbf{Acceptance Criteria:} The human must successfully replace the writing tool without giving up.  \\
-\textbf{Requirement(s) Verified:} \frref{fr:replace_tool}\\
+\textbf{Requirement(s) Verified:} \frref{fr:replace_tool}
 
 \subsubsection{Functional Test: Reload Writing Tool}
 \label{test:writing_ft_reload}
@@ -33,7 +33,7 @@
 \textbf{Operational Procedure:} A human test subject attempts to reload a writing tool already inside the robot.
 \textbf{Metric:} Whether or not the human succeeds in the task before giving up.\\
 \textbf{Acceptance Criteria:} The human must successfully reload the writing tool without giving up.  \\
-\textbf{Requirement(s) Verified:} \frref{fr:insert_tool} \frref{fr:remove_tool}\\
+\textbf{Requirement(s) Verified:} \frref{fr:insert_tool} \frref{fr:remove_tool}
 
 \subsubsection{Functional Test: Writing Pressure Control}
 \label{test:writing_ft_pressure}
@@ -74,7 +74,7 @@
 \textbf{Cause:} Overuse of the writing implement.\\
 \textbf{Effects:} The robot agent moves around and attempts to continue drawing, without making physical marks.\\
 \textbf{Criticality:} This is a critical failure, as it requires the user to replace the implement before drawing can continue. If the user fails to replace the implement, lines will be missing from the drawing.\\
-\textbf{Safety Hazards:} There are no safety hazards associated with this failure mode.\\
+\textbf{Safety Hazards:} There are no safety hazards associated with this failure mode.
 
 \subsubsection{Failure Mode: Writing Mechanism Failure}
 \label{sec:writing_fm_mechanism}
@@ -82,4 +82,4 @@
 \textbf{Cause:} This is caused by a communication failure, as described by \sref{sec:comm_fm_loss}, or more likely, by the raise/lowering mechanism breaking.\\
 \textbf{Effects:} The robot agent will be unable to alter whether or not it is writing as it moves. This can cause either missing lines or incorrect ones, depending on the state of the writing mechanism.\\
 \textbf{Criticality:} This is a critical error as it directly affects the quality of the lines being drawn. Users can resolve this issue after receiving an error report to continue operation. However, it is possible the drawing has been compromised.\\
-\textbf{Safety Hazards:} There are no safety hazards associated with this failure mode.\\
+\textbf{Safety Hazards:} There are no safety hazards associated with this failure mode.
