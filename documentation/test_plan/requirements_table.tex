@@ -8,7 +8,7 @@
  \hline
  Requirement & Test \\ [0.5ex] 
  \hline\hline
- \frref{fr:omnidirectional} & []  \\ 
+ \frref{fr:omnidirectional} & \tref{test:locomotion_ft_omni}  \\ 
  \hline
  \frref{fr:autonomous} & \tref{test:sdp_ft_autonomy} \\
  \hline
@@ -16,15 +16,15 @@
  \hline
  \frref{fr:in_bounds} & \tref{test:localization_pt_accuracy}, \tref{test:localization_pt_bounds}, \tref{test:localization_ft_robopos}, \tref{test:localization_ft_bounds}, \tref{test:image_ft_bounds}, \tref{test:sdp_pt_executable} \\
  \hline
- \frref{fr:insert_tool} & [] \\
+ \frref{fr:insert_tool} & \tref{test:writing_ft_reload} \\
  \hline
- \frref{fr:remove_tool} & [] \\
+ \frref{fr:remove_tool} & \tref{test:writing_ft_reload} \\
  \hline
  \frref{fr:replace_tool} & \tref{test:writing_ft_replace} \\
  \hline
  \frref{fr:reliable_comm} & \tref{test:comm_pt_reliability}, \tref{test:comm_ft_send}, \tref{test:comm_ft_parse} \\
  \hline
- \frref{fr:drive_control} & [] \\
+ \frref{fr:drive_control} & \tref{test:locomotion_ft_omni} \\
  \hline
  \frref{fr:on_tool} & \tref{test:writing_ft_pressure} \\
  \hline
@@ -56,9 +56,9 @@
  \hline
  \nfrref{nfr:coordination} & \tref{test:sdp_pt_execu}, \tref{test:sdp_pt_draw} \\
  \hline
- \nfrref{nfr:budget} & [] \\
+ \nfrref{nfr:budget} & \tref{test:sys_ft_budget} \\
  \hline
- \nfrref{nfr:safe} & \tref{test:sdp_pt_executable}, \tref{test:sdp_ft_collision}, \tref{test:ui_pt_stop_speed}, \tref{test:ui_pt_error_delay} \\
+ \nfrref{nfr:safe} & \tref{test:sdp_pt_executable}, \tref{test:sdp_ft_collision}, \tref{test:ui_pt_stop_speed}, \tref{test:ui_pt_error_delay}, \tref{test:sys_ft_safety} \\
  \hline
  \nfrref{nfr:pos_accuracy} & \tref{test:locomotion_pt_accuracy} \\
  \hline

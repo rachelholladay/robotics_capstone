@@ -5,7 +5,7 @@
 
 \subsection{Functional Test: Size}
 \label{test:sys_ft_size}
-\textbf{Test Question:} How big is each robot agent?\\
+\textbf{Test Question:} Is the robot agent too big to be portable, i.e. carry the robot through a standard door?\\
 \textbf{Operational Procedure:} Measure the physical dimensions of the robot in terms of width, length, and height or in terms of diameter and height. \\
 \textbf{Metric:} Numeric value of each length measurement; robot footprint; robot volume.\\
 \textbf{Acceptance Criteria:} Must be less than 80 in. x 36 in. x 36 in. \\
@@ -13,30 +13,27 @@
 
 \subsection{Functional Test: Weight}
 \label{test:sys_ft_weight}
-\textbf{Test Question:} How heavy is each robot agent?\\
+\textbf{Test Question:} Is the robot agent too heavy to be portable, i.e. able to be lifted by a normal person?\\
 \textbf{Operational Procedure:} Measure the mass of the robot. \\
-\textbf{Metric:} Numeric value of each length measurement; robot footprint; robot volume.\\
-\textbf{Acceptance Criteria:} Must be less than 80 in. x 36 in. x 36 in. \\
+\textbf{Metric:} Numeric value of robot mass.\\
+\textbf{Acceptance Criteria:} Must be less than 50 pounds. \\
 \textbf{Requirement(s) Verified:} \nfrref{nfr:weight_limit}
 
+\subsection{Functional Test: Budget}
+\label{test:sys_ft_budget}
+\textbf{Test Question:} Does the cost for developing this robotic system exceed our budget?\\
+\textbf{Operational Procedure:} Document total amount of money spent for designing and constructing this robot system. This includes machining expense, part cost, and etc. \\
+\textbf{Metric:} Total amount of money spent.\\
+\textbf{Acceptance Criteria:} Total developing expense has to be less than \$2500. \\
+\textbf{Requirement(s) Verified:} \nfrref{nfr:budget}
 
-Test: do the drive commands respect physical robot capabilities. This relates to whether they robot can drive/draw at the same time w/o marker getting stuck. Also, is there a speed threshold at which drawing quality degrades - involves writing implement, locomotion
-
-Test: does an individual robot draw accurately relative to the commanded motion. This involves making sure line aren't jagged/squiggly, etc. come up with better words for this
-
-
-Test: does the robot fulfill weight requirements. CHECK REQ SPEC FOR VALUES
-
-Test: is the robot safe, aka does it not have pointy (sharp) edges on the outside
-
-Test/verification: Was robot system price within budget
-metric: dollars
-acceptance criteria: 2500 dollars
-
-
-\njnote{Fail: out of bounds - uses localization, locomotion}
-\njnote{Fail: robot makes incorrect mark on ground - uses locomotion, localization, writing implement}
-\njnote{Fail: collision between robots - uses locomotion, localization}
+\subsection{Functional Test: Safety}
+\label{test:sys_ft_safety}
+\textbf{Test Question:} Is the robot safe during operation? Specifically, when collision happens, will the robot harm other robots, external environment, or human?\\
+\textbf{Operational Procedure:} Count the number of sharp edges on the exterior of the robot. Also, measure the time it takes from the overhead camera detects collision to robot agent stops moving motors. Intermediate steps involved are: camera sends collision signal to system controller and system controller commands involved robot agent to stop its current action. \\
+\textbf{Metric:} Number of sharp edges; amount of time takes from detection to action.\\
+\textbf{Acceptance Criteria:} Values for these two metrics need to be as small as possible. The maximum number of sharp edges on the exterior is 4, assuming a rectangular chassis design. The maximum amount of time is 1.5 seconds. \\
+\textbf{Requirement(s) Verified:} \nfrref{nfr:safe}
 
 \subsection{Failure Mode: Out of Bounds}
 \label{sec:sys_val_fm_bounds}
@@ -45,6 +42,15 @@ acceptance criteria: 2500 dollars
 \textbf{Effect:} The robot moving out of bounds introduces undefined behavior that could result in collision, incorrect drawings, or making marks with the writing tool that are not on the appropriate writing surface.\\
 \textbf{Criticality:} This is a critical error, as it results in incorrect localization, drawing marks, and system operation. Entering this failure mode results in system operation ending.\\
 \textbf{Safety Hazards:} This failure poses a safety hazard of collision, as robots that exist the bounds may collide with objects or people that it is not expecting.\\
+\textbf{Failure Tree:} See \figref{fig:out_of_bounds_failure}
+
+\begin{figure}
+ \centering
+ \includegraphics[width=0.65\columnwidth]{figs/fault_table_bounds.png}
+ \caption{Fault Tree of the Failure Mode of the Robot going out of bounds.}
+ \label{fig:out_of_bounds_failure}
+\end{figure}
+\clearpage
 
 \subsection{Failure Mode: Incorrect Markings}
 \label{sec:sys_val_fm_markings}
@@ -59,6 +65,6 @@ acceptance criteria: 2500 dollars
 \textbf{Description:} This failure exists when robot agents collide with any obstacle, including each other or external obstacles.\\
 \textbf{Cause:} Robot collision is a result of the locomotion, localization, or work scheduling subsystems failing. Locomotion failure could cause undefined motions by a robot agent, causing it to hit another robot, or move out of bounds (\sref{sec:sys_val_fm_bounds}) and collide with an obstacle. Localization failure could result in incorrect motion commands, resulting in collision with unintended objects. Finally, poor motion planning has potential to require the robots to move into collision with each other.\\
 \textbf{Effect:} Robot collision could damage the robot agents, or hurt human observers who are hit.\\
-\textbf{Criticality:} This failure is of medium importance. The robots are designed to be safe (\sref{nfr:safe}), and therefore are unlikely to hurt or be significantly damaged by a collision. \\
+\textbf{Criticality:} This failure is of medium importance. The robots are designed to be safe (\nfrref{nfr:safe}), and therefore are unlikely to hurt or be significantly damaged by a collision. \\
 \textbf{Safety Hazards:} There is a hazard of minor human injury, but as stated above the robots are designed to minimize human injury in the case of collision.\\
 
