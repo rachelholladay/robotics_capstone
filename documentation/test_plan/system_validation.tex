@@ -3,10 +3,7 @@
 \section{Full System Validation}
 \label{sec:system_validation}
 
-\njnote{Fail: out of bounds - uses localization, locomotion}
-\njnote{Fail: robot makes incorrect mark on ground - uses locomotion, localization, writing implement}
-\njnote{Fail: collision between robots - uses locomotion, localization}
-\njnote{Fail: nonuniform/flat surface - assumptions(?) causes slippage}
+
 
 
 Test: do the drive commands respect physical robot capabilities. This relates to whether they robot can drive/draw at the same time w/o marker getting stuck. Also, is there a speed threshold at which drawing quality degrades - involves writing implement, locomotion
@@ -22,3 +19,19 @@ Test: is the robot safe, aka does it not have pointy (sharp) edges on the outsid
 Test/verification: Was robot system price within budget
 metric: dollars
 acceptance criteria: 2500 dollars
+
+
+\njnote{Fail: out of bounds - uses localization, locomotion}
+\njnote{Fail: robot makes incorrect mark on ground - uses locomotion, localization, writing implement}
+\njnote{Fail: collision between robots - uses locomotion, localization}
+\njnote{Fail: nonuniform/flat surface - assumptions(?) causes slippage}
+
+\subsubsection{Failure Mode: Fail to Plan}
+\label{sec:sys_val_fm_bounds}
+\njnote{Fail: unable to generate plan}
+
+\textbf{Description:} This failure mode occurs when the offboard system is unable to generate a valid plan for the robot agents. This means the main controller is unable to command the robots to successfully complete the input drawing.\\
+\textbf{Cause:} Failure to create a valid plan could arise from an out of bounds drawing. Other reasons include the image processing result being incorrect, which forces the work planner to incorrectly assign and generate plans.\\
+\textbf{Effect: The system is unable to complete an invalid drawing, and cannot begin autonomous operation.}
+\textbf{Criticality: This is a system-critical failure due to the fact that the system cannot recreate the drawing if it cannot generate a robot motion plan to do so.} \\
+\textbf{Safety Hazards: There are no safety hazards associated with this failure mode, given that it is entirely software-based.} \\
