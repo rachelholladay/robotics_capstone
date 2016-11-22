@@ -3,14 +3,27 @@
 \section{Full System Validation}
 \label{sec:system_validation}
 
+\subsubsection{Functional Test: Size}
+\label{sec:sys_ft_size}
+\textbf{Test Question:} How big is each robot agent?\\
+\textbf{Operational Procedure:} Measure the physical dimensions of the robot in terms of width, length, and height or in terms of diameter and height. \\
+\textbf{Metric:} Numeric value of each length measurement; robot footprint; robot volume.\\
+\textbf{Acceptance Criteria:} Must be less than 80 in. x 36 in. x 36 in. \\
+\textbf{Requirement(s) Verified:} \yjnote{size one}
 
+\subsubsection{Functional Test: Weight}
+\label{sec:sys_ft_weight}
+\textbf{Test Question:} How heavy is each robot agent?\\
+\textbf{Operational Procedure:} Measure the mass of the robot. \\
+\textbf{Metric:} Numeric value of each length measurement; robot footprint; robot volume.\\
+\textbf{Acceptance Criteria:} Must be less than 80 in. x 36 in. x 36 in. \\
+\textbf{Requirement(s) Verified:} \yjnote{size one}
 
 
 Test: do the drive commands respect physical robot capabilities. This relates to whether they robot can drive/draw at the same time w/o marker getting stuck. Also, is there a speed threshold at which drawing quality degrades - involves writing implement, locomotion
 
 Test: does an individual robot draw accurately relative to the commanded motion. This involves making sure line aren't jagged/squiggly, etc. come up with better words for this
 
-Test: does the robot fulfill size requirements. CHECK REQ SPEC FOR VALUES
 
 Test: does the robot fulfill weight requirements. CHECK REQ SPEC FOR VALUES
 
