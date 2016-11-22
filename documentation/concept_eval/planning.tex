@@ -33,7 +33,7 @@ Given the output from the image processor (\sref{sec:image_processing}), and par
 \end{figure}
 
 A key aspect of our software system is distributing and planning the work to the robot agents, modeled in \figref{fig:planning_processing}.
-Two of our nonfunctional requirements are to be efficient and have the robots coordinate with each other (NFR4, NFR9). These two objectives inform the planning pipeline. We split the planning and coordination into two separate problems, allowing us to frame coordination as a scheduling problem~\cite{o1989deadlock}. Hence our work distribution and planning can be handled offline while our coordinate occurs online.
+Two of our nonfunctional requirements are to be efficient and have the robots coordinate with each other (\nfrref{nfr:efficiency}, \nfrref{nfr:coordination}). These two objectives inform the planning pipeline. We split the planning and coordination into two separate problems, allowing us to frame coordination as a scheduling problem~\cite{o1989deadlock}. Hence our work distribution and planning can be handled offline while our coordinate occurs online.
 
 From our image processing \sref{sec:sw_arch_image_processing}, we recieve processed image data.
 Using this data, we compute the length of every individual line to be drawn.
@@ -54,4 +54,4 @@ The timing of the processing trajectory is adjusted by adding a pause to avoid c
 Once all paths have been drawn, the drawing is completed.
 
 \subsection{Requirements Fulfilled}
-\added[remark={RH, V2}]{Our planning framework allows the system to be autonomous (FR2) and will enforce that the robots stay within bounds (FR4). The planning framework will also control the writing implement on/off switch (FR10) and keep track of total system progress (FR12). Our planner is designed to parition work evenly for efficiency (NFR5) and carefully plan for quality (NFR6) and reliability (NFR8). The online component of \figref{fig:planning_processing} coordinates the robots to avoid collision(NFR9). Additionally as we flesh out the rest of the system we will build error handling into the software (NFR2).}
+\added[remark={RH, V2}]{Our planning framework allows the system to be autonomous (\frref{fr:autonomous}) and will enforce that the robots stay within bounds (\frref{fr:in_bounds}). The planning framework will also control the writing implement on/off switch (\frref{fr:kill_switch}) and keep track of total system progress (\frref{fr:know_progress}). Our planner is designed to partition work evenly for efficiency (\nfrref{nfr:efficiency}) and carefully plan for quality (\nfrref{nfr:quality}) and reliability (\nfrref{nfr:reliability}). The online component of \figref{fig:planning_processing} coordinates the robots to avoid collision (\nfrref{nfr:coordination}). Additionally as we flesh out the rest of the system we will build error handling into the software (\nfrref{nfr:errors}).}
