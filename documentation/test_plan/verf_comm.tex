@@ -31,11 +31,11 @@
 
 \subsubsection{Failure Mode: Loss of Connection}
 \label{sec:comm_fm_loss}
-\textbf{Description:} A loss of connection occurs when a robot agent and the off-board processing unit are unable to send data between each other. As per \njnote{REF REQUIREMENT ABOUT PERFECT COMMUNICATION}, the robot system expects near perfect communication. This means that a failure resulting in intermittent or sparse connection will be treated equivalently to no connection. \\
+\textbf{Description:} A loss of connection occurs when a robot agent and the off-board processing unit are unable to send data between each other. As per \sref{fr:reliable_comm}, the robot system expects consistent communication. This means that a failure resulting in intermittent or sparse connection will be treated equivalently to no connection. \\
 \textbf{Cause:} This failure mode is the result of a robot agent and the off-board unit being unable to connect. This could be the result of a hardware failure, in which the either of the robot or off-board device's transmitter fail. Other causes could be loss of signal due to distance between the two devices, or obstacles that attenuate or disturb communication. \\
 \textbf{Effects:} In the case that the off-board device cannot communicate with the robot, robots should be aware of a dropped connection and cease all locomotion. This will prevent robots from moving out of bounds or into collision, as without connection they can no longer localize. If the robot cannot communicate with the off-board device, locomotion should also end. The robot cannot report errors or sensor information to the off-board device for planning and scheduling, which then risks incorrect drawing and motion. \\
 \textbf{Criticality:} Loss of connection is high-risk with regard to completing the drawing task. Requirements do not specify the ability to recover a connection, so processing and drawing will end on signal loss. \\
-\textbf{Safety Hazards:} The only risk is the robots going out of bounds, or colliding with each other. Both of these pose little hazard to bystanders, as the robots are designed to be safe in the event of human-robot collision (\njnote{REFERENCE SAFE REQUIREMENT}). 
+\textbf{Safety Hazards:} The only risk is the robots going out of bounds, or colliding with each other. Both of these pose little hazard to bystanders, as the robots are designed to be safe in the event of human-robot collision (\sref{nfr:safe}).
 
 \subsubsection{Failure Mode: Incorrect Data}
 \label{sec:comm_fm_incorrect}
