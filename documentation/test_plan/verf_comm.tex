@@ -10,7 +10,7 @@
 \textbf{Operational Procedure:} Run the system for a significant period of time (several hours) and record any communication downtime or data loss during communication. \\
 \textbf{Metric:} Time duration of down communication and packet loss. \\
 \textbf{Acceptance Criteria:} Operational 95\% of the time.\\
-\textbf{Requirement(s) Verified:} \rhnote{Communication one}
+\textbf{Requirement(s) Verified:} \frref{fr:reliable_comm}, \frref{fr:know_progress}
 
 \subsubsection{Functional Test: Sending and Receiving Data}
 \label{sec:comm_ft_send}
@@ -18,7 +18,7 @@
 \textbf{Operational Procedure:} Send data from the off-board device to the robot and verify the robot received it. Send data from the robot to the off-board device and verify the off-board device received it. \\
 \textbf{Metric:} Four booleans on whether the data is successfully sent and recieved on both ends. \\
 \textbf{Acceptance Criteria:} We must succeed on all four accounts. \\
-\textbf{Requirement(s) Verified:} \rhnote{communication}
+\textbf{Requirement(s) Verified:} \frref{fr:reliable_comm}
 
 \subsubsection{Functional Test: Data Parsing}
 \label{sec:comm_ft_parse}
@@ -26,8 +26,7 @@
 \textbf{Operational Procedure:} Send data from the off-board device to the robot and verify the robot received it and can execute it. Send data from the robot to the off-board device and verify the off-board device received it and can respond to it. \\
 \textbf{Metric:} Check whether the data was successfully parsed on all sides. \\
 \textbf{Acceptance Criteria:} We require all data be parsable. \\
-\textbf{Requirement(s) Verified:} \rhnote{communication}
-
+\textbf{Requirement(s) Verified:} \frref{fr:reliable_comm}
 
 \subsubsection{Failure Mode: Loss of Connection}
 \label{sec:comm_fm_loss}
