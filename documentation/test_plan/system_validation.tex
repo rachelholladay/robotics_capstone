@@ -3,7 +3,7 @@
 \section{Full System Validation}
 \label{sec:system_validation}
 
-\subsubsection{Functional Test: Size}
+\subsection{Functional Test: Size}
 \label{test:sys_ft_size}
 \textbf{Test Question:} How big is each robot agent?\\
 \textbf{Operational Procedure:} Measure the physical dimensions of the robot in terms of width, length, and height or in terms of diameter and height. \\
@@ -11,7 +11,7 @@
 \textbf{Acceptance Criteria:} Must be less than 80 in. x 36 in. x 36 in. \\
 \textbf{Requirement(s) Verified:} \nfrref{nfr:size_limit}
 
-\subsubsection{Functional Test: Weight}
+\subsection{Functional Test: Weight}
 \label{test:sys_ft_weight}
 \textbf{Test Question:} How heavy is each robot agent?\\
 \textbf{Operational Procedure:} Measure the mass of the robot. \\
@@ -38,7 +38,7 @@ acceptance criteria: 2500 dollars
 \njnote{Fail: robot makes incorrect mark on ground - uses locomotion, localization, writing implement}
 \njnote{Fail: collision between robots - uses locomotion, localization}
 
-\subsubsection{Failure Mode: Out of Bounds}
+\subsection{Failure Mode: Out of Bounds}
 \label{sec:sys_val_fm_bounds}
 \textbf{Description:} This failure describes the situation when any robot agents move beyond the bounds of the drawing surface, as described by the boundary vision markers.\\
 \textbf{Cause:} This error can be caused by either poor localization, or poor locomotion. If localization software believes the robot to be somewhere it is not, it may command the robot out of bounds. If the robot motors or wheels are not working properly, it may move out of bounds, despite being given correct motion commands.\\
@@ -46,7 +46,7 @@ acceptance criteria: 2500 dollars
 \textbf{Criticality:} This is a critical error, as it results in incorrect localization, drawing marks, and system operation. Entering this failure mode results in system operation ending.\\
 \textbf{Safety Hazards:} This failure poses a safety hazard of collision, as robots that exist the bounds may collide with objects or people that it is not expecting.\\
 
-\subsubsection{Failure Mode: Incorrect Markings}
+\subsection{Failure Mode: Incorrect Markings}
 \label{sec:sys_val_fm_markings}
 \textbf{Description:} Incorrect markings are made when a robot agent lowers the writing implement, and makes a mark in a location that does not match with the input drawing. \\
 \textbf{Cause:} The cause of incorrect markings could be a result of the writing implement, locomotion, or localization subsystems. The writing implement subsystem may malfunction and lower the tool at an incorrect time. The locomotion subsystem may move the robot incorrectly while the writing implement is lowered, making markings where they are not expected. Localization error can cause markings to be in places that the system thinks are correct, but do not line up with the input drawing.\\
@@ -54,7 +54,7 @@ acceptance criteria: 2500 dollars
 \textbf{Criticality:} Given that the goal of this robot subsystem is to accurately recreate an input drawing, failure to do so is a critical error.\\
 \textbf{Safety Hazards:} There are no safety hazards associated with incorrectly marking the drawing surface.\\
 
-\subsubsection{Failure Mode: Robot Collision}
+\subsection{Failure Mode: Robot Collision}
 \label{sec:sys_val_fm_collision}
 \textbf{Description:} This failure exists when robot agents collide with any obstacle, including each other or external obstacles.\\
 \textbf{Cause:} Robot collision is a result of the locomotion, localization, or work scheduling subsystems failing. Locomotion failure could cause undefined motions by a robot agent, causing it to hit another robot, or move out of bounds (\sref{sec:sys_val_fm_bounds}) and collide with an obstacle. Localization failure could result in incorrect motion commands, resulting in collision with unintended objects. Finally, poor motion planning has potential to require the robots to move into collision with each other.\\
