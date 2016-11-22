@@ -4,7 +4,7 @@
 \label{sec:verification_power}
 
 \subsubsection{Performance Test: Battery Duration}
-\label{sec:power_pt_battery}
+\label{test:power_pt_battery}
 \textbf{Test Question:} How long can an individual robot run for on a single battery charge? \\
 \textbf{Operational Procedure:} Charge a robot fully. Given some example drawing inputs, continue to input drawings until the robot is fully drained of power. Time how long this takes. \\
 \textbf{Metric:} The duration of operational time given one charge \\
@@ -12,7 +12,7 @@
 \textbf{Requirement(s) Verified:} \frref{fr:battery_power}
 
 \subsubsection{Functional Test: Battery Life}
-\label{sec:power_ft_battery}
+\label{test:power_ft_battery}
 \textbf{Test Question:} Can the robots complete a drawing from a single charge? \\
 \textbf{Operational Procedure:} Given a set of example drawing inputs, we want to test the robots ability. For each input, fully charge each robot, send the input and keep track of whether the drawing is fully complete before the battery on either robot is fully drained. \\
 \textbf{Metric:} The ratio of the number of completed drawings to the total number of drawings. \\

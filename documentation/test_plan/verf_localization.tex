@@ -25,7 +25,7 @@
 \textbf{Operational Procedure:} With a single robot within the working bounds, the localization system attempts to determine the robot's location.\\
 \textbf{Metric:} Whether or not a location is returned by the localization system.\\
 \textbf{Acceptance Criteria:} The system must return a location for the robot. \\
-\textbf{Requirement(s) Verified:} \frref{fr:in_bounds}, \nfrref{nfr:quality}
+\textbf{Requirement(s) Verified:} \frref{fr:in_bounds}, \nfrref{nfr:quality}, \frref{fr:localize}, \nfrref{nfr:rot_accuracy}
 
 \subsubsection{Functional Test: Bounds}
 \label{test:localization_ft_bounds}
@@ -33,7 +33,7 @@
 \textbf{Operational Procedure:} The localization system attempts to find all four corners of the working bounds while they are all in its field of view.\\
 \textbf{Metric:} Whether or not locations are returned for all four corners.\\
 \textbf{Acceptance Criteria:} The system must return locations for all four corners of the working bounds.\\
-\textbf{Requirement(s) Verified:} \frref{fr:in_bounds}, \nfrref{nfr:quality}
+\textbf{Requirement(s) Verified:} \frref{fr:in_bounds}, \nfrref{nfr:quality}, \frref{fr:localize}
 
 \subsubsection{Failure Mode: Camera Failure}
 \label{sec:localization_fm_cam}

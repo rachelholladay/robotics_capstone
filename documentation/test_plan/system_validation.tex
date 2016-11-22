@@ -4,20 +4,20 @@
 \label{sec:system_validation}
 
 \subsubsection{Functional Test: Size}
-\label{sec:sys_ft_size}
+\label{test:sys_ft_size}
 \textbf{Test Question:} How big is each robot agent?\\
 \textbf{Operational Procedure:} Measure the physical dimensions of the robot in terms of width, length, and height or in terms of diameter and height. \\
 \textbf{Metric:} Numeric value of each length measurement; robot footprint; robot volume.\\
 \textbf{Acceptance Criteria:} Must be less than 80 in. x 36 in. x 36 in. \\
-\textbf{Requirement(s) Verified:} \yjnote{size one}
+\textbf{Requirement(s) Verified:} \nfrref{nfr:size_limit}
 
 \subsubsection{Functional Test: Weight}
-\label{sec:sys_ft_weight}
+\label{test:sys_ft_weight}
 \textbf{Test Question:} How heavy is each robot agent?\\
 \textbf{Operational Procedure:} Measure the mass of the robot. \\
 \textbf{Metric:} Numeric value of each length measurement; robot footprint; robot volume.\\
 \textbf{Acceptance Criteria:} Must be less than 80 in. x 36 in. x 36 in. \\
-\textbf{Requirement(s) Verified:} \yjnote{size one}
+\textbf{Requirement(s) Verified:} \nfrref{nfr:weight_limit}
 
 
 Test: do the drive commands respect physical robot capabilities. This relates to whether they robot can drive/draw at the same time w/o marker getting stuck. Also, is there a speed threshold at which drawing quality degrades - involves writing implement, locomotion
@@ -57,7 +57,7 @@ acceptance criteria: 2500 dollars
 \subsubsection{Failure Mode: Robot Collision}
 \label{sec:sys_val_fm_collision}
 \textbf{Description:} This failure exists when robot agents collide with any obstacle, including each other or external obstacles.\\
-\textbf{Cause:} Robot collision is a result of the locomotion, localization, or work scheduling subsystems failing. Locomotion failure could cause undefined motions by a robot agent, causing it to hit another robot, or move out of bounds (\sref{sys_val_fm_bounds}) and collide with an obstacle. Localization failure could result in incorrect motion commands, resulting in collision with unintended objects. Finally, poor motion planning has potential to require the robots to move into collision with each other.\\
+\textbf{Cause:} Robot collision is a result of the locomotion, localization, or work scheduling subsystems failing. Locomotion failure could cause undefined motions by a robot agent, causing it to hit another robot, or move out of bounds (\sref{sec:sys_val_fm_bounds}) and collide with an obstacle. Localization failure could result in incorrect motion commands, resulting in collision with unintended objects. Finally, poor motion planning has potential to require the robots to move into collision with each other.\\
 \textbf{Effect:} Robot collision could damage the robot agents, or hurt human observers who are hit.\\
 \textbf{Criticality:} This failure is of medium importance. The robots are designed to be safe (\sref{nfr:safe}), and therefore are unlikely to hurt or be significantly damaged by a collision. \\
 \textbf{Safety Hazards:} There is a hazard of minor human injury, but as stated above the robots are designed to minimize human injury in the case of collision.\\

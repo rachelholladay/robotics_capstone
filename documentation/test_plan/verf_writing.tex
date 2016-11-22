@@ -5,7 +5,7 @@
 
 \subsubsection{Performance Test: Loading}
 \label{test:writing_pt_load}
-\textbf{Test Question:} Is a human operator able to relaod the writing tool within the required tiem limit of 10s, and by how much? \\
+\textbf{Test Question:} Is a human operator able to reload the writing tool within the required tiem limit of 10s, and by how much? \\
 \textbf{Operational Procedure:} With a writing tool already in the writing assembly, a human test subject will perform 3 reloads separately timed reloads of the tool. \\
 \textbf{Metric:} Duration of the shortest reload time. \\
 \textbf{Acceptance Criteria:} The shortest reload time is under 10s. \\
@@ -71,7 +71,7 @@
 \subsubsection{Failure Mode: Writing Mechanism Failure}
 \label{sec:writing_fm_mechanism}
 \textbf{Description:} This failure occurs when the mechanism that raises and lowers the writing implement does not work. This causes the robot to be incapable of either drawing a line, or moving on the writing surface without drawing a line.\\
-\textbf{Cause:} This is caused by a communication failure, as described by \sref{comm_fm_loss}, or more likely, by the raise/lowering mechanism breaking.\\
+\textbf{Cause:} This is caused by a communication failure, as described by \sref{sec:comm_fm_loss}, or more likely, by the raise/lowering mechanism breaking.\\
 \textbf{Effects:} The robot agent will be unable to alter whether or not it is writing as it moves. This can cause either missing lines or incorrect ones, depending on the state of the writing mechanism.\\
 \textbf{Criticality:} This is a critical error as it directly affects the quality of the lines being drawn. Users can resolve this issue after receiving an error report to continue operation. However, it is possible the drawing has been compromised.\\
 \textbf{Safety Hazards:} There are no safety hazards associated with this failure mode.\\
