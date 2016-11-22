@@ -19,6 +19,14 @@
 \textbf{Acceptance Criteria:} The robot must reach the end of the 5ft line in 20 seconds. \\
 \textbf{Requirement(s) Verified:} \nfrref{nfr:efficiency}
 
+\subsubsection{Functional Test: Omnidirectional}
+\label{test:locomotion_ft_omni}
+\textbf{Test Question:} Can the robot drive omnidirectionally? \\
+\textbf{Operational Procedure:} The robot will drive along a path that has a turn of more than 120 degrees.\\
+\textbf{Metric:} Whether or not the robot can make the turn.\\
+\textbf{Acceptance Criteria:} The robot must be able to make an in-place turn more than 120 degrees.\
+\textbf{Requirement(s) Verified:} \nfrref{fr:omnidirectional}
+
 \subsubsection{Failure Mode: Inaccurate Motion}
 \label{sec:locomotion_fm_motion}
 \textbf{Description:} This failure mode describes the situation in which a robot agent is unable to accurately follow motion commands. An example of this is if the robot is commanded to move 10 inches, but localization detects it only moving 4.\\
