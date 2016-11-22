@@ -3,41 +3,37 @@
 \subsection{Image Processing}
 \label{sec:verification_image}
 
-
 \subsubsection{Performance Test: Accuracy}
-\label{sec:image_pt_accuracy}
+\label{test:image_pt_accuracy}
 \textbf{Test Question:} How closely does the image processor output resemble the original image?\\
 \textbf{Operational Procedure:} The image processor takes in a valid input image and produces a result.\\
 \textbf{Metric:} The percentage of lines that were accurately captured by the image processing system.\\
 \textbf{Acceptance Criteria:} The system must succeed in capturing 95\% of the lines in the input image.\\
-\textbf{Requirement(s) Verified:} \dznote{Quality}
-
-\subsubsection{Functional Tests}
-\label{sec:image_ft}
+\textbf{Requirement(s) Verified:} \nfrref{nfr:quality}
 
 \subsubsection{Functional Test: Return Data}
-\label{sec:image_ft_data}
+\label{test:image_ft_data}
 \textbf{Test Question:} Does the image processor return data usable by the planner?\\
 \textbf{Operational Procedure:} The image processor takes in a valid input image and attempts to produce a series of lines from it.\\
 \textbf{Metric:} Whether or not usable output is produced.\\
 \textbf{Acceptance Criteria:} The image processor must be able to produce a series of lines for the planner.\\
-\textbf{Requirement(s) Verified:} \dznote{Input Drawing Plan}
+\textbf{Requirement(s) Verified:} \frref{fr:input_plan}
 
 \subsubsection{Functional Test: Reject Improper Input}
-\label{sec:image_ft_reject}
+\label{test:image_ft_reject}
 \textbf{Test Question:} Is the image processor able to detect and reject improper input?\\
 \textbf{Operational Procedure:} The image processor takes in an invalid input image (not an image file, or is not only consisted of lines). \\
 \textbf{Metric:} Whether or not input is rejected.\\
 \textbf{Acceptance Criteria:} The invalid input must be rejected.\\
-\textbf{Requirement(s) Verified:} \dznote{Input Drawing Plan}
+\textbf{Requirement(s) Verified:} \frref{fr:input_plan}
 
 \subsubsection{Functional Test: Keep Lines Within Bounds}
-\label{sec:image_ft_bounds}
+\label{test:image_ft_bounds}
 \textbf{Test Question:} Does the image processor keep lines to be drawn within the working bounds?\\
 \textbf{Operational Procedure:} The image processor takes in a valid input and produces an output in the context of the bounds. \\
 \textbf{Metric:} Whether or not all lines lie within the working bounds.\\
 \textbf{Acceptance Criteria:} All lines must lie within the working bounds.\\
-\textbf{Requirement(s) Verified:} \dznote{Input Drawing Plan, Within Bounds}
+\textbf{Requirement(s) Verified:} \frref{fr:in_bounds}, \frref{fr:input_plan}
 
 \subsubsection{Failure Mode: Unable to Process Input Image}
 \label{sec:image_fm_input}

@@ -17,10 +17,33 @@
 %\definechangesauthor[name={Per cusse}, color=orange]{per}
 \setremarkmarkup{(#2)}
 
+\usepackage{xcite}
+
+\usepackage{xr}
+\makeatletter
+\newcommand*{\addFileDependency}[1]{% argument=file name and extension
+  \typeout{(#1)}% latexmk will find this if $recorder=0 (however, in that case, it will ignore #1 if it is a .aux or .pdf file etc and it exists! if it doesn't exist, it will appear in the list of dependents regardless)
+  \@addtofilelist{#1}% if you want it to appear in \listfiles, not really necessary and latexmk doesn't use this
+  \IfFileExists{#1}{}{\typeout{No file #1.}}% latexmk will find this message if #1 doesn't exist (yet)
+}
+\makeatother
+
+\newcommand*{\myexternaldocument}[1]{%
+    \externaldocument{#1}%
+    \addFileDependency{#1.tex}%
+    \addFileDependency{#1.aux}%
+}
+%%% END HELPER CODE
+
+% put all the external documents here!
+\myexternaldocument{../requirements/main}
+
 % Labels in IEEE format
 \newcommand{\sref}[1]{Sec. \ref{#1}} % Section
 \newcommand{\figref}[1]{Fig.\ref{#1}} % Figure
-\newcommand{\frref}[1]{FR\ref{#1}} % Functional Requirement
+\newcommand{\frref}[1]{FR \ref{#1}} % Functional Requirement
+\newcommand{\nfrref}[1]{NFR \ref{#1}} % Nonfunctional Requirement
+\newcommand{\tref}[1]{T\ref{#1}} % Test
 
 \usepackage{ifthen}
 \newboolean{include-notes}
