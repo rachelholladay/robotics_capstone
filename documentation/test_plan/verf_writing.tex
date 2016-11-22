@@ -4,7 +4,7 @@
 \label{sec:verification_writing_implement}
 
 \subsubsection{Performance Test: Loading}
-\label{sec:writing_pt_load}
+\label{test:writing_pt_load}
 \textbf{Test Question:} Is a human operator able to relaod the writing tool within the required tiem limit of 10s, and by how much? \\
 \textbf{Operational Procedure:} With a writing tool already in the writing assembly, a human test subject will perform 3 reloads separately timed reloads of the tool. \\
 \textbf{Metric:} Duration of the shortest reload time. \\
@@ -12,7 +12,7 @@
 \textbf{Requirement(s) Verified:} \nfrref{nfr:tool_switch_duration}
 
 \subsubsection{Performance Test: Writing Quality}
-\label{sec:writing_pt_qual}
+\label{test:writing_pt_qual}
 \textbf{Test Question:} Is the mark produced by the robot of acceptable quality? \\
 \textbf{Operational Procedure:} Using a fully loaded writing tool, the robot attempts to draw along a route with at least 4ft of travel distance and 3 turns exceeding 50 degrees. Verify that the resulting drawing is of acceptable quality. \\
 \textbf{Metric:} Percent thickness of the route at its narrowest point compared to the maximum thickness of a line created with the writing tool, and whether or not there are complete breaks in the line. \\
@@ -20,7 +20,7 @@
 \textbf{Requirement(s) Verified:} \nfrref{nfr:quality} \\
 
 \subsubsection{Functional Test: Replace Writing Tool}
-\label{sec:writing_ft_replace}
+\label{test:writing_ft_replace}
 \textbf{Test Question:} Is a human user able to replace the writing tool? \\
 \textbf{Operational Procedure:} A human test subject attempts to replace a writing tool already inside the robot.
 \textbf{Metric:} Whether or not the human succeeds in the task before giving up.\\
@@ -28,7 +28,7 @@
 \textbf{Requirement(s) Verified:} \frref{fr:replace_tool}\\
 
 \subsubsection{Functional Test: Writing Pressure Control}
-\label{sec:writing_ft_pressure}
+\label{test:writing_ft_pressure}
 \textbf{Test Question:} Can the writing tool be actuated to move up an down?\\
 \textbf{Operational Procedure:} With a writing tool in the writing assembly, the motors for moving up and down attempt to move throughout their range. \\
 \textbf{Metric:} Whether or not the writing tool moves.\\
@@ -36,7 +36,7 @@
 \textbf{Requirement(s) Verified:} \frref{fr:on_tool}
 
 \subsubsection{Functional Test: Simultaneous Driving and Writing}
-\label{sec:writing_ft_both}
+\label{test:writing_ft_both}
 \textbf{Test Question:} Does the writing tool make a mark when pushed down? \\
 \textbf{Operational Procedure:} With a fully loaded writing implement, the robot will mark a 1ft line on the writing surface.\\
 \textbf{Metric:} Whether or not any discernible mark is made and the full distance is travelled. \\
@@ -44,7 +44,7 @@
 \textbf{Requirement(s) Verified:} \nfrref{nfr:quality}
 
 \subsubsection{Functional Test: Marking}
-\label{sec:writing_ft_mark}
+\label{test:writing_ft_mark}
 \textbf{Test Question:} Does the writing tool make a mark when pushed down? \\
 \textbf{Operational Procedure:} The robot will press down on a writing surface with a fully loaded writing implement. \\
 \textbf{Metric:} Whether or not a any discerible mark is made. \\
@@ -52,7 +52,7 @@
 \textbf{Requirement(s) Verified:} \nfrref{nfr:quality}
 
 \subsubsection{Functional Test: Force Sensor}
-\label{sec:writing_ft_force}
+\label{test:writing_ft_force}
 \textbf{Test Question:} Can the force sensor measure applied force? \\
 \textbf{Operational Procedure:} The robot will press a writing implement down onto a writing surface with three different pressure settings: optimal, underactuated, and overactuated.\\
 \textbf{Metric:} Whether or not the sensor can distinguish between the three different pressure settings. \\

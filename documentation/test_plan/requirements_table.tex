@@ -2,3 +2,69 @@
 
 \section{Requirements Traceability Matrix}
 \label{sec:requirements_matrix}
+
+\begin{center}
+ \begin{tabular}{||c c ||} 
+ \hline
+ Requirement & Test \\ [0.5ex] 
+ \hline\hline
+ \frref{fr:omnidirectional} & \tref{}  \\ 
+ \hline
+ \frref{fr:autonomous} & \tref{test:sdp_ft_collision} \\
+ \hline
+ \frref{fr:localize} & \tref{} \\
+ \hline
+ \frref{fr:in_bounds} & \tref{test:localization_pt_accuracy}, \tref{test:localization_pt_bounds}, \tref{test:localization_ft_robopos}, \tref{test:localization_ft_bounds}, \tref{test:image_ft_bounds}, \tref{test:sdp_pt_executable} \\
+ \hline
+ \frref{fr:insert_tool} & \tref{} \\
+ \hline
+ \frref{fr:remove_tool} & \tref{} \\
+ \hline
+ \frref{fr:replace_tool} & \tref{test:writing_ft_replace} \\
+ \hline
+ \frref{fr:reliable_comm} & \tref{} \\
+ \hline
+ \frref{fr:drive_control} & \tref{} \\
+ \hline
+ \frref{fr:on_tool} & \tref{test:writing_ft_pressure} \\
+ \hline
+ \frref{fr:input_plan} & \tref{test:image_ft_data}, \tref{test:image_ft_reject}, \tref{test:image_ft_bounds} \\
+ \hline
+ \frref{fr:know_progress} & \tref{} \\
+ \hline
+ \frref{fr:kill_switch} & \tref{} \\
+ \hline
+ \frref{fr:user_interface} & \tref{} \\
+ \hline
+ \frref{fr:battery_power} & \tref{} \\
+ \hline
+ \nfrref{nfr:documentation} & \tref{} \\
+ \hline
+ \nfrref{nfr:errors} & \tref{}  \\
+ \hline
+ \nfrref{nfr:weight_limit} & \tref{} \\
+ \hline
+ \nfrref{nfr:size_limit} & \tref{} \\
+ \hline
+ \nfrref{nfr:efficiency} & \tref{test:locomotion_ft_speed}, \tref{test:sdp_pt_execu}, \tref{test:sdp_pt_draw}, \tref{test:sdp_pt_speedup} \\
+ \hline
+ \nfrref{nfr:quality} & \tref{test:writing_pt_qual}, \tref{test:writing_ft_both}, \tref{test:writing_ft_mark}, \tref{test:writing_ft_force}, \tref{test:localization_pt_accuracy}, \tref{test:localization_ft_robopos}, \tref{test:localization_ft_bounds}, \tref{test:image_pt_accuracy} \\
+ \hline
+ \nfrref{nfr:mobileapp} & \tref{} \\
+ \hline
+ \nfrref{nfr:reliability} & \tref{} \\
+ \hline
+ \nfrref{nfr:coordination} & \tref{test:sdp_pt_execu}, \tref{test:sdp_pt_draw} \\
+ \hline
+ \nfrref{nfr:budget} & \tref{} \\
+ \hline
+ \nfrref{nfr:safe} & \tref{test:sdp_pt_executable}, \tref{test:sdp_ft_collision} \\
+ \hline
+ \nfrref{nfr:pos_accuracy} & \tref{test:locomotion_pt_accuracy} \\
+ \hline
+ \nfrref{nfr:rot_accuracy} & \tref{} \\
+ \hline
+ \nfrref{nfr:tool_switch_duration} & \tref{test:writing_pt_load} \\ [1ex]
+\hline
+\end{tabular}
+\end{center}

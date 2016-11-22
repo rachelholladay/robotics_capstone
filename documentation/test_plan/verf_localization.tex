@@ -4,7 +4,7 @@
 \label{sec:verification_localization}
 
 \subsubsection{Performance Test: Robot Position Accuracy}
-\label{sec:localization_pt_accuracy}
+\label{test:localization_pt_accuracy}
 \textbf{Test Question:} Is the localization system able to accurately determine the position of each robot?\\
 \textbf{Operational Procedure:} Both robots sit stationary within the working bounds, and the localization system attempts to determine their locations.\\
 \textbf{Metric:} The difference of the robots' actual position from the position reported by the localization system. \\
@@ -12,7 +12,7 @@
 \textbf{Requirement(s) Verified:} \nfrref{nfr:quality}, \frref{fr:in_bounds}
 
 \subsubsection{Performance Test: Bounds Accuracy}
-\label{sec:localization_pt_bounds}
+\label{test:localization_pt_bounds}
 \textbf{Test Question:} Is the localization system able to accurately determine the boundaries of the workspace?\\
 \textbf{Operational Procedure:} The localization system attempts to determine the bounds of the workspace.\\
 \textbf{Metric:} The total difference in distance between the reported corners of the workspace and the actual corners.\\
@@ -20,7 +20,7 @@
 \textbf{Requirement(s) Verified:} \frref{fr:in_bounds}
 
 \subsubsection{Functional Test: Robot Position}
-\label{sec:localization_ft_robopos}
+\label{test:localization_ft_robopos}
 \textbf{Test Question:} Can the localization system find the robot?\\
 \textbf{Operational Procedure:} With a single robot within the working bounds, the localization system attempts to determine the robot's location.\\
 \textbf{Metric:} Whether or not a location is returned by the localization system.\\
@@ -28,7 +28,7 @@
 \textbf{Requirement(s) Verified:} \frref{fr:in_bounds}, \nfrref{nfr:quality}
 
 \subsubsection{Functional Test: Bounds}
-\label{sec:localization_ft_bounds}
+\label{test:localization_ft_bounds}
 \textbf{Test Question:} Can the localization system find the working bounds?\\
 \textbf{Operational Procedure:} The localization system attempts to find all four corners of the working bounds while they are all in its field of view.\\
 \textbf{Metric:} Whether or not locations are returned for all four corners.\\
