@@ -5,17 +5,17 @@
 
 \subsubsection{Performance Test: Loading}
 \label{test:writing_pt_load}
-\textbf{Test Question:} Is a human operator able to reload the writing tool within the required tiem limit of 10s, and by how much? \\
-\textbf{Operational Procedure:} With a writing tool already in the writing assembly, a human test subject will perform 3 reloads separately timed reloads of the tool. \\
+\textbf{Test Question:} Is a human operator able to reload the writing tool within the required time limit of 10s, and by how much? \\
+\textbf{Operational Procedure:} With a writing tool already installed in the writing assembly, a human test subject will perform 3 reload tests which are separately timed. \\
 \textbf{Metric:} Duration of the shortest reload time. \\
 \textbf{Acceptance Criteria:} The shortest reload time is under 10s. \\
 \textbf{Requirement(s) Verified:} \nfrref{nfr:tool_switch_duration}
 
 \subsubsection{Performance Test: Writing Quality}
 \label{test:writing_pt_qual}
-\textbf{Test Question:} Is the mark produced by the robot of acceptable quality? \\
-\textbf{Operational Procedure:} Using a fully loaded writing tool, the robot attempts to draw along a route with at least 4ft of travel distance and 3 turns exceeding 50 degrees. Verify that the resulting drawing is of acceptable quality. \\
-\textbf{Metric:} Percent thickness of the route at its narrowest point compared to the maximum thickness of a line created with the writing tool, and whether or not there are complete breaks in the line. \\
+\textbf{Test Question:} Is the drawing produced by the robot of acceptable quality? \\
+\textbf{Operational Procedure:} Usingi a fully loaded writing tool, the robot attempts to draw along a route with at least 4 ft. of travel distance and 3 turns exceeding 50 degrees. Verify that the resulting drawing is of acceptable quality. \\
+\textbf{Metric:} Percent thickness of the route at its narrowest point compared to the maximum thickness of a line created with the writing tool. Boolean on whether or not there are complete breaks in the line. \\
 \textbf{Acceptance Criteria:} The percent thickness is at least 70\%, and there are no complete breaks in the line. \\
 \textbf{Requirement(s) Verified:} \nfrref{nfr:quality} 
 
@@ -30,7 +30,7 @@
 \subsubsection{Functional Test: Reload Writing Tool}
 \label{test:writing_ft_reload}
 \textbf{Test Question:} Is a human user able to reload the writing tool? \\
-\textbf{Operational Procedure:} A human test subject attempts to reload a writing tool already inside the robot.
+\textbf{Operational Procedure:} A human test subject attempts to reload the writing tool already installed in the robot.
 \textbf{Metric:} Whether or not the human succeeds in the task before giving up.\\
 \textbf{Acceptance Criteria:} The human must successfully reload the writing tool without giving up.  \\
 \textbf{Requirement(s) Verified:} \frref{fr:insert_tool} \frref{fr:remove_tool}
@@ -45,9 +45,9 @@
 
 \subsubsection{Functional Test: Simultaneous Driving and Writing}
 \label{test:writing_ft_both}
-\textbf{Test Question:} Does the writing tool make a mark when pushed down? \\
-\textbf{Operational Procedure:} With a fully loaded writing implement, the robot will mark a 1ft line on the writing surface.\\
-\textbf{Metric:} Whether or not any discernible mark is made and the full distance is travelled. \\
+\textbf{Test Question:} Can the writing tool make a mark while driving? \\
+\textbf{Operational Procedure:} With a fully loaded writing implement, the robot will mark a 1 ft. line on the writing surface.\\
+\textbf{Metric:} Whether or not any discernible mark is made and the full distance is covered. \\
 \textbf{Acceptance Criteria:} A discernible mark must be made and the full distance must be travelled without the robot becoming stuck or breaking.\\
 \textbf{Requirement(s) Verified:} \nfrref{nfr:quality}
 
@@ -74,12 +74,12 @@
 \textbf{Cause:} Overuse of the writing implement.\\
 \textbf{Effects:} The robot agent moves around and attempts to continue drawing, without making physical marks.\\
 \textbf{Criticality:} This is a critical failure, as it requires the user to replace the implement before drawing can continue. If the user fails to replace the implement, lines will be missing from the drawing.\\
-\textbf{Safety Hazards:} There are no safety hazards associated with this failure mode.
+\textbf{Safety Hazards:} There is no safety hazard associated with this failure mode.
 
 \subsubsection{Failure Mode: Writing Mechanism Failure}
 \label{sec:writing_fm_mechanism}
-\textbf{Description:} This failure occurs when the mechanism that raises and lowers the writing implement does not work. This causes the robot to be incapable of either drawing a line, or moving on the writing surface without drawing a line.\\
-\textbf{Cause:} This is caused by a communication failure, as described by \sref{sec:comm_fm_loss}, or more likely, by the raise/lowering mechanism breaking.\\
+\textbf{Description:} This failure occurs when the mechanism that raises and lowers the writing implement does not work. This causes the robot to be incapable of either drawing a line or even moving on the writing surface.\\
+\textbf{Cause:} This is caused by a communication failure, as described by \sref{sec:comm_fm_loss}, or more likely, by the raise/lowering mechanism breakdown.\\
 \textbf{Effects:} The robot agent will be unable to alter whether or not it is writing as it moves. This can cause either missing lines or incorrect ones, depending on the state of the writing mechanism.\\
-\textbf{Criticality:} This is a critical error as it directly affects the quality of the lines being drawn. Users can resolve this issue after receiving an error report to continue operation. However, it is possible the drawing has been compromised.\\
-\textbf{Safety Hazards:} There are no safety hazards associated with this failure mode.
+\textbf{Criticality:} This is a critical failure as it directly affects the quality of the lines being drawn. To continue opertion, users can resolve this issue after receiving an error message. However, it is possible that the drawing has already been compromised.\\
+\textbf{Safety Hazards:} There is no safety hazard associated with this failure mode.

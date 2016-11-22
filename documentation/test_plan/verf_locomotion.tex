@@ -8,15 +8,15 @@
 \textbf{Test Question:} Is the robot able to drive with positional and rotational accuracy?\\
 \textbf{Operational Procedure:} The robot drives along a predetermined testing route consisting of at least 3 feet of linear distance and 90 degrees of turn.\\
 \textbf{Metric:} The difference of the robot's final position and orientation from the intended position and orientation. \\
-\textbf{Acceptance Criteria:} The robot's position must be less than 1 inch away from the intended position, and its orientation must be within 10 degrees of the intended orientation.\\
+\textbf{Acceptance Criteria:} The robot's position must be less than 1 inch away from the intended position and its orientation must be within 10 degrees of the intended orientation.\\
 \textbf{Requirement(s) Verified:} \nfrref{nfr:pos_accuracy}
 
 \subsubsection{Functional Test: Speed}
 \label{test:locomotion_ft_speed}
 \textbf{Test Question:} Can the robot reach a desired speed? \\
-\textbf{Operational Procedure:} The robot will drive along a straight line for 5ft during a timed trial.\\
+\textbf{Operational Procedure:} The robot will drive along a straight line for 5 ft. during a timed trial.\\
 \textbf{Metric:} The time required for the robot to reach the end of the line.\\
-\textbf{Acceptance Criteria:} The robot must reach the end of the 5ft line in 20 seconds. \\
+\textbf{Acceptance Criteria:} The robot must reach the end of the 5 ft. testing course in 20 seconds. \\
 \textbf{Requirement(s) Verified:} \nfrref{nfr:efficiency}
 
 \subsubsection{Functional Test: Omnidirectional}
@@ -29,16 +29,16 @@
 
 \subsubsection{Failure Mode: Inaccurate Motion}
 \label{sec:locomotion_fm_motion}
-\textbf{Description:} This failure mode describes the situation in which a robot agent is unable to accurately follow motion commands. An example of this is if the robot is commanded to move 10 inches, but localization detects it only moving 4.\\
-\textbf{Cause:} Inaccurate motion could be a result of slippage of the wheels or failed motor encoders.\\
+\textbf{Description:} This failure mode describes the situation in which a robot agent is unable to accurately follow motion commands. An example of this is if the robot is commanded to move 10 inches, but localization detects it only moving 4 inches.\\
+\textbf{Cause:} Inaccurate motion could be a result of slippage of wheels, failed motor encoders, or failed driving motors.\\
 \textbf{Effects:} Inability to move accurately can cause a user-reported error, which the user can resolve to continue operation. \\
 \textbf{Criticality:}  This is a minor failure, as it does not end system operation and can be resolved by the user.\\
 \textbf{Safety Hazards:} The only safety hazard is with regard to the drawing surface; slippage could cause minor destruction of the surface.
 
 \subsubsection{Failure Mode: Failure to Move Omnidirectionally}
 \label{sec:locomotion_fm_omni}
-\textbf{Description:} Failure to make omnidirectional movement means a robot agent cannot move in an arbitrary direction on the flat plane represented by the drawing surface.\\
-\textbf{Cause:} Similar to \sref{sec:locomotion_fm_motion}, this could be caused by wheels causing slippage in some directions. Alternatively, a broken wheel or motor could have this effect as well.\\
-\textbf{Effects:} Failling to move omnidirectionally could result in incorrect drawings - the robot agent can no longer make arbitrarily sharp curves to faithfully recreate the input image. When detected, robot operation should halt and report to the user to be fixed.\\
-\textbf{Criticality:}  This is a critical error, as it has a direct relation on the quality of the drawing.\\
+\textbf{Description:} Failure to make omnidirectional movements means a robot agent cannot move in an arbitrary direction on the flat plane represented by the drawing surface.\\
+\textbf{Cause:} Similar to \sref{sec:locomotion_fm_motion}, this could be caused by wheels slippage. Alternatively, a broken wheel or motor could have this effect as well.\\
+\textbf{Effects:} Failing to move omnidirectionally could result in incorrect drawings - the robot agent can no longer move along sharp curves to faithfully recreate the input image. When detected, robot operation should halt and robot should report to the user of this failure.\\
+\textbf{Criticality:}  This is a critical error, as it has a direct influence on the quality of the drawing.\\
 \textbf{Safety Hazards:} As with \sref{sec:locomotion_fm_motion}, the only safety hazard is that a broken wheel could damage the drawing surface.

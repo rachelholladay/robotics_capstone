@@ -13,7 +13,7 @@
 
 \subsubsection{Functional Test: Return Data}
 \label{test:image_ft_data}
-\textbf{Test Question:} Does the image processor return data usable by the planner?\\
+\textbf{Test Question:} Does the image processor return data usable to the planner?\\
 \textbf{Operational Procedure:} The image processor takes in a valid input image and attempts to produce a series of lines from it.\\
 \textbf{Metric:} Whether or not usable output is produced.\\
 \textbf{Acceptance Criteria:} The image processor must be able to produce a series of lines for the planner.\\
@@ -22,14 +22,14 @@
 \subsubsection{Functional Test: Reject Improper Input}
 \label{test:image_ft_reject}
 \textbf{Test Question:} Is the image processor able to detect and reject improper input?\\
-\textbf{Operational Procedure:} The image processor takes in an invalid input image (not an image file, or is not only consisted of lines). \\
+\textbf{Operational Procedure:} The image processor takes in an invalid input image (not an image file or contains components other than lines). \\
 \textbf{Metric:} Whether or not input is rejected.\\
 \textbf{Acceptance Criteria:} The invalid input must be rejected.\\
 \textbf{Requirement(s) Verified:} \frref{fr:input_plan}
 
 \subsubsection{Functional Test: Keep Lines Within Bounds}
 \label{test:image_ft_bounds}
-\textbf{Test Question:} Does the image processor keep lines to be drawn within the working bounds?\\
+\textbf{Test Question:} Does the image processor generate drawing lines within the working bounds?\\
 \textbf{Operational Procedure:} The image processor takes in a valid input and produces an output in the context of the bounds. \\
 \textbf{Metric:} Whether or not all lines lie within the working bounds.\\
 \textbf{Acceptance Criteria:} All lines must lie within the working bounds.\\
@@ -38,7 +38,7 @@
 \subsubsection{Failure Mode: Unable to Process Input Image}
 \label{sec:image_fm_input}
 \textbf{Description:} Inability to process user input refers to the image processing subsystem failing to determine a set of lines usable for work distribution, planning, and scheduling. \\
-\textbf{Cause:} This could be caused by an unreadable input, or input drawings that do not conform to requirements. An example of this would be an input that contains background noise, making it unsuitable for processing and drawing. \\
-\textbf{Effects:} The effect is that another input, or a corrected version of the initial input, will have to be supplied for the system to continue operation. \\
+\textbf{Cause:} This could be caused by an unreadable input or input drawings that do not conform to requirements. An example of this would be an input that contains background noise, making it unsuitable for processing and drawing. \\
+\textbf{Effects:} The effect is that another input, a corrected version of the initial input, will have to be supplied for the system to continue operation. \\
 \textbf{Criticality:} This failure is critical to system operation, as no drawing can be made until the input can be properly processed. \\
 \textbf{Safety Hazards:} There are no safety hazards involved in this failure mode.
