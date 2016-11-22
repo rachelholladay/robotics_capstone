@@ -6,26 +6,26 @@
 \subsubsection{Performance Test: Loading}
 \label{sec:writing_pt_load}
 \textbf{Test Question:} Is a human operator able to relaod the writing tool within the required tiem limit of 10s, and by how much? \\
-\textbf{Operational Procedure:} With a writing tool already in the writing assembly, a human test subject will perform 3 reloads separately timed reloads of the tool.
-\textbf{Metric:} Duration of the shortest reload time.
-\textbf{Acceptance Criteria:} The shortest reload time is under 10s.
-\textbf{Requirement(s) Verified:} \dznote{reload time}
+\textbf{Operational Procedure:} With a writing tool already in the writing assembly, a human test subject will perform 3 reloads separately timed reloads of the tool. \\
+\textbf{Metric:} Duration of the shortest reload time. \\
+\textbf{Acceptance Criteria:} The shortest reload time is under 10s. \\
+\textbf{Requirement(s) Verified:} \nfrref{nfr:tool_switch_duration}
 
 \subsubsection{Performance Test: Writing Quality}
 \label{sec:writing_pt_qual}
 \textbf{Test Question:} Is the mark produced by the robot of acceptable quality? \\
 \textbf{Operational Procedure:} Using a fully loaded writing tool, the robot attempts to draw along a route with at least 4ft of travel distance and 3 turns exceeding 50 degrees. Verify that the resulting drawing is of acceptable quality. \\
 \textbf{Metric:} Percent thickness of the route at its narrowest point compared to the maximum thickness of a line created with the writing tool, and whether or not there are complete breaks in the line. \\
-\textbf{Acceptance Criteria:} The percent thickness is at least 70\%, and there are no complete breaks in the line. 
-\textbf{Requirement(s) Verified:} \dznote{drawing quality} \\
+\textbf{Acceptance Criteria:} The percent thickness is at least 70\%, and there are no complete breaks in the line. \\
+\textbf{Requirement(s) Verified:} \nfrref{nfr:quality} \\
 
 \subsubsection{Functional Test: Replace Writing Tool}
-\label{sec:writing_ft_load}
+\label{sec:writing_ft_replace}
 \textbf{Test Question:} Is a human user able to replace the writing tool? \\
 \textbf{Operational Procedure:} A human test subject attempts to replace a writing tool already inside the robot.
 \textbf{Metric:} Whether or not the human succeeds in the task before giving up.\\
 \textbf{Acceptance Criteria:} The human must successfully replace the writing tool without giving up.  \\
-\textbf{Requirement(s) Verified:} \dznote{load writing tool}\\
+\textbf{Requirement(s) Verified:} \frref{fr:replace_tool}\\
 
 \subsubsection{Functional Test: Writing Pressure Control}
 \label{sec:writing_ft_pressure}
@@ -33,15 +33,15 @@
 \textbf{Operational Procedure:} With a writing tool in the writing assembly, the motors for moving up and down attempt to move throughout their range. \\
 \textbf{Metric:} Whether or not the writing tool moves.\\
 \textbf{Acceptance Criteria:} The writing tool must move through the writing assembly's full vertical range. \\
-\textbf{Requirement(s) Verified:} \dznote{thickness}
+\textbf{Requirement(s) Verified:} \frref{fr:on_tool}
 
-\subsubsection{Functional Test: Simutaneous Driving and Writing}
+\subsubsection{Functional Test: Simultaneous Driving and Writing}
 \label{sec:writing_ft_both}
 \textbf{Test Question:} Does the writing tool make a mark when pushed down? \\
 \textbf{Operational Procedure:} With a fully loaded writing implement, the robot will mark a 1ft line on the writing surface.\\
 \textbf{Metric:} Whether or not any discernible mark is made and the full distance is travelled. \\
 \textbf{Acceptance Criteria:} A discernible mark must be made and the full distance must be travelled without the robot becoming stuck or breaking.\\
-\textbf{Requirement(s) Verified:} \dznote{writing}
+\textbf{Requirement(s) Verified:} \nfrref{nfr:quality}
 
 \subsubsection{Functional Test: Marking}
 \label{sec:writing_ft_mark}
@@ -49,7 +49,7 @@
 \textbf{Operational Procedure:} The robot will press down on a writing surface with a fully loaded writing implement. \\
 \textbf{Metric:} Whether or not a any discerible mark is made. \\
 \textbf{Acceptance Criteria:} A discernible mark must be made.\\
-\textbf{Requirement(s) Verified:} \dznote{writing}
+\textbf{Requirement(s) Verified:} \nfrref{nfr:quality}
 
 \subsubsection{Functional Test: Force Sensor}
 \label{sec:writing_ft_force}
@@ -57,7 +57,7 @@
 \textbf{Operational Procedure:} The robot will press a writing implement down onto a writing surface with three different pressure settings: optimal, underactuated, and overactuated.\\
 \textbf{Metric:} Whether or not the sensor can distinguish between the three different pressure settings. \\
 \textbf{Acceptance Criteria:} The sensor must be able to distinguish between all three settings.\\
-\textbf{Requirement(s) Verified:} \dznote{writing}
+\textbf{Requirement(s) Verified:} \nfrref{nfr:quality}
 
 
 \subsubsection{Failure Mode: Out of Writing Material}

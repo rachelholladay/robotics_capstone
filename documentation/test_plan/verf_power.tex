@@ -9,7 +9,7 @@
 \textbf{Operational Procedure:} Charge a robot fully. Given some example drawing inputs, continue to input drawings until the robot is fully drained of power. Time how long this takes. \\
 \textbf{Metric:} The duration of operational time given one charge \\
 \textbf{Acceptance Criteria:} We accept this if the operational time exceeds the necessary duration time of 90\% of our test drawing inputs. \\
-\textbf{Requirement(s) Verified:} \rhnote{battery life one}
+\textbf{Requirement(s) Verified:} \frref{fr:battery_power}
 
 \subsubsection{Functional Test: Battery Life}
 \label{sec:power_ft_battery}
@@ -17,7 +17,7 @@
 \textbf{Operational Procedure:} Given a set of example drawing inputs, we want to test the robots ability. For each input, fully charge each robot, send the input and keep track of whether the drawing is fully complete before the battery on either robot is fully drained. \\
 \textbf{Metric:} The ratio of the number of completed drawings to the total number of drawings. \\
 \textbf{Acceptance Criteria:}  We want to be able to successfully draw 90\% of the drawings in our example drawing input set. \\
-\textbf{Requirement(s) Verified:} \rhnote{battery life one}
+\textbf{Requirement(s) Verified:} \frref{fr:battery_power}
 
 
 \subsubsection{Failure Mode: Insufficient Battery}
