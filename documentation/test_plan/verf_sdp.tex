@@ -57,5 +57,5 @@
 \textbf{Description:} This failure mode occurs when the offboard system is unable to generate a valid plan for the robot agents. This means the main controller is unable to command the robots to successfully complete the input drawing.\\
 \textbf{Cause:} Failure to create a valid plan could arise from an out of bounds drawing. Other reasons include the image processing result being incorrect, which forces the work planner to incorrectly assign and generate plans.\\
 \textbf{Effect:} The system is unable to complete an invalid drawing, and cannot begin autonomous operation.}
-\textbf{Criticality: This is a system-critical failure due to the fact that the system cannot recreate the drawing if it cannot generate a robot motion plan to do so. \\
+\textbf{Criticality:} This is a system-critical failure due to the fact that the system cannot recreate the drawing if it cannot generate a robot motion plan to do so. \\
 \textbf{Safety Hazards:} There are no safety hazards associated with this failure mode, given that it is entirely software-based. \\
