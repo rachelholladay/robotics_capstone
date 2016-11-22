@@ -24,14 +24,28 @@ acceptance criteria: 2500 dollars
 \njnote{Fail: out of bounds - uses localization, locomotion}
 \njnote{Fail: robot makes incorrect mark on ground - uses locomotion, localization, writing implement}
 \njnote{Fail: collision between robots - uses locomotion, localization}
-\njnote{Fail: nonuniform/flat surface - assumptions(?) causes slippage}
 
-\subsubsection{Failure Mode: Fail to Plan}
+\subsubsection{Failure Mode: Out of Bounds}
 \label{sec:sys_val_fm_bounds}
-\njnote{Fail: unable to generate plan}
+\textbf{Description:} This failure describes the situation when any robot agents move beyond the bounds of the drawing surface, as described by the boundary vision markers.\\
+\textbf{Cause:} This error can be caused by either poor localization, or poor locomotion. If localization software believes the robot to be somewhere it is not, it may command the robot out of bounds. If the robot motors or wheels are not working properly, it may move out of bounds, despite being given correct motion commands.\\
+\textbf{Effect:} The robot moving out of bounds introduces undefined behavior that could result in collision, incorrect drawings, or making marks with the writing tool that are not on the appropriate writing surface.\\
+\textbf{Criticality:} This is a critical error, as it results in incorrect localization, drawing marks, and system operation. Entering this failure mode results in system operation ending.\\
+\textbf{Safety Hazards:} This failure poses a safety hazard of collision, as robots that exist the bounds may collide with objects or people that it is not expecting.\\
 
-\textbf{Description:} This failure mode occurs when the offboard system is unable to generate a valid plan for the robot agents. This means the main controller is unable to command the robots to successfully complete the input drawing.\\
-\textbf{Cause:} Failure to create a valid plan could arise from an out of bounds drawing. Other reasons include the image processing result being incorrect, which forces the work planner to incorrectly assign and generate plans.\\
-\textbf{Effect: The system is unable to complete an invalid drawing, and cannot begin autonomous operation.}
-\textbf{Criticality: This is a system-critical failure due to the fact that the system cannot recreate the drawing if it cannot generate a robot motion plan to do so.} \\
-\textbf{Safety Hazards: There are no safety hazards associated with this failure mode, given that it is entirely software-based.} \\
+\subsubsection{Failure Mode: Incorrect Markings}
+\label{sec:sys_val_fm_markings}
+\textbf{Description:} Incorrect markings are made when a robot agent lowers the writing implement, and makes a mark in a location that does not match with the input drawing. \\
+\textbf{Cause:} The cause of incorrect markings could be a result of the writing implement, locomotion, or localization subsystems. The writing implement subsystem may malfunction and lower the tool at an incorrect time. The locomotion subsystem may move the robot incorrectly while the writing implement is lowered, making markings where they are not expected. Localization error can cause markings to be in places that the system thinks are correct, but do not line up with the input drawing.\\
+\textbf{Effect:} The effect of this failure is that the output drawing by the system is incorrect.\\
+\textbf{Criticality:} Given that the goal of this robot subsystem is to accurately recreate an input drawing, failure to do so is a critical error.\\
+\textbf{Safety Hazards:} There are no safety hazards associated with incorrectly marking the drawing surface.\\
+
+\subsubsection{Failure Mode: Robot Collision}
+\label{sec:sys_val_fm_collision}
+\textbf{Description:} This failure exists when robot agents collide with any obstacle, including each other or external obstacles.\\
+\textbf{Cause:} Robot collision is a result of the locomotion, localization, or work scheduling subsystems failing. Locomotion failure could cause undefined motions by a robot agent, causing it to hit another robot, or move out of bounds (\sref{sys_val_fm_bounds}) and collide with an obstacle. Localization failure could result in incorrect motion commands, resulting in collision with unintended objects. Finally, poor motion planning has potential to require the robots to move into collision with each other.\\
+\textbf{Effect:} Robot collision could damage the robot agents, or hurt human observers who are hit.\\
+\textbf{Criticality:} This failure is of medium importance. The robots are designed to be safe (\sref{nfr:safe}), and therefore are unlikely to hurt or be significantly damaged by a collision. \\
+\textbf{Safety Hazards:} There is a hazard of minor human injury, but as stated above the robots are designed to minimize human injury in the case of collision.\\
+
