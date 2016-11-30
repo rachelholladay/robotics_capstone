@@ -10,6 +10,7 @@
 \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage[toc,page]{appendix}
 
 % Tracking Changes
 %\usepackage[final]{changes}
@@ -44,6 +45,7 @@
 \newcommand{\frref}[1]{FR \ref{#1}} % Functional Requirement
 \newcommand{\nfrref}[1]{NFR \ref{#1}} % Nonfunctional Requirement
 \newcommand{\tref}[1]{T\ref{#1}} % Test
+\newcommand{\appref}[1]{Appendix \ref{#1}} % Appendix
 
 \usepackage{ifthen}
 \newboolean{include-notes}
@@ -97,6 +99,10 @@
 \input{failure_modes.tex}
 \input{risk_management.tex}
 \input{requirements_table.tex}
+\pagebreak
+\begin{appendices}
+\input{planner_inputs.tex}
+\end{appendices}
 
 %{\footnotesize
 %\bibliographystyle{ieeetr}
