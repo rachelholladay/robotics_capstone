@@ -1,7 +1,7 @@
 '''
 Sketch of prototype planner
 '''
-import numpy, random, math
+import numpy, random, math, sys
 import matplotlib
 from matplotlib import pyplot as plt
 from matplotlib import animation
@@ -200,10 +200,14 @@ def animate(i, path0, path1):
     return lines    
 
 if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        testName = 'test{}'.format(sys.argv[1])
+    else:
+        testName = 'test2'
     boundx = 10
     boundy = 10
     safeDist = 1
-    points = readPoints('drawingInputs/', 'test2')
+    points = readPoints('drawingInputs/', testName)
     (rob0_pts, rob1_pts) = assign_partitionHalf(points, boundx)
     (p0, f0) = createPlan(rob0_pts, [0, 0])
     (p1, f1) = createPlan(rob1_pts, [boundx, boundy])
@@ -227,6 +231,7 @@ if __name__ == "__main__":
         ax.plot([points[i, 0], points[i, 2]], [points[i, 1], points[i, 3]], lw=5, color='black') 
     line, = ax.plot([], [], lw=2)
 
+    
     plotcols = ["orange", "red"]
     lines = []
     for index in range(2):
@@ -236,5 +241,7 @@ if __name__ == "__main__":
     count = max(len(p0), len(p1))+1
     anim = animation.FuncAnimation(fig, animate, init_func=init, fargs=[p0, p1],
                                frames=count, interval=500, blit=True)
-    anim.save('plannerOutput/basic_animation.mp4', writer=FFwriter) 
+    anim.save('plannerOutput/basic_animation.mp4', writer=FFwriter)
     plt.show()
+    
+    plt.savefig('plannerOutput/{}.png'.format(testName), bbox_inches='tight')
