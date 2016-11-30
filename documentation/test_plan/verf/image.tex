@@ -6,7 +6,7 @@
 \subsubsection{Performance Test: Accuracy}
 \label{test:image_pt_accuracy}
 \textbf{Test Question:} How closely does the image processor output resemble the original image?\\
-\textbf{Operational Procedure:} The image processor takes in a valid input image and produces a result.\\
+\textbf{Operational Procedure:} The image processor takes in a valid input image \added[remark={RH, V2}]{from the example input set (\appref{app:planner_inputs})} and produces a result.\\
 \textbf{Metric:} The percentage of lines that were accurately captured by the image processing system.\\
 \textbf{Acceptance Criteria:} The system must succeed in capturing 95\% of the lines in the input image.\\
 \textbf{Requirement(s) Verified:} \nfrref{nfr:quality}
@@ -14,7 +14,7 @@
 \subsubsection{Functional Test: Return Data}
 \label{test:image_ft_data}
 \textbf{Test Question:} Does the image processor return data usable to the planner?\\
-\textbf{Operational Procedure:} The image processor takes in a valid input image and attempts to produce a series of lines from it.\\
+\textbf{Operational Procedure:} The image processor takes in a valid input image \added[remark={RH, V2}]{from the example input set (\appref{app:planner_inputs})} and attempts to produce a series of lines from it.\\
 \textbf{Metric:} Whether or not usable output is produced.\\
 \textbf{Acceptance Criteria:} The image processor must be able to produce a series of lines for the planner.\\
 \textbf{Requirement(s) Verified:} \frref{fr:input_plan}
@@ -30,7 +30,7 @@
 \subsubsection{Functional Test: Keep Lines Within Bounds}
 \label{test:image_ft_bounds}
 \textbf{Test Question:} Does the image processor generate drawing lines within the working bounds?\\
-\textbf{Operational Procedure:} The image processor takes in a valid input and produces an output in the context of the bounds. \\
+\textbf{Operational Procedure:} The image processor takes in a valid input \added[remark={RH, V2}]{from the example input set (\appref{app:planner_inputs})} and produces an output in the context of the bounds. \\
 \textbf{Metric:} Whether or not all lines lie within the working bounds.\\
 \textbf{Acceptance Criteria:} All lines must lie within the working bounds.\\
 \textbf{Requirement(s) Verified:} \frref{fr:in_bounds}, \frref{fr:input_plan}

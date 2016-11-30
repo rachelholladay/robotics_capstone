@@ -6,7 +6,7 @@
 \subsubsection{Performance Test: Executable Plans}
 \label{test:sdp_pt_executable}
 \textbf{Test Question:} How consistent is the planner at generating executable plans, ie those that avoid collision and stay within bounds? \\
-\textbf{Operational Procedure:} Given a set of example drawing inputs, run each input and check the plan for potential robot-robot collisions and out of bounds driving. \\
+\textbf{Operational Procedure:} \replaced[remark={RH, V2}]{Using the example input set (\appref{app:planner_inputs}),}{Given a set of example drawing inputs} run each input and check the plan for potential robot-robot collisions and out of bounds driving. \\
 \textbf{Metric:} Ratio of number of unacceptable plans, those that would involve collision or driving out of bounds, over the total number of plans. \\
 \textbf{Acceptance Criteria:} Almost all, 99\% of plans would not involve collision or out-of-bounds if executed. \\
 \textbf{Requirement(s) Verified:} \frref{fr:in_bounds}, \nfrref{nfr:safe}
@@ -14,7 +14,7 @@
 \subsubsection{Performance Test: Execution Distribution}
 \label{test:sdp_pt_execu}
 \textbf{Test Question:} How efficiently is execution time, i.e. the total time robots spend moving, distributed?\\
-\textbf{Operational Procedure:} Given a set of example drawing inputs, run each input and record the total time each robot spends moving. \\
+\textbf{Operational Procedure:} \replaced[remark={RH, V2}]{Using the example input set (\appref{app:planner_inputs}),}{Given a set of example drawing inputs} run each input and record the total time each robot spends moving. \\
 \textbf{Metric:} We define execution efficiency as $\frac{\min(execution(R_{0}), execution(R_{1}))}{\max(execution(R_{0}), execution(R_{1}))}$ where execution($R_{0}$) refers to the execution time of robot 0 and execution($R_{0}$) refers to the execution time of robot 1\\
 \textbf{Acceptance Criteria:} Execution efficiency of 0.75.\\
 \textbf{Requirement(s) Verified:} \nfrref{nfr:efficiency}, \nfrref{nfr:coordination}
@@ -22,7 +22,7 @@
 \subsubsection{Performance Test: Drawing Distribution}
 \label{test:sdp_pt_draw}
 \textbf{Test Question:} How efficiently is drawing time, i.e. the total time robots spend drawing, distributed? \\
-\textbf{Operational Procedure:}  Given a set of example drawing inputs, run each input and record the total time each robot spends drawing. \\
+\textbf{Operational Procedure:} \replaced[remark={RH, V2}]{Using the example input set (\appref{app:planner_inputs}),}{Given a set of example drawing inputs} run each input and record the total time each robot spends drawing. \\
 \textbf{Metric:} We define drawing efficiency as $\frac{\min(draw(R_{0}), draw(R_{1}))}{\max(draw(R_{0}), draw(R_{1}))}$ where draw($R_{0}$) refers to the drawing time of robot 0 and draw($R_{0}$) refers to the drawing time of robot 1\\
 \textbf{Acceptance Criteria:} Drawing efficiency of 0.75.\\
 \textbf{Requirement(s) Verified:} \nfrref{nfr:efficiency}, \nfrref{nfr:coordination}
@@ -30,7 +30,7 @@
 \subsubsection{Performance Test: Speedup}
 \label{test:sdp_pt_speedup}
 \textbf{Test Question:} What speedup is achieved by using two robots instead of one?\\
-\textbf{Operational Procedure:} Given a set of example drawing inputs, run each input first with one robot and then with two. Time the execution time of each variant.\\
+\textbf{Operational Procedure:} \replaced[remark={RH, V2}]{Using the example input set (\appref{app:planner_inputs}),}{Given a set of example drawing inputs} run each input first with one robot and then with two. Time the execution time of each variant.\\
 \textbf{Metric:} The comparison of duration, i.e. $\frac{execution time with 2 robots}{execution time with 1 robot}$. \\
 \textbf{Acceptance Criteria:} According to our requirements we expect a speedup of 2x. \\
 \textbf{Requirement(s) Verified:} \nfrref{nfr:efficiency}
@@ -38,7 +38,7 @@
 \subsubsection{Functional Test: Collision Free}
 \label{test:sdp_ft_collision}
 \textbf{Test Question:} Does the planner and executor generate collision free plans?\\
-\textbf{Operational Procedure:} Given a set of example drawing inputs, run each input and check for any robot-robot collisions during execution. \\
+\textbf{Operational Procedure:} \replaced[remark={RH, V2}]{Using the example input set (\appref{app:planner_inputs}),}{Given a set of example drawing inputs} run each input and check for any robot-robot collisions during execution. \\
 \textbf{Metric:} Boolean across each plans on whether a collision occurred.\\
 \textbf{Acceptance Criteria:} We only accept if collisions were avoided on 95\% of our test cases. \\
 \textbf{Requirement(s) Verified:} \nfrref{nfr:safe}

@@ -6,7 +6,7 @@
 \subsection{Performance Test: Painting Accuracy}
 \label{test:sys_pt_accuracy}
 \textbf{Test Question:} How closely does the drawn image resemble the original image?\\
-\textbf{Operational Procedure:} Input a sample image for the system to complete. After completion, overlap the original image with the image of final drawing captured from overhead camera. Rescale the two images so that they are in the same size. Evaluate the coherence of the two images.\\
+\textbf{Operational Procedure:} \replaced[remark={RH, V2}]{Using the example input set (\appref{app:planner_inputs}), input each }{Input a sample image} for the system to complete. After completion, overlap the original image with the image of final drawing captured from overhead camera. Rescale the two images so that they are in the same size. Evaluate the coherence of the two images.\\
 \textbf{Metric:} The percentage of drawn lines that were within 3 pixels of difference compared to those of the original image.\\
 \textbf{Acceptance Criteria:} The system must successfully and accurately draw 95\% of the lines in the original image.\\
 \textbf{Requirement(s) Verified:} \nfrref{nfr:quality}
@@ -14,7 +14,7 @@
 \subsection{Performance Test: Reliability}
 \label{test:sys_pt_reliability}
 \textbf{Test Question:} How reliable is the system in terms of successfully complete a series of drawing tasks?\\
-\textbf{Operational Procedure:} Command the system to finish a series of drawing tasks. Measure the number of consecutive successful completion. Successful completion is defined as the system autonomously finishes painting and the painting process is free of errors including but not limited to localization breakdown, motor breakdown, or painting mechanism breakdown. Calling human interference with switching battery and drawing utility does not count as unsuccessful run.\\
+\textbf{Operational Procedure:} Command the system to finish \replaced[remark={RH, V2}]{the example input set (\appref{app:planner_inputs}).}{a series of drawing tasks.} Measure the number of consecutive successful completion. Successful completion is defined as the system autonomously finishes painting and the painting process is free of errors including but not limited to localization breakdown, motor breakdown, or painting mechanism breakdown. Calling human interference with switching battery and drawing utility does not count as unsuccessful run.\\
 \textbf{Metric:} Number of consecutive painting completion. \\
 \textbf{Acceptance Criteria:} The minimum acceptable number of consecutive completion is 5.\\
 \textbf{Requirement(s) Verified:} \nfrref{nfr:reliability}
