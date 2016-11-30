@@ -1,0 +1,42 @@
+% !TEX root = system_validation.tex
+
+\subsection{Communication}
+\label{sec:verification_comm}
+
+\subsubsection{Performance Test: Uptime}
+\label{test:comm_pt_reliability}
+\textbf{Test Question:} What is the uptime on our ability to communicate data to between the robots and the offboard system?  \\
+\textbf{Operational Procedure:} Run the system for a significant period of time (several hours) and record any communication downtime or data loss during communication. \\
+\textbf{Metric:} Time duration of down communication and packet loss. \\
+\textbf{Acceptance Criteria:} Operational 95\% of the time.\\
+\textbf{Requirement(s) Verified:} \frref{fr:reliable_comm}, \frref{fr:know_progress}, \nfrref{nfr:reliability}
+
+\subsubsection{Functional Test: Sending and Receiving Data}
+\label{test:comm_ft_send}
+\textbf{Test Question:} Can the robot send and receive data from the off-board device and can the off-board device send and receive data to the robot?\\
+\textbf{Operational Procedure:} Send data from the off-board device to the robot and verify the robot received it. Send data from the robot to the off-board device and verify the off-board device received it. \\
+\textbf{Metric:} Four booleans on whether the data is successfully sent and recieved on both ends. \\
+\textbf{Acceptance Criteria:} We must succeed on all four accounts. \\
+\textbf{Requirement(s) Verified:} \frref{fr:reliable_comm}
+
+\subsubsection{Functional Test: Data Parsing}
+\label{test:comm_ft_parse}
+\textbf{Test Question:}  Can the data on each side (robot, off-board device) be parsed by each other? \\
+\textbf{Operational Procedure:} Send data from the off-board device to the robot and verify the robot received it and can execute it. Send data from the robot to the off-board device and verify the off-board device received it and can respond to it. \\
+\textbf{Metric:} Check whether the data was successfully parsed on all sides. \\
+\textbf{Acceptance Criteria:} We require all data be parsable. \\
+\textbf{Requirement(s) Verified:} \frref{fr:reliable_comm} \\
+
+\deleted[remark={RH, V2}]{\textbf{Failure Mode: Loss of Connection}} 
+\deleted[remark={RH, V2}]{\textbf{Description:} A loss of connection occurs when a robot agent and the off-board processing unit are unable to send data between each other. As per \sref{fr:reliable_comm}, the robot system expects consistent communication. This means that a failure resulting in intermittent or sparse connection will be treated equivalently to no connection.} 
+\deleted[remark={RH, V2}]{\textbf{Cause:} This failure mode is the result of a robot agent and the off-board unit being unable to connect. This could be the result of a hardware failure, in which the either of the robot or off-board device's transmitter fail. Other causes could be loss of signal due to distance between the two devices, or obstacles that attenuate or disturb communication.} 
+\deleted[remark={RH, V2}]{\textbf{Effects:} In the case that the off-board device cannot communicate with the robot, robots should be aware of a dropped connection and cease all locomotion. This will prevent robots from moving out of bounds or into collision, as without connection they can no longer localize. If the robot cannot communicate with the off-board device, locomotion should also end. The robot cannot report errors or sensor information to the off-board device for planning and scheduling, which then risks incorrect drawing and motion.} 
+\deleted[remark={RH, V2}]{\textbf{Criticality:} Loss of connection is high-risk with regard to completing the drawing task. Requirements do not specify the ability to recover a connection, so processing and drawing will end on signal loss.} 
+\deleted[remark={RH, V2}]{\textbf{Safety Hazards:} The only risk is the robots going out of bounds, or colliding with each other. Both of these pose little hazard to bystanders, as the robots are designed to be safe in the event of human-robot collision (\sref{nfr:safe}).} 
+
+\deleted[remark={RH, V2}]{\textbf{Failure Mode: Incorrect Data}} 
+\deleted[remark={RH, V2}]{\textbf{Description:} This failure mode occurs when the robot receives bad data from the off-board device, or when the off-board device receives bad data from a robot agent. Bad data here refers to data that cannot be parsed by either end.} 
+\deleted[remark={RH, V2}]{\textbf{Cause:} Garbage data could be the result of a low-quality connection with high noise, or if data being sent becomes corrupted. It could also occur due to controller inability to parse the data being sent. }
+\deleted[remark={RH, V2}]{\textbf{Effects:} Invalid and incorrect commands and information should be ignored by the robot agent or the off-board processor.}
+\deleted[remark={RH, V2}]{\textbf{Criticality:} Incorrect data is noncritical to task completion as incorrect commands will be reacted to accordingly and resent. For example, if the off-board device sends a locomotion command to a robot, but the command becomes corrupt. The localization system will see the robot not move, and attempt to send a similar motion command again.}
+\deleted[remark={RH, V2}]{\textbf{Safety Hazards:} There is no risk to unparseable data being sent between robot and off-board device.} 

@@ -65,21 +65,19 @@
 \textbf{Operational Procedure:} The robot will press a writing implement down onto a writing surface with three different pressure settings: optimal, underactuated, and overactuated.\\
 \textbf{Metric:} Whether or not the sensor can distinguish between the three different pressure settings. \\
 \textbf{Acceptance Criteria:} The sensor must be able to distinguish between all three settings.\\
-\textbf{Requirement(s) Verified:} \nfrref{nfr:quality}
+\textbf{Requirement(s) Verified:} \nfrref{nfr:quality} \\
 
 
-\subsubsection{Failure Mode: Out of Writing Material}
-\label{sec:writing_fm_ink}
-\textbf{Description:} This failure mode describes the situation when a writing implement is loaded inside a robot agent, and runs out of writing material. \\
-\textbf{Cause:} Overuse of the writing implement.\\
-\textbf{Effects:} The robot agent moves around and attempts to continue drawing, without making physical marks.\\
-\textbf{Criticality:} This is a critical failure, as it requires the user to replace the implement before drawing can continue. If the user fails to replace the implement, lines will be missing from the drawing.\\
-\textbf{Safety Hazards:} There is no safety hazard associated with this failure mode.
+\deleted[remark={RH, V2}]{\textbf{Failure Mode: Out of Writing Material}} 
+\deleted[remark={RH, V2}]{Description: This failure mode describes the situation when a writing implement is loaded inside a robot agent, and runs out of writing material.} 
+\deleted[remark={RH, V2}]{\textbf{Cause:} Overuse of the writing implement.}
+\deleted[remark={RH, V2}]{\textbf{Effects:} The robot agent moves around and attempts to continue drawing, without making physical marks.}
+\deleted[remark={RH, V2}]{\textbf{Criticality:} This is a critical failure, as it requires the user to replace the implement before drawing can continue. If the user fails to replace the implement, lines will be missing from the drawing.}
+\deleted[remark={RH, V2}]{\textbf{Safety Hazards:} There is no safety hazard associated with this failure mode.}
 
-\subsubsection{Failure Mode: Writing Mechanism Failure}
-\label{sec:writing_fm_mechanism}
-\textbf{Description:} This failure occurs when the mechanism that raises and lowers the writing implement does not work. This causes the robot to be incapable of either drawing a line or even moving on the writing surface.\\
-\textbf{Cause:} This is caused by a communication failure, as described by \sref{sec:comm_fm_loss}, or more likely, by the raise/lowering mechanism breakdown.\\
-\textbf{Effects:} The robot agent will be unable to alter whether or not it is writing as it moves. This can cause either missing lines or incorrect ones, depending on the state of the writing mechanism.\\
-\textbf{Criticality:} This is a critical failure as it directly affects the quality of the lines being drawn. To continue opertion, users can resolve this issue after receiving an error message. However, it is possible that the drawing has already been compromised.\\
-\textbf{Safety Hazards:} There is no safety hazard associated with this failure mode.
+\deleted[remark={RH, V2}]{\textbf{Failure Mode: Writing Mechanism Failure}} 
+\deleted[remark={RH, V2}]{\textbf{Description:} This failure occurs when the mechanism that raises and lowers the writing implement does not work. This causes the robot to be incapable of either drawing a line or even moving on the writing surface.}
+\deleted[remark={RH, V2}]{\textbf{Cause:} This is caused by a communication failure, as described by \sref{sec:comm_fm_loss}, or more likely, by the raise/lowering mechanism breakdown.}
+\deleted[remark={RH, V2}]{\textbf{Effects:} The robot agent will be unable to alter whether or not it is writing as it moves. This can cause either missing lines or incorrect ones, depending on the state of the writing mechanism.}
+\deleted[remark={RH, V2}]{\textbf{Criticality:} This is a critical failure as it directly affects the quality of the lines being drawn. To continue opertion, users can resolve this issue after receiving an error message. However, it is possible that the drawing has already been compromised.}
+\deleted[remark={RH, V2}]{\textbf{Safety Hazards:} There is no safety hazard associated with this failure mode.}

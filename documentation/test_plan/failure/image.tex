@@ -1,0 +1,12 @@
+% !TEX root = system_validation.tex
+
+\subsection{Image Processing}
+\label{sec:failure_image}
+
+\subsubsection{Unable to Process Input Image}
+\label{sec:image_fm_input}
+\added[remark={RH, V2}]{\textbf{Description:} Inability to process user input refers to the image processing subsystem failing to determine a set of lines usable for work distribution, planning, and scheduling.} \\
+\added[remark={RH, V2}]{\textbf{Cause:} This could be caused by an unreadable input or input drawings that do not conform to requirements. An example of this would be an input that contains background noise, making it unsuitable for processing and drawing.} \\
+\added[remark={RH, V2}]{\textbf{Effects:} The effect is that another input, a corrected version of the initial input, will have to be supplied for the system to continue operation.} \\
+\added[remark={RH, V2}]{\textbf{Criticality:} This failure is critical to system operation, as no drawing can be made until the input can be properly processed. }\\
+\added[remark={RH, V2}]{\textbf{Safety Hazards:} There are no safety hazards involved in this failure mode.}
