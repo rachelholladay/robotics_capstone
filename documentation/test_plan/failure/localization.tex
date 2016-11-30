@@ -9,7 +9,8 @@
 \added[remark={RH, V2}]{\textbf{Cause:} Two potential causes for a camera failure are insufficient power supplied to the camera, or improper mounting. Improper mounting can cause the camera to fall or hang, which results in skewed and mis-calibrated camera data.}\\
 \added[remark={RH, V2}]{\textbf{Effects:}  The effect of camera failure results in localization being poor or impossible, which can halt operation. This can be temporary, as a user-reported error would be generated to resolve this issue.}\\
 \added[remark={RH, V2}]{\textbf{Criticality:}  This failure is of medium importance, as, while it halts operation, it can be resolved by the user to continue the drawing process.}\\
-\added[remark={RH, V2}]{\textbf{Safety Hazards:} The only safety hazard exists if the camera falls entirely from its mount, in which case it may fall on a person below.} 
+\added[remark={RH, V2}]{\textbf{Safety Hazards:} The only safety hazard exists if the camera falls entirely from its mount, in which case it may fall on a person below.} \\
+\added[remark={DZ, V2}]{\textbf{Mitigation:} A stable and sturdy camera mount design and using a reliable camera can help mitigate this failure mode.}
 
 \subsubsection{Unusable Localization Data}
 \label{sec:localization_fm_unusable}
@@ -17,7 +18,8 @@
 \added[remark={RH, V2}]{\textbf{Cause:} Causes include mis-calibrated camera data or incorrectly placed bounds tags. For example, the bounds tags could be placed in a shape that does not reflect the drawing surface accurately, resulting in incorrect localization. Blurry data could also result in misreading localization tags.}\\
 \added[remark={RH, V2}]{\textbf{Effects:}  If localization cannot be completed, robot operation will halt to avoid performing undefined actions. This error can be resolved by the user recalibrating or fixing the source that causes bad data.}\\
 \added[remark={RH, V2}]{\textbf{Criticality:}  Similar to \sref{sec:localization_fm_cam}, this failure is of medium criticality and can be resolved by the user.}\\
-\added[remark={RH, V2}]{\textbf{Safety Hazards:} There are no safety hazards that result from this failure mode.}
+\added[remark={RH, V2}]{\textbf{Safety Hazards:} There are no safety hazards that result from this failure mode.}\\
+\added[remark={DZ, V2}]{\textbf{Mitigation:} Concrete setup procedures and multiple checks before operation can help mitigate this failure mode.}
 
 \subsubsection{Vision Tag Occlusion}
 \label{sec:localization_fm_occlusion}
@@ -26,3 +28,4 @@
 \added[remark={RH, V2}]{\textbf{Effects:} Inability to find a tag results in incomplete localization, and will pause operation until the user can resolve the issue. This guarantees all robots are tracked continually during operation, as well as staying within bounds of the drawing surface.}\\
 \added[remark={RH, V2}]{\textbf{Criticality:}  This is a minor failure, as robot operation can easily be corrected and operation can continue.}\\
 \added[remark={RH, V2}]{\textbf{Safety Hazards:} There are no safety hazards that result from this failure mode.}\\
+\added[remark={DZ, V2}]{\textbf{Mitigation:} Proper security of the area around the work surface can help mitigate this failure mode.}
