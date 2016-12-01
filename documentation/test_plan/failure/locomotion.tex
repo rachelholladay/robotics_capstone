@@ -6,7 +6,7 @@
 \subsubsection{Inaccurate Motion}
 \label{sec:locomotion_fm_motion}
 \added[remark={RH, V2}]{\textbf{Description:} This failure mode describes the situation in which a robot agent is unable to accurately follow motion commands. An example of this is if the robot is commanded to move 10 inches, but localization detects it only moving 4 inches.}\\
-\added[remark={RH, V2}]{\textbf{Cause:} Inaccurate motion could be a result of slippage of wheels, failed motor encoders, or failed driving motors.}\\
+\added[remark={RH, V2}]{\textbf{Cause:} Inaccurate motion could be a result of slippage of wheels, failed motor encoders, or failed driving motors. Encoders and the localization system can be used to determin which of these causes occured.}\\
 \added[remark={RH, V2}]{\textbf{Effects:} Inability to move accurately can cause a user-reported error, which the user can resolve to continue operation.}\\
 \added[remark={RH, V2}]{\textbf{Criticality:}  This is a minor failure, as it does not end system operation and can be resolved by the user.}\\
 \added[remark={RH, V2}]{\textbf{Safety Hazards:} The only safety hazard is with regard to the drawing surface; slippage could cause minor destruction of the surface.}\\
