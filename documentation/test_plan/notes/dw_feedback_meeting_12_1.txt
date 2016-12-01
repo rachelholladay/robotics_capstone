@@ -24,6 +24,9 @@ risk mitigation refers to specific actions to be taken to reduce risk of somethi
   --> but it can be a process
 ex. for intruder collision - risk mitigation is putting up sign showing robots are workign, or if criticality is low then perhaps don't need to do anything
 
-
+HARDWARE
+he recommends 12 or 24V battery
+battery matches drivetrain voltage (that's where biggest current draw is)
+  use DC-DC converters for the rest
 
 
