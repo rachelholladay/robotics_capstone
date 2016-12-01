@@ -2,27 +2,44 @@
 
 \section{Risk Management}
 \label{sec:risk}
+\njnote{Write scales}
 
-\subsection{Battery Explosion}
-\textbf{Description:} Similar to the lithium-ion battery of JPL’s Robosimian robot, our robot’s on-board power supply runs risk of explosion and combustion.\\
-\textbf{Risk Likelihood:} Low. With proper treatment of the battery and based on the number of such incidents, we expect this to be a risk with low likelihood.\\
-\textbf{Risk Criticality:} High. However, once such incident happens, the result can be quite devastating and putting out such fire has proven to be challenging. Therefore, the criticality for this risk is high.\\
-\textbf{Risk Mitigation:} In order to mitigate risk of battery explosion, we first need to be mindful of when and where the batteries are being charged. When designing electronics layout, we should also avoid encapsulation of batteries to avoid excessive heat accumulation.
-
-\subsection{Intruder Collision}
-\textbf{Description:} When humans or other objects unexpectedly move into the robot’s workspace during operation, robot agents are running risk of colliding with these intruders.\\
-\textbf{Risk Likelihood:} Medium. One of the assumptions states that “we assume that our drawing surface is free of any obstacles.” With such assumption, we do not expect such risk happens very often. However, depending on the size of drawing surfaces, such risk may happen more often than expected.\\
-\textbf{Risk Criticality:} Low. Due to the compact and lightweight design of our robot, we do not expect serious consequence brought by these potential collisions.\\
-\textbf{Risk Mitigation:} To reduce the negative effect caused by such collisions, we plan to emphasis on being round, lightweight, and small when designing robot’s mechanical components. We are also taking collision detection into account when designing localization system.
-
-\subsection{Camera Failure}
-\textbf{Description:} Since we are using overhead camera as a part of the localization system, we are take risk of potential failure in camera mounting mechanism. If such failure happens, camera would fall from height, which is a huge safety concern.\\
-\textbf{Risk Likelihood:} Medium. It is hard to evaluate this risk’s likelihood without a detailed camera mounting mechanism design. We are labeling the likelihood as medium to make sure we put enough attention into minimizing such risk.\\
-\textbf{Risk Criticality:} High. Our robot system is designed to complete large-scale drawings, which means that the localizing camera needs to be placed relatively high to capture full workspace. Falling from such height, the camera may cause multiple serious results, such as destroying drawn patterns, damaging robot agents, and, most severely, hitting humans beneath. \\
-\textbf{Risk Mitigation:} To minimize the likelihood of such risk, we plan to conduct extensive research and prototype on different camera mounting mechanisms. We also view being lightweight as a main criteria when selecting cameras. Lastly, we need to explicitly warn the users or people around to not step in the system’s workspace while it is operating.
-
-\subsection{Finger Jam}
-\textbf{Description:} The system requires manual replacement of drawing utility. Such manual process may lead to a risk issue in which user’s fingers get stuck in rotating wheels or in motors for chalk lifting. \\
-\textbf{Risk Likelihood:} Medium. Since we plan to design the robot as small as possible, motors for locomotion and painting may be really close to each other. Such compact design increases the likelihood of finger jam. Especially with the need for manually switching drawing tools, such issue may come up occasionally. \\
-\textbf{Risk Criticality:} Low. From the concept design, the motors we are looking at are pretty tiny and do not generate large amount of energy. We doubt jamming fingers by those motors, if happens, would lead to serious health affect.\\
-\textbf{Risk Mitigation:} We plan to mitigate this risk from two aspects. Firstly, we plan to cover rotating parts, like motors and gears, with mechanical housings to prevent users from touching. Secondly, we plan to implement a paint reservoir on each robot agent to extend the amount drawings it can complete with one paint refill, so that users can conduct manual work less frequently.
+\begin{center}
+ \begin{tabular}{||c c c c c||}
+ \hline
+ Failure Mode & Likelihood & Detectability & Criticallity & Priority \\ [0.5ex]
+ \hline\hline
+ \failref{sec:writing_fm_ink} & 0 & 0 & 0 & 0  \\
+ \hline
+ \failref{sec:writing_fm_mechanism} & 0 & 0 & 0 & 0  \\
+ \hline
+ \failref{sec:locomotion_fm_motion} & 0 & 0 & 0 & 0  \\
+ \hline
+ \failref{sec:locomotion_fm_omni} & 0 & 0 & 0 & 0  \\
+ \hline
+ \failref{sec:localization_fm_cam} & 0 & 0 & 0 & 0  \\
+ \hline
+ \failref{sec:localization_fm_unusable} & 0 & 0 & 0 & 0  \\
+ \hline
+ \failref{sec:localization_fm_occlusion} & 0 & 0 & 0 & 0  \\
+ \hline
+ \failref{sec:image_fm_input} & 0 & 0 & 0 & 0  \\
+ \hline
+ \failref{sec:sdp_fm_planning} & 0 & 0 & 0 & 0  \\
+ \hline
+ \failref{sec:comm_fm_loss} & 0 & 0 & 0 & 0  \\
+ \hline
+ \failref{sec:comm_fm_incorrect} & 0 & 0 & 0 & 0  \\
+ \hline
+ \failref{sec:ui_fm_navigation} & 0 & 0 & 0 & 0  \\
+ \hline
+ \failref{sec:power_fm_battery} & 0 & 0 & 0 & 0  \\
+ \hline
+ \failref{sec:sys_val_fm_bounds} & 0 & 0 & 0 & 0  \\
+ \hline
+ \failref{sec:sys_val_fm_markings} & 0 & 0 & 0 & 0  \\
+ \hline
+ \failref{sec:sys_val_fm_collision} & 0 & 0 & 0 & 0  \\
+ \hline
+\end{tabular}
+\end{center}
