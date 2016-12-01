@@ -4,6 +4,31 @@
 \label{sec:risk}
 \njnote{Write scales}
 
+Likelihood: how likely is this failure mode?\\
+Detectability: how likely can this failure mode be noticed?\\
+Criticality: how serious are the potential results caused by this failure mode?\\
+Priority: how much attention should be put in to address this failure mode? \\
+The scale for priority is assigned based on likelihood, detectability, and criticality.\\
+
+\begin{center}
+ \begin{tabular}{||c c c c c ||}
+ \hline
+ Scale & Likelihood & Detectability & Criticality & Priority \\ [0.5ex]
+ \hline\hline
+ 1 & Impossible (close to 0\% chance) & mpossible to detect (close 0\% chance) & Harmless & Negligible \\
+ \hline
+ 2 & Unlikely (25\% chance) & Unlikely to detect (25\% chance) & May result in minor pain & Could be addressed\\
+ \hline
+ 3 & Possible (50\% chance) & Might be detected (50\% chance) & May result in minor injury & Necessary to be addressed\\
+ \hline
+ 4 & Certain (75\% chance) & Easy to detect (75\% chance) & May result in moderate injury and result in system immobility & Important to be addressed\\
+ \hline
+ 5 & Inevitable (100\% chance) & Obvious (100\% chance) & May result in serious injury and death & Has to be addressed and avoided\\
+ \hline 
+\end{tabular}
+\end{center}
+
+
 \begin{center}
  \begin{tabular}{||c c c c c||}
  \hline
