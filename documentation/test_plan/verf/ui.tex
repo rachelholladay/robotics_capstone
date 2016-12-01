@@ -21,7 +21,7 @@
 
 \subsubsection{Performance Test: Error Understandability}
 \label{test:ui_pt_error_understand}
-\textbf{Test Question:} How understandable and informative or are the user errors?\\
+\textbf{Test Question:} How understandable and informative \added[remark={NJ,V2}]{are error messages?}\\
 \textbf{Operational Procedure:} Given a list of known operational errors, intentionally trigger each error while a non-developer user is using the system (while masking the error cause) and evaluate how well the user can determine the error. For example, while the system is drawing the user could be in a different room with only the error reporting device, making the user unable to see what errors the robots are facing.\\
 \textbf{Metric:}  Determine if the user can determine the error and knows how to react to or correct the error. \\
 \textbf{Acceptance Criteria:}  The user should be able to determine and react effectively for 90\% of the errors.\\
@@ -33,7 +33,7 @@
 \textbf{Operational Procedure:} While the system is in use, press the emergency stop button and check if all systems halt their operation. \\
 \textbf{Metric:} Boolean on whether every subsystem stops or not. \\
 \textbf{Acceptance Criteria:} It is only successful if the boolean metric is true. \\
-\textbf{Requirement(s) Verified:} \frref{fr:kill_switch} 
+\textbf{Requirement(s) Verified:} \frref{fr:kill_switch}
 
 \subsubsection{Functional Test: Error Reporting}
 \label{test:ui_ft_error_reporting}
@@ -43,9 +43,9 @@
 \textbf{Acceptance Criteria:} Considering error handling is critical to performance, our system should have an error-reporting score of 90\%. \\
 \textbf{Requirement(s) Verified:} \nfrref{nfr:errors}, \nfrref{nfr:documentation}, \frref{fr:user_interface}, \nfrref{nfr:mobileapp}
 
-\deleted[remark={RH, V2}]{\textbf{Failure Mode: UI Navigation}} 
-\deleted[remark={RH, V2}]{\textbf{Description:} This failure occurs when a user is unable to navigate the UI to setup and begin the autonomous drawing process.} 
-\deleted[remark={RH, V2}]{\textbf{Cause:} Causes of this effect could be an unintuitive user interface, a UI that lacks features necessary to run the system, or lack of user training to use the interface properly.} 
-\deleted[remark={RH, V2}]{\textbf{Effects:} The only effect is that the system is unable to begin the drawing process.} 
-\deleted[remark={RH, V2}]{\textbf{Criticality:} UI failure is noncritical to system operation, as the system can run without a graphical interface. However, it is critical for demo purposes as a demo user must be able to begin system operation.} 
+\deleted[remark={RH, V2}]{\textbf{Failure Mode: UI Navigation}}
+\deleted[remark={RH, V2}]{\textbf{Description:} This failure occurs when a user is unable to navigate the UI to setup and begin the autonomous drawing process.}
+\deleted[remark={RH, V2}]{\textbf{Cause:} Causes of this effect could be an unintuitive user interface, a UI that lacks features necessary to run the system, or lack of user training to use the interface properly.}
+\deleted[remark={RH, V2}]{\textbf{Effects:} The only effect is that the system is unable to begin the drawing process.}
+\deleted[remark={RH, V2}]{\textbf{Criticality:} UI failure is noncritical to system operation, as the system can run without a graphical interface. However, it is critical for demo purposes as a demo user must be able to begin system operation.}
 \deleted[remark={RH, V2}]{\textbf{Safety Hazards:} No safety hazards are posed by this failure mode.}

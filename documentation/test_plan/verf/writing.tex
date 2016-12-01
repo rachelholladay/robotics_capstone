@@ -14,32 +14,30 @@
 \subsubsection{Performance Test: Writing Quality}
 \label{test:writing_pt_qual}
 \textbf{Test Question:} Is the drawing produced by the robot of acceptable quality? \\
-\textbf{Operational Procedure:} Usingi a fully loaded writing tool, the robot attempts to draw along a route with at least 4 ft. of travel distance and 3 turns exceeding 50 degrees. Verify that the resulting drawing is of acceptable quality. \\
+\textbf{Operational Procedure:} Using a fully loaded writing tool, the robot attempts to draw along a route with at least 4 ft. of travel distance and 3 turns exceeding 50 degrees. Verify that the resulting drawing is of acceptable quality. \\
 \textbf{Metric:} Percent thickness of the route at its narrowest point compared to the maximum thickness of a line created with the writing tool. Boolean on whether or not there are complete breaks in the line. \\
 \textbf{Acceptance Criteria:} The percent thickness is at least 70\%, and there are no complete breaks in the line. \\
-\textbf{Requirement(s) Verified:} \nfrref{nfr:quality} 
+\textbf{Requirement(s) Verified:} \nfrref{nfr:quality}
 
 \subsubsection{Functional Test: Replace Writing Tool}
 \label{test:writing_ft_replace}
 \textbf{Test Question:} Is a human user able to replace the writing tool? \\
 \textbf{Operational Procedure:} A human test subject attempts to replace a writing tool already inside the robot.
 \textbf{Metric:} Whether or not the human succeeds in the task before giving up.\\
-\textbf{Acceptance Criteria:} The human must successfully replace the writing tool without giving up.  \\
-\textbf{Requirement(s) Verified:} \frref{fr:replace_tool}
+\textbf{Acceptance Criteria:} The human must successfully replace the writing tool without giving up \added[remark={NJ,V2}]{within time limits specified by requirements (2 minutes)}.  \\
+\textbf{Requirement(s) Verified:} \frref{fr:replace_tool} \added[remark={NJ, V2}]{\frref{fr:insert_tool} \frref{fr:remove_tool}}
 
-\subsubsection{Functional Test: Reload Writing Tool}
-\label{test:writing_ft_reload}
-\textbf{Test Question:} Is a human user able to reload the writing tool? \\
-\textbf{Operational Procedure:} A human test subject attempts to reload the writing tool already installed in the robot.
-\textbf{Metric:} Whether or not the human succeeds in the task before giving up.\\
-\textbf{Acceptance Criteria:} The human must successfully reload the writing tool without giving up.  \\
-\textbf{Requirement(s) Verified:} \frref{fr:insert_tool} \frref{fr:remove_tool}
+\removed[remark={NJ, V2}]{\textbf{Test Question:} Is a human user able to reload the writing tool? \\}
+\removed[remark={NJ, V2}]{\textbf{Operational Procedure:} A human test subject attempts to reload the writing tool already installed in the robot.}
+\removed[remark={NJ, V2}]{\textbf{Metric:} Whether or not the human succeeds in the task before giving up.\\}
+\removed[remark={NJ, V2}]{\textbf{Acceptance Criteria:} The human must successfully reload the writing tool without giving up.  \\}
+\removed[remark={NJ, V2}]{\textbf{Requirement(s) Verified:} \frref{fr:insert_tool} \frref{fr:remove_tool}}
 
 \subsubsection{Functional Test: Writing Pressure Control}
 \label{test:writing_ft_pressure}
 \textbf{Test Question:} Can the writing tool be actuated to move up an down?\\
 \textbf{Operational Procedure:} With a writing tool in the writing assembly, the motors for moving up and down attempt to move throughout their range. \\
-\textbf{Metric:} Whether or not the writing tool moves.\\
+\textbf{Metric:} Whether or not the writing tool moves. \added[remark={NJ,V2}]{This test measures the writing tool's ability to precisely control the writing implement within its vertical range of motion.}\\
 \textbf{Acceptance Criteria:} The writing tool must move through the writing assembly's full vertical range. \\
 \textbf{Requirement(s) Verified:} \frref{fr:on_tool}
 
@@ -54,7 +52,7 @@
 \subsubsection{Functional Test: Marking}
 \label{test:writing_ft_mark}
 \textbf{Test Question:} Does the writing tool make a mark when pushed down? \\
-\textbf{Operational Procedure:} The robot will press down on a writing surface with a fully loaded writing implement. \\
+\textbf{Operational Procedure:} The robot will press down on a writing surface with a fully loaded writing implement. \added[remark={NJ,V2}]{Robot must mark with pressure necessary to mark the surface without damaging the surface or writing tool.}\\
 \textbf{Metric:} Whether or not a any discerible mark is made. \\
 \textbf{Acceptance Criteria:} A discernible mark must be made.\\
 \textbf{Requirement(s) Verified:} \nfrref{nfr:quality}
@@ -62,20 +60,20 @@
 \subsubsection{Functional Test: Force Sensor}
 \label{test:writing_ft_force}
 \textbf{Test Question:} Can the force sensor measure applied force? \\
-\textbf{Operational Procedure:} The robot will press a writing implement down onto a writing surface with three different pressure settings: optimal, underactuated, and overactuated.\\
+\textbf{Operational Procedure:} The robot will press a writing implement down onto a writing surface with three different pressure settings: optimal, underactuated, and overactuated. \added[remark={NJ,V2}]{Writing pressure settings will determine how strong the mark on the surface is. This allows the robot to maintain a consistently strong mark on the writing surface throughout operation.}\\
 \textbf{Metric:} Whether or not the sensor can distinguish between the three different pressure settings. \\
 \textbf{Acceptance Criteria:} The sensor must be able to distinguish between all three settings.\\
 \textbf{Requirement(s) Verified:} \nfrref{nfr:quality} \\
 
 
-\deleted[remark={RH, V2}]{\textbf{Failure Mode: Out of Writing Material}} 
-\deleted[remark={RH, V2}]{Description: This failure mode describes the situation when a writing implement is loaded inside a robot agent, and runs out of writing material.} 
+\deleted[remark={RH, V2}]{\textbf{Failure Mode: Out of Writing Material}}
+\deleted[remark={RH, V2}]{Description: This failure mode describes the situation when a writing implement is loaded inside a robot agent, and runs out of writing material.}
 \deleted[remark={RH, V2}]{\textbf{Cause:} Overuse of the writing implement.}
 \deleted[remark={RH, V2}]{\textbf{Effects:} The robot agent moves around and attempts to continue drawing, without making physical marks.}
 \deleted[remark={RH, V2}]{\textbf{Criticality:} This is a critical failure, as it requires the user to replace the implement before drawing can continue. If the user fails to replace the implement, lines will be missing from the drawing.}
 \deleted[remark={RH, V2}]{\textbf{Safety Hazards:} There is no safety hazard associated with this failure mode.}
 
-\deleted[remark={RH, V2}]{\textbf{Failure Mode: Writing Mechanism Failure}} 
+\deleted[remark={RH, V2}]{\textbf{Failure Mode: Writing Mechanism Failure}}
 \deleted[remark={RH, V2}]{\textbf{Description:} This failure occurs when the mechanism that raises and lowers the writing implement does not work. This causes the robot to be incapable of either drawing a line or even moving on the writing surface.}
 \deleted[remark={RH, V2}]{\textbf{Cause:} This is caused by a communication failure, as described by \sref{sec:comm_fm_loss}, or more likely, by the raise/lowering mechanism breakdown.}
 \deleted[remark={RH, V2}]{\textbf{Effects:} The robot agent will be unable to alter whether or not it is writing as it moves. This can cause either missing lines or incorrect ones, depending on the state of the writing mechanism.}
