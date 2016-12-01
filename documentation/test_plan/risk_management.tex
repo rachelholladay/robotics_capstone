@@ -1,32 +1,88 @@
-% !TEX root = main.tex
+% !TEX root = main.tex 
 
 \section{Risk Management}
 \label{sec:risk}
+\added[remark={RH, V2}]{We assess risk through the following questions.}
+\begin{itemize}
+	\item \added[remark={YJ, V2}]{Likelihood: how likely is this failure mode?}
+	\item \added[remark={YJ, V2}]{Detectability: how likely can this failure mode be noticed?}
+	\item \added[remark={YJ, V2}]{Criticality: how serious are the potential results caused by this failure mode?}
+	\item \added[remark={YJ, V2}]{Priority: how much attention should be put in to address this failure mode?} 
+\end{itemize}
 
-Likelihood: how likely is this failure mode?\\
-Detectability: how likely can this failure mode be noticed?\\
-Criticality: how serious are the potential results caused by this failure mode?\\
-Priority: how much attention should be put in to address this failure mode? \\
-The scale for priority is assigned based on likelihood, detectability, and criticality.\\
+\added[remark={YJ, V2}]{The scales for priority is assigned based on likelihood, detectability, and criticality. We define the following scales and rank our failure modes accordingly.}\\
 
 \begin{center}
- \begin{tabular}{||c c c c c ||}
+ \begin{tabular}{||c c ||}
  \hline
- Scale & Likelihood & Detectability & Criticality & Priority \\ [0.5ex]
+ Scale & Likelihood  \\ [0.5ex]
  \hline\hline
- 1 & Impossible (close to 0\% chance) & mpossible to detect (close 0\% chance) & Harmless & Negligible \\
+ 1 & Impossible (close to 0\% chance) \\
  \hline
- 2 & Unlikely (25\% chance) & Unlikely to detect (25\% chance) & May result in minor pain & Could be addressed\\
+ 2 & Unlikely (25\% chance) \\
  \hline
- 3 & Possible (50\% chance) & Might be detected (50\% chance) & May result in minor injury & Necessary to be addressed\\
+ 3 & Possible (50\% chance) \\
  \hline
- 4 & Certain (75\% chance) & Easy to detect (75\% chance) & May result in moderate injury and result in system immobility & Important to be addressed\\
+ 4 & Certain (75\% chance) \\
  \hline
- 5 & Inevitable (100\% chance) & Obvious (100\% chance) & May result in serious injury and death & Has to be addressed and avoided\\
+ 5 & Inevitable (100\% chance) \\
  \hline 
 \end{tabular}
 \end{center}
 
+\begin{center}
+ \begin{tabular}{||c c ||}
+ \hline
+ Scale & Detectability \\ [0.5ex]
+ \hline\hline
+ 1 & Impossible to detect (close 0\% chance) \\
+ \hline
+ 2 & Unlikely to detect (25\% chance) \\
+ \hline
+ 3 & Might be detected (50\% chance) \\
+ \hline
+ 4 & Easy to detect (75\% chance) \\
+ \hline
+ 5 & Obvious (100\% chance) \\
+ \hline 
+\end{tabular}
+\end{center}
+
+\begin{center}
+ \begin{tabular}{||c c ||}
+ \hline
+ Scale & Criticality \\ [0.5ex]
+ \hline\hline
+ 1 & Harmless \\
+ \hline
+ 2 & May result in minor pain \\
+ \hline
+ 3 & May result in minor injury \\
+ \hline
+ 4 & May result in moderate injury and result in system immobility \\
+ \hline
+ 5 & May result in serious injury and death \\
+ \hline 
+\end{tabular}
+\end{center}
+
+\begin{center}
+ \begin{tabular}{||c c ||}
+ \hline
+ Scale & Priority \\ [0.5ex]
+ \hline\hline
+ 1 & Negligible \\
+ \hline
+ 2 & Could be addressed \\
+ \hline
+ 3 & Necessary to be addressed \\
+ \hline
+ 4 & Important to be addressed \\
+ \hline
+ 5 & Has to be addressed and avoided \\
+ \hline 
+\end{tabular}
+\end{center}
 
 \begin{center}
  \begin{tabular}{||c c c c c||}
