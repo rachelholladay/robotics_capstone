@@ -47,8 +47,8 @@
 \label{test:sys_ft_safety}
 \textbf{Test Question:} Is the robot safe during operation? Specifically, when collision happens, will the robot harm other robots, external environment, or human?\\
 \textbf{Operational Procedure:} Count the number of sharp edges on the exterior of the robot. Also, measure the time it takes from the overhead camera detects collision to robot agent stops moving motors. Intermediate steps involved are: camera sends collision signal to system controller and system controller commands involved robot agent to stop its current action. \\
-\textbf{Metric:} Number of sharp edges \added[remark={YJ,V2}{(angles less than 90 degrees)}; amount of time takes from detection to action.\\
-\textbf{Acceptance Criteria:} Values for these two metrics need to be as small as possible. \removed[remark={NJ,V2}]{The maximum number of sharp edges on the exterior is 4, assuming a rectangular chassis design.}\added[remark={NJ,V2}]{Zero sharp edges can be on the exterior - any edges from, for example, a rectangular chassis, should be rounded.} The maximum amount of time is 1.5 seconds. \\
+\textbf{Metric:} Number of sharp edges \added[remark={YJ,V2}]{(angles less than 90 degrees)}; amount of time takes from detection to action.\\
+\textbf{Acceptance Criteria:} Values for these two metrics need to be as small as possible. \deleted[remark={NJ,V2}]{The maximum number of sharp edges on the exterior is 4, assuming a rectangular chassis design.}\added[remark={NJ,V2}]{Zero sharp edges can be on the exterior - any edges from, for example, a rectangular chassis, should be rounded.} The maximum amount of time is 1.5 seconds. \\
 \textbf{Requirement(s) Verified:} \nfrref{nfr:safe}
 
 \subsection{Functional Test: Documentation}
