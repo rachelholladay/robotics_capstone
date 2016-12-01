@@ -1,0 +1,29 @@
+Meeting w/ DW about test plan 12/7
+
+WRITING IMPLEMENT
+focus on refilling resovoir over waterproof
+
+IMPLEMENTATION
+drawing lines vs text
+parameterizing lines, circles, 
+
+TEST PLAN
+prioritize failure modes
+failure table - include likelihood of occurence, detectability, criticality
+
+move current risk management ones to failure modes
+  relates to adding failure table, add info relating to fault table
+risk management is "summary of failure modes/how to handl risk"
+  includes failure table
+  summary can be a part of the table itself
+
+ex. of mitigation - battery monitoring process
+  battery has to be removed to be charged, someone must be present while battery is charging
+  ex. not so great example, but put sticker on battery labeling it
+risk mitigation refers to specific actions to be taken to reduce risk of something
+  --> but it can be a process
+ex. for intruder collision - risk mitigation is putting up sign showing robots are workign, or if criticality is low then perhaps don't need to do anything
+
+
+
+
