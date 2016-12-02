@@ -1,0 +1,65 @@
+Sections are vaguely ordered
+Top level = section
+  - title = subsection
+  text = description of what goes there
+
+
+Introduction/Document Description
+  describes what detail design doc is for
+  also describes organization of doc - parts defined, then overall system operational modes and diagrams, then implementation, then fault-recovery
+
+Parts list
+  - part, contains price(?), quantity, link to item, anything else relevant?
+
+System States/Operational Modes
+  "define system states and operational modes to support concept of operation"
+    not sure about this, maybe have the full system diagram from previous doc?
+  "define temporal aspects with statecharts or other models"
+    not really sure what to include here either
+
+System Diagrams
+  - Intro specifying that diagrams are for components/full system hardware
+    all diagrams have short description
+  - Full System Diagrams (multiple views)
+  - Component diagrams
+  - Wiring diagrams
+
+Hardware Fabrication Process
+  "explain the fabrication and implementation process"
+  - Subsystem 1-N
+    not sure if this should be split by subsystem, maybe only for hw subsystems
+  - Assembly Instructions
+    required according to instructions, this can fit all hw subsystems together
+
+Software Implementation Process
+  - Design hierarchy
+    "object oriented" or "structured design"
+    probably best to split this into software subsections
+  - Software Libraries/Packages
+    list of software libraries (apriltags, python, c++, protobuf, etc.)
+  - Subsystem 1-N
+    only for software subsystems
+    describe how each subsystem uses some of the libraries and how that subsystem works in detail
+
+Failure States & Recovery
+  - Subsystem 1-N and Full System
+    probably best to organize failure states/recovery by subsystem
+  section for describing fault recovery and "degraded modes"
+  similar to failure modes from test plan
+
+Installation Plan
+  "includes size, weight, power, other resource needs"
+
+Traceability Matrix
+  "detailed design should make clear how system meets functional and non-functional requirements, can be done by tracing requirements to design attributes"
+  Maybe another table linking requirements to sub/subsub sections in the doc
+
+References
+  bibliography of parts and links for research or something?
+  "provides references to source material"
+
+
+
+
+
+
