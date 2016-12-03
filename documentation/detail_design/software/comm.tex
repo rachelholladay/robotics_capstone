@@ -15,7 +15,11 @@ Using proto3 will allow the offboard system to send commands in packets, called 
 
 \subsubsection{Message Design}
 \label{sec:software_comm_msg}
+Message design will be addressed first with regard to messages sent to robot agents, then messages sent from robot agents to the offboard system.
 
+All messages sent to the robot agents will involve emergency information commands or locomotion. Emergency commands can be separated into full system stop, and system pause. System stop is the emergency kill switch, which occurs by user command or when the system encounters a fatal error. This will end onboard robot operation. System pause occurs for errors that are recoverable; an example of this would be robot collision. The user has the option to assess and correct any issues, and resume operation. Both system stop and pause will halt all locomotion commands until the robot agent is commanded otherwise.
 
+Locomotion commands will be continually sent to robot agents. These commands will come in the form of relative motor powers to command each of the four mecanum wheels. These messages will be sent continually, to allow for stable corrections to robot motion to maintain smooth lines, which increases the overall quality of drawing.
 
-TALK ABOUT HOW IT SERIALIZES DATA THAT WE CAN SEND IN MESSAGE PACKETS 
+Robot agents are responsible for sending odometry and logging information back to the offboard processor. Odometry information is sent for each of the four motors on the robot, by sending the encoder ticks since last requested. This odometry information can be incorporated into localization. Motor encoder movement for the writing implement motor will also be sent. Logging information can be used for debugging or system analysis. An example of logging information is the robot battery level.
+
