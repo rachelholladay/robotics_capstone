@@ -2,3 +2,8 @@
 
 \subsection{Writing Implement}
 \label{sec:software_writing_implement}
+Writing implement software is run both on the offboard system as well as on individual robot agents. This software will be a part of the main control system on the offboard system, written in Python \cite{python27}. Onboard, it will be parsed from the communication system \sref{sec:software_comm} and used to command the writing implement.
+
+The offboard system will combine localization and planning data to determine when the writing implement should be raised or lowered. Once the controller decides the state of the implement, it uses logging information from the agent to determine how far up or down the implement must be moved. This delta is computed as a part of the proto3 message packets \cite{protobuf3} and sent to the agent for command.
+
+Onboard a robot agent, the robot controller is responsible for sending the current state of the writing implement back to the offboard system. This is sent using proto3 messages \cite{protobuf3} as a part of the logging information. When the agent receives a message, it parses the writing implement command, and then commands the writing implement motor appropriately. This part of the onboard controller is written in Python \cite{python27}, using the RPi GPIO Library for interfacing \cite{python_rpigpio}.
