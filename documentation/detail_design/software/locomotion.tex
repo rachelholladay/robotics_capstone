@@ -2,3 +2,18 @@
 
 \subsection{Locomotion}
 \label{sec:software_locomotion}
+The software involved in locomotion exists both on the offboard processor as well as on individual robot agents. Robot agents must process commands sent from \sref{sec:software_comm} and command the motors. The offboard processor must use localization from \sref{sec:software_localization} and planning data from \sref{sec:software_sdp} to determine the current motor commands.
+
+\subsubsection{Libraries}
+\label{sec:software_locomotion_libs}
+Locomotion software makes use of Python 2.7 scripts \cite{python27} for commanding motors via Raspberry Pi \cite{python_rpigpio} and generating proto3 commands offboard by combining localization and planning
+
+\subsubsection{Robot Agent}
+\label{sec:software_locomotion_robot}
+Robot agents read proto3 messages coming from the TCP connection, as specified in \sref{sec:software_comm}. These messages contain locomotion commands in the form of specific motor velocitoes; these motor values are relative to each other in value and together, will command the robot in the required direction. The robot parses this proto3 message, and commands each of the four motors via the Raspberry Pi GPIO pins \cite{python_rpigpio}
+
+\subsubsection{Offboard Controller}
+\label{sec:software_locomotion_offboard}
+The offboard controller is in charge of combining localization and planning information to create correct locomotion commands for each robot agent. The system must take into account the robot agent's current position and orientation, and then generate locomotion commands that will move the robot along the specified path. Locomotion commands will be generated using controlling python scripts \cite{python27}.
+
+Omnidirectional motion with mecanum wheels must have a specific controller, as directional movement is not as straightforward as with traditionally-wheeled robots. Controllers already exist, and reduce the problem to selecting a robot velocity, rotational velocity, and desired angle to be rotated to \cite{mecanumcontrol}. Localization provides information about the robot's current position and orientation. The path planning algorithm can be used in conjunction with localization to determine the next expected location and orientation of the robot. Given a current robot position and expected, the delta can be computed to represent the position and angle to be moved. Using speed constraints that align with \njnote{REFERENCE nfr:quality from req spec}, velocity commands for each motor can be computed. These are then added the the proto3 message, and sent to a robot for execution.
