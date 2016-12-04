@@ -5,12 +5,14 @@
 
 \njnote{probably best to organize failure states/recovery by subsystem section for describing fault recovery and "degraded modes" similar to failure modes from test plan}
 
-\input{failure/writing.tex}
-\input{failure/locomotion.tex}
-\input{failure/localization.tex}
-\input{failure/image.tex}
-\input{failure/sdp.tex}
-\input{failure/comm.tex}
-\input{failure/ui.tex}
-\input{failure/power.tex}
-\input{failure/full_system.tex}
+\subsection{Degraded Mode: Driving but Not Drawing}
+Causes: out of writing material OR writing up/down mechanism broke
+Recovery: Person pauses system and fixes it 
+
+\subsection{Degraded Mode: Erratic Driving or Drawing}
+Causes: Inaccurate motion or failure to move omni or incorrect localization or loss of connection or battery problems or out of bounds
+Recovery: SHUT IT DOWN
+
+\subsection{Degraded Mode: Planning Failure}
+Causes: Unable to generate valid path
+Recovery: Cant do that. Pick a new image

@@ -11,25 +11,25 @@ The offboard controller's primary function is to continually send updated locomo
 
 \njnote{not sure how to format this in code typeset}
 
-planner_input = ImageProcessing.processInputImage(input)
-paths = Planner.planRobotTrajectories(planner_input)
-Communication.connectToRobots()
-
-while !Planner.isFinishedDrawing()
-
-  robot_info = Communication.getTCPMessage(robots)
-
-  localization = Localization.localizeRobots(camera_data, robot_info.odometry)
-  paths = Planner.updatePaths(localization)
-
-  locomotion_message = Locomotion.generateCommand(localization, paths)
-  writing_message = WritingImplement.generateCommand(localization, paths)
-  error_message = Communication.processErrors()
-
-  Communication.sendMessage(locomotion_message, writing_message, error_message)
-  UI.displayErrors(error_message)
-
-\njnote{end pseudocode here}
+\begin{algorithm}[t!]
+\caption{Full System}\label{algo:full_system}
+\begin{algorithmic}[1]  
+\State \textbf{Given:} Input Image $I$ 
+\State planner\_input = \Call{ImageProcessing.processInputImage}{$I$} 
+\State paths = \Call{Planner.planRobotTrajectories}{planner\_input}
+\State \Call{Communication.connectToRobots}{} 
+\Procedure{!Planner.isFinishedDrawing}{}
+    \State robot\_info = \Call{Communication.getTCPMessage}{robots}
+    \State localization = \Call{Localization.localizeRobots}{camera\_data, robot\_info.odometry}
+   \State paths = \Call{Planner.updatePaths}{localization}
+   \State locomotion\_message = \Call{Locomotion.generateCommand}{localization, paths}
+   \State writing\_message = \Call{WritingImplement.generateCommand}{localization, paths}
+   \State error\_message = \Call{Communication.processErrors}{}
+   \State \Call{Communication.sendMessage}{locomotion\_message, writing\_message, error\_message}
+   \State \Call{UI.displayErrors}{error\_message}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
 It is important to note that while locomotion, writing implement, and error-related messages are all sent together, any action based on error reports executes with the highest priority on the onboard robot controllers.
 
@@ -45,33 +45,41 @@ The robot will parse commands as it recieves them, and use them to actuate motor
 In order to send logging information in a way that is easiest for the offboard controller to process, the onboard system will only send logging information when requested by the offboard controller. Log information includes motor encoder data for odometry, battery state, and any debugging information.
 
 The onboard robot controller will operate based on the following pseudocode. Functions are classified by the subsystem they refer to, similar to \sref{sec:software_full_offboard}.
-\njnote{start more pseudocode here}
-Communication.connectToOffboard()
 
-while 1
-  message = Communication.getTCPMessage(offboard)
-  locomotion = Communication.parseLocomotionMessage(message)
-  writing = Communication.parseWritingMessage(message)
-  errors = Communication.parseErrorMessage(message)
+\begin{algorithm}[t!]
+\caption{Offboard Processing}\label{algo:offboard}
+\begin{algorithmic}[1]  
+\State Communication.connectToOffboard()
+\Procedure{True}{}
+  \State message = \Call{Communication.getTCPMessage}{offboard}
+  \State locomotion = \Call{Communication.parseLocomotionMessage}{message}
+  \State writing = \Call{Communication.parseWritingMessage}{message}
+  \State errors = \Call{Communication.parseErrorMessage}{message}
 
-  if errors.emergencyOff
-    Locomotion.stopOperation()
-    Writing.stopOperation()
+  \If{errors.emergencyOff} 
+  \State \Call{Locomotion.stopOperation}{}
+	\State \Call{Writing.stopOperation}{}
+  \EndIf 
 
-  if errors.pause
-    Locomotion.pauseOperation()
-    Writing.pauseOperation()
+  \If{errors.pause} 
+  \State \Call{Locomotion.pauseOperation}{}
+	\State \Call{Writing.pauseOperation}{}
+  \EndIf
 
-  Locomotion.parseErrors(errors)
-  Writing.parseErrors(errors)
+  \State \Call{Locomotion.parseErrors}{errors}
+  \State \Call{Writing.parseErrors}{errors}
 
-  Locomotion.actuateMotors(locomotion)
-  Writing.actuateMotors(writing)
+  \State \Call{Locomotion.actuateMotors}{}
+  \State \Call{Writing.actuateMotors}{}
 
-  if message.requestsLogging
-    Communication.sendMessage(Power.batteryLevel, Locomotion.encoders, Writing.encoders)
+  \If{message.requestsLogging} 
+  \State \Call{Communication.sendMessage}{Power.batteryLevel, Locomotion.encoders, Writing.encoders}
+  \EndIf
+    
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
-\njnote{end pseudocode}
 
 
 
