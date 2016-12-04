@@ -2,3 +2,76 @@
 
 \subsection{Full System}
 \label{sec:software_full_system}
+
+Full system architecture is split into offboard and onboard, and handles the coordination between the various subsystem software. This section will describe the controller for the offboard and onboard systems separately.
+
+\subsubsection{Offboard Controller}
+\label{sec:software_full_offboard}
+The offboard controller's primary function is to continually send updated locomotion commands to the robot agents. This controller will operate based on the pseudocode listed below. Functions are classified by the subsystem they are a part of (Planner refers to the planning subsystem \sref{sec:software_sdp}, Locomotion refers to the locomotion subsystem \sref{sec:software_locomotion}, etc.).
+
+\njnote{not sure how to format this in code typeset}
+
+planner_input = ImageProcessing.processInputImage(input)
+paths = Planner.planRobotTrajectories(planner_input)
+Communication.connectToRobots()
+
+while !Planner.isFinishedDrawing()
+
+  robot_info = Communication.getTCPMessage(robots)
+
+  localization = Localization.localizeRobots(camera_data, robot_info.odometry)
+  paths = Planner.updatePaths(localization)
+
+  locomotion_message = Locomotion.generateCommand(localization, paths)
+  writing_message = WritingImplement.generateCommand(localization, paths)
+  error_message = Communication.processErrors()
+
+  Communication.sendMessage(locomotion_message, writing_message, error_message)
+  UI.displayErrors(error_message)
+
+\njnote{end pseudocode here}
+
+It is important to note that while locomotion, writing implement, and error-related messages are all sent together, any action based on error reports executes with the highest priority on the onboard robot controllers.
+
+The main loop will run continuously at a fixed rate until system operation is finished and the drawing is complete. In order to ensure a fixed-rate operation, large processing steps - such as updating paths, updating the UI, and localizing - will be done concurrently in separate threads. This will ensure the main controller is free to send any error messages immediately, or send an emergency kill command on user input.
+
+
+\subsubsection{Onboard Robot Controller}
+\label{sec:software_full_onboard}
+The onboard robot controller is responsible for parsing incoming commands, and sending odometry, writing implement, and other logging information back to the offboard system.
+
+The robot will parse commands as it recieves them, and use them to actuate motors for locomotion or raising and lowering the writing implement. It will also parse error information, for messages such as emergency stop, pause, or other noncritical errors. Error processing and action occurs with a higher priority than logging and motor actuation.
+
+In order to send logging information in a way that is easiest for the offboard controller to process, the onboard system will only send logging information when requested by the offboard controller. Log information includes motor encoder data for odometry, battery state, and any debugging information.
+
+The onboard robot controller will operate based on the following pseudocode. Functions are classified by the subsystem they refer to, similar to \sref{sec:software_full_offboard}.
+\njnote{start more pseudocode here}
+Communication.connectToOffboard()
+
+while 1
+  message = Communication.getTCPMessage(offboard)
+  locomotion = Communication.parseLocomotionMessage(message)
+  writing = Communication.parseWritingMessage(message)
+  errors = Communication.parseErrorMessage(message)
+
+  if errors.emergencyOff
+    Locomotion.stopOperation()
+    Writing.stopOperation()
+
+  if errors.pause
+    Locomotion.pauseOperation()
+    Writing.pauseOperation()
+
+  Locomotion.parseErrors(errors)
+  Writing.parseErrors(errors)
+
+  Locomotion.actuateMotors(locomotion)
+  Writing.actuateMotors(writing)
+
+  if message.requestsLogging
+    Communication.sendMessage(Power.batteryLevel, Locomotion.encoders, Writing.encoders)
+
+\njnote{end pseudocode}
+
+
+
