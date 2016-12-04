@@ -2,3 +2,9 @@
 
 \subsection{Full System}
 \label{sec:hardware_full_system}
+
+\subsubsection{Computation}
+\label{sec:computation}
+A laptop computer will handle all offboard computation. This includes image processing, planning, scheduling, localization, and managing communication with the robot workers. Only communications, a computationally light task, must be managed in real time. This means that the computational speed of the laptop is largely unimportant to proper operation of the system. 
+
+Each robot worker will be equipped with a Raspberry Pi 3 to manage onboard computation, motor controller operation, and communication with the offboard system. The Raspberry Pi 3 is a fully functional Linux system with easily accessible GPIO pins, which can be used for the motor controller. It also has a built-in WiFi card, which simplifies communications and decreases the number of necessary parts. 
