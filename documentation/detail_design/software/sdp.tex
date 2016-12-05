@@ -2,3 +2,48 @@
 
 \subsection{Work Scheduling, Distribution and Planning}
 \label{sec:software_sdp}
+
+\rhnote{Need to add explanatory text}
+
+\begin{algorithm}[t!]
+\caption{Planner.planRobotTrajectories}
+\label{algo:sdp_overview}
+\begin{algorithmic}[1]  
+\State \textbf{Given:} Set of Line Coordinates $L$ 
+\State $\{L_{R0}, L_{R1}\}$ = \Call{Scheduler.DistributeWork}{L}
+\State $P_{R0}$ = \Call{Planner.generatePlan}{$L_{R0}$}
+\State $P_{R1}$ = \Call{Planner.generatePlan}{$L_{R1}$}
+\State $\{T_{R0}, T_{R1}\}$ = \Call{Planner.generateTrajectories}{$P_{R0}$, $P_{R1}$}
+\State \Return $\{T_{R0}, T_{R1}\}$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[t!]
+\caption{Scheduler.DistributeWork}
+\label{algo:distribute}
+\begin{algorithmic}[1]  
+\State \textbf{Given:} Set of Line Coordinates $L$ 
+\State \rhnote{try geographic one.. leave open to others}
+\State \Return $\{L_{R0}, L_{R1}\}$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[t!]
+\caption{Planner.generatePlan}
+\label{algo:generatePlan}
+\begin{algorithmic}[1]  
+\State \textbf{Given:} Set of Line Coordinates $L_{Ri}$ 
+\State \rhnote{loop through lines and connecting pieces and call like generateControls}
+\State \Return $P_{Ri}$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[t!]
+\caption{Planner.generateTrajectories}
+\label{algo:generateTrajs}
+\begin{algorithmic}[1]  
+\State \textbf{Given:} Plan $P_{R0}, P_{R1}$ 
+\State \rhnote{step through each time. if collision, insert pause on alternating robots}
+\State \Return $\{T_{R0}, T_{R1}\}$
+\end{algorithmic}
+\end{algorithm}
