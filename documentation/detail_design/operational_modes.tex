@@ -2,10 +2,20 @@
 
 \section{Operational Modes}
 \label{sec:operational_modes}
+This robot system can be defined by only a few operational modes. These modes represent various states that the system can take from the point of view of a user.
 
-\njnote{"define system states and operational modes to support concept of operation". not sure about this, maybe have the full system diagram from previous doc? "define temporal aspects with statecharts or other models". not really sure what to include here either}
+\subsection{Mode: User Inputs}
+\label{sec:operational_user}
+The first mode a user encounters is the user input mode. This mode involves the user creating and inputting an image to be drawn. This is all done via the user interface. In addition, this operational mode requires the user to setup the drawing surface, and place the robots in bounds.
 
-\subsection{Mode: User Inputs Stuff}
 \subsection{Mode: Preprocessing and Planning}
+\label{sec:operational_preprocess}
+After the system is set up, the offboard processing system runs preprocessing to connect wirelessly to the robots, calibrate any localization, and determine the trajectories for the robot agents to follow. To do this, the planning system uses the user-generated drawing and parses it into a series of lines. It then runs these lines through the path planner to determine a series of trajectories for each robot. While these may be optimized to avoid collision, minute differences in performance and actual-robot speed require real-time collision detection as well.
+
 \subsection{Mode: Driving and Drawing}
+\label{sec:operational_driving}
+This is the main operational stage, in which the actual result of the system is generated. The offboard system will continually use updating localization and odometry to send commands to navigate the robot agents around the drawing space. In addition, the offboard processor will send commands to raise and lower the writing implement to create the drawing based on the robot position. Robot agents are responsible for parsing data to actuate motors, and sending odometry and other logging information back to the offboard processor. During this stage, the user observes the drawing process, pausing appropriately if they want to pause or stop execution.
+
 \subsection{Mode: Error Handling}
+\label{sec:operational_error}
+The error handling operational mode does not occur regularly. This mode occurs whenever the offboard system receives information (from localization, or the robot agents) that an error has occurred. Depending on the issue, the system will shut down or pause. If the system pauses and it is possible to recover from the error, the user is responsible for correcting any issues and resuming operation. The user is unable to assist the system from recovering from fatal errors. Any errors and warnings are displayed on the UI for the user to see.
