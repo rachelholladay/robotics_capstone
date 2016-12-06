@@ -18,6 +18,8 @@ Our scheduling and planning process, as detailed in \aref{algo:full_system}, hap
 \end{algorithmic}
 \end{algorithm}
 
+The work distribution algorithm is given in \aref{algo:distribute}. The idea is to spatially segregate the lines such that one robot primarily operates on the left and the other operates on the right. By alternating assignment, rather than assigning down the middle, we hope to better balance the distribution.  
+
 \begin{algorithm}[ht!]
 \caption{Scheduler.DistributeWork}
 \label{algo:distribute}
@@ -31,6 +33,8 @@ Our scheduling and planning process, as detailed in \aref{algo:full_system}, hap
 \State \Return $\{L_{0}, L_{1}\}$
 \end{algorithmic}
 \end{algorithm}
+
+Given a robot's set of lines, we next need to plan a path that traverse through all the lines, given in \aref{algo:generatePlan}. We think of the overall plan as a series of segments, planning from where we left off to the start of the next line, then planning along the line. We define a home pose $H$ for each robot where it starts and ends. To minimize collision we start each robot from opposite sides of the drawing surface.  
 
 \begin{algorithm}[ht!]
 \caption{Planner.generatePlan}
@@ -46,6 +50,8 @@ Our scheduling and planning process, as detailed in \aref{algo:full_system}, hap
 \State \Return $P$
 \end{algorithmic}
 \end{algorithm}
+
+We generate a reference trajectory for each robot in \aref{algo:generateTrajs}. We generate uniformly timed straight line "Snap" trajectories. At each time step, we check for collision and simply insert a waiting pause to prevent the robots from colliding. Hence this is equivalent to one robot waiting at a invisible stop sign, allowing the other robot to pass. To allow a rough notion of fairness we alternate which robot should pause.
 
 \begin{algorithm}[ht!]
 \caption{Planner.generateTrajectories}
