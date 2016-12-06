@@ -3,9 +3,9 @@
 \subsection{Work Scheduling, Distribution and Planning}
 \label{sec:software_sdp}
 
-\rhnote{Need to add explanatory text}
+Our scheduling and planning process, as detailed in \aref{algo:full_system}, happens entirely offline. Thus it is the job of the controller to monitor the trajectory execution. In \aref{algo:sdp_overview} we decompose planning those trajectory into: distributing the work between the two robots, planning each path independently and coordinating the trajectories to avoid collision. 
 
-\begin{algorithm}[t!]
+\begin{algorithm}[ht!]
 \caption{Planner.planRobotTrajectories}
 \label{algo:sdp_overview}
 \begin{algorithmic}[1]  
@@ -18,32 +18,46 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}[t!]
+\begin{algorithm}[ht!]
 \caption{Scheduler.DistributeWork}
 \label{algo:distribute}
 \begin{algorithmic}[1]  
-\State \textbf{Given:} Set of Line Coordinates $L$ 
+\State \textbf{Given:} Set of Line Coordinates $L$, Number of lines $n$
 \State \rhnote{try geographic one.. leave open to others}
 \State \Return $\{L_{R0}, L_{R1}\}$
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}[t!]
+\begin{algorithm}[ht!]
 \caption{Planner.generatePlan}
 \label{algo:generatePlan}
 \begin{algorithmic}[1]  
-\State \textbf{Given:} Set of Line Coordinates $L_{Ri}$ 
-\State \rhnote{loop through lines and connecting pieces and call like generateControls}
-\State \Return $P_{Ri}$
+\State \textbf{Given:} Set of Line Coordinates $L$, Number of lines $n$, Home Pose $H$
+\State \textbf{Initialize:} Reference Path $P = H$
+\Procedure{for i=0:n}{}
+\State $P$ += \Call{GenerateControls}{$P$.end, $L$[i].start}
+\State $P$ += \Call{GenerateControls}{$L$[i].start, $L$[i].end}
+\EndProcedure
+\State $P$ += \Call{GenerateControls}{$P$.end, $H$}
+\State \Return $P$
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}[t!]
+\begin{algorithm}[ht!]
 \caption{Planner.generateTrajectories}
 \label{algo:generateTrajs}
 \begin{algorithmic}[1]  
-\State \textbf{Given:} Plan $P_{R0}, P_{R1}$ 
-\State \rhnote{step through each time. if collision, insert pause on alternating robots}
-\State \Return $\{T_{R0}, T_{R1}\}$
+\State \textbf{Given:} Plan $P_{0}, P_{1}$ 
+\State \textbf{Initialize:} 
+\State Total Time $T$= \Call{max}{$P_{0}, P_{1}$}
+\Procedure{for i=0:(T-1)}{}
+%\State \rhnote{step through each time. if collision, insert pause on alternating robots}
+\If{\Call{CheckCollision}{$P_{0}[i], P_{1}[i]$}}
+\State \Call{InsertPause}{}
+\EndIf 
+\State $T_{0}$ += \Call{planner.SnapTraj}{$P_{0}[i], P_{0}[i+1]$}
+\State $T_{1}$ += \Call{planner.SnapTraj}{$P_{1}[i], P_{1}[i+1]$}
+\EndProcedure
+\State \Return $\{T_{0}, T_{1}\}$
 \end{algorithmic}
 \end{algorithm}
