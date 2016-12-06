@@ -3,7 +3,7 @@
 \subsection{Communication}
 \label{sec:software_comm}
 
-The communication software subsystem handles sending information to and from the robot agents and the offboard system. The offboard system will be tasked with mainly with sending locomotion and emergency commands to the robot agents. The robot agents will send logging information and odometry measured from motor actions back to the offboard system for processing. The offboard system can use received data to determine if a robot agent has fallen into any error states. Below is a model describing the flow of information between the offboard and onboard system. This model is described in detail throughout this section.
+The communication software subsystem handles sending information to and from the robot agents and the offboard system. The offboard system will be tasked with mainly with sending locomotion and emergency commands to the robot agents. The robot agents will send logging information and odometry measured from motor actions back to the offboard system for processing. The offboard system can use received data to determine if a robot agent has fallen into any error states. \figref{fig:software_comm_model} is a model describing the flow of information between the offboard and onboard system. This model is described in detail throughout this section.
 
 \begin{figure}
 \centering
