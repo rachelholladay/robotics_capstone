@@ -23,8 +23,12 @@ Our scheduling and planning process, as detailed in \aref{algo:full_system}, hap
 \label{algo:distribute}
 \begin{algorithmic}[1]  
 \State \textbf{Given:} Set of Line Coordinates $L$, Number of lines $n$
-\State \rhnote{try geographic one.. leave open to others}
-\State \Return $\{L_{R0}, L_{R1}\}$
+\State \textbf{Initialize:} Line Sets $L_{0} = L_{1} = \emptyset$
+\Procedure{for i=0:$\frac{n}{2}$}{}
+\State $L_{0}$ += \Call{Scheduler.FindNextLeftmost}{L}
+\State $L_{1}$ += \Call{Scheduler.FindNextRightmost}{L}
+\EndProcedure
+\State \Return $\{L_{0}, L_{1}\}$
 \end{algorithmic}
 \end{algorithm}
 
@@ -35,28 +39,28 @@ Our scheduling and planning process, as detailed in \aref{algo:full_system}, hap
 \State \textbf{Given:} Set of Line Coordinates $L$, Number of lines $n$, Home Pose $H$
 \State \textbf{Initialize:} Reference Path $P = H$
 \Procedure{for i=0:n}{}
-\State $P$ += \Call{GenerateControls}{$P$.end, $L$[i].start}
-\State $P$ += \Call{GenerateControls}{$L$[i].start, $L$[i].end}
+\State $P$ += \Call{Planner.GenerateControls}{$P$.end, $L$[i].start}
+\State $P$ += \Call{Planner.GenerateControls}{$L$[i].start, $L$[i].end}
 \EndProcedure
-\State $P$ += \Call{GenerateControls}{$P$.end, $H$}
+\State $P$ += \Call{Planner.GenerateControls}{$P$.end, $H$}
 \State \Return $P$
 \end{algorithmic}
 \end{algorithm}
 
 \begin{algorithm}[ht!]
 \caption{Planner.generateTrajectories}
-\label{algo:generateTrajs}
+\label{algo:generateTrajs} 
 \begin{algorithmic}[1]  
 \State \textbf{Given:} Plan $P_{0}, P_{1}$ 
-\State \textbf{Initialize:} 
+\State \textbf{Initialize:} Traj $T_{0} = T_{1} = \emptyset$, Pause Traj $T_{p} = T_{0}$
 \State Total Time $T$= \Call{max}{$P_{0}, P_{1}$}
 \Procedure{for i=0:(T-1)}{}
-%\State \rhnote{step through each time. if collision, insert pause on alternating robots}
-\If{\Call{CheckCollision}{$P_{0}[i], P_{1}[i]$}}
-\State \Call{InsertPause}{}
+\If{\Call{Planner.CheckCollision}{$P_{0}[i], P_{1}[i]$}}
+\State \Call{Planner.InsertPause}{$T_{p}$}
+\State $T_{p}$ = \Call{Swap}{$T_{0}, T_{1}$}
 \EndIf 
-\State $T_{0}$ += \Call{planner.SnapTraj}{$P_{0}[i], P_{0}[i+1]$}
-\State $T_{1}$ += \Call{planner.SnapTraj}{$P_{1}[i], P_{1}[i+1]$}
+\State $T_{0}$ += \Call{Planner.SnapTraj}{$P_{0}[i], P_{0}[i+1]$}
+\State $T_{1}$ += \Call{Planner.SnapTraj}{$P_{1}[i], P_{1}[i+1]$}
 \EndProcedure
 \State \Return $\{T_{0}, T_{1}\}$
 \end{algorithmic}
