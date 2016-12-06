@@ -7,17 +7,15 @@ Full system architecture is split into offboard and onboard, and handles the coo
 
 \subsubsection{Offboard Controller}
 \label{sec:software_full_offboard}
-The offboard controller's primary function is to continually send updated locomotion commands to the robot agents. This controller will operate based on the pseudocode listed below. Functions are classified by the subsystem they are a part of (Planner refers to the planning subsystem \sref{sec:software_sdp}, Locomotion refers to the locomotion subsystem \sref{sec:software_locomotion}, etc.).
-
-\njnote{not sure how to format this in code typeset}
+The offboard controller's primary function is to continually send updated locomotion commands to the robot agents. This controller will operate based on the pseudocode listed below. Functions are classified by the subsystem they are a part of (Planner refers to the planning subsystem \sref{sec:software_sdp}, Locomotion refers to the locomotion subsystem \sref{sec:software_locomotion}, etc.). This pseudocode acts as a temporal model that describes offboard control flow.
 
 \begin{algorithm}[t!]
 \caption{Full System}\label{algo:full_system}
-\begin{algorithmic}[1]  
-\State \textbf{Given:} Input Image $I$ 
-\State planner\_input = \Call{ImageProcessing.processInputImage}{$I$} 
+\begin{algorithmic}[1]
+\State \textbf{Given:} Input Image $I$
+\State planner\_input = \Call{ImageProcessing.processInputImage}{$I$}
 \State paths = \Call{Planner.planRobotTrajectories}{planner\_input}
-\State \Call{Communication.connectToRobots}{} 
+\State \Call{Communication.connectToRobots}{}
 \Procedure{!Planner.isFinishedDrawing}{}
     \State robot\_info = \Call{Communication.getTCPMessage}{robots}
     \State localization = \Call{Localization.localizeRobots}{camera\_data, robot\_info.odometry}
@@ -44,11 +42,11 @@ The robot will parse commands as it recieves them, and use them to actuate motor
 
 In order to send logging information in a way that is easiest for the offboard controller to process, the onboard system will only send logging information when requested by the offboard controller. Log information includes motor encoder data for odometry, battery state, and any debugging information.
 
-The onboard robot controller will operate based on the following pseudocode. Functions are classified by the subsystem they refer to, similar to \sref{sec:software_full_offboard}.
+The onboard robot controller will operate based on the following pseudocode. Functions are classified by the subsystem they refer to, similar to \sref{sec:software_full_offboard}. The pseudocode below describes the temporal model of onboard robot controller operation.
 
 \begin{algorithm}[t!]
 \caption{Offboard Processing}\label{algo:offboard}
-\begin{algorithmic}[1]  
+\begin{algorithmic}[1]
 \State Communication.connectToOffboard()
 \Procedure{True}{}
   \State message = \Call{Communication.getTCPMessage}{offboard}
@@ -56,12 +54,12 @@ The onboard robot controller will operate based on the following pseudocode. Fun
   \State writing = \Call{Communication.parseWritingMessage}{message}
   \State errors = \Call{Communication.parseErrorMessage}{message}
 
-  \If{errors.emergencyOff} 
+  \If{errors.emergencyOff}
   \State \Call{Locomotion.stopOperation}{}
 	\State \Call{Writing.stopOperation}{}
-  \EndIf 
+  \EndIf
 
-  \If{errors.pause} 
+  \If{errors.pause}
   \State \Call{Locomotion.pauseOperation}{}
 	\State \Call{Writing.pauseOperation}{}
   \EndIf
@@ -72,10 +70,10 @@ The onboard robot controller will operate based on the following pseudocode. Fun
   \State \Call{Locomotion.actuateMotors}{}
   \State \Call{Writing.actuateMotors}{}
 
-  \If{message.requestsLogging} 
+  \If{message.requestsLogging}
   \State \Call{Communication.sendMessage}{Power.batteryLevel, Locomotion.encoders, Writing.encoders}
   \EndIf
-    
+
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
