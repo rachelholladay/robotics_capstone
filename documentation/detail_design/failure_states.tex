@@ -2,9 +2,6 @@
 
 \section{Failure States and Recovery}
 \label{sec:failure_states}
-
-\njnote{probably best to organize failure states/recovery by subsystem section for describing fault recovery and "degraded modes" similar to failure modes from test plan}
-
 \subsection{Degraded Mode: Driving but Not Drawing}
 This failure state occurs when a robot agent is able to drive properly using localization and planning but the writing implement is not working properly. It can be caused by one of two factors: a broken actuation mechanism, or the writing material is out of ink. The writing implement running out of ink is significantly more likely, as it is a common occurrence and the system is designed around this limitation. For either degraded mode, the only solution is for the user to pause system operation, resolve the issue, and resume operation. The user can either replace the writing implement or replenish ink, or fix the actuation mechanism.
 

@@ -3,15 +3,30 @@
 \subsection{Communication}
 \label{sec:software_comm}
 
+<<<<<<< HEAD
 The communication software subsystem handles sending information to and from the robot agents and the offboard system. The offboard system will be tasked with mainly with sending locomotion and emergency commands to the robot agents. The robot agents will send logging information and odometry measured from motor actions back to the offboard system for processing. The offboard system can use received data to determine if a robot agent has fallen into an error state.
 
 \subsubsection{Libraries \& Protocols}
 \label{sec:software_comm_libs}
 Communication will be handled via a TCP connection between a robot agent and the offboard system. Given that the robots only receive and process commands relating to their own motion, there is no need for the robots to be able to directly communicate with each other. 
+=======
+The communication software subsystem handles sending information to and from the robot agents and the offboard system. The offboard system will be tasked with mainly with sending locomotion and emergency commands to the robot agents. The robot agents will send logging information and odometry measured from motor actions back to the offboard system for processing. The offboard system can use received data to determine if a robot agent has fallen into any error states. \figref{fig:software_comm_model} is a model describing the flow of information between the offboard and onboard system. This model is described in detail throughout this section.
 
-Once a TCP connection is established, data will be sent using Protocol Buffers, a Google-designed standard for serializing structured data \cite{protobuf3}. For this project, Protocol Buffers language version 3 (proto3) will be used due to its improved speed and features over the previous version, proto2. 
+\begin{figure}
+\centering
+\includegraphics[width=0.9\columnwidth]{figs/sw_arch_communication.png}
+\caption{Model of system communication across controllers.}
+\label{fig:software_comm_model}
+\end{figure}
 
-Using proto3 will allow the offboard system to send commands in packets, called \'messages\'. This way, the system can organize locomotion and emergency commands into separate messages or sections of a message, which can then easily be parsed by the robot agents. 
+\subsubsection{Libraries \& Protocols}
+\label{sec:software_comm_libs}
+Communication will be handled via a TCP connection between a robot agent and the offboard system. Robot agents will not connect with each other. Given that the robots only receive and process commands relating to their own motion, there is no need for the robots to be able to directly communicate with each other.
+>>>>>>> origin/master
+
+Once a TCP connection is established, data will be sent using Protocol Buffers, a Google-designed standard for serializing structured data \cite{protobuf3}. For this project, Protocol Buffers language version 3 (proto3) will be used due to its improved speed and features over the previous version, proto2.
+
+Using proto3 will allow the offboard system to send commands in packets, called \'messages\'. This way, the system can organize locomotion and emergency commands into separate messages or sections of a message, which can then easily be parsed by the robot agents.
 
 \subsubsection{Message Design}
 \label{sec:software_comm_msg}
