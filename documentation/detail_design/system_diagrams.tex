@@ -3,19 +3,72 @@
 \section{System Diagrams}
 \label{sec:system_diagrams}
 
-In this section, CAD diagrams for full system and subsystems and electronics diagram will be presented. Subsystems include localization system, locomotion system, painting mechanism, and power system. Detailed explanation of fabrication and assembly processes will be discussed in section 4. \yjnote{proper reference please}
+In this section, CAD diagrams for full system and subsystems and electronics diagram will be presented. Subsystems include localization system, locomotion system, painting mechanism, and power system. Detailed explanation of fabrication and assembly processes will be discussed in \sref{sec:hardware}.
 
 \subsection{Full System Diagrams}
 \label{sec:full_sys_diagrams}
-\yjnote{please include all the images in hardware->CAD->Full System}
 
-Above labeled images show different views of the robot, including isometric, top, bottom, front, and side views. The labels indicate the relative positioning of each subsystem. 
+\begin{figure}
+\centering
+\includegraphics[width=0.9\columnwidth]{hardware/CAD/Full System/Full_System.PNG}
+\caption{Full system diagram from isometric view.}
+\label{fig:full-sys-diagram-iso}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\columnwidth]{hardware/CAD/Full System/Full_System_Top.PNG}
+\includegraphics[width=0.9\columnwidth]{hardware/CAD/Full System/Full_System_Bottom.PNG}
+\caption{Full system diagram from top view (left) and from bottom view (right).}
+\label{fig:full-sys-diagram-bottom}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\columnwidth]{hardware/CAD/Full System/Full_System_Front.PNG}
+\includegraphics[width=0.9\columnwidth]{hardware/CAD/Full System/Full_System_Side.PNG}
+\caption{Full system diagram from front view (left) and from side view (right).}
+\label{fig:full-sys-diagram-front}
+\end{figure}
+
+Above labeled images show different views of the robot, including isometric, top, bottom, front, and side views. The labels indicate the relative positioning of each subsystem. As indicated in the CAD, the desigend system is 23 cm in diameter and 19 cm tall. The total mass of the system is estimated to be 1.5 kg.  
 
 \subsection{Component Diagrams}
 \label{sec:component_diagrams}
-\yjnote{please include all images from folders: Localization System, Locomotion System, Painting Mechanism, and Power System}
 
-Above images show the assembled and exploded views of each subsystem. This section intends to give readers the basic familiarity with the functionality and degree of complexity contained in each subsystem. Section 4 will explains the fabrication and assemnbly procedures. \yjnote{proper reference please}
+\begin{figure}
+\centering
+\includegraphics[width=0.9\columnwidth]{hardware/CAD/Painting Mechanism/Painting.PNG}
+\includegraphics[width=0.9\columnwidth]{hardware/CAD/Painting Mechanism/
+FPainting_Exploded.PNG}
+\caption{Painting mechanism from isometric view (left) and from exploded view (right).}
+\label{fig:painting-diagram}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\columnwidth]{hardware/CAD/Locomotion System/Locomotion.PNG}
+\includegraphics[width=0.9\columnwidth]{hardware/CAD/Locomotion System/Locomotion_Exploded.PNG}
+\caption{Locomotion system from isometric view (left) and from exploded view (right).}
+\label{fig:locomotion-diagram}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\columnwidth]{hardware/CAD/Localization System/Localization.PNG}
+\includegraphics[width=0.9\columnwidth]{hardware/CAD/Localization System/Localization_Exploded.PNG}
+\caption{Localization system from isometric view (left) and from exploded view (right).}
+\label{fig:localization-diagram}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\columnwidth]{hardware/CAD/Power System/Power.PNG}
+\caption{Power system.}
+\label{fig:power-diagram}
+\end{figure}
+
+Above images show the assembled and exploded views of each subsystem. This section intends to give readers the basic familiarity with the functionality and degree of complexity contained in each subsystem. \sref{sec:hardware} will explains the fabrication and assemnbly procedures.
 
 Painting mechanism is the most complicated mechanical system on the robot. Chalk holder is a 3D printed part with external thread. Rotor is another 3D printed part with internal thread. The subsystem uses a motor to control the lifting of the marker. Since the motor is fixed on the motor holder, as it activates, rotor rotates inside the motor holder along with the bearing and threads out the chalk holder, which lifts or lowers the installed chalk marker.
 
