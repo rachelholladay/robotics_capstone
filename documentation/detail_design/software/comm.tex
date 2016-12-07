@@ -15,8 +15,6 @@ The communication software subsystem handles sending information to and from the
 \label{fig:software_comm_model}
 \end{figure}
 
-\subsubsection{Libraries \& Protocols}
-\label{sec:software_comm_libs}
 Communication will be handled via a TCP connection between a robot agent and the offboard system. Given that the robots only receive and process commands relating to their own motion, there is no need for the robots to be able to directly communicate with each other. 
 
 Once a TCP connection is established, data will be sent using Protocol Buffers, a Google-designed standard for serializing structured data \cite{protobuf3}. For this project, Protocol Buffers language version 3 (proto3) will be used due to its improved speed and features over the previous version, proto2.
