@@ -3,4 +3,68 @@
 \section{Traceability Matrix}
 \label{sec:traceability_matrix}
 
-\njnote{"detailed design should make clear how system meets functional and non-functional requirements, can be done by tracing requirements to design attributes". Maybe another table linking requirements to sub/subsub sections in the doc}
+\begin{center}
+ \begin{tabular}{||c c ||}
+ \hline
+ Requirement & Section \\ [0.5ex]
+ \hline\hline
+ \frref{fr:omnidirectional} & \sref{sec:hardware_locomotion}  \\
+ \hline
+ \frref{fr:autonomous} & \sref{sec:software_full_system}, \sref{sec:software_locomotion}, \sref{sec:software_sdp} \\
+ \hline
+ \frref{fr:localize} & \sref{sec:software_localization}, \sref{sec:hardware_localization} \\
+ \hline
+ \frref{fr:in_bounds} & \sref{sec:software_localization}, \sref{sec:software_sdp} \\
+ \hline
+ \frref{fr:insert_tool} & \sref{sec:software_writing_implement}, \sref{sec:hardware_writing_implement} \\
+ \hline
+ \frref{fr:remove_tool} & \sref{sec:software_writing_implement}, \sref{sec:hardware_writing_implement} \\
+ \hline
+ \frref{fr:replace_tool} & \sref{sec:software_writing_implement}, \sref{sec:hardware_writing_implement} \\
+ \hline
+ \frref{fr:reliable_comm} & \sref{sec:software_comm}, \sref{sec:hardware_comm} \\
+ \hline
+ \frref{fr:drive_control} & \sref{sec:software_locomotion}, \sref{sec:hardware_locomotion} \\
+ \hline
+ \frref{fr:on_tool} & \sref{sec:software_writing_implement}, \sref{sec:hardware_writing_implement}, \sref{sec:software_sdp} \\
+ \hline
+\frref{fr:input_plan} & \sref{sec:software_ui} \\
+ \hline
+ \frref{fr:know_progress} & \sref{sec:software_full_system}, \sref{sec:software_sdp}, \sref{sec:software_comm} \\
+ \hline
+ \frref{fr:kill_switch} & \sref{sec:software_full_system}, \sref{sec:software_comm} \\
+ \hline
+ \frref{fr:user_interface} & \sref{sec:software_ui}, \sref{sec:hardware_ui} \\
+ \hline
+ \frref{fr:battery_power} & \sref{sec:software_power}, \sref{sec:hardware_power} \\
+ \hline
+ \nfrref{nfr:documentation} & \sref{sec:software_ui} \\
+ \hline
+ \nfrref{nfr:errors} & \sref{sec:software_full_system}  \\
+ \hline
+ \nfrref{nfr:weight_limit} & \sref{sec:full_sys_diagrams} \\
+ \hline
+ \nfrref{nfr:size_limit} & \sref{sec:full_sys_diagrams} \\
+ \hline
+ \nfrref{nfr:efficiency} & \sref{sec:software_sdp} \\
+ \hline
+ \nfrref{nfr:quality} & \sref{sec:software_full_system}, \sref{sec:software_sdp}, \sref{sec:software_comm} \\
+ \hline
+ \nfrref{nfr:mobileapp} & \sref{sec:software_ui} \\
+ \hline
+ \nfrref{nfr:reliability} & \sref{sec:hardware}, \sref{sec:software_implementation} \\
+ \hline
+ \nfrref{nfr:coordination} & \sref{sec:software_full_system}, \sref{sec:software_sdp} \\
+ \hline
+ \nfrref{nfr:budget} & \sref{sec:parts} \\
+ \hline
+ \nfrref{nfr:safe} & \sref{sec:software_full_system}\\
+ \hline
+ \nfrref{nfr:pos_accuracy} & \sref{sec:software_locomotion}, \sref{sec:software_localization},  \sref{sec:hardware_locomotion}, \sref{sec:hardware_localization} \\
+ \hline
+ \nfrref{nfr:rot_accuracy} & \sref{sec:software_locomotion}, \sref{sec:software_localization},  \sref{sec:hardware_locomotion}, \sref{sec:hardware_localization} \\
+ \hline
+ \nfrref{nfr:tool_switch_duration} & \sref{sec:software_writing_implement}, \sref{sec:hardware_writing_implement} \\ [1ex]
+\hline
+\end{tabular}
+\end{center}

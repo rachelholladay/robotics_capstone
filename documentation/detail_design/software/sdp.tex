@@ -3,9 +3,9 @@
 \subsection{Work Scheduling, Distribution and Planning}
 \label{sec:software_sdp}
 
-\rhnote{Need to add explanatory text}
+Our scheduling and planning process, as detailed in \aref{algo:full_system}, happens entirely offline. Thus it is the task of the controller to monitor the trajectory execution. In \aref{algo:sdp_overview} we decompose planning those trajectory into: distributing the work between the two robots, planning each path independently and coordinating the trajectories to avoid collision. 
 
-\begin{algorithm}[t!]
+\begin{algorithm}[ht!]
 \caption{Planner.planRobotTrajectories}
 \label{algo:sdp_overview}
 \begin{algorithmic}[1]  
@@ -18,32 +18,56 @@
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}[t!]
+The work distribution algorithm is given in \aref{algo:distribute}. The idea is to spatially segregate the lines such that one robot primarily operates on the left and the other operates on the right. By alternating assignment, rather than assigning down the middle, we hope to better balance the distribution.  
+
+\begin{algorithm}[ht!]
 \caption{Scheduler.DistributeWork}
 \label{algo:distribute}
 \begin{algorithmic}[1]  
-\State \textbf{Given:} Set of Line Coordinates $L$ 
-\State \rhnote{try geographic one.. leave open to others}
-\State \Return $\{L_{R0}, L_{R1}\}$
+\State \textbf{Given:} Set of Line Coordinates $L$, Number of lines $n$
+\State \textbf{Initialize:} Line Sets $L_{0} = L_{1} = \emptyset$
+\Procedure{for i=0:$\frac{n}{2}$}{}
+\State $L_{0}$ += \Call{Scheduler.FindNextLeftmost}{L}
+\State $L_{1}$ += \Call{Scheduler.FindNextRightmost}{L}
+\EndProcedure
+\State \Return $\{L_{0}, L_{1}\}$
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}[t!]
+Given a robot's set of lines, we next need to plan a path that traverse through all the lines, given in \aref{algo:generatePlan}. We think of the overall plan as a series of segments, planning from where we left off to the start of the next line, then planning along the line. We define a home pose $H$ for each robot where it starts and ends. To minimize collision we start each robot from opposite sides of the drawing surface.  
+
+\begin{algorithm}[ht!]
 \caption{Planner.generatePlan}
 \label{algo:generatePlan}
 \begin{algorithmic}[1]  
-\State \textbf{Given:} Set of Line Coordinates $L_{Ri}$ 
-\State \rhnote{loop through lines and connecting pieces and call like generateControls}
-\State \Return $P_{Ri}$
+\State \textbf{Given:} Set of Line Coordinates $L$, Number of lines $n$, Home Pose $H$
+\State \textbf{Initialize:} Reference Path $P = H$
+\Procedure{for i=0:n}{}
+\State $P$ += \Call{Planner.GenerateControls}{$P$.end, $L$[i].start}
+\State $P$ += \Call{Planner.GenerateControls}{$L$[i].start, $L$[i].end}
+\EndProcedure
+\State $P$ += \Call{Planner.GenerateControls}{$P$.end, $H$}
+\State \Return $P$
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}[t!]
+We generate a reference trajectory for each robot in \aref{algo:generateTrajs}. We generate uniformly timed straight line "Snap" trajectories. At each time step, we check for collision and simply insert a waiting pause to prevent the robots from colliding. Hence this is equivalent to one robot waiting at a invisible stop sign, allowing the other robot to pass. To allow a rough notion of fairness we alternate which robot should pause.
+
+\begin{algorithm}[ht!]
 \caption{Planner.generateTrajectories}
-\label{algo:generateTrajs}
+\label{algo:generateTrajs} 
 \begin{algorithmic}[1]  
-\State \textbf{Given:} Plan $P_{R0}, P_{R1}$ 
-\State \rhnote{step through each time. if collision, insert pause on alternating robots}
-\State \Return $\{T_{R0}, T_{R1}\}$
+\State \textbf{Given:} Plan $P_{0}, P_{1}$ 
+\State \textbf{Initialize:} Traj $T_{0} = T_{1} = \emptyset$, Pause Traj $T_{p} = T_{0}$
+\State Total Time $T$= \Call{max}{$P_{0}, P_{1}$}
+\Procedure{for i=0:(T-1)}{}
+\If{\Call{Planner.CheckCollision}{$P_{0}[i], P_{1}[i]$}}
+\State \Call{Planner.InsertPause}{$T_{p}$}
+\State $T_{p}$ = \Call{Swap}{$T_{0}, T_{1}$}
+\EndIf 
+\State $T_{0}$ += \Call{Planner.SnapTraj}{$P_{0}[i], P_{0}[i+1]$}
+\State $T_{1}$ += \Call{Planner.SnapTraj}{$P_{1}[i], P_{1}[i+1]$}
+\EndProcedure
+\State \Return $\{T_{0}, T_{1}\}$
 \end{algorithmic}
 \end{algorithm}

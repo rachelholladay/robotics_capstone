@@ -3,13 +3,92 @@
 \section{System Diagrams}
 \label{sec:system_diagrams}
 
-\njnote{Intro specifying that diagrams are for components/full system hardware all diagrams have short description}
+In this section, CAD diagrams for full system and subsystems and electronics diagram will be presented. Subsystems include localization system, locomotion system, painting mechanism, and power system. Detailed explanation of fabrication and assembly processes will be discussed in \sref{sec:hardware}.
 
-\subsection{Full System Digrams}
+\subsection{Full System Diagrams}
 \label{sec:full_sys_diagrams}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.9\columnwidth]{hardware/CAD/FullSystem/Full_System.PNG}
+\caption{Full system diagram from isometric view.}
+\label{fig:full-sys-diagram-iso}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.49\columnwidth]{hardware/CAD/FullSystem/Full_System_Top.PNG}
+\includegraphics[width=0.49\columnwidth]{hardware/CAD/FullSystem/Full_System_Bottom.PNG}
+\caption{Full system diagram from top view (left) and from bottom view (right).}
+\label{fig:full-sys-diagram-bottom}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.49\columnwidth]{hardware/CAD/FullSystem/Full_System_Front.PNG}
+\includegraphics[width=0.49\columnwidth]{hardware/CAD/FullSystem/Full_System_Side.PNG}
+\caption{Full system diagram from front view (left) and from side view (right).}
+\label{fig:full-sys-diagram-front}
+\end{figure}
+
+Above labeled images show different views of the robot, including isometric, top, bottom, front, and side views. The labels indicate the relative positioning of each subsystem. As indicated in the CAD, the desigend system is 23 cm in diameter and 19 cm tall. The total mass of the system is estimated to be 1.5 kg.  
 
 \subsection{Component Diagrams}
 \label{sec:component_diagrams}
 
-\subsection{Wiring Diagrams}
-\label{sec:wiring_diagrams}
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.49\columnwidth]{hardware/CAD/PaintingMechanism/Painting.PNG}
+\includegraphics[width=0.49\columnwidth]{hardware/CAD/PaintingMechanism/Painting_Exploded.PNG}
+\caption{Painting mechanism from isometric view (left) and from exploded view (right).}
+\label{fig:painting-diagram}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.49\columnwidth]{hardware/CAD/LocomotionSystem/Locomotion.PNG}
+\includegraphics[width=0.49\columnwidth]{hardware/CAD/LocomotionSystem/Locomotion_Exploded.PNG}
+\caption{Locomotion system from isometric view (left) and from exploded view (right).}
+\label{fig:locomotion-diagram}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.49\columnwidth]{hardware/CAD/LocalizationSystem/Localization.PNG}
+\includegraphics[width=0.49\columnwidth]{hardware/CAD/LocalizationSystem/Localization_Exploded.PNG}
+\caption{Localization system from isometric view (left) and from exploded view (right).}
+\label{fig:localization-diagram}
+\end{figure}
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.5\columnwidth]{hardware/CAD/PowerSystem/Power.PNG}
+\caption{Power system.}
+\label{fig:power-diagram}
+\end{figure}
+
+Above images show the assembled and exploded views of each subsystem. This section intends to give readers the basic familiarity with the functionality and degree of complexity contained in each subsystem. \sref{sec:hardware} will explains the fabrication and assemnbly procedures.
+
+Painting mechanism is the most complicated mechanical system on the robot. Chalk holder is a 3D printed part with external thread. Rotor is another 3D printed part with internal thread. The subsystem uses a motor to control the lifting of the marker. Since the motor is fixed on the motor holder, as it activates, rotor rotates inside the motor holder along with the bearing and threads out the chalk holder, which lifts or lowers the installed chalk marker.
+
+\subsection{Electronics Diagrams}
+\label{sec:electronics_diagrams}
+
+Below is the full wiring diagram for the electronics on each robot. 
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\columnwidth]{figs/wiring-diagram.jpg}
+\caption{Full electronics diagram for a single robot.}
+\label{fig:electronics-diagram}
+\end{figure}
+
+Two motor HATs will be stacked onto the Raspberry Pi for each robot, as illustratred in the image below.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.45\columnwidth]{figs/HATs-on-pi.jpg}
+\includegraphics[width=0.45\columnwidth]{figs/HAT-on-pi.jpg}
+\caption{Approximation of what the Raspberry Pi and Motor HAT assembly will look like from the side (left) and the top (right).}
+\label{fig:HATs}
+\end{figure}

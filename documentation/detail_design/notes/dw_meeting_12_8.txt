@@ -27,5 +27,14 @@ MECHANICAL
 TRACEABILITY
 - it refs requirements back to sections of doc
 - NFR 4 -> Section 2
+  - should also link to drawing mechanism/pen (2.3?)
+
+- instead, look at req and point reqs to which systems they point to
+
+ELECTRONICS
+- electronics diagrams needs a proper figref
+- expand 2.3, electronics diagram
+  - explain which wires being connected to what
+  - explain purpose of the connections
 
 

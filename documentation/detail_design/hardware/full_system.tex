@@ -3,8 +3,16 @@
 \subsection{Full System}
 \label{sec:hardware_full_system}
 
+\subsubsection{Assembly Instruction}
+\label{sec:full_assemb}
+To reiterate:\\
+1. Localization system is attached to the chassis via glue.\\
+2. Motor-wheel assembles are attached to the chassis via screws.\\
+3. Painting mechanism is attached to the chassis by gluing on the bottom side of the motor holder.\\
+4. Power system is attached to the chassis via velco strips.
+
 \subsubsection{Computation}
-\label{sec:computation}
+\label{sec:full_computation}
 A WiFi-compatible laptop computer will handle all offboard computation. This includes image processing, planning, scheduling, localization, and managing communication with the robot workers. Only communications, a computationally light task, must be managed in real time. This means that the computational speed of the laptop is largely unimportant to proper operation of the system. 
 
 Each robot worker will be equipped with a Raspberry Pi 3 to manage onboard computation, motor controller operation, and communication with the offboard system. The Raspberry Pi 3 is a fully functional Linux system with easily accessible GPIO pins, which can be used for the motor controller. The 1.2GHz quad-core processor will be more than sufficient for the required onboard computation. It also has a built-in WiFi card, which simplifies communications and decreases the number of necessary parts. 
