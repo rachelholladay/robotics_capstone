@@ -1,10 +1,18 @@
 DW MEETING 12/8
 
+GENERAL TODO
+- RH add hyperlinks on figrefs 
+- DZ explain wiring explanations (in fabrication procedure)
+- DZ add proper figrefs for wiring figures
+- general explanation for electronics explanation, how wired up
+- NJ explain communication diagram colors
+- NJ add table of proto3 message fields
+- link Failure States back to test plan failure modes
+
 GENERAL
 - uniformly good
   - mechanical, electrical, software good
-- not much negative (we the best)
-
+- not much negative (we are great)
 
 MECHANICAL
 - chassis, drivetrain, torque, voltage
@@ -36,5 +44,32 @@ ELECTRONICS
 - expand 2.3, electronics diagram
   - explain which wires being connected to what
   - explain purpose of the connections
+  - for example, explain that which pin on the rpi the motors connect to and/or why it doesn't matter which pin it's connected to
+- link figure 9 with a figref
+- may want to explain that the pics are just examples of the different figures
+
+FABRICATION PROCEDURE
+- would be nice to see wiring explanations
+- 4.6.1 needs actual fabrication procedure especially for electronics
+
+SOFTWARE
+- explain external/environment in software section
+  - how it's just the passive markers going into input
+  - DW thought the 
+- Figure 11
+  - explain what arrows in the sw arch are
+  - may want to explain data flow between
+- Figure 12 communication diagram
+  - explain color coding here too
+  - potentially change box types?
+- proto3 messages
+  - table of message data types contained - explain all the data fields
+  - contain type of each data type (ex e-stop is boolean, motor command is numerical value, etc.)
+
+FAILURE STATES/RECOVERY
+- TODO reference test plan failure modes
+
+
+
 
 
