@@ -1,0 +1,31 @@
+DW MEETING 12/8
+
+GENERAL
+- uniformly good
+  - mechanical, electrical, software good
+- not much negative (we the best)
+
+
+MECHANICAL
+- chassis, drivetrain, torque, voltage
+- motor
+  - have to specify motor - link is a line of motors, not specific one
+  - add manufacturer/part# to ensure actual motor can be 
+
+- mecanum wheels
+  - not smooth, rattle a lot
+  - rigidity of structure/compliance to account for mecanum rattle/bumpiness
+  - potential fix: rubber something(?)
+
+- schematic
+  - motors on plastic
+  - needs detail of how motors attached
+    - lasercut hole with bolt/nuts
+    - be aware of motor mounting
+    - be aware of shaking
+
+TRACEABILITY
+- it refs requirements back to sections of doc
+- NFR 4 -> Section 2
+
+
