@@ -7,6 +7,7 @@ Full system architecture is split into offboard and onboard, and handles the coo
 
 \subsubsection{Offboard Controller}
 \label{sec:software_full_offboard}
+
 The offboard controller's primary function is to continually send updated locomotion commands to the robot agents. This controller will operate based on the pseudocode listed below. Functions are classified by the subsystem they are a part of (Planner refers to the planning subsystem \sref{sec:software_sdp}, Locomotion refers to the locomotion subsystem \sref{sec:software_locomotion}, etc.). This pseudocode acts as a temporal model that describes offboard control flow.
 
 \begin{algorithm}[t!]
