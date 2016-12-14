@@ -5,7 +5,6 @@ GENERAL TODO
 - DZ explain wiring explanations (in fabrication procedure)
 - DZ add proper figrefs for wiring figures
 - general explanation for electronics explanation, how wired up
-- link Failure States back to test plan failure modes
 
 GENERAL
 - uniformly good
