@@ -1,13 +1,10 @@
 DW MEETING 12/8
 
 GENERAL TODO
-- RH add hyperlinks on figrefs 
+- RH add hyperlinks on figrefs
 - DZ explain wiring explanations (in fabrication procedure)
 - DZ add proper figrefs for wiring figures
 - general explanation for electronics explanation, how wired up
-- NJ explain communication diagram colors
-- NJ add table of proto3 message fields
-- link Failure States back to test plan failure modes
 
 GENERAL
 - uniformly good
@@ -18,7 +15,7 @@ MECHANICAL
 - chassis, drivetrain, torque, voltage
 - motor
   - have to specify motor - link is a line of motors, not specific one
-  - add manufacturer/part# to ensure actual motor can be 
+  - add manufacturer/part# to ensure actual motor can be
 
 - mecanum wheels
   - not smooth, rattle a lot
@@ -55,7 +52,7 @@ FABRICATION PROCEDURE
 SOFTWARE
 - explain external/environment in software section
   - how it's just the passive markers going into input
-  - DW thought the 
+  - DW thought the
 - Figure 11
   - explain what arrows in the sw arch are
   - may want to explain data flow between

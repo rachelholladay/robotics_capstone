@@ -8,63 +8,59 @@
  \hline
  Requirement & Section \\ [0.5ex]
  \hline\hline
- \frref{fr:omnidirectional} & \sref{sec:hardware_locomotion}  \\
+ \frref{fr:omnidirectional} & \sref{sec:hardware_locomotion}, \sref{sec:software_locomotion_robot}, \sref{sec:software_locomotion_offboard}  \\
  \hline
- \frref{fr:autonomous} & \sref{sec:software_full_system}, \sref{sec:software_locomotion}, \sref{sec:software_sdp} \\
+ \frref{fr:autonomous} & \sref{sec:software_localization}, \sref{sec:software_locomotion}, \sref{sec:software_sdp} \\
  \hline
- \frref{fr:localize} & \sref{sec:software_localization}, \sref{sec:hardware_localization} \\
+ \frref{fr:localize} & \sref{sec:hardware_localization}, \sref{sec:hardware_locomotion} \\
  \hline
- \frref{fr:in_bounds} & \sref{sec:software_localization}, \sref{sec:software_sdp} \\
+ \frref{fr:in_bounds} & \sref{sec:software_localization}, \sref{sec:software_sdp}, \sref{sec:software_comm}, \sref{sec:installation_plan} \\
  \hline
- \frref{fr:insert_tool} & \sref{sec:software_writing_implement}, \sref{sec:hardware_writing_implement} \\
+ \frref{fr:insert_tool} & \sref{sec:hardware_writing_implement} \\
  \hline
- \frref{fr:remove_tool} & \sref{sec:software_writing_implement}, \sref{sec:hardware_writing_implement} \\
+ \frref{fr:remove_tool} & \sref{sec:hardware_writing_implement} \\
  \hline
- \frref{fr:replace_tool} & \sref{sec:software_writing_implement}, \sref{sec:hardware_writing_implement} \\
+ \frref{fr:replace_tool} & \sref{sec:hardware_writing_implement} \\
  \hline
- \frref{fr:reliable_comm} & \sref{sec:software_comm}, \sref{sec:hardware_comm} \\
+ \frref{fr:reliable_comm} & \sref{sec:hardware_power}, \sref{sec:software_comm} \\
  \hline
- \frref{fr:drive_control} & \sref{sec:software_locomotion}, \sref{sec:hardware_locomotion} \\
+ \frref{fr:drive_control} & \sref{sec:software_sdp}, \sref{sec:software_locomotion}, \sref{sec:software_localization} \\
  \hline
- \frref{fr:on_tool} & \sref{sec:software_writing_implement}, \sref{sec:hardware_writing_implement}, \sref{sec:software_sdp} \\
+ \frref{fr:on_tool} & \sref{sec:hardware_writing_implement}, \sref{sec:software_writing_implement} \\
  \hline
 \frref{fr:input_plan} & \sref{sec:software_ui} \\
  \hline
- \frref{fr:know_progress} & \sref{sec:software_full_system}, \sref{sec:software_sdp}, \sref{sec:software_comm} \\
+ \frref{fr:kill_switch} & \sref{sec:hardware_full_system}, \sref{sec:software_full_system},\sref{sec:software_comm}, \sref{sec:software_ui} \\
  \hline
- \frref{fr:kill_switch} & \sref{sec:software_full_system}, \sref{sec:software_comm} \\
+ \frref{fr:user_interface} & \sref{sec:hardware_ui}, \sref{sec:software_ui} \\
  \hline
- \frref{fr:user_interface} & \sref{sec:software_ui}, \sref{sec:hardware_ui} \\
+ \frref{fr:battery_power} & \sref{sec:hardware_power}, \sref{sec:software_power} \\
  \hline
- \frref{fr:battery_power} & \sref{sec:software_power}, \sref{sec:hardware_power} \\
+ \nfrref{nfr:documentation} & \sref{sec:full_assemb}, \sref{sec:software_full_system}, \sref{sec:software_libraries} \\
  \hline
- \nfrref{nfr:documentation} & \sref{sec:software_ui} \\
- \hline
- \nfrref{nfr:errors} & \sref{sec:software_full_system}  \\
+ \nfrref{nfr:errors} & \sref{sec:software_full_system}, \sref{sec:software_comm}, \sref{sec:software_localization}, \sref{sec:failure_states}  \\
  \hline
  \nfrref{nfr:weight_limit} & \sref{sec:full_sys_diagrams} \\
  \hline
  \nfrref{nfr:size_limit} & \sref{sec:full_sys_diagrams} \\
  \hline
- \nfrref{nfr:efficiency} & \sref{sec:software_sdp} \\
+ \nfrref{nfr:efficiency} & \sref{sec:hardware_locomotion}, \sref{sec:software_sdp} \\
  \hline
- \nfrref{nfr:quality} & \sref{sec:software_full_system}, \sref{sec:software_sdp}, \sref{sec:software_comm} \\
+ \nfrref{nfr:quality} & \sref{sec:software_locomotion}, \sref{sec:software_sdp}, \sref{sec:hardware_locomotion}, \sref{sec:software_writing_implement}, \sref{sec:hardware_power} \\
  \hline
- \nfrref{nfr:mobileapp} & \sref{sec:software_ui} \\
+ \nfrref{nfr:reliability} & \sref{sec:hardware_writing_implement}, \sref{sec:hardware_power}, \sref{sec:hardware_locomotion}, \sref{sec:software_localization} \sref{sec:software_comm} \\
  \hline
- \nfrref{nfr:reliability} & \sref{sec:hardware}, \sref{sec:software_implementation} \\
- \hline
- \nfrref{nfr:coordination} & \sref{sec:software_full_system}, \sref{sec:software_sdp} \\
+ \nfrref{nfr:coordination} & \sref{sec:software_sdp}, \sref{sec:software_comm} \\
  \hline
  \nfrref{nfr:budget} & \sref{sec:parts} \\
  \hline
- \nfrref{nfr:safe} & \sref{sec:software_full_system}\\
+ \nfrref{nfr:safe} & \sref{sec:hardware_full_system}, \sref{sec:hardware_power} \sref{sec:software_locomotion}, \sref{sec:software_sdp}, \sref{sec:software_comm}\\
  \hline
- \nfrref{nfr:pos_accuracy} & \sref{sec:software_locomotion}, \sref{sec:software_localization},  \sref{sec:hardware_locomotion}, \sref{sec:hardware_localization} \\
+ \nfrref{nfr:pos_accuracy} & \sref{sec:hardware_locomotion}, \sref{sec:hardware_localization}, \sref{sec:software_locomotion}, \sref{sec:software_localization} \\
  \hline
- \nfrref{nfr:rot_accuracy} & \sref{sec:software_locomotion}, \sref{sec:software_localization},  \sref{sec:hardware_locomotion}, \sref{sec:hardware_localization} \\
+ \nfrref{nfr:rot_accuracy} & \sref{sec:hardware_locomotion}, \sref{sec:hardware_localization}, \sref{sec:software_locomotion}, \sref{sec:software_localization} \\
  \hline
- \nfrref{nfr:tool_switch_duration} & \sref{sec:software_writing_implement}, \sref{sec:hardware_writing_implement} \\ [1ex]
+ \nfrref{nfr:tool_switch_duration} & \sref{sec:hardware_writing_implement}, \sref{sec:hardware_full_system} \\ [1ex]
 \hline
 \end{tabular}
 \end{center}

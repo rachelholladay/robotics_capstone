@@ -15,7 +15,7 @@ The communication software subsystem handles sending information to and from the
 \label{fig:software_comm_model}
 \end{figure}
 
-Communication will be handled via a TCP connection between a robot agent and the offboard system. Given that the robots only receive and process commands relating to their own motion, there is no need for the robots to be able to directly communicate with each other. 
+Communication will be handled via a TCP connection between a robot agent and the offboard system. Given that the robots only receive and process commands relating to their own motion, there is no need for the robots to be able to directly communicate with each other.
 
 Once a TCP connection is established, data will be sent using Protocol Buffers, a Google-designed standard for serializing structured data \cite{protobuf3}. For this project, Protocol Buffers language version 3 (proto3) will be used due to its improved speed and features over the previous version, proto2.
 
@@ -27,7 +27,47 @@ Message design will be addressed first with regard to messages sent to robot age
 
 All messages sent to the robot agents will involve emergency information commands or locomotion. Emergency commands can be separated into full system stop, and system pause. System stop is the emergency kill switch, which occurs by user command or when the system encounters a fatal error. This will end onboard robot operation. System pause occurs for errors that are recoverable; an example of this would be robot collision. The user has the option to assess and correct any issues, and resume operation. Both system stop and pause will halt all locomotion commands until the robot agent is commanded otherwise.
 
-Locomotion commands will be continually sent to robot agents. These commands will come in the form of relative motor powers to command each of the four mecanum wheels. These messages will be sent continually, to allow for stable corrections to robot motion to maintain smooth lines, which increases the overall quality of drawing.
+Locomotion commands will be continually sent to robot agents. These commands will come in the form of relative motor powers to command each of the four mecanum wheels. These messages will be sent continually, to allow for stable corrections to robot motion to maintain smooth lines, which increases the overall quality of drawing. \added[remark={NJ, V2}]{Below is a table representing data fields that will go into the proto3 messages being sent to onboard robot controllers.}
 
-Robot agents are responsible for sending odometry and logging information back to the offboard processor. Odometry information is sent for each of the four motors on the robot, by sending the encoder ticks since the last communication. This odometry information can be incorporated into localization. Motor encoder movement for the writing implement motor will also be sent. Logging information can be used for debugging or system analysis. An example of logging information is the robot battery level.
+\begin{center}
+ \begin{tabular}{||c c ||}
+ \hline
+ Message Name & Data Type \\ [0.5ex]
+ \hline\hline
+ Emergency State & Stop, Pause, Resume \\
+ \hline
+ Wheel Motor 1 & Motor power \\
+ \hline
+ Wheel Motor 2 & Motor power \\
+ \hline
+ Wheel Motor 3 & Motor power \\
+ \hline
+ Wheel Motor 4 & Motor power \\
+ \hline
+ Writing Implement Motor & Motor power \\
+ \hline
+\end{tabular}
+\end{center}
+
+Robot agents are responsible for sending odometry and logging information back to the offboard processor. Odometry information is sent for each of the four motors on the robot, by sending the encoder ticks since the last communication. This odometry information can be incorporated into localization. Motor encoder movement for the writing implement motor will also be sent. Logging information can be used for debugging or system analysis. An example of logging information is the robot battery level. \added[remark={NJ, V2}]{Below is a table representing data fields that will go into the proto3 messages being sent back to the offboard master controller.} \\
+\begin{center}
+ \begin{tabular}{||c c ||}
+ \hline
+ Message Name & Data Type \\ [0.5ex]
+ \hline\hline
+ Wheel 1 Odometry & Encoder value \\
+ \hline
+ Wheel 2 Odometry & Encoder value \\
+ \hline
+ Wheel 3 Odometry & Encoder value \\
+ \hline
+ Wheel 4 Odometry & Encoder value \\
+ \hline
+ Writing Implement Motor Odometry & Encoder value \\
+ \hline
+ Battery Level & Voltage from battery \\
+ \hline
+\end{tabular}
+\end{center}
+
 
