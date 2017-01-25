@@ -1,0 +1,8 @@
+Meeting notes 1/25
+Schedule/WBS, design modifications
+
+Writing Implement
+- Change to arm that moves writing implement up/down
+- Use force-feedback motor to ensure constant force
+- TODO: new CAD models for arm
+- TODO: spec out motor with force/torque feedback
