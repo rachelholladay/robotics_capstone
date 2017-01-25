@@ -73,10 +73,7 @@ Split into multiple more detailed and specific requirements of insertion, remova
 \item The main system controller must be able to receive an input that allows it to command the robot agents to draw an appropriate image. The system must be able to parse the input into a state usable for robot planning and control in order to draw the input. 
 \end{functional_requirement}
 
-\begin{functional_requirement}{Robots Know Progress}{2}
-\label{fr:know_progress}
-\item All robot agents are required to understand how much of the drawing each one has completed, and which sections are left to be drawn. This is necessary to ensure an equal spread of workload across all robot agents. \added[remark={NJ, V2}]{The ability to communicate progress can be guaranteed by consistent inter-robot communication, as defined by \frref{fr:reliable_comm}.}
-\end{functional_requirement}
+\deleted[remark={NJ, V2.3}]{All robot agents are required to understand how much of the drawing each one has completed, and which sections are left to be drawn. This is necessary to ensure an equal spread of workload across all robot agents. \added[remark={NJ, V2}]{The ability to communicate progress can be guaranteed by consistent inter-robot communication, as defined by \frref{fr:reliable_comm}.}}
 
 \begin{functional_requirement}{Kill Switch}{3}
 \label{fr:kill_switch}
@@ -133,10 +130,7 @@ Documentation of the design process, software, and hardware implementation is im
 \item The drawing that results from the robotic system must closely match the input image. Quality can be qualitatively measured by visual comparison, or using software via a number of image difference metrics.
 \end{nonfunctional_requirement}
 
-\begin{nonfunctional_requirement}{Mobile App}{1}
-\label{nfr:mobileapp}
-\item User interface and experience will be done using a mobile application. This application will allow users to remotely input images for drawing, enable, disable, and pause the robot system's operation. The app will also be able to track and display current progress.
-\end{nonfunctional_requirement}
+\deleted[remark={NJ, V2.3}]{Mobile App, User interface and experience will be done using a mobile application. This application will allow users to remotely input images for drawing, enable, disable, and pause the robot system's operation. The app will also be able to track and display current progress.}
 
 \begin{nonfunctional_requirement}{Reliability}{6}
 \label{nfr:reliability}

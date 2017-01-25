@@ -1,0 +1,22 @@
+Meeting Notes 1/24/17
+WBS and Schedule update
+
+General
+- class has access to room 1207
+  - email about room status
+  
+
+Schedule
+  - include necessary resources, place access, etc.
+    - minimal for us
+  - include nontechnical requirements (time for reports? etc)
+  - schedule purpose to show other people ("stakeholders") as well as us
+  - gant (sp.) chart? vs regular itemized list
+  - add in time to redesign/rebuild systems - must be part of schedule
+  - must be complete by May 4
+
+
+WBS
+  - subsystem-separated
+  - make sure to add integration as a component
+
