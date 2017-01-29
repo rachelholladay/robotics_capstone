@@ -1,7 +1,7 @@
 '''
 Communication subsystem
 '''
-class CommunicationSystem:
+class CommunicationSystem(object):
     '''
     Contains communication subsystem
     '''

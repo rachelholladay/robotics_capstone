@@ -1,7 +1,7 @@
 '''
 Planner class
 '''
-class PlannerSystem:
+class PlannerSystem(object):
     '''
     Contains planner subsystem
     '''

@@ -3,9 +3,13 @@ Main offboard controller.
 Runs fixed-rate loop that pulls data from subsystems
 '''
 import sys
+from subsystems.communication import CommunicationSystem
+from subsystems.localization import LocalizationSystem
+from subsystem.locomotion import LocomotionSystem
+from subsystem.planner import PlannerSystem
+from subsystem.ui import UISystem
 
-
-class OffboardController:
+class OffboardController(object):
     def __init__(self, robot_ip):
         '''
         Instantiates main subsystems based on input parameters
