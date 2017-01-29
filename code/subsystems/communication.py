@@ -1,10 +1,29 @@
 '''
 Communication subsystem
 '''
+from enum import Enum
+
+class MessageType(Enum):
+    LOCOMOTION = 1
+    WRITING = 2
+    ERROR = 3
+    DEBUG = 4
+
 class CommunicationSystem:
     '''
-    Contains communication subsystem
+    Contains communication subsystem.
+
+    Message design: This class keeps track of the most recently unsent protobuf
+    message, filling it with data as various other subsystems send updates. On
+    sending, it sends the multiple protobuf messages to each of its existing
+    connections, or robots.
+
+    For example, in a 2 robot system, a CommunicationSystem will hold and fill
+    2 unique protobuf messages. When the message is sent, it will flush the 
+    protobuf message and begin again. It then waits for updates from other 
+    subsystems with new and updated information for the messages.
     '''
+
     def __init__(self):
         self.connections = [] # List of existing robot connections
 
@@ -53,3 +72,13 @@ class CommunicationSystem:
         for robot in self.connections:
             # TODO close TCP connection
             self.connections.remove(robot)
+
+    def generateCommand(self, type, data):
+        '''
+        Given data generated from a subsystem and subsystem type, generates
+        the appropriate protobuf message
+        @return subsystem_messages List of protobuf messages 
+        '''
+        subsystem_messages = None
+        return subsystem_messages
+
