@@ -9,7 +9,7 @@ class MessageType(Enum):
     ERROR = 3
     DEBUG = 4
 
-class CommunicationSystem:
+class CommunicationSystem(object):
     '''
     Contains communication subsystem.
 

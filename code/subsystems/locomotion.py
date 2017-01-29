@@ -1,7 +1,7 @@
 '''
 Locomotion subsystem
 '''
-class LocomotionSystem:
+class LocomotionSystem(object):
     '''
     Contains locomotion subsystem
     '''
