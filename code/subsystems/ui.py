@@ -1,7 +1,7 @@
 '''
 UI subsystem
 '''
-class UISystem:
+class UISystem(object):
     '''
     Contains UI subsystem
     '''
