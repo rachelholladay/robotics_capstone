@@ -1,0 +1,32 @@
+MEETING NOTES 1/31/17
+Meeting with professor
+
+-------Presentation notes/structure:
+- wbs/dict 40%
+- schedule 40%
+- general progress 15% - try to show visual of unfinished things too
+- oral presentation 5% - part of individual grade
+- feedback in class on other presentations = attendance/participation grade
+
+- system design overview brief - concept, tech performance measures
+- subsystem status (colorize wbs?)
+- design mods since CDR
+- key ongoing design efforts
+- prototyping efforts if any
+- schedule
+
+- show a few wbs dict entries
+- pick part of schedule (row of gantt chart, for ex.) and talk through
+
+talking about sw progress:
+    - slides of text w/ descriptions
+    - potentially best to talk about it w/ slide
+
+
+focus on wbs/schedule, but need full progress update on everything else
+20 min presentation + 5 for questions
+
+
+
+-------Team meeting
+
