@@ -28,5 +28,23 @@ focus on wbs/schedule, but need full progress update on everything else
 
 
 
--------Team meeting
+-------Planning Notes
+Read in a series of straight lines and arcs (circles given in similar format to matplotlib)
+	L endpoint1_x endpoint1_y endpoint2_x endpoint2_y
+	A center_x center_y radius starting_degree(wrt to pointing up)
+Separate up by 2 robots (greedy)
+	Pick leftmost 
+	Add to left, tally left cost
+	Calculate rightmost
+	Add to right tally right cost
+	Whichever has the lower cost, pick next segment, continue
+Re order paths (greedy)
+	Pick closest to start, then take that path
+	From ending of that path pick next closest
+
+Produce path - array of locations by taking drawings + connecting segments from line to line
+Generate a series of reference velocities thus producing a trajectory
+Compute collisions and add timing breaks
+Integrate velocity commands and display execution of path on screen as video
+Then execute on real robot, use sensor fusion for dead reckoning + overhead camera
 
