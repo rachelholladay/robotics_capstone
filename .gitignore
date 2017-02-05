@@ -8,5 +8,6 @@
 *.toc
 *.soc
 *.lof
+*.pyc
 .DS_Store
 latexSuite*:
