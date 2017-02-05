@@ -5,9 +5,9 @@ Runs fixed-rate loop that pulls data from subsystems
 import sys
 from subsystems.communication import CommunicationSystem
 from subsystems.localization import LocalizationSystem
-from subsystem.locomotion import LocomotionSystem
-from subsystem.planner import PlannerSystem
-from subsystem.ui import UISystem
+from subsystems.locomotion import LocomotionSystem
+from subsystems.planner import PlannerSystem
+from subsystems.ui import UISystem
 
 class OffboardController(object):
     def __init__(self, robot_ip):
@@ -22,8 +22,9 @@ class OffboardController(object):
         self.sys_locomotion = LocomotionSystem()
         self.sys_comm = CommunicationSystem()
         self.sys_ui = UISystem()
-        
 
+        self.processInputData('inputs/test1')
+        
     def processInputData(self, data):
         '''
         Receives input image and runs planner
