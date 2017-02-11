@@ -3,16 +3,22 @@
 \section{Build Progress}
 \label{sec:build_progress}
 
+We chronicle our build progress thus far, splitting up efforts into electromechanical updates and software updates. This corresponds to the bases of our tree, excluding the integration branch which happens as a final step. 
+
 \subsection{Electromechnical Updates}
 \label{sec:electromechanical_progress}
 
-\rhnote{Insert CAD drawings and talk about design changes.}
+\yjnote{Insert CAD drawings and talk about design changes.}
 
-\rhnote{Mention ordered parts for first robot. }
+\yjnote{Mention ordered parts for first robot. }
 
 \subsection{Software Update}
 \label{sec:software_progress}
 
-\rhnote{describe software arch plan and how thats going}
+In our software development process, our first step was to design a software architecture. Like most robotic systems, our robots involve several interlocking pieces of software that need to be well organized in order to function. We took our psuedo-code developed last semester and converted it into interlocking code skeletons that serves as the groundwork for the rest of our software development. Having determined how to separate the work between modules we can now develop each one independently. 
 
-\rhnote{Explain changes in distributor (more greedy) and that communication choice neil made}
+We have begun by focusing in on the communication and SDP (scheduling, distribution and planning) modules. \njnote{What did neil decide on communication?}
+
+In our SDP module, we have edited our work distribution method to take advantage of a more greedy approach. We define the cost of the work for each robot, with the goal of keeping these costs as equal as possible. When iterating through our set of lines, we add the next new line to the robot with the smaller total cost work thus far. We then update that robot's work to account for the cost to get from it's current position to the start of the line and the cost of drawing the line. As we progress through, we eagerly reorder and reorient the lines to optimize cost. This is in contrast to our previous method, which reodered only at the end and separated the lines greedily with respect to spatial dimension. 
+
+In developing the SDP module, we have begun a framework for the UI module, adding the capability to read in assignments. We expect to continue to develop much of the UI module in tandem with the other pieces, as UI visualization serves as a vital tool in development. 
