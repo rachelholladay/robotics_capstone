@@ -8,13 +8,14 @@ We chronicle our build progress thus far, splitting up efforts into electromecha
 \subsection{Electromechnical Updates}
 \label{sec:electromechanical_progress}
 
-AAs shown below in \figref{fig:em1}, we have made three changes to the electromechanical system since the critical design review. 1) Chassis material is changed from acrylic to plywood. Since we plan to use laser cutting as main fabrication method, fabricating wood would generate less hazardous fume then fabricating acrylic does. Also, wood has higher strength to density ratio, which could make the robots more lightweight. 2) Raspberry Pi is now located above the chassis, instead of below it, so that the robot has space to stack multiple motor HATs. 3) Painting mechanism is redesigned to reduce mechanical complexity.
+As shown below in \figref{fig:em1}, we have made three changes to the electromechanical system since the critical design review. 1) Chassis material is changed from acrylic to plywood. Since we plan to use laser cutting as main fabrication method, fabricating wood would generate less hazardous fume then fabricating acrylic does. Also, wood has higher strength to density ratio, which could make the robots more lightweight. 2) Raspberry Pi is now located above the chassis, instead of below it, so that the robot has space to stack multiple motor HATs. 3) Painting mechanism is redesigned to reduce mechanical complexity.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.49\columnwidth]{CAD/full_old.PNG}
 \includegraphics[width=0.49\columnwidth]{CAD/full_new.PNG}
 \label{fig:em1}
+\caption{Full System Comparison, old (left) versus new (right)}
 \end{figure}
 
 \figref{fig:em2} and \figref{fig:em3} compare the improved painting mechanism to the old design. Instead of a screw type of actuation, the robot now uses a lever mechanism to press the chalk marker on drawing surfaces. The driving motor is fixed to the chassis via an off-the-shelf motor case. This motor then rotates a 3D printed marker holder with the chalk marker installed. By control the rotation direction and voltage input of the motor, the robot can either lift up or down the marker. This design change reduces painting mechanism’s number of components from 5 to 3 and dramatically reduced the amount of material that needs to be 3D printed, which reduce fabrication cost and fabrication time. To secure the chalk marker better, we may add internal ribs in the marker holder or design it into a snap-fit component. This design decision will be made when we receive the ordered chalk markers. Almost electromechanical components are ordered. We expect to start fabrication later this week.
