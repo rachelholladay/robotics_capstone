@@ -18,12 +18,5 @@ class LocomotionSystem(object):
         """
         return self.locomotionData
 
-class LocomotionData(object):
-    """
-    Contains fields for locomotion data for a single robot
-    Locomotion data includes wheel motor commands as well as motor commands
-    for the writing implement
-    """
-    def __init__(self):
-      self.motor_command = [0, 0, 0, 0] # TODO rename 'command' more accurately
+
 

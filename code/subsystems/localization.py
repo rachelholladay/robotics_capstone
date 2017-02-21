@@ -26,13 +26,3 @@ class LocalizationSystem(object):
         # TODO update LocalizationData struct
         return self.localization
 
-
-class LocalizationData:
-    """
-    Struct containing localization data for each of the 4 corners and 2 robots
-    """
-    def __init__(self):
-        corners = [DirectedPoint(), DirectedPoint(), DirectedPoint(), \
-            DirectedPoint()]
-        robots = [DirectedPoint(), DirectedPoint()]
-

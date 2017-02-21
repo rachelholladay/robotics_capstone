@@ -65,10 +65,3 @@ class CommunicationSystem(object):
         self.messages[robot] = None
         pass
 
-
-class ErrorData(object):
-    """
-    Contains fields for any error messages to be sent to the robots
-    """
-    def __init__(self):
-        pass
