@@ -2,6 +2,8 @@
 Planner class
 '''
 from ui import UISystem
+from scipy.spatial import distance
+import numpy
 
 class PlannerSystem(object):
     '''
@@ -36,8 +38,8 @@ class DistributeWork(object):
         '''
         cost_r0 = 0
         cost_r1 = 0
-        for i in xrange(len(self.all_lines)):
-            print self.all_lines[i]
+        for i in xrange(len(self.lines)):
+            print self.lines[i]
             if cost_r0 > cost_r1:
                 new_set = self.r1_set
             else:
@@ -45,7 +47,8 @@ class DistributeWork(object):
             cost = min(cost_r0, cost_r1)
 
             line_idx = self.findClosestLine(new_set[-1])
-            closest_line = self.all_lines[line_idx]
+            closest_line = self.lines[line_idx]
+            #TODO remove the line 
             self.lines = numpy.array(self.lines, (line_idx), axis=0)
             cost += self.incoporateNewSegment(new_set, closest_line)
                 
@@ -57,6 +60,11 @@ class DistributeWork(object):
         endpoint) of those remaining and return the index of that line
         @param current_point
         '''
+        (num_points, _) = self.lines.shape
+        twod_points = self.lines.reshape((num_points*2, 2))
+        dists = distance.cdist([current_point], twod_points, 'euclidean')[0]
+        idx = numpy.argmin(dists)
+        #want to get the idx in self.lines out to return it
         return NotImplementedError
 
     def incoporateNewSegment(self, line_set, new_line):
