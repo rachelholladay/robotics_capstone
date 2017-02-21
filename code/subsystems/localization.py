@@ -1,7 +1,8 @@
 '''
 Localization subsystem
 '''
-from geometry import DirectedPoint # TODO fix imports
+from utils.dataStorage import LocalizationData
+from utils.geometry import DirectedPoint # TODO fix imports
 
 class LocalizationSystem(object):
     '''

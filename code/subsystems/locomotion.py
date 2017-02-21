@@ -1,6 +1,8 @@
 '''
 Locomotion subsystem
 '''
+from utils.dataStorage import LocomotionData
+
 class LocomotionSystem(object):
     '''
     Contains locomotion subsystem.

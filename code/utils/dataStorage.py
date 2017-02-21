@@ -2,6 +2,8 @@
 File containing data structs for passing information between subsystems
 """
 
+from utils.geometry import DirectedPoint
+
 class LocomotionData(object):
     """
     Contains fields for locomotion data for a single robot

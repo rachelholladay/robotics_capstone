@@ -5,9 +5,9 @@ Runs fixed-rate loop that pulls data from subsystems
 import sys
 from subsystems.communication import CommunicationSystem
 from subsystems.localization import LocalizationSystem
-from subsystem.locomotion import LocomotionSystem
-from subsystem.planner import PlannerSystem
-from subsystem.ui import UISystem
+from subsystems.locomotion import LocomotionSystem
+from subsystems.planner import PlannerSystem
+from subsystems.ui import UISystem
 
 class OffboardController(object):
     def __init__(self, robot_ip):
@@ -16,13 +16,12 @@ class OffboardController(object):
         '''
         self.robot_ip = robot_ip
 
-
         self.sys_planner = PlannerSystem()
         self.sys_localization = LocalizationSystem()
         self.sys_locomotion = LocomotionSystem()
         self.sys_comm = CommunicationSystem()
         self.sys_ui = UISystem()
-        
+
 
     def processInputData(self, data):
         '''
@@ -30,17 +29,17 @@ class OffboardController(object):
         '''
         paths = self.sys_planner.planTrajectories(data)
 
-    def robotSetup(self, num_robots=2):
+    def robotSetup(self):
         '''
         Sets up communication links with robot agents.
         Setup step for drawing loop
         '''
-        for i in xrange(0, num_robots):
-            success = self.sys_comm.connectToRobot(self.robot_ip(i))
+        for i in xrange(0, len(self.robot_ip)):
+            success = self.sys_comm.connectToRobot(self.robot_ip[i])
             if not success:
                 print 'FAILED TO CONNECT TO ROBOT'
                 sys.exit(1)
-        
+
 
         # TODO connect to camera, ensure valid connection
 
@@ -73,4 +72,6 @@ class OffboardController(object):
 if __name__ == "__main__":
     robotIPs = ['111.111.1.1', '222.222.2.2']
 
-    controller = OffboardController(robotIPs)
+    controller = OffboardController(robot_ip=robotIPs)
+    controller.robotSetup()
+    # controller.loop()

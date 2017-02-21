@@ -1,6 +1,9 @@
 '''
 Communication subsystem
 '''
+
+from utils import dataStorage as storage
+
 class CommunicationSystem(object):
     '''
     Contains communication subsystem

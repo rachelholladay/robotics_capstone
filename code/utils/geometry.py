@@ -15,7 +15,7 @@ class DirectedPoint(Point):
     localization data, in which objects are represented by an (x,y,theta)
     """
     def __init__(self, x=None, y=None, theta=None):
-        Point.__init__(x,y)
+        Point.__init__(self, x,y)
         self.theta = theta
 
 
