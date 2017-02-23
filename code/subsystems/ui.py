@@ -3,13 +3,15 @@ UI subsystem
 '''
 
 import numpy
+from matplotlib import pyplot as plt
 
 class UISystem(object):
     '''
     Contains UI subsystem
     '''
     def __init__(self):
-        pass
+        self.boundx = 10
+        self.boundy = 10
 
     def parseInputPaths(self, filepath):
         '''
@@ -35,3 +37,31 @@ class UISystem(object):
         points = all_values.reshape(num_points, pt_dim)
         return points
 
+    def drawDistribution(self, data_r0, data_r1):
+        '''
+        Draw the robot's paths, with solid as drawing and dotted
+        as transport. Red = Robot 0, Blue = Robot 1
+        @param data_r0 Path for Robot 0
+        @param data_d1 Path for Robot 1
+        '''
+        path_r0 = numpy.array(data_r0)
+        path_r1 = numpy.array(data_r1)
+        fig = plt.figure()
+        ax = plt.axes(xlim=(0, self.boundx), ylim=(0, self.boundy))
+        for i in xrange(len(path_r0)-1):
+            if i % 2 == 0:
+                ax.plot([path_r0[i, 0], path_r0[i+1, 0]], 
+                    [path_r0[i, 1], path_r0[i+1, 1]], lw=3, ls='--', color='red')
+            else:
+               ax.plot([path_r0[i, 0], path_r0[i+1, 0]],
+                    [path_r0[i, 1], path_r0[i+1, 1]], lw=5, color='red')
+
+        for i in xrange(len(path_r1)-1):
+            if i % 2 == 0:
+                ax.plot([path_r1[i, 0], path_r1[i+1, 0]],
+                    [path_r1[i, 1], path_r1[i+1, 1]], lw=3, ls='--', color='blue')
+            else:
+               ax.plot([path_r1[i, 0], path_r1[i+1, 0]],
+                    [path_r1[i, 1], path_r1[i+1, 1]], lw=5, color='blue')
+
+        plt.show()
