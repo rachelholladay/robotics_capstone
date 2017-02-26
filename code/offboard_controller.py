@@ -74,9 +74,35 @@ class OffboardController(object):
 
 if __name__ == "__main__":
     robotIPs = ['111.111.1.1', '222.222.2.2']
-    test_proto = test_pb2.test_msg()
-    test_proto.name = 'ASDF'
 
-    controller = OffboardController(robot_ip=robotIPs)
-    controller.robotSetup()
+    from messages import robot_commands_pb2
+    import socket
+
+    cmd = robot_commands_pb2.robot_command()
+    cmd.robot_id = 5
+    serialized = cmd.SerializeToString()
+
+    commsys = CommunicationSystem()
+    address=('localhost', 5555)
+    buf_size = 1024
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+    s.connect(address)
+    s.send(serialized)
+    while 1:
+    	serialized = s.recv(buf_size)
+    	data = cmd.ParseFromString(serialized)
+    	if data is None:
+            continue
+        print 'received echo: '
+        print data
+
+
+    s.close()
+
+
+
+    # controller = OffboardController(robot_ip=robotIPs)
+    # controller.robotSetup()
     # controller.loop()

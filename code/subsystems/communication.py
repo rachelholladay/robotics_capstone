@@ -1,12 +1,12 @@
 '''
 Communication subsystem
 
-Requires: pip install protobuf
-Requires: apt-get install protobuf-compiler
 '''
+import socket
+
+from messages import robot_commands_pb2
 
 from utils import dataStorage as storage
-from messages import robot_commands_pb2
 
 class CommunicationSystem(object):
     '''
@@ -23,27 +23,40 @@ class CommunicationSystem(object):
     subsystems with new and updated information for the messages.
     '''
 
+    PORT = 5555
+    BUFFER_SIZE = 1024
+
     def __init__(self):
         self.connections = [] # List of existing robot connections
         self.messages = []
 
     def connectToRobot(self, robot_ip, robot_id):
         '''
-        Establish TCP connection with robot, return connection and success status
+        Attempt to establish TCP connection with robot at specified
+        IP address.
         @param robot_id Integer ID to delineate individual robots
         @param robot_ip The IP address of the robot to connect to
-        @return status,connection Success status of connect attempt and connection itself
+        @return status Success status of connect attempt
         '''
-        # TODO socket stuff to connect to raspberry pi IP
-        robot_connection = None
+        # Setup TCP socket
+        address = (robot_ip, PORT)
+        socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
+        # Attempt to connect
+        try:
+            socket.connect(address)
+        except RuntimeError:
+            print "Unable to connect Robot ID: ",robot_id," at IP ",robot_ip
+            return False
 
         msg = robot_commands_pb2.robot_command()
         msg.robot_id = robot_id
 
         self.connections.append(robot_connection)
         self.messages.append(msg)
-        pass
+        
+        return True
 
 
     def getTCPMessages(self):
@@ -71,9 +84,13 @@ class CommunicationSystem(object):
         Closes any existing TCP messages
         @return status Success or failure of ending communications
         '''
-        for robot in self.connections:
+        for i in range(len(self.connections)):
             # TODO close TCP connection
-            self.connections.remove(robot)
+            robot_connection = self.connections[i]
+            robot_connection.close()
+
+            self.connections.remove(robot_connection)
+            self.messages.remove(self.messages[i])
 
     def generateMessage(robot, locomotion, error):
         """

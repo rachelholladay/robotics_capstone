@@ -13,7 +13,7 @@ from google.protobuf import descriptor_pb2
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='robot_commands.proto',
   package='robot_commands',
-  serialized_pb='\n\x14robot_commands.proto\x12\x0erobot_commands\"!\n\rrobot_command\x12\x10\n\x08robot_id\x18\x01 \x02(\t')
+  serialized_pb='\n\x14robot_commands.proto\x12\x0erobot_commands\"!\n\rrobot_command\x12\x10\n\x08robot_id\x18\x01 \x02(\x05')
 
 
 
@@ -27,8 +27,8 @@ _ROBOT_COMMAND = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='robot_id', full_name='robot_commands.robot_command.robot_id', index=0,
-      number=1, type=9, cpp_type=9, label=2,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      number=1, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),

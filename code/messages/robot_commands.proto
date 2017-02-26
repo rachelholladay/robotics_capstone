@@ -1,6 +1,6 @@
 package robot_commands;
 
 message robot_command {
-  required string robot_id = 1;
+  required int32 robot_id = 1;
 
 }
