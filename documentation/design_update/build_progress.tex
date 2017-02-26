@@ -1,0 +1,51 @@
+% !TEX root = main.tex
+
+\section{Build Progress}
+\label{sec:build_progress}
+
+We chronicle our build progress thus far, splitting up efforts into electromechanical updates and software updates. This corresponds to the bases of our tree, excluding the integration branch which happens as a final step.
+
+\subsection{Electromechanical Updates}
+\label{sec:electromechanical_progress}
+
+As shown below in \figref{fig:em1}, we have made three changes to the electromechanical system since the critical design review. 1) Chassis material is changed from acrylic to plywood. Since we plan to use laser cutting as main fabrication method, fabricating wood would generate less hazardous fume then fabricating acrylic does. Also, wood has higher strength to density ratio, which could make the robots more lightweight. 2) Raspberry Pi is now located above the chassis, instead of below it, so that the robot has space to stack multiple motor HATs. 3) Painting mechanism is redesigned to reduce mechanical complexity.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.49\columnwidth]{CAD/full_old.PNG}
+\includegraphics[width=0.49\columnwidth]{CAD/full_new.PNG}
+\label{fig:em1}
+\caption{Full System Comparison, old (left) versus new (right)}
+\end{figure}
+
+\figref{fig:em2} and \figref{fig:em3} compare the improved painting mechanism to the old design. Instead of a screw type of actuation, the robot now uses a lever mechanism to press the chalk marker on drawing surfaces. The driving motor is fixed to the chassis via an off-the-shelf motor case. This motor then rotates a 3D printed marker holder with the chalk marker installed. By control the rotation direction and voltage input of the motor, the robot can either lift up or down the marker. This design change reduces painting mechanism’s number of components from 5 to 3 and dramatically reduced the amount of material that needs to be 3D printed, which reduce fabrication cost and fabrication time. To secure the chalk marker better, we may add internal ribs in the marker holder or design it into a snap-fit component. This design decision will be made when we receive the ordered chalk markers. Almost electromechanical components are ordered. We expect to start fabrication later this week.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.4\columnwidth]{CAD/painting_old.PNG}
+\includegraphics[width=0.4\columnwidth]{CAD/painting_new.PNG}
+\label{fig:em2}
+\caption{Painting Mechanism Changes, old (left) versus new (right)}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.49\columnwidth]{CAD/old_painting_highlighted.PNG}
+\includegraphics[width=0.49\columnwidth]{CAD/new_painting_highlighted.PNG}
+\label{fig:em3}
+\caption{A comparison of the old (left) versus new (right) chassis with the painting mechanism exposed}
+\end{figure}
+
+\clearpage
+
+\subsection{Software Update}
+\label{sec:software_progress}
+
+In our software development process, our first step was to design a software architecture. Like most robotic systems, our robots involve several interlocking pieces of software that need to be well organized in order to function. We took our psuedo-code developed last semester and converted it into interlocking code skeletons that serves as the groundwork for the rest of our software development. Having determined how to separate the work between modules we can now develop each one independently.
+
+We have begun by focusing in on the communication and SDP (scheduling, distribution and planning) modules.
+
+The communication module has taken the roles of establishing connections, sending and receiving messages, and generating messages. The subsystem will keep track of TCP connections to each robot, and monitor them for any changes that could signal loss of connection. It will also manage receiving and parsing data from the onboard controllers. The onboard controllers send any motor encoder and error data, which the communication subsystem parses into data usable by other subsystems. Motor encoder data is passed into the localization subsystem, and error data is processed to determine if the system should be paused or shut down. Finally, the communication subsystem will take data from the locomotion and writing modules, and parse them into proto3 messages to be sent to the onboard controllers via TCP.
+
+In our SDP module, we have edited our work distribution method to take advantage of a more greedy approach. We define the cost of the work for each robot, with the goal of keeping these costs as equal as possible. When iterating through our set of lines, we add the next new line to the robot with the smaller total cost work thus far. We then update that robot's work to account for the cost to get from it's current position to the start of the line and the cost of drawing the line. As we progress through, we eagerly reorder and reorient the lines to optimize cost. This is in contrast to our previous method, which reodered only at the end and separated the lines greedily with respect to spatial dimension.
+
+In developing the SDP module, we have begun a framework for the UI module, adding the capability to read in assignments. We expect to continue to develop much of the UI module in tandem with the other pieces, as UI visualization serves as a vital tool in development.

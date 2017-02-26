@@ -1,9 +1,9 @@
 '''
 UI subsystem
 '''
-class UISystem:
-	'''
-	Contains UI subsystem
-	'''
-	def __init__(self):
-		pass
+class UISystem(object):
+    '''
+    Contains UI subsystem
+    '''
+    def __init__(self):
+        pass

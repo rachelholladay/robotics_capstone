@@ -1,9 +1,9 @@
 '''
 Planner class
 '''
-class PlannerSystem:
-	'''
-	Contains planner subsystem
-	'''
-	def __init__(self):
-		pass
+class PlannerSystem(object):
+    '''
+    Contains planner subsystem
+    '''
+    def __init__(self):
+        pass

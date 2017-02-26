@@ -1,0 +1,7 @@
+Comprehensive document containing dated changes to system design
+
+1/25/17
+- Writing implement - use motor with arm to lift instead of screw mechanism
+- Using wood instead of acrylic for the chassis
+- Considersion mecanum wheel suspension
+- Place controller (rpi) above chassis instead of underneath
