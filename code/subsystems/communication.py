@@ -9,8 +9,19 @@ from utils import dataStorage as storage
 
 class CommunicationSystem(object):
     '''
-    Contains communication subsystem
+    Contains communication subsystem.
+
+    Message design: This class keeps track of the most recently unsent protobuf
+    message, filling it with data as various other subsystems send updates. On
+    sending, it sends the multiple protobuf messages to each of its existing
+    connections, or robots.
+
+    For example, in a 2 robot system, a CommunicationSystem will hold and fill
+    2 unique protobuf messages. When the message is sent, it will flush the 
+    protobuf message and begin again. It then waits for updates from other 
+    subsystems with new and updated information for the messages.
     '''
+
     def __init__(self):
         self.connections = [] # List of existing robot connections
         self.messages = []
@@ -55,7 +66,6 @@ class CommunicationSystem(object):
             # TODO close TCP connection
             self.connections.remove(robot)
 
-
     def generateMessage(robot, locomotion, error):
         """
         Builds the message for the specified robot consisting of locomotion,
@@ -70,4 +80,5 @@ class CommunicationSystem(object):
         """
         self.messages[robot] = None
         pass
+
 
