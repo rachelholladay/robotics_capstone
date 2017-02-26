@@ -6,6 +6,7 @@ Requires: apt-get install protobuf-compiler
 '''
 
 from utils import dataStorage as storage
+from messages import robot_commands_pb2
 
 class CommunicationSystem(object):
     '''
@@ -26,16 +27,24 @@ class CommunicationSystem(object):
         self.connections = [] # List of existing robot connections
         self.messages = []
 
-    def connectToRobot(self, robot_ip):
+    def connectToRobot(self, robot_ip, robot_id):
         '''
         Establish TCP connection with robot, return connection and success status
+        @param robot_id Integer ID to delineate individual robots
         @param robot_ip The IP address of the robot to connect to
         @return status,connection Success status of connect attempt and connection itself
         '''
         # TODO socket stuff to connect to raspberry pi IP
-        robot = None # need to actually establish connection
-        self.connections.append(robot)
+        robot_connection = None
+
+
+        msg = robot_commands_pb2.robot_command()
+        msg.robot_id = robot_id
+
+        self.connections.append(robot_connection)
+        self.messages.append(msg)
         pass
+
 
     def getTCPMessages(self):
         '''

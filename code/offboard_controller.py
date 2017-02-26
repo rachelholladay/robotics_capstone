@@ -35,7 +35,7 @@ class OffboardController(object):
         Setup step for drawing loop
         '''
         for i in xrange(0, len(self.robot_ip)):
-            success = self.sys_comm.connectToRobot(self.robot_ip[i])
+            success = self.sys_comm.connectToRobot(i, self.robot_ip[i])
             if not success:
                 print 'FAILED TO CONNECT TO ROBOT'
                 sys.exit(1)
@@ -71,13 +71,12 @@ class OffboardController(object):
     def _test(self):
         pass
 
+
 if __name__ == "__main__":
     robotIPs = ['111.111.1.1', '222.222.2.2']
+    test_proto = test_pb2.test_msg()
+    test_proto.name = 'ASDF'
 
-
-		from messages import test_pb2
-		test_proto = test_pb2.test_msg()
-
-  	controller = OffboardController(robot_ip=robotIPs)
-  	controller.robotSetup()
-  	# controller.loop()
+    controller = OffboardController(robot_ip=robotIPs)
+    controller.robotSetup()
+    # controller.loop()
