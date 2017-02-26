@@ -1,5 +1,8 @@
 '''
 Communication subsystem
+
+Requires: pip install protobuf
+Requires: apt-get install protobuf-compiler
 '''
 class CommunicationSystem:
 	'''

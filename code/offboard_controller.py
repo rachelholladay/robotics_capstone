@@ -69,3 +69,6 @@ if __name__ == "__main__":
 	robotIPs = ['111.111.1.1', '222.222.2.2']
 
 	controller = OffboardController(robotIPs)
+
+	from messages import test_pb2
+	test_proto = test_pb2.test_msg()
