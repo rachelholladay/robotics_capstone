@@ -78,28 +78,31 @@ if __name__ == "__main__":
     from messages import robot_commands_pb2
     import socket
 
-    cmd = robot_commands_pb2.robot_command()
-    cmd.robot_id = 5
-    serialized = cmd.SerializeToString()
-
     commsys = CommunicationSystem()
-    address=('localhost', 5555)
-    buf_size = 1024
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-
-    s.connect(address)
-    s.send(serialized)
-    while 1:
-    	serialized = s.recv(buf_size)
-    	data = cmd.ParseFromString(serialized)
-    	if data is None:
-            continue
-        print 'received echo: '
-        print data
+    commsys.connectToRobot('localhost', 0)
+    commsys.sendTCPMessages()
 
 
-    s.close()
+
+    # serialized = cmd.SerializeToString()
+
+    # commsys = CommunicationSystem()
+    # address=('localhost', 5555)
+    # buf_size = 1024
+    # s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+    # s.connect(address)
+    # s.send(serialized)
+    # while 1:
+    # 	serialized = s.recv(buf_size)
+    # 	data = cmd.ParseFromString(serialized)
+    # 	if data is None:
+    #         continue
+    #     print 'received echo: '
+    #     print data
+
+    # s.close()
 
 
 

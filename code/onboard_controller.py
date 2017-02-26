@@ -24,7 +24,7 @@ if __name__ == "__main__":
     from messages import robot_commands_pb2
     import socket
     address = ('localhost', 5555)
-    buf_size = 1024
+    buf_size = CommunicationSystem.BUFFER_SIZE
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -32,7 +32,7 @@ if __name__ == "__main__":
     s.bind(address)
     s.listen(1)
     serialized = None
-    
+
     conn, addr = s.accept()
     print 'connection address: ', addr
     while 1:
@@ -41,10 +41,12 @@ if __name__ == "__main__":
         if serialized is None:
             continue
 
-        print 'recieved: '
         data.ParseFromString(serialized)
-        print data
-        break
+        if data.IsInitialized():
+            print 'recieved: '
+
+            print data
+        
 
     conn.send(serialized)
     conn.close()
