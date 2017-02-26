@@ -2,7 +2,8 @@
 Main onboard controller.
 '''
 import sys
-from subsystems.communication import CommunicationSystem
+from messages import robot_commands_pb2
+from onboard.robot_communication import RobotCommunication
 
 
 class OnboardController(object):
@@ -19,35 +20,12 @@ class OnboardController(object):
         pass
 
 if __name__ == "__main__":
-    offboard_ip = '111.111.1.1'
-
-    from messages import robot_commands_pb2
-    import socket
-    address = ('localhost', 5555)
-    buf_size = CommunicationSystem.BUFFER_SIZE
-
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-
-    s.bind(address)
-    s.listen(1)
-    serialized = None
-
-    conn, addr = s.accept()
-    print 'connection address: ', addr
-    while 1:
-        data = robot_commands_pb2.robot_command()
-        serialized = conn.recv(buf_size)
-        if serialized is None:
+    robotcomm = RobotCommunication()
+    robotcomm.connectToOffboard()
+    while(1):
+        msg = robotcomm.listenForMessage()
+        if msg is None:
             continue
-
-        data.ParseFromString(serialized)
-        if data.IsInitialized():
-            print 'recieved: '
-
-            print data
-        
-
-    conn.send(serialized)
-    conn.close()
-
+        else:
+            print msg
+            break

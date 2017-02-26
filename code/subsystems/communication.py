@@ -7,6 +7,7 @@ import socket
 from messages import robot_commands_pb2
 
 from utils import dataStorage as storage
+from utils import constants
 
 class CommunicationSystem(object):
     '''
@@ -24,9 +25,6 @@ class CommunicationSystem(object):
     subsystems with new and updated information for the messages.
     '''
 
-    PORT = 5555
-    BUFFER_SIZE = 1024
-
     def __init__(self):
         self.connections = [] # List of existing robot connections
         self.messages = []
@@ -37,12 +35,13 @@ class CommunicationSystem(object):
         For offboard controller.
         Attempt to establish TCP connection with robot at specified
         IP address.
+
         @param robot_id Integer ID to delineate individual robots
         @param robot_ip The IP address of the robot to connect to
         @return status Success status of connect attempt
         '''
         # Setup TCP socket
-        address = (robot_ip, CommunicationSystem.PORT)
+        address = (robot_ip, constants.PORT)
         conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         conn.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
@@ -108,7 +107,15 @@ class CommunicationSystem(object):
             self.messages.remove(self.messages[i])
 
 
-    def generateMessage(robot, locomotion, error):
+    def clearMessage(robot_id):
+        """
+        Clears the protobuf message for the corresponding robot id
+        @param robot_id The index/ID of the proto message to clear
+        """
+        self.messages[robot_id].Clear()
+
+
+    def generateMessage(robot_id, locomotion, error):
         """
         Builds the message for the specified robot consisting of locomotion,
         writing, and error data. Message is a proto3 message to be sent to
@@ -116,11 +123,11 @@ class CommunicationSystem(object):
         commands, which includes wheels and writing tool data, and error
         information.
 
-        @param robot Index to specify which robot the message is for
+        @param robot_id Index to specify which robot the message is for
         @param locomotion LocomotionData struct for wheels and writing tool
         @param error ErrorData struct
         """
-        self.messages[robot] = None
+        self.messages[robot_id].Clear()
         pass
 
 

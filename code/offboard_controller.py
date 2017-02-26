@@ -3,11 +3,7 @@ Main offboard controller.
 Runs fixed-rate loop that pulls data from subsystems
 '''
 import sys
-from subsystems.communication import CommunicationSystem
-from subsystems.localization import LocalizationSystem
-from subsystems.locomotion import LocomotionSystem
-from subsystems.planner import PlannerSystem
-from subsystems.ui import UISystem
+import subsystems
 
 class OffboardController(object):
     def __init__(self, robot_ip):
@@ -16,11 +12,11 @@ class OffboardController(object):
         '''
         self.robot_ip = robot_ip
 
-        self.sys_planner = PlannerSystem()
-        self.sys_localization = LocalizationSystem()
-        self.sys_locomotion = LocomotionSystem()
-        self.sys_comm = CommunicationSystem()
-        self.sys_ui = UISystem()
+        self.sys_planner = subsystems.PlannerSystem()
+        self.sys_localization = subsystems.LocalizationSystem()
+        self.sys_locomotion = subsystems.LocomotionSystem()
+        self.sys_comm = subsystems.CommunicationSystem()
+        self.sys_ui = subsystems.UISystem()
 
 
     def processInputData(self, data):
@@ -78,7 +74,7 @@ if __name__ == "__main__":
     from messages import robot_commands_pb2
     import socket
 
-    commsys = CommunicationSystem()
+    commsys = subsystems.CommunicationSystem()
     commsys.connectToRobot('localhost', 0)
     commsys.sendTCPMessages()
 
