@@ -68,6 +68,8 @@ class OffboardController(object):
             self.sys_ui.displayInfo(locomotion_msg, writing_msg, error_msg)
 
 
+    def _test(self):
+        pass
 
 if __name__ == "__main__":
     robotIPs = ['111.111.1.1', '222.222.2.2']
