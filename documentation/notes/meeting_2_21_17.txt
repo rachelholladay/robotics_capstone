@@ -1,0 +1,33 @@
+Notes (Tuesday 2/21 in class)
+
+GENERAL
+- grade posted this week for 1st assignment
+    - everyone gets A
+    - setup WBS/schedule not difficult
+    - semester goals: use of process, project itself
+        - schedule, risk management, etc.
+    - focus of grade hasn't happened yet
+        - expect more as semester goes on
+    - participation grade posted (first 1/3 of total)
+- report seems fine, progress is good
+    - good - redesigned writing implement
+    - TODO - ensure document/presentation readable
+        - specifically WBS screenshot fonts
+
+RISK MANAGEMENT
+- use risk matrix(?)
+- risks:
+    - decided to order only 1 robot's worth of parts
+    - build/test 1st robot first
+    - taking part inventory/testing electronics
+        - found motors didn't have encoders - ordered those
+- TODO start formal documentation
+    - make soon so we can use as a tool for our productivity
+- TODO more fully develop verification/validation plan
+    - incorporate test plan into verification vs. validation(?)
+    - this is an upcoming report
+
+TESTING
+- highbay room probably fine
+
+

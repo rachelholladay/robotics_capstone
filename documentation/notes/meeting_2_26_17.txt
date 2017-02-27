@@ -1,0 +1,57 @@
+QUESTIONS TO ASK
+what is project management in the context of this presentation
+    schedule updates? need to confirm/deny and are we missing anything
+
+STATE OF DEVELOPMENT
+    come up with dev updates, then each make slide or two
+    - Camera rig assembly - going to build out of 80/20 instead of wood
+        b/c easier assembly
+    - NOTE: Only talk about progress, not relative to schedule
+    - finished: SDP, communication, UI ahead of schedule, locomotion 
+        ahead of schedule, localization beginning this week
+    - finished: chassis done, writing implement in progress/finishing this week
+        - camera rig assembly simplified, only slightly delayed (<1week)
+        - mechanical slightly delayed b/c parts came in later than expected
+
+    - we named our robots!!!!! blue and bad
+
+    - TODO pick some SDP examples to show, talk about in-progress UI and
+        updated SDP algorithm
+
+PROJECT MANAGEMENT
+    - provide schedule update - talk about being ahead/behind in areas here
+         see state of dev for list of being ahead/behind
+    - Moved UI subsystem dev to end of spring break - time to work at end 
+        of break, so moved it to better spread out rest of work
+
+RISK MANAGEMENT - need table:
+    jan 26 slides, slide 20
+
+    Unexpected costs (things cost too much, run out of budget, blahblah)
+    Defective parts - motors we buy are bad and burn out early
+    Running off schedule - machine shop closed, parts backordered, etc.
+    Unavailable group member (sickness, travel, death, sickness during travel)
+    Software packages incompatible (RACHEL DEFINE THIS ONE)
+    Mechanical failure - chassis breaks, wheels break, etc.
+    Scheduling system fails to meet efficiency standards/requirements
+    High latency between offboard and onboard
+    Inability to power onboard system
+    Short circuits damaging electrical systems
+    Overhead camera not sufficient for localization
+        Overhead camera data too distorted
+    Writing tool (market) works poorly - doesn't draw well, out of ink quickly
+    Mecanums cause too much vibration for smooth writing
+    Unable to achieve desired 3D printing tolerance
+        parts not being right sized, not being strong enough
+    Friction between mecanums and surface not high enough (causes slippage)
+        high consequence, low likelihood
+    Inability to easily access or maintain specific parts
+        similar to MRSD Project example in jan 26 slides
+    Project lacks sufficient risk for chart (lol don't add this)
+    Motor PID control oscillates too much/inability to tune
+        risk reduction plan can include better tuning
+    Camera rig difficult to transport - limits demo capabilities
+        can also take longer as we would have to rebuild smaller
+
+
+

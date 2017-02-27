@@ -1,12 +1,16 @@
 '''
 Communication subsystem
 '''
+
+from utils import dataStorage as storage
+
 class CommunicationSystem(object):
     '''
     Contains communication subsystem
     '''
     def __init__(self):
         self.connections = [] # List of existing robot connections
+        self.messages = []
 
     def connectToRobot(self, robot_ip):
         '''
@@ -31,15 +35,9 @@ class CommunicationSystem(object):
 
         return messages
 
-    def sendTCPMessage(self, locomotion=None, writing=None, error=None):
+    def sendTCPMessage(self):
         '''
-        Construct 2 proto3 messages, one for each robot. Messages concatenate
-        commands from locomotion, writing, and error-reports from the offboard
-        system into one proto3 message to send to each robot.
-
-        @param locomotion Locomotion commands for each robot
-        @param writing Writing implement commands for each robot
-        @param error Error commands for each robot
+        Sends both proto3 messages to the respective robots via TCP connection
         @return status Success or failure status of sending messages
         '''
         status = False
@@ -53,3 +51,20 @@ class CommunicationSystem(object):
         for robot in self.connections:
             # TODO close TCP connection
             self.connections.remove(robot)
+
+
+    def generateMessage(robot, locomotion, error):
+        """
+        Builds the message for the specified robot consisting of locomotion,
+        writing, and error data. Message is a proto3 message to be sent to
+        the onboard robot controllers. These messages concatenate locomotion
+        commands, which includes wheels and writing tool data, and error
+        information.
+
+        @param robot Index to specify which robot the message is for
+        @param locomotion LocomotionData struct for wheels and writing tool
+        @param error ErrorData struct
+        """
+        self.messages[robot] = None
+        pass
+
