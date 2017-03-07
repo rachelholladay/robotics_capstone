@@ -51,3 +51,17 @@ Since we have enough left-over budget, we plan to use 80/20 aluminum frames, ins
 
 \subsection{Software Update}
 \label{sec:software_progress}
+
+\subsubsection{Communication}
+\subsubsection{Locomotion}
+\subsubsection{Localization}
+\subsubsection{Scheduling, Distribution and Planning (SDP)}
+
+In order to our SDP module, we first had to add a few basic UI elements. We laid out a file format for specifying the lines to be drawn and wrote the UI functionality to parse the data in.
+
+Given the data the next step is to distribute the work between the two robots, offline. We will later describe a first pass distribution algorithm along with the UI developed to visualize its results. We will conduct further testing to see if a more advanced algorithm is needed. Luckily, this can be done in parallel with other developments since we have fixed the input and output of the system, allowing us to swap in different distribution tactics. The output of the distributor is a set of vectors that specify the plan for each robot. These vectors will then be handed off to the locomotion module, described above, that will follow each of them in sequence. Therefore, this gives us two next steps: to integrate the planning with the locomotion and to develop a collision avoidance strategy. 
+
+To handle collisions, we will start off with a naive strategy. We define a robot's \textit{boundary} as a fixed radius circle around robot, where the radius exceeds that of the robot to provide cushion. As each robot moves, it will check if the other robot's boundary intersects with its own boundary. If this condition is true, one robot (Bad) will stop execution, allowing the other robot (Blue) to pass until the condition is false. While we believe this method will always prevent collisions, it may not be the most efficient. Therefore we will implement this and test accordingly to check performance. 
+
+For our distributor, we developed a very greedy method. 
+\rhnote{describe scheduling algo}
