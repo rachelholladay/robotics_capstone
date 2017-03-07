@@ -7,7 +7,47 @@
 
 \subsection{Electromechanical Updates}
 \label{sec:electromechanical_progress}
+As shown below in \figref{fig:em1}, we have built a physical robot prototype that incorporates chassis, painting mechanism, and locomotion system. Chassis is made of laser patterned acrylic. It is designed to be as compact as possible because smaller robots are less likely to collide with each other during drawing operations. This prototype proves that the chassis’ current cutout sizes have no clearance issue with moving components. 
 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.49\columnwidth]{CAD/full_system_1.jpeg}
+\includegraphics[width=0.49\columnwidth]{CAD/full_system_2.jpeg}
+\label{fig:em1}
+\caption{Prototype Overview, from left view (left) and right view (right)}
+\end{figure}
+
+Painting mechanism composes a 3D printed chalk holder and a micro gear motor which is shown in \figref{fig:em2}. The driving motor is mounted to the chassis via an off-the-shelf motor case. When designing the chalk holder, four internal ribs are added inside the holder to securely hold the chalk marker in place while allowing users to easily switch out the marker. A thin cap is added on the bottom of the chalk holder to prevent the chalk marker from sliding out while drawing. One flaw of this design is that the holder’s D-shaft cutout is a little undersized. Therefore, the chalk holder broke while pressing the motor shaft through. This problem will be addressed in the next iteration. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.49\columnwidth]{CAD/painting.jpeg}
+\includegraphics[width=0.49\columnwidth]{CAD/chalk_holder.jpeg}
+\label{fig:em2}
+\caption{Painting Mechanism (left), Chalk Holder CAD (right)}
+\end{figure}
+
+\figref{fig:em3} shows the locomotion system. Four Mecanum wheels are oriented in a “X” shape to minimize motor workload. These wheels are connected to driving motors through 3D printed wheel adaptors. These adaptors contain two segments: standard Lego technic axle and D-shaft housing. Like the chalk holder, the D-shaft cutout is a little undersized. Therefore, we had to press fit the motors in. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.32\columnwidth]{CAD/wheels_1.jpeg}
+\includegraphics[width=0.32\columnwidth]{CAD/wheels_2.jpeg}
+\includegraphics[width=0.32\columnwidth]{CAD/wheel_adapter_1.jpeg}
+\label{fig:em3}
+\caption{Locomotion System (left), Locomotion System Components (center), Wheel Adaptor CAD (right)}
+\end{figure}
+
+Besides mechanical update, motor controller code was also completed. However, we did not get enough time to wire all electronics to this prototype and test the code. This would be the next step of system development. 
+
+Since we have enough left-over budget, we plan to use 80/20 aluminum frames, instead of wood, to construct the camera jig. The jig will be built using components listed in \figref{fig:em4}. We are in the process of testing camera’s optimal height, and will then incorporate that information to the camera jig CAD design. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.98\columnwidth]{CAD/8020.jpeg}
+\label{fig:em4}
+\caption{80/20 Parts}
+\end{figure}
 
 \subsection{Software Update}
 \label{sec:software_progress}
