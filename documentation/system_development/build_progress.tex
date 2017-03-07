@@ -63,5 +63,29 @@ Given the data the next step is to distribute the work between the two robots, o
 
 To handle collisions, we will start off with a naive strategy. We define a robot's \textit{boundary} as a fixed radius circle around robot, where the radius exceeds that of the robot to provide cushion. As each robot moves, it will check if the other robot's boundary intersects with its own boundary. If this condition is true, one robot (Bad) will stop execution, allowing the other robot (Blue) to pass until the condition is false. While we believe this method will always prevent collisions, it may not be the most efficient. Therefore we will implement this and test accordingly to check performance. 
 
-For our distributor, we developed a very greedy method. 
-\rhnote{describe scheduling algo}
+For our distributor, we developed a very greedy method. We start Blue the robot at one corner of the drawing area and Bad the robot at the other corner. Our goal is greedily balance their cost, where cost corresponds to the length of the line drawn so far. We initialize both robots with cost zero. From there, we loop over the line count. We pick the robot with the lower cost, defaulting to one in the case of equality. Whichever robot has the lower cost, we pick the line with the closest starting point to the robot's current position. We then calculate the cost as the distance to drive to the line plus the distance to drive to draw out that line. Having updated the robot's position, we continue. 
+
+To illustrate the output of our planner we developed a visualization, shown below in \figref{fig:planner1}. The red path represents Bad the robot and the blue path represents Blue the robot. Solid lines corresponding to drawing lines and hence making a mark on the pavement while dotted lines correspond to purely transit. In \figref{fig:planner1}, Blue the robot starts from the top right corner and transits to draw one line and then return home. In contrast, Bad the robot draws two intersecting, nearby lines.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.49\columnwidth]{figs/figure_1.png}
+\label{fig:planner1}
+\caption{Planning Output}
+\end{figure}
+
+In some cases, such as in \figref{fig:planner2}, we see a nice breakdown of work as each robot is responsible for one box. The occurs because at the end of each step, the next closest line is directly adjacent, making the transit distance zero. In \figref{fig:planner3} we see that the greedy approach segments the lines less cleanly and raises the possibility of collision. We note that at every intersection of two robots there is a possibility of collision, but not necessarily if the robots traverse those areas at different times. Additionally the robots could collide outside of intersections since we are not dealing with point robots. As mentioned above, we will continue to explore collision avoidance. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.49\columnwidth]{figs/figure_7.png}
+\label{fig:planner2}
+\caption{Planning Output}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.49\columnwidth]{figs/figure_4.png}
+\label{fig:planner3}
+\caption{Planning Output}
+\end{figure}
