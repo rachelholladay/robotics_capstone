@@ -1,0 +1,29 @@
+Meeting with Cam 2.28.17
+Pre-meeting for milestone 2 presentation
+
+3D PRINTING ISSUES
+- can contact Cam for who to talk to w/ regard to 3D printing
+    - if printers don't work
+
+DEVELOPMENT PROGRESS
+same as expected
+
+PROJECT MANAGEMENT
+how we're coming along in schedule
+
+RISK MANAGEMENT
+consequence/likelihood/risk dictionary:
+- instead of overall consequence/likelihood, use risk plan worksheet template
+- instead of colored grid of likelihood/consequence for all risk,
+- have likelihood/consequence grid for EACH risk showing where it falls
+
+- <10 risks, talk about each one individually
+    - not spending too long on each one
+- we have ~12, talk about most (leave out low quality ones or merge them)
+
+content of project description should be consistent
+    Make sure to add detail on top of WBS
+        Update WBS accordingly to match new/updated risks
+
+risk here focus on build/development/schedule delay-related risks
+
