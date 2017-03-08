@@ -14,8 +14,8 @@ As shown below in \figref{fig:em1}, we have built a physical robot prototype tha
 \centering
 \includegraphics[width=0.49\columnwidth]{CAD/full_system_1.jpeg}
 \includegraphics[width=0.49\columnwidth]{CAD/full_system_2.jpeg}
-\label{fig:em1}
 \caption{Prototype Overview, from left view (left) and right view (right)}
+\label{fig:em1}
 \end{figure}
 The painting mechanism is composed of a 3D printed chalk holder and a micro gear motor which is shown in \figref{fig:em2}. The driving motor is mounted to the chassis via an off-the-shelf motor case. When designing the chalk holder, four internal ribs were added inside the holder to securely hold the chalk marker in place. This also allows users to easily switch out the marker. A thin cap is added on the bottom of the chalk holder to prevent the chalk marker from sliding out while drawing. One flaw of this design is that the holder’s D-shaft cutout is slightly undersized. As a result, the chalk holder broke while pressing the motor shaft through the holder. This problem will be addressed in the next iteration. 
 
@@ -23,8 +23,8 @@ The painting mechanism is composed of a 3D printed chalk holder and a micro gear
 \centering
 \includegraphics[width=0.49\columnwidth]{CAD/painting.jpeg}
 \includegraphics[width=0.49\columnwidth]{CAD/chalk_holder.jpeg}
-\label{fig:em2}
 \caption{Painting Mechanism (left), Chalk Holder CAD (right)}
+\label{fig:em2}
 \end{figure}
 \figref{fig:em3} shows the locomotion system. Four Mecanum wheels are oriented in a “X” shape to minimize motor workload. These wheels are connected to driving motors through 3D printed wheel adaptors. These adaptors contain two segments: a standard Lego technic axle and D-shaft housing. Like the chalk holder, the D-shaft cutout is a little undersized. Therefore, we had to press fit the motors in. 
 
@@ -34,8 +34,8 @@ The painting mechanism is composed of a 3D printed chalk holder and a micro gear
 \includegraphics[width=0.32\columnwidth]{CAD/wheels_1.jpeg}
 \includegraphics[width=0.32\columnwidth]{CAD/wheels_2.jpeg}
 \includegraphics[width=0.32\columnwidth]{CAD/wheel_adapter_1.jpeg}
-\label{fig:em3}
 \caption{Locomotion System (left), Locomotion System Components (center), Wheel Adaptor CAD (right)}
+\label{fig:em3}
 \end{figure}
 
 Besides mechanical update, motor controller code was also completed. However, we did not get enough time to wire all electronics to this prototype and test the code. This would be the next step of system development.
@@ -45,17 +45,18 @@ Since we have enough left-over budget, we plan to use 80/20 aluminum frames, ins
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.98\columnwidth]{CAD/8020.jpeg}
-\label{fig:em4}
 \caption{80/20 Parts}
+\label{fig:em4}
 \end{figure}
 
 \subsection{Software Update}
 \label{sec:software_progress}
+We detail the software progress made across the following subsystems. Many subsystems are near full development, allowing us to begin integration. 
 
 \subsubsection{Communication}
 The goal of the communication subsystem is to abstract out networking operations such that other subsystems can maintain modularity. Currently, this subsystem is mostly complete. The system is able to easily establish, maintain, and close TCP connections between the separate robots, given their IP addresses. It also contains code to generate a singular protobuf data containing all data necessary to send robots, and pass it through the TCP connection. Onboard communication code is able to continually receive these TCP protobuf messages, and parse them accordingly.
 
-In order to further isolate communication code from the actual subsystems, other subsystems fill in a data struct containing relevant information to send to the robots. For example, the localization subsytem will enter information into a localization data struct, which is passed to the communication subsystem at runtime. The communication subsystem will then parse relevant localization data into the protbuf message to send across the network. These data structs have the additional use of allowing for convenient transfer of data between other subsystems as well.
+In order to further isolate communication code from the actual subsystems, other subsystems fill in a data struct containing relevant information to send to the robots. For example, the localization subsystem will enter information into a localization data struct, which is passed to the communication subsystem at runtime. The communication subsystem will then parse relevant localization data into the protbuf message to send across the network. These data structs have the additional use of allowing for convenient transfer of data between other subsystems as well.
 
 \subsubsection{Locomotion}
 The locomotion subsystem has had some major changes. Previously, we planned to run locomotion offboard, where it would generate motor powers to send to the robot system. However, analysis showed that offboard motor processing incurs a higher latency than an accurate control could easily use. Decreased latency allows the motor PID controller to provide more accurate stabilization, to better enable the robot to follow a path. As a result, the locomotion subsystem is being moved to an onboard robot system. The offboard system will send the robot's current position and orientation, as well as a target position and orientation. The robot will compute the locomotion commands necessary to reach the target, and run the position and velocity controller accordingly. The positional localization and target data is able to be sent via protobuf message to the onboard system. The encoder and localization motor control is written, and will be tested with sample data once chassis construction is completed.
@@ -73,27 +74,29 @@ To handle collisions, we will start off with a naive strategy. We define a robot
 
 For our distributor, we developed a very greedy method. We start Blue the robot at one corner of the drawing area and Bad the robot at the other corner. Our goal is greedily balance their cost, where cost corresponds to the length of the line drawn so far. We initialize both robots with cost zero. From there, we loop over the line count. We pick the robot with the lower cost, defaulting to one in the case of equality. Whichever robot has the lower cost, we pick the line with the closest starting point to the robot's current position. We then calculate the cost as the distance to drive to the line plus the distance to drive to draw out that line. Having updated the robot's position, we continue. 
 
-To illustrate the output of our planner we developed a visualization, shown below in \figref{fig:planner1}. The red path represents Bad the robot and the blue path represents Blue the robot. Solid lines corresponding to drawing lines and hence making a mark on the pavement while dotted lines correspond to purely transit. In \figref{fig:planner1}, Blue the robot starts from the top right corner and transits to draw one line and then return home. In contrast, Bad the robot draws two intersecting, nearby lines.
+To illustrate the output of our planner we developed a visualization, shown below in \figref{fig:planner_good}. The red path represents Bad the robot and the blue path represents Blue the robot. Solid lines corresponding to drawing lines and hence making a mark on the pavement while dotted lines correspond to purely transit. In \figref{fig:planner_good}, Blue the robot starts from the top right corner and transits to draw one line and then return home. In contrast, Bad the robot draws two intersecting, nearby lines.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.49\columnwidth]{figs/figure_1.png}
-\label{fig:planner1}
 \caption{Planning Output}
+\label{fig:planner_good}
 \end{figure}
 
 In some cases, such as in \figref{fig:planner2}, we see a nice breakdown of work as each robot is responsible for one box. The occurs because at the end of each step, the next closest line is directly adjacent, making the transit distance zero. In \figref{fig:planner3} we see that the greedy approach segments the lines less cleanly and raises the possibility of collision. We note that at every intersection of two robots there is a possibility of collision, but not necessarily if the robots traverse those areas at different times. Additionally the robots could collide outside of intersections since we are not dealing with point robots. As mentioned above, we will continue to explore collision avoidance. 
 
 \begin{figure}[h!]
 \centering
-\includegraphics[width=0.49\columnwidth]{figs/figure_7.png}
-\label{fig:planner2}
-\caption{Planning Output}
-\end{figure}
-
-\begin{figure}[h!]
-\centering
-\includegraphics[width=0.49\columnwidth]{figs/figure_4.png}
-\label{fig:planner3}
-\caption{Planning Output}
+\begin{subfigure}[b]{0.48\textwidth}
+    \includegraphics[width=\textwidth]{figs/figure_7.png}
+    \caption{Good Distribution}
+    \label{fig:planner2}
+\end{subfigure}
+\begin{subfigure}[b]{0.48\textwidth}
+    \includegraphics[width=\textwidth]{figs/figure_4.png}
+    \caption{Plan with Possible Collisions}
+    \label{fig:planner3}
+\end{subfigure}        
+\caption{Example Planner Output on Test Cases}
+\label{fig:more_output}
 \end{figure}
