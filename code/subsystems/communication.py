@@ -1,17 +1,18 @@
 '''
 Communication subsystem
-'''
-from enum import Enum
 
-class MessageType(Enum):
-    LOCOMOTION = 1
-    WRITING = 2
-    ERROR = 3
-    DEBUG = 4
+'''
+import socket
+
+from messages import robot_commands_pb2
+
+from utils import dataStorage as storage
+from utils import constants
 
 class CommunicationSystem(object):
     '''
-    Contains communication subsystem.
+    Contains communication subsystem. Allows for TCP communication using
+    protbuf to and from the offboard and onboard systems.
 
     Message design: This class keeps track of the most recently unsent protobuf
     message, filling it with data as various other subsystems send updates. On
@@ -26,20 +27,43 @@ class CommunicationSystem(object):
 
     def __init__(self):
         self.connections = [] # List of existing robot connections
+        self.messages = []
 
-    def connectToRobot(self, robot_ip):
+
+    def connectToRobot(self, robot_ip, robot_id):
         '''
-        Establish TCP connection with robot, return connection and success status
+        For offboard controller.
+        Attempt to establish TCP connection with robot at specified
+        IP address.
+
+        @param robot_id Integer ID to delineate individual robots
         @param robot_ip The IP address of the robot to connect to
-        @return status,connection Success status of connect attempt and connection itself
+        @return status Success status of connect attempt
         '''
-        # TODO socket stuff to connect to raspberry pi IP
-        robot = None # need to actually establish connection
-        self.connections.append(robot)
-        pass
+        # Setup TCP socket
+        address = (robot_ip, constants.PORT)
+        conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        conn.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+        # Attempt to connect
+        try:
+            conn.connect(address)
+        except socket.error:
+            print "Unable to connect Robot ID: ",robot_id," at IP ",robot_ip
+            return False
+
+        msg = robot_commands_pb2.robot_command()
+        msg.robot_id = robot_id
+
+        self.connections.append(conn)
+        self.messages.append(msg)
+        
+        return True
+
 
     def getTCPMessages(self):
         '''
+        For offboard controller.
         Request message from each robot from the list of established connections
         @return messages List of proto3 message objects from each robot
         '''
@@ -50,35 +74,60 @@ class CommunicationSystem(object):
 
         return messages
 
-    def sendTCPMessage(self, locomotion=None, writing=None, error=None):
-        '''
-        Construct 2 proto3 messages, one for each robot. Messages concatenate
-        commands from locomotion, writing, and error-reports from the offboard
-        system into one proto3 message to send to each robot.
 
-        @param locomotion Locomotion commands for each robot
-        @param writing Writing implement commands for each robot
-        @param error Error commands for each robot
-        @return status Success or failure status of sending messages
+    def sendTCPMessages(self):
         '''
-        status = False
-        return False
+        For offboard controller.
+        Sends both protobuf messages to the respective robots via TCP connection
+        @return status Int status of sending messages to individual robots. 
+            0: Successful transmission between all robots
+            n: Number of robots for which message failed to send
+        '''
+        status = 0
+        for i in range(len(self.connections)):
+            conn = self.connections[i]
+            try:
+                conn.send(self.messages[i].SerializeToString())
+            except socket.error:
+                status += 1
+        return status
+
 
     def closeTCPConnections(self):
         '''
         Closes any existing TCP messages
         @return status Success or failure of ending communications
         '''
-        for robot in self.connections:
+        for i in range(len(self.connections)):
             # TODO close TCP connection
-            self.connections.remove(robot)
+            robot_connection = self.connections[i]
+            robot_connection.close()
 
-    def generateCommand(self, type, data):
-        '''
-        Given data generated from a subsystem and subsystem type, generates
-        the appropriate protobuf message
-        @return subsystem_messages List of protobuf messages 
-        '''
-        subsystem_messages = None
-        return subsystem_messages
+            self.connections.remove(robot_connection)
+            self.messages.remove(self.messages[i])
+
+
+    def clearMessage(robot_id):
+        """
+        Clears the protobuf message for the corresponding robot id
+        @param robot_id The index/ID of the proto message to clear
+        """
+        self.messages[robot_id].Clear()
+
+
+    def generateMessage(robot_id, locomotion, error):
+        """
+        Builds the message for the specified robot consisting of locomotion,
+        writing, and error data. Message is a proto3 message to be sent to
+        the onboard robot controllers. These messages concatenate locomotion
+        commands, which includes wheels and writing tool data, and error
+        information.
+
+        @param robot_id Index to specify which robot the message is for
+        @param locomotion LocomotionData struct for wheels and writing tool
+        @param error ErrorData struct
+        """
+        self.messages[robot_id].Clear()
+        pass
+
 

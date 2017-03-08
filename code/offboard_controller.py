@@ -3,11 +3,7 @@ Main offboard controller.
 Runs fixed-rate loop that pulls data from subsystems
 '''
 import sys
-from subsystems.communication import CommunicationSystem
-from subsystems.localization import LocalizationSystem
-from subsystem.locomotion import LocomotionSystem
-from subsystem.planner import PlannerSystem
-from subsystem.ui import UISystem
+import subsystems
 
 class OffboardController(object):
     def __init__(self, robot_ip):
@@ -16,13 +12,12 @@ class OffboardController(object):
         '''
         self.robot_ip = robot_ip
 
+        self.sys_planner = subsystems.PlannerSystem()
+        self.sys_localization = subsystems.LocalizationSystem()
+        self.sys_locomotion = subsystems.LocomotionSystem()
+        self.sys_comm = subsystems.CommunicationSystem()
+        self.sys_ui = subsystems.UISystem()
 
-        self.sys_planner = PlannerSystem()
-        self.sys_localization = LocalizationSystem()
-        self.sys_locomotion = LocomotionSystem()
-        self.sys_comm = CommunicationSystem()
-        self.sys_ui = UISystem()
-        
 
     def processInputData(self, data):
         '''
@@ -30,17 +25,17 @@ class OffboardController(object):
         '''
         paths = self.sys_planner.planTrajectories(data)
 
-    def robotSetup(self, num_robots=2):
+    def robotSetup(self):
         '''
         Sets up communication links with robot agents.
         Setup step for drawing loop
         '''
-        for i in xrange(0, num_robots):
-            success = self.sys_comm.connectToRobot(self.robot_ip(i))
+        for i in xrange(0, len(self.robot_ip)):
+            success = self.sys_comm.connectToRobot(i, self.robot_ip[i])
             if not success:
                 print 'FAILED TO CONNECT TO ROBOT'
                 sys.exit(1)
-        
+
 
         # TODO connect to camera, ensure valid connection
 
@@ -69,8 +64,44 @@ class OffboardController(object):
             self.sys_ui.displayInfo(locomotion_msg, writing_msg, error_msg)
 
 
+    def _test(self):
+        pass
+
 
 if __name__ == "__main__":
     robotIPs = ['111.111.1.1', '222.222.2.2']
 
-    controller = OffboardController(robotIPs)
+    from messages import robot_commands_pb2
+    import socket
+
+    commsys = subsystems.CommunicationSystem()
+    commsys.connectToRobot('localhost', 0)
+    commsys.sendTCPMessages()
+
+
+
+    # serialized = cmd.SerializeToString()
+
+    # commsys = CommunicationSystem()
+    # address=('localhost', 5555)
+    # buf_size = 1024
+    # s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+    # s.connect(address)
+    # s.send(serialized)
+    # while 1:
+    # 	serialized = s.recv(buf_size)
+    # 	data = cmd.ParseFromString(serialized)
+    # 	if data is None:
+    #         continue
+    #     print 'received echo: '
+    #     print data
+
+    # s.close()
+
+
+
+    # controller = OffboardController(robot_ip=robotIPs)
+    # controller.robotSetup()
+    # controller.loop()
