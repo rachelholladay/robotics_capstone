@@ -1,4 +1,6 @@
 # Ignore latex stuff
+*.swp
+*.sublime-*
 *.aux
 *.log
 *.out
