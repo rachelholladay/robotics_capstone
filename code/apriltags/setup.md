@@ -1,3 +1,8 @@
+To run files inside src/
+ex. test.cpp
+make test
+./test
+
 setup for https://april.eecs.umich.edu/software/apriltag.html
 
 Installed packages based on niftk apriltags library
