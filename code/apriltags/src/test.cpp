@@ -34,17 +34,21 @@ either expressed or implied, of the Regents of The University of Michigan.
 
 #include "opencv2/opencv.hpp"
 
+// #include "../apriltags/apriltag.h"
+// #include "../apriltags/tag36h11.h"
+// #include "../apriltags/tag36h10.h"
+// #include "../apriltags/tag36artoolkit.h"
+// #include "../apriltags/tag25h9.h"
+// #include "../apriltags/tag25h7.h"
+// #include "../apriltags/common/getopt.h"
 
-
-
-
-#include "../apriltags/apriltag.h"
-#include "../apriltags/tag36h11.h"
-#include "../apriltags/tag36h10.h"
-#include "../apriltags/tag36artoolkit.h"
-#include "../apriltags/tag25h9.h"
-#include "../apriltags/tag25h7.h"
-#include "../apriltags/common/getopt.h"
+#include "apriltag.h"
+#include "tag36h11.h"
+#include "tag36h10.h"
+#include "tag36artoolkit.h"
+#include "tag25h9.h"
+#include "tag25h7.h"
+#include "common/getopt.h"
 
 using namespace std;
 using namespace cv;
