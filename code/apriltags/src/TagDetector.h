@@ -22,14 +22,24 @@ class TagData
      */
 public:
 
-    TagData(double p[4][2], double c[2], matd_t* H);
+    TagData() {};
+
+    TagData(std::vector<std::vector<double>> p, 
+        std::vector<double> c, cv::Mat H)
+    {
+        tag_corners = p;
+        center = c;
+        homography = H;
+    };
 
     // The corners of the tag in image pixel coordinates. These always
     // wrap counter-clock wise around the tag.
-    double tag_corners[4][2];
+    // Always 4x2
+    std::vector<std::vector<double>> tag_corners;
 
     // The center of the detection in image pixel coordinates.
-    double center[2];
+    // Always 2x1
+    std::vector<double> center;
 
     // The 3x3 homography matrix describing the projection from an
     // "ideal" tag (with corners at (-1,-1), (1,-1), (1,1), and (-1,
@@ -40,19 +50,24 @@ public:
 class TagDetector
 {
 public:
-
     // Default Constructor
     TagDetector();
 
     // Detects tags and updates mapping of TagData
-    void detect_apriltags();
+    void detect_apriltags(cv::Mat frame);
 
     void test()
     {
-        std::cout << "test TagDetector" << std::endl;
+        std::cout << "hello from TagDetector" << std::endl;
     };
 
+    void close();
+
 private:
+
+    // Takes the detection output and fills TagData with it
+    void convert_detections(zarray_t* detections);
+
     // Stores mapping of AprilTag ID to relevant tag data.
     std::map<int, TagData> tags;
 

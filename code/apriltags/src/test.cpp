@@ -48,11 +48,45 @@ either expressed or implied, of the Regents of The University of Michigan.
 using namespace std;
 using namespace cv;
 
+// Given example function
+int example(int argc, char *argv[]);
+// Runs full pipeline using TagDetector
+int detection_loop();
+
+
 int main(int argc, char *argv[])
 {    
-    TagDetector temp;
-    temp.test();
+    detection_loop();
+    // Given test example
+    // example(argc, char *argv[]);
+}
 
+int detection_loop()
+{
+    TagDetector detector;
+    detector.test();
+
+
+    // Initialize camera
+    VideoCapture cap(0);
+    if (!cap.isOpened()) {
+        cerr << "Couldn't open video capture device" << endl;
+        return -1;
+    }
+
+    cv::Mat frame;
+    while(true)
+    {
+        cap >> frame;
+        detector.detect_apriltags(frame);
+
+    }
+
+}
+
+
+int example(int argc, char *argv[])
+{
     getopt_t *getopt = getopt_create();
 
     getopt_add_bool(getopt, 'h', "help", 0, "Show this help");
