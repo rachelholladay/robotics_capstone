@@ -82,6 +82,7 @@ int detection_loop()
 
     }
 
+    detector.close();
 }
 
 

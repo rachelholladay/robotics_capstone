@@ -7,6 +7,7 @@
 #define TAGDETECTOR_H
 
 #include <iostream>
+#include <boost/python.hpp>
 
 #include "opencv2/opencv.hpp"
 
@@ -53,7 +54,7 @@ public:
     // Default Constructor
     TagDetector();
 
-    // Detects tags and updates mapping of TagData
+    // Detects tags and updates TagData map
     void detect_apriltags(cv::Mat frame);
 
     void test()
@@ -66,7 +67,7 @@ public:
 private:
 
     // Takes the detection output and fills TagData with it
-    void convert_detections(zarray_t* detections);
+    void _convert_detections(zarray_t* detections);
 
     // Stores mapping of AprilTag ID to relevant tag data.
     std::map<int, TagData> tags;
@@ -88,5 +89,19 @@ private:
     bool _refine_pose = false;
 
 };
+
+
+int test_fn()
+{
+    return 5;
+}
+
+// Boost Python test function
+BOOST_PYTHON_MODULE(TagDetector)
+{
+    using namespace boost::python;
+    def("test_fn", test_fn);
+}
+
 
 #endif

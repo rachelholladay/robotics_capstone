@@ -60,13 +60,13 @@ void TagDetector::detect_apriltags(cv::Mat frame)
 
     // Fill in TagData structure by mapping AprilTag IDs to
     // completed TagData objects
-    convert_detections(detections);
+    _convert_detections(detections);
 
     zarray_destroy(detections);
 
 }
 
-void TagDetector::convert_detections(zarray_t *detections)
+void TagDetector::_convert_detections(zarray_t *detections)
 {    
     int size = zarray_size(detections);
     tags.clear();
@@ -99,14 +99,14 @@ void TagDetector::convert_detections(zarray_t *detections)
 void TagDetector::close()
 {
     apriltag_detector_destroy(td);
-    if (!strcmp(famname, "tag36h11"))
+    if (_family == "tag36h11")
         tag36h11_destroy(tf);
-    else if (!strcmp(famname, "tag36h10"))
+    else if (_family == "tag36h10")
         tag36h10_destroy(tf);
-    else if (!strcmp(famname, "tag36artoolkit"))
+    else if (_family == "tag36artoolkit")
         tag36artoolkit_destroy(tf);
-    else if (!strcmp(famname, "tag25h9"))
+    else if (_family == "tag25h9")
         tag25h9_destroy(tf);
-    else if (!strcmp(famname, "tag25h7"))
-        tag25h7_destroy(tf);   
+    else if (_family ==  "tag25h7")
+        tag25h7_destroy(tf);  
 }
