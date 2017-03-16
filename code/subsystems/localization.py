@@ -1,8 +1,11 @@
 '''
 Localization subsystem
 '''
+from __future__ import print_function
+
 from utils.dataStorage import LocalizationData
 from utils.geometry import DirectedPoint # TODO fix imports
+import apriltags.src.boost_apriltags as apriltags
 
 class LocalizationSystem(object):
     '''
@@ -27,3 +30,9 @@ class LocalizationSystem(object):
         # TODO update LocalizationData struct
         return self.localization
 
+    def test(self):
+        """
+        Test function for apriltags library
+        """
+        detector = apriltags.TagDetector()
+        detector.test()

@@ -71,13 +71,15 @@ class OffboardController(object):
 if __name__ == "__main__":
     robotIPs = ['111.111.1.1', '222.222.2.2']
 
-    from messages import robot_commands_pb2
-    import socket
+    # from messages import robot_commands_pb2
+    # import socket
 
-    commsys = subsystems.CommunicationSystem()
-    commsys.connectToRobot('localhost', 0)
-    commsys.sendTCPMessages()
+    # commsys = subsystems.CommunicationSystem()
+    # commsys.connectToRobot('localhost', 0)
+    # commsys.sendTCPMessages()
 
+    loc = subsystems.LocalizationSystem()
+    loc.test()
 
 
     # serialized = cmd.SerializeToString()
