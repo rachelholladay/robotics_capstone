@@ -24,29 +24,43 @@ class TagData
 public:
 
     TagData() {};
+    TagData(int new_id) { id = new_id; };
 
-    TagData(std::vector<std::vector<double>> p, 
-        std::vector<double> c, cv::Mat H)
+    TagData(apriltag_detection_t* det)
     {
-        tag_corners = p;
-        center = c;
-        homography = H;
+        id = det->id;
+
+        cy = det->c[0];
+        cx = det->c[1];
+
+        h00 = det->H->data[0];
+        h01 = det->H->data[1];
+        h02 = det->H->data[2];
+        h10 = det->H->data[3];
+        h11 = det->H->data[4];
+        h12 = det->H->data[5];
+        h20 = det->H->data[6];
+        h21 = det->H->data[7];
+        h22 = det->H->data[8];
     };
+
+    // Tag ID
+    int id; 
+    // The center of the detection in image pixel coordinates.
+    double cy,cx;
+    // The 3x3 homography matrix describing the projection from an
+    // "ideal" tag (with corners at (-1,-1), (1,-1), (1,1), and (-1,
+    // 1)) to pixels in the imag  e  
+    double h00,h01,h02,h10,h11,h12,h20,h21,h22;
 
     // The corners of the tag in image pixel coordinates. These always
     // wrap counter-clock wise around the tag.
     // Always 4x2
-    std::vector<std::vector<double>> tag_corners;
+    // std::vector<std::vector<double>> tag_corners;
+    // std::vector<std::vector<double>> get_corners() { return tag_corners; };
 
-    // The center of the detection in image pixel coordinates.
-    // Always 2x1
-    std::vector<double> center;
-
-    // The 3x3 homography matrix describing the projection from an
-    // "ideal" tag (with corners at (-1,-1), (1,-1), (1,1), and (-1,
-    // 1)) to pixels in the imag    
-    cv::Mat homography;
 };
+
 
 class TagDetector
 {
@@ -56,18 +70,20 @@ public:
 
     // Setup camera
     void setup();
-
     // Detects tags and updates TagData map
     void detect_apriltags();
-
+    // Returns the number of tags detected
     int num_detected() { return tags.size(); };
-
+    // Closes and destroys detector objects
     void close();
-
-    void test() { std::cout << "TagDetector test" << std::endl; };
-
+   
     // Stores mapping of AprilTag ID to relevant tag data.
     std::map<int, TagData> tags;
+    // Retrieves nth TagData object from map, irrespective of id
+    TagData getTag(int n);
+
+ // Class function test
+    void test() { std::cout << "TagDetector test" << std::endl; };
 
 private:
 
@@ -94,50 +110,5 @@ private:
     bool _refine_pose = false;
 
 };
-
-
-// int test_fn()
-// {
-//     TagDetector d;
-//     d.test();
-//     d.setup();
-//     while(true)
-//     {
-//         d.detect_apriltags();
-//         if(d.num_detected() > 0)
-//         {
-//             std::cout << d.num_detected() << std::endl;
-//             break;
-//         }
-
-//     }
-//     return 0;
-// }
-
-// // Boost Python test function
-// BOOST_PYTHON_MODULE(apriltags)
-// {
-//     using namespace boost::python;
-//     def("test_fn", test_fn);
-
-//     // TODO add setup to establish camera, make camera
-//     // internal variable
-//     // require no frame in python, only scan when called
-//     // TODO need a way to pull TagData struct
-//     class_<TagDetector>("TagDetector",
-//         init<>())
-//         .def("setup", &TagDetector::setup)
-//         .def("detect_apriltags", &TagDetector::detect_apriltags)
-//         .def("num_detected", &TagDetector::num_detected)
-//         .def("close", &TagDetector::close)
-//         .def("test", &TagDetector::test);
-
-//     //  // Expose the class Animal.
-//     // class_<Animal>("Animal",
-//     //     init<std::string const &>())
-//     //     .def("get_address", &Animal::get_address)
-//     //     .add_property("name", &Animal::get_name, &Animal::set_name)
-// }
-
 
 #endif

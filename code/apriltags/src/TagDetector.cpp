@@ -51,7 +51,7 @@ void TagDetector::setup()
     if(!cap.isOpened())
     {
         std::cerr << 
-            "TagDetector::setup Could not open video device" 
+            "TagDetector::setup: Could not open video device" 
             << std::endl;
     }
 }
@@ -89,24 +89,40 @@ void TagDetector::_convert_detections(zarray_t *detections)
     {
         apriltag_detection_t *det;
         zarray_get(detections, i, &det);
-        std::vector<std::vector<double>> tag_corners
-            { { det->p[0][0], det->p[0][1]},
-              { det->p[1][0], det->p[1][1]},
-              { det->p[2][0], det->p[2][1]},
-              { det->p[3][0], det->p[3][1]} };
+        // std::vector<std::vector<double>> tag_corners
+        //     { { det->p[0][0], det->p[0][1]},
+        //       { det->p[1][0], det->p[1][1]},
+        //       { det->p[2][0], det->p[2][1]},
+        //       { det->p[3][0], det->p[3][1]} };
 
-        std::vector<double> center
-            { det->c[0], det->c[1] };
+        // std::vector<double> center
+        //     { det->c[0], det->c[1] };
 
-        cv::Mat H = (Mat_<double>(3,3) <<
-            det->H->data[0], det->H->data[1], det->H->data[2],
-            det->H->data[3], det->H->data[4], det->H->data[5],
-            det->H->data[6], det->H->data[7], det->H->data[8]);
+        // cv::Mat H = (Mat_<double>(3,3) <<
+        //     det->H->data[0], det->H->data[1], det->H->data[2],
+        //     det->H->data[3], det->H->data[4], det->H->data[5],
+        //     det->H->data[6], det->H->data[7], det->H->data[8]);
 
-        tags[det->id] = TagData(tag_corners, center, H);
+        tags[det->id] = TagData(det);
     }
-
 }
+
+
+TagData TagDetector::getTag(int n)
+{
+    // Get nth TagData object, else return invalid tag
+    int x = 0;
+    for(std::map<int, TagData>::iterator i = tags.begin(); 
+        i != tags.end(); 
+        i++)
+    {
+        if(x == n)
+            return i->second;
+        x++;
+    }
+    return TagData(-1);    
+}
+
 
 void TagDetector::close()
 {
