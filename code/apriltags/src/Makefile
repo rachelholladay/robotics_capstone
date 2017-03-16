@@ -1,4 +1,3 @@
-CC = gcc
 CXX = g++
 
 # Add apriltags core library to path, requires -I
@@ -21,19 +20,22 @@ BOOST_INC = /usr/include
 BOOST_LIB = /usr/lib
 BOOSTFLAGS = -shared -Wl,--export-dynamic -L$(BOOST_LIB) -lboost_python
 
-TARGETS := test TagDetector
+TARGETS := test boost_apriltags
 
 .PHONY: all
-all: test TagDetector
+all: test boost_apriltags
 
-TagDetector.so: TagDetector.o $(APRILTAG_LIB)
-	@echo "   [$@]"
-	@$(CXX) -o $@ $^ $(LDFLAGS) $(OPENCV_LIB) $(BOOSTFLAGS) $(PYTHONFLAGS)
+# TagDetector.so: TagDetector.o $(APRILTAG_LIB)
+# 	@echo "   [$@]"
+# 	@$(CXX) -o $@ $^ $(LDFLAGS) $(OPENCV_LIB) $(BOOSTFLAGS) $(PYTHONFLAGS)
 
 test: test.o $(APRILTAG_LIB) TagDetector.o
 	@echo "   [$@]"
 	@$(CXX) -o $@ $^ $(LDFLAGS) $(OPENCV_LIB) $(BOOSTFLAGS) $(PYTHONFLAGS)
 
+boost_apriltags.so: boost_apriltags.o TagDetector.o $(APRILTAG_LIB)
+	@echo "   [$@]"
+	@$(CXX) -o $@ $^ $(LDFLAGS) $(OPENCV_LIB) $(BOOSTFLAGS) $(PYTHONFLAGS) 
 
 # %.o: %.c
 # 	@echo "   $@"

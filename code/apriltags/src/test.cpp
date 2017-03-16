@@ -51,36 +51,40 @@ using namespace cv;
 // Given example function
 int example(int argc, char *argv[]);
 // Runs full pipeline using TagDetector
-int detection_loop();
+void detection_loop();
 
 
 int main(int argc, char *argv[])
-{    
+{   
+    std::cout << "main" << endl;
     detection_loop();
     // Given test example
     // example(argc, char *argv[]);
 }
 
-int detection_loop()
+void detection_loop()
 {
+    std::cout << "asdf" << endl;
     TagDetector detector;
     detector.test();
-
-
-    // Initialize camera
-    VideoCapture cap(0);
-    if (!cap.isOpened()) {
-        cerr << "Couldn't open video capture device" << endl;
-        return -1;
-    }
-
-    cv::Mat frame;
+    detector.setup();
     while(true)
-    {
-        cap >> frame;
-        detector.detect_apriltags(frame);
+        detector.detect_apriltags();
 
-    }
+    // // Initialize camera
+    // VideoCapture cap(0);
+    // if (!cap.isOpened()) {
+    //     cerr << "Couldn't open video capture device" << endl;
+    //     return -1;
+    // }
+
+    // cv::Mat frame;
+    // while(true)
+    // {
+    //     cap >> frame;
+    //     detector.detect_apriltags(frame);
+
+    // }
 
     detector.close();
 }

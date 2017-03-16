@@ -45,10 +45,22 @@ TagDetector::TagDetector()
 
 }
 
-void TagDetector::detect_apriltags(cv::Mat frame)
+void TagDetector::setup()
+{
+    cap = cv::VideoCapture(0);
+    if(!cap.isOpened())
+    {
+        std::cerr << 
+            "TagDetector::setup Could not open video device" 
+            << std::endl;
+    }
+}
+
+void TagDetector::detect_apriltags()
 {    
     // Convert raw frame to image_u8_t header for detection
-    cv::Mat gray;
+    cv::Mat gray, frame;
+    cap >> frame;
     cv::cvtColor(frame, gray, COLOR_BGR2GRAY);
     image_u8_t im = { .width = gray.cols,
         .height = gray.rows,

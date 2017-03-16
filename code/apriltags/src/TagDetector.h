@@ -7,7 +7,7 @@
 #define TAGDETECTOR_H
 
 #include <iostream>
-#include <boost/python.hpp>
+// #include <boost/python.hpp>
 
 #include "opencv2/opencv.hpp"
 
@@ -54,23 +54,28 @@ public:
     // Default Constructor
     TagDetector();
 
-    // Detects tags and updates TagData map
-    void detect_apriltags(cv::Mat frame);
+    // Setup camera
+    void setup();
 
-    void test()
-    {
-        std::cout << "hello from TagDetector" << std::endl;
-    };
+    // Detects tags and updates TagData map
+    void detect_apriltags();
+
+    int num_detected() { return tags.size(); };
 
     void close();
+
+    void test() { std::cout << "TagDetector test" << std::endl; };
+
+    // Stores mapping of AprilTag ID to relevant tag data.
+    std::map<int, TagData> tags;
 
 private:
 
     // Takes the detection output and fills TagData with it
     void _convert_detections(zarray_t* detections);
 
-    // Stores mapping of AprilTag ID to relevant tag data.
-    std::map<int, TagData> tags;
+    // Camera object
+    cv::VideoCapture cap;
 
     // Tag detector object, initialized by constructor
     apriltag_detector_t* td;
@@ -91,17 +96,48 @@ private:
 };
 
 
-int test_fn()
-{
-    return 5;
-}
+// int test_fn()
+// {
+//     TagDetector d;
+//     d.test();
+//     d.setup();
+//     while(true)
+//     {
+//         d.detect_apriltags();
+//         if(d.num_detected() > 0)
+//         {
+//             std::cout << d.num_detected() << std::endl;
+//             break;
+//         }
 
-// Boost Python test function
-BOOST_PYTHON_MODULE(TagDetector)
-{
-    using namespace boost::python;
-    def("test_fn", test_fn);
-}
+//     }
+//     return 0;
+// }
+
+// // Boost Python test function
+// BOOST_PYTHON_MODULE(apriltags)
+// {
+//     using namespace boost::python;
+//     def("test_fn", test_fn);
+
+//     // TODO add setup to establish camera, make camera
+//     // internal variable
+//     // require no frame in python, only scan when called
+//     // TODO need a way to pull TagData struct
+//     class_<TagDetector>("TagDetector",
+//         init<>())
+//         .def("setup", &TagDetector::setup)
+//         .def("detect_apriltags", &TagDetector::detect_apriltags)
+//         .def("num_detected", &TagDetector::num_detected)
+//         .def("close", &TagDetector::close)
+//         .def("test", &TagDetector::test);
+
+//     //  // Expose the class Animal.
+//     // class_<Animal>("Animal",
+//     //     init<std::string const &>())
+//     //     .def("get_address", &Animal::get_address)
+//     //     .add_property("name", &Animal::get_name, &Animal::set_name)
+// }
 
 
 #endif
