@@ -8,7 +8,7 @@ d.setup()
 
 while True:
     d.detect_apriltags()
-    if d.num_detected() > 1:
+    if d.num_detected() > 0:
         print (d.num_detected())
         break
 

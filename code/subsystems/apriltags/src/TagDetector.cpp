@@ -89,20 +89,6 @@ void TagDetector::_convert_detections(zarray_t *detections)
     {
         apriltag_detection_t *det;
         zarray_get(detections, i, &det);
-        // std::vector<std::vector<double>> tag_corners
-        //     { { det->p[0][0], det->p[0][1]},
-        //       { det->p[1][0], det->p[1][1]},
-        //       { det->p[2][0], det->p[2][1]},
-        //       { det->p[3][0], det->p[3][1]} };
-
-        // std::vector<double> center
-        //     { det->c[0], det->c[1] };
-
-        // cv::Mat H = (Mat_<double>(3,3) <<
-        //     det->H->data[0], det->H->data[1], det->H->data[2],
-        //     det->H->data[3], det->H->data[4], det->H->data[5],
-        //     det->H->data[6], det->H->data[7], det->H->data[8]);
-
         tags[det->id] = TagData(det);
     }
 }
