@@ -113,8 +113,7 @@ TagData TagDetector::getTag(int n)
     // Get nth TagData object, else return invalid tag
     int x = 0;
     for(std::map<int, TagData>::iterator i = tags.begin(); 
-        i != tags.end(); 
-        i++)
+        i != tags.end(); i++)
     {
         if(x == n)
             return i->second;

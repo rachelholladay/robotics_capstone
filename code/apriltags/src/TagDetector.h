@@ -82,7 +82,7 @@ public:
     // Retrieves nth TagData object from map, irrespective of id
     TagData getTag(int n);
 
- // Class function test
+    // Class function test
     void test() { std::cout << "TagDetector test" << std::endl; };
 
 private:
