@@ -79,7 +79,8 @@ if __name__ == "__main__":
     # commsys.sendTCPMessages()
 
     loc = subsystems.LocalizationSystem()
-    loc.test()
+    loc.setup()
+    loc.loop()
 
 
     # serialized = cmd.SerializeToString()
