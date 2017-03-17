@@ -4,6 +4,9 @@ Runs fixed-rate loop that pulls data from subsystems
 '''
 import sys
 import subsystems
+from utils import constants as cst
+
+from IPython import embed
 
 class OffboardController(object):
     def __init__(self, robot_ip):
@@ -13,7 +16,7 @@ class OffboardController(object):
         self.robot_ip = robot_ip
 
         self.sys_planner = subsystems.PlannerSystem()
-        self.sys_localization = subsystems.LocalizationSystem()
+        self.sys_localization = subsystems.LocalizationSystem(scaled_dims=[1,1])
         self.sys_locomotion = subsystems.LocomotionSystem()
         self.sys_comm = subsystems.CommunicationSystem()
         self.sys_ui = subsystems.UISystem()
@@ -40,6 +43,8 @@ class OffboardController(object):
         # TODO connect to camera, ensure valid connection
 
         # TODO start localization, planner and UI in threads
+        self.sys_localization.setup()
+        self.sys_localization.begin_loop()
 
     def loop(self):
         '''
@@ -51,7 +56,7 @@ class OffboardController(object):
 
 
             robot_messages = self.sys_comm.getTCPMessages()
-            localization = self.sys_localization.getPositions()
+            localization = self.sys_localization.getLocalization()
 
             paths = self.sys_planner.updatePaths(localization)
 
@@ -63,6 +68,9 @@ class OffboardController(object):
 
             self.sys_ui.displayInfo(locomotion_msg, writing_msg, error_msg)
 
+
+    def close(self):
+        self.sys_localization.close()
 
     def _test(self):
         pass
@@ -78,10 +86,13 @@ if __name__ == "__main__":
     # commsys.connectToRobot('localhost', 0)
     # commsys.sendTCPMessages()
 
-    loc = subsystems.LocalizationSystem()
+    loc = subsystems.LocalizationSystem(scaled_dims=[1,1])
     loc.setup()
-    loc.loop()
-
+    loc.begin_loop(verbose=0)
+    while(True):
+        data = loc.getLocalizationData()
+        if data is not None:
+            embed()
 
     # serialized = cmd.SerializeToString()
 

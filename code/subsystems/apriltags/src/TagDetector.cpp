@@ -43,11 +43,48 @@ TagDetector::TagDetector()
     td->refine_decode = _refine_decode;
     td->refine_pose = _refine_pose;
 
+    filename = "";
+
+}
+
+TagDetector::TagDetector(std::string file)
+{
+    if (_family == "tag36h11")
+        tf = tag36h11_create();
+    else if (_family == "tag36h10")
+        tf = tag36h10_create();
+    else if (_family == "tag36artoolkit")
+        tf = tag36artoolkit_create();
+    else if (_family == "tag25h9")
+        tf = tag25h9_create();
+    else if (_family ==  "tag25h7")
+        tf = tag25h7_create();
+    else {
+        printf("Unrecognized tag family name. Use e.g. \"tag36h11\".\n");
+        exit(-1);
+    }
+    tf->black_border = _border;
+
+    td = apriltag_detector_create();
+    apriltag_detector_add_family(td, tf);
+
+    td->quad_decimate = _decimate;
+    td->quad_sigma = _blur;
+    td->nthreads = _threads;
+    td->debug = _debug;
+    td->refine_edges = _refine_edges;
+    td->refine_decode = _refine_decode;
+    td->refine_pose = _refine_pose;
+
+    filename = file;
 }
 
 void TagDetector::setup()
 {
-    cap = cv::VideoCapture(0);
+    if(filename == "")
+        cap = cv::VideoCapture(0);
+    else
+        cap = cv::VideoCapture(filename);
     if(!cap.isOpened())
     {
         std::cerr << 

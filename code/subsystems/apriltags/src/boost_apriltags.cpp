@@ -45,6 +45,7 @@ BOOST_PYTHON_MODULE(boost_apriltags)
     // TODO need a way to pull TagData struct
     class_<TagDetector>("TagDetector",
         init<>())
+        .def(init<std::string>())
         .def("setup", &TagDetector::setup)
         .def("detect_apriltags", &TagDetector::detect_apriltags)
         .def("num_detected", &TagDetector::num_detected)

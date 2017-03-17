@@ -2,6 +2,11 @@ Installation of libraries using Ubuntu 14.04:
 
 Using Python 2.7.6
 
+Boost and Apriltags: See subsystems/apriltags setup.md
+
+OpenCV for python
+pip install opencv-python
+
 Protobuf:
     pip install protobuf
 Protobuf Compiler:

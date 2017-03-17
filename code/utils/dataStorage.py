@@ -24,14 +24,14 @@ class LocalizationData:
         #   ex. constants.TAG_BOTTOM_LEFT
         # Separate dictionaries exist for corner tags (constant during
         # system operation) and robot tags (volatile during operation)
-        self.corners = dict()
-        self.robots = dict()
-        # self.corners = {cst.TAG_BOTTOM_LEFT: DirectedPoint(valid=False),
-        #                 cst.TAG_BOTTOM_RIGHT: DirectedPoint(valid=False),
-        #                 cst.TAG_TOP_LEFT: DirectedPoint(valid=False),
-        #                 cst.TAG_TOP_RIGHT: DirectedPoint(valid=False) }
-        # self.robots = {cst.TAG_ROBOT1: DirectedPoint(valid=False),
-        #                cst.TAG_ROBOT2: DirectedPoint(valid=False) }
+        # self.corners = dict()
+        # self.robots = dict()
+        self.corners = {cst.TAG_BOTTOM_LEFT: DirectedPoint(valid=False),
+                        cst.TAG_BOTTOM_RIGHT: DirectedPoint(valid=False),
+                        cst.TAG_TOP_LEFT: DirectedPoint(valid=False),
+                        cst.TAG_TOP_RIGHT: DirectedPoint(valid=False) }
+        self.robots = {cst.TAG_ROBOT1: DirectedPoint(valid=False),
+                       cst.TAG_ROBOT2: DirectedPoint(valid=False) }
 
 
 class ErrorData(object):

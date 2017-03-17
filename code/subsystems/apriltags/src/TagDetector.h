@@ -67,6 +67,8 @@ class TagDetector
 public:
     // Default Constructor
     TagDetector();
+    // Constructor for specifying file to read from - for testing
+    TagDetector(std::string file);
 
     // Setup camera
     void setup();
@@ -97,6 +99,9 @@ private:
     apriltag_detector_t* td;
     // Tag family, initialized by constructor
     apriltag_family_t* tf;
+
+    // Filename to read data from, blank if camera data
+    std::string filename;
 
     // Default  internal parameters
     bool _debug = false;
