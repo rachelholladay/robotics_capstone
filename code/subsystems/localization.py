@@ -192,7 +192,7 @@ class LocalizationSystem(object):
         # Clamp calibrated values from 0 to the respective dimension
         calibrated[:,0] = np.clip(calibrated[:,0], 0, self.scaled_dims[0])
         calibrated[:,1] = np.clip(calibrated[:,1], 0, self.scaled_dims[1])
-        embed()
+
         # Push calibrated points into localization struct
         for row_idx, tag_key in enumerate(found_tags):
             if tag_key in cst.TAG_CORNERS:

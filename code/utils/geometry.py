@@ -10,6 +10,9 @@ class Point(object):
         self.y = y
         self.valid = valid
 
+    def __str__(self):
+        return "Point: x:%f y:%f" % (self.x, self.y)
+
 class DirectedPoint(Point):
     """
     A DirectedPoint is a point with orientation. The expected use is for
@@ -19,4 +22,5 @@ class DirectedPoint(Point):
         Point.__init__(self, x, y, valid)
         self.theta = theta
 
-
+    def __str__(self):
+        return "DirectedPoint x:%f y:%f theta:%f" % (self.x, self.y, self.theta)
