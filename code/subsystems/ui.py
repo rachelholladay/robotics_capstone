@@ -35,6 +35,7 @@ class UISystem(object):
         all_values = numpy.array(all_vals)
         num_points = len(all_values) / pt_dim
         points = all_values.reshape(num_points, pt_dim)
+        #FIXME return in neil style data struct
         return points
 
     def drawDistribution(self, data_r0, data_r1):

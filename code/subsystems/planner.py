@@ -3,6 +3,7 @@ Planner class
 '''
 from ui import UISystem
 from scipy.spatial import distance
+from utils import constants
 import numpy
 
 class PlannerSystem(object):
@@ -11,17 +12,39 @@ class PlannerSystem(object):
     '''
     def __init__(self):
         self.sys_ui = UISystem()
-        self.start_r0 = [0, 0]
-        self.start_r1 = [10, 10]
+        self.start_r0 = [constants.BOTTOM_BORDER, constants.LEFT_BORDER]
+        self.start_r1 = [constants.TOP_BORDER, constants.RIGHT_BORDER]
 
-    def planTrajectories(self, filepath):
+    def planTrajectories(self, data):
         '''
         Do lots of stuff..
         '''
-        pathData = self.sys_ui.parseInputPaths(filepath)
+        pathData = self.scaleData(data)
         Distributor = DistributeWork(pathData, self.start_r0, self.start_r1)
         [path_r0, path_r1] = Distributor.getAllocation()
         self.sys_ui.drawDistribution(path_r0, path_r1)
+
+    def scaleData(self, data):
+        '''
+        Scale data to the bounds.
+        '''
+        #TODO get out bounds from path data (add to each file)
+        pathData = numpy.zeros((data.shape))
+        for i in xrange(4):
+           pts = data[:, i]
+           if i % 2 == 0:
+              init = float(end_x - start_x)
+              final = float(constants.RIGHT_BORDER - constants.LEFT_BORDER)
+              pts_d = numpy.divide(pts, init)
+              pts_m = numpy.multiply(pts_d, final)
+              pathData = numpy.add(pts_m, constants.LEFT_BORDER)
+           else:
+              init = float(end_y - start_y)
+              final = float(constants.TOP_BORDER - constants.BOTTOM_BORDER)
+              pts_d = numpy.divide(pts, init)
+              pts_m = numpy.multiply(pts_d, final)
+              pathData = numpy.add(pts_m, constants.BOTTOM_BORDER) 
+        return pathData
 
 class DistributeWork(object):
     '''

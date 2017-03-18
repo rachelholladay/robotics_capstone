@@ -10,7 +10,7 @@ from subsystems.planner import PlannerSystem
 from subsystems.ui import UISystem
 
 class OffboardController(object):
-    def __init__(self, robot_ip):
+    def __init__(self, robot_ip, drawing_number):
         '''
         Instantiates main subsystems based on input parameters
         '''
@@ -22,14 +22,9 @@ class OffboardController(object):
         self.sys_comm = CommunicationSystem()
         self.sys_ui = UISystem()
 
-        self.processInputData('inputs/test1')
-        
-    def processInputData(self, data):
-        '''
-        Receives input image and runs planner
-        '''
+        data = self.us_parseInputPaths('inputs/test{}'.format(drawing_number))
         paths = self.sys_planner.planTrajectories(data)
-
+        
     def robotSetup(self):
         '''
         Sets up communication links with robot agents.
@@ -75,6 +70,6 @@ class OffboardController(object):
 if __name__ == "__main__":
     robotIPs = ['111.111.1.1', '222.222.2.2']
 
-    controller = OffboardController(robot_ip=robotIPs)
+    controller = OffboardController(robot_ip=robotIPs, drawing_number=1)
     controller.robotSetup()
     # controller.loop()
