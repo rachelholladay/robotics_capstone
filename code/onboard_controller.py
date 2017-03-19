@@ -2,7 +2,8 @@
 Main onboard controller.
 '''
 import sys
-from subsystems.communication import CommunicationSystem
+from messages import robot_commands_pb2
+from onboard.robot_communication import RobotCommunication
 
 
 class OnboardController(object):
@@ -19,8 +20,12 @@ class OnboardController(object):
         pass
 
 if __name__ == "__main__":
-    offboard_ip = 111.111.1.1
-
-    controller = OffboardController(robot_ip=robotIPs)
-    controller.robotSetup()
-    # controller.loop()
+    robotcomm = RobotCommunication()
+    robotcomm.connectToOffboard()
+    while(1):
+        msg = robotcomm.listenForMessage()
+        if msg is None:
+            continue
+        else:
+            print msg
+            break
