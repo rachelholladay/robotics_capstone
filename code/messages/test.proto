@@ -1,0 +1,6 @@
+package test_pkg;
+
+message test_msg {
+  required string name = 1;
+
+}
