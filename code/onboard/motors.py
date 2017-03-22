@@ -16,7 +16,7 @@ from encoders import Encoders
 Constants
 '''
 # Encoder shaft rotations per motive shaft rotation
-GEAR_RATIO = 210.59
+GEAR_RATIO = 297.92
 # Counts per revolution
 CPR = 12
 # Encoder pin numbers
