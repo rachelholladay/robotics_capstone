@@ -33,13 +33,13 @@ class LocalizationData:
         self.robots = {cst.TAG_ROBOT1: DirectedPoint(valid=False),
                        cst.TAG_ROBOT2: DirectedPoint(valid=False) }
 
-class LineInputData:
+class LineInputData(object):
     """
     Struct containing the input data, the lines and bounds
     """
     def __init__(self):
-        self.vertical_bounds = [0, 0]
-        self.horizontal_bounds = [0, 0]
+        self.vertical_bounds = [-1, -1]
+        self.horizontal_bounds = [-1, -1]
         self.lines = []
 
 class ErrorData(object):
