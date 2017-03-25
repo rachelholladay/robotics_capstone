@@ -5,6 +5,7 @@ UI subsystem
 import numpy
 from matplotlib import pyplot as plt
 from utils import constants as cst
+from utils import dataStorage as ds
 
 class UISystem(object):
     '''
@@ -32,18 +33,19 @@ class UISystem(object):
                 if count == 0:
                     [x0, y0, x1, y1] = line.split()
                     count += 1
-                line_array = line.split()[1:]
-                line_num = [float(i) for i in line_array]
-                all_vals += line_num
+                else:
+                    line_array = line.split()[1:]
+                    line_num = [float(i) for i in line_array]
+                    all_vals += line_num
 
         all_values = numpy.array(all_vals)
         num_points = len(all_values) / pt_dim
         points = all_values.reshape(num_points, pt_dim)
 
-        Ldata = LineInputData()
+        Ldata = ds.LineInputData()
         Ldata.lines = points
-        Ldata.vertical_bounds = [y0, y1]
-        Ldata.horizontal_bound = [x0, x1]
+        Ldata.vertical_bounds = [int(y0), int(y1)]
+        Ldata.horizontal_bounds = [int(x0), int(x1)]
         return Ldata
 
     def drawDistribution(self, data_r0, data_r1):
