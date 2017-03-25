@@ -20,7 +20,7 @@ class OffboardController(object):
         self.sys_comm = subsystems.CommunicationSystem()
         self.sys_ui = subsystems.UISystem()
 
-        data = self.us_parseInputPaths('inputs/test{}'.format(drawing_number))
+        data = self.sys_ui.parseInputPaths('inputs/test{}'.format(drawing_number))
         paths = self.sys_planner.planTrajectories(data)
         
     def robotSetup(self):
