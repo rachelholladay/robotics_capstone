@@ -5,11 +5,10 @@ Runs fixed-rate loop that pulls data from subsystems
 import sys
 import subsystems
 from utils import constants as cst
-
 from IPython import embed
 
 class OffboardController(object):
-    def __init__(self, robot_ip):
+    def __init__(self, robot_ip, drawing_number):
         '''
         Instantiates main subsystems based on input parameters
         '''
@@ -21,13 +20,9 @@ class OffboardController(object):
         self.sys_comm = subsystems.CommunicationSystem()
         self.sys_ui = subsystems.UISystem()
 
-
-    def processInputData(self, data):
-        '''
-        Receives input image and runs planner
-        '''
+        data = self.sys_ui.parseInputPaths('inputs/test{}'.format(drawing_number))
         paths = self.sys_planner.planTrajectories(data)
-
+        
     def robotSetup(self):
         '''
         Sets up communication links with robot agents.
@@ -114,8 +109,6 @@ if __name__ == "__main__":
 
     # s.close()
 
-
-
-    # controller = OffboardController(robot_ip=robotIPs)
-    # controller.robotSetup()
+    controller = OffboardController(robot_ip=robotIPs, drawing_number=1)
+    controller.robotSetup()
     # controller.loop()
