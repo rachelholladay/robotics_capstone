@@ -23,7 +23,7 @@ class OnboardController(object):
     def test(self):
         pass
 
-    def getMotorCommands(self, current, target):
+    def getMotorCommands(self, current, target, verbose=1):
         """
         Uses mechanum control equations to compute motor powers for each motor
             to move along a vector between the provided current/target points
@@ -44,18 +44,19 @@ class OnboardController(object):
 
         @param current DirectedPoint of robot current position
         @param target DirectedPoint of robot target position
+        @param verbose Prints debugging output
         @return [V1, V2, V3, V4] list of motor powers for each robot
         """
         target_dpt = target - current
 
         # setup mecanum control params
         # angle to translate at, radians 0-2pi
-        # target_angle = math.radians(vector_target.theta) % (2.0 * math.pi)
         target_angle = (math.atan2(target_dpt.y, target_dpt.x)) % (2 * math.pi)
         target_speed = 1.0 # speed robot moves at [-1, 1]
         target_rot_speed = 0.0 # how quickly to change robot orientation [-1, 1]
 
-        print("Target Angle:", math.degrees(target_angle))
+        if verbose:
+            print("Target Angle:", math.degrees(target_angle))
 
         # Compute motors, 1-4, with forward direction as specified:
         pi4 = math.pi / 4.0
