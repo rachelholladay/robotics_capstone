@@ -91,14 +91,12 @@ class Motors(object):
             currMotor.run(Adafruit_MotorHAT.FORWARD)
         else:
             currMotor.run(Adafruit_MotorHAT.BACKWARD)
-        currMotor.setSpeed(pwm)
+        currMotor.setSpeed(abs(pwm))
 
     def stopMotors(self):
         self.stopFlag = True
         if self.currThread is not None:
             self.currThread.join()
-        mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
-    	mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
-    	mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
-    	mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
+        for motorNum in xrange(0,4):
+            self.motors[motorNum].run(Adafruit_MotorHAT.RELEASE)
     	time.sleep(STOP_TIME)
