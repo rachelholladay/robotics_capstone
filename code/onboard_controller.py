@@ -24,13 +24,10 @@ class OnboardController(object):
     def getMotorCommands(self, current, target):
         """
         Uses mechanum control equations to compute motor powers for each motor
-            to move from a provided current position to a desired target 
-            position.
+            to move along a vector between the provided current/target points
         This function does not take into account whether or not the robot has
             reached the target, and does not scale speed based on distance to 
             target.
-        Function provides motor powers to move along the vector between the
-        current and target position/orientations.
 
         Motor powers are ordered 1-4, given a robot with motors in the
         following position, and forward defined as:
@@ -38,7 +35,7 @@ class OnboardController(object):
         #    |      |    / \
         #    |      |     |
         #    3 ---- 4     |
-        
+
         # Mecanum Control:
         # https://www.roboteq.com/index.php/component/easyblog/entry/driving-mecanum-wheels-omnidirectional-robots?Itemid=1208
         # This pdf has accurate equations: http://thinktank.wpi.edu/resources/346/ControllingMecanumDrive.pdf
@@ -62,17 +59,20 @@ class OnboardController(object):
         V3 = target_speed * math.cos(target_angle + pi4) + target_rot_speed
         V4 = target_speed * math.sin(target_angle + pi4) - target_rot_speed
 
-
+        return [V1, V2, V3, V4]
 
 
 
 if __name__ == "__main__":
-    robotcomm = RobotCommunication()
-    robotcomm.connectToOffboard()
-    while(1):
-        msg = robotcomm.listenForMessage()
-        if msg is None:
-            continue
-        else:
-            print msg
-            break
+
+    # TODO create Motors() class and add test targets
+
+    # robotcomm = RobotCommunication()
+    # robotcomm.connectToOffboard()
+    # while(1):
+    #     msg = robotcomm.listenForMessage()
+    #     if msg is None:
+    #         continue
+    #     else:
+    #         print msg
+    #         break
