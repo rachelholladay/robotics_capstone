@@ -1,122 +1,104 @@
-'''
-Motor control for robot
-Motors 1 and 2 are x direction motion
-Motors 3 and 4 are y direction motion
-'''
-
-#!/usr/bin/python
-from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor 
+"""
+Motors class. Contains code controlling and accessing motor data.
+"""
+import RPi.GPIO as GPIO
 import time
 import threading
 import numpy as np
+import atexit
 from math import sqrt
-from encoders import Encoders
+from encoders import Encoder
+from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
+
 
 '''
 Constants
 '''
-# Encoder shaft rotations per motive shaft rotation
-GEAR_RATIO = 297.92
-# Counts per revolution
-CPR = 12
-# Encoder pin numbers
-a1 = 4
-a2 = 17
-a3 = 18
-a4 = 27
-b1 = 22
-b2 = 23
-b3 = 24
-b4 = 25
+# Motor pin numbers: 4x4 numpy matrix.
+# Each row is a motor [ENC_A1, ENC_A2 ENC_A3, ENC_A4]
+PINS = np.array([24, 23, 18, 20])
+# How long to wait for motors to stop and reissue commands
+STOP_TIME = 0.01
 # Speed PID constants
-kPS = 0.4
-kDS = 0.1
-# Period to get speed (in seconds)
-speedDelay = 0.050
-# Linear speed (in rpm)
-constSpeed = 80
-
+kP = 4
+kD = 0.1
 
 class Motors(object):
-	def __init__(self, address):
-		'''
-		Instantiates the Motors class with the specified I2C address
-		'''
-		self.mh = Adafruit_MotorHAT(addr=address)
-		self.motors = [mh.getMotor(1), mh.getMotor(1), 
-			mh.getMotor(1), mh.getMotor(1)]
-		self.encoders = [Encoders(a1, b1), Encoders(a2, b2), 
-			Encoders(a3, b3), Encoders(a3, b3)]
-		self.setSpeedsExit = False
-		self.setSpeedsExited = True
-		self.pwms = np.array([0,0,0,0])
-		self.prevErrors = np.array([0.0,0.0])
+    def __init__(self):
+        '''
+        Instantiates arrays and encoder objects
+        '''
+        mh = mh = Adafruit_MotorHAT(addr=0x60)
+        e = [None, None, None, None]
 
-	def turnOffMotors(self):
-		'''
-		Use this before turning off the Pi or motors will not stop
-		'''
-		self.mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
-		self.mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
-		self.mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
-		self.mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
+        for motor in xrange(0,4):
+            # Init encoders
+            ePin = PINS[motor]
+            if ePin is not None:
+                e[motor] = Encoder(ePin)
+            else:
+                e[motor] = Encoder(-1)
 
-	def setSpeeds(self, speedX, speedY):
-		'''
-		0 is x axis, 1 is y axis
-		speed is in rpm
-		'''
-		# Kill other instances of pidSpeed
-		self.setSpeedsExit = True
-		while self.setSpeedsExited is False:
-			pass
-		self.setSpeedsEixt = False
-		self.setSpeedsExited = False
-		t = threading.Thread(target=self.pidSpeed, args=(speedX, speedY))
-		t.start()
+        self.encoders = e
+        self.prevErrors = np.array([0.0,0.0,0.0,0.0])
+        # Thread exit flags
+        self.stopFlag = False
+        self.currThread = None
+        self.motors = [mh.getMotor(1), mh.getMotor(2), mh.getMotor(3), mh.getMotor(4)]
+        atexit.register(self.stopMotors)
 
-	def pidSpeed(self, speedX, speedY):
-		targets = np.array([speedX, speedX, speedY, speedY])
-		while self.setSpeedsExit is False:
-			currSpeeds = self.getSpeeds()
-			# Compute new PWM values using PID control
-			errors = targets-currSpeeds
-			self.pwms += (errors*kPS + (errors-prevErrors)*kDS).astype(int)
-			prevErrors = errors
-			# Execute new PWM values
-			# Direction
-			if pwmX > 0:
-				self.motors[0].run(Adafruit_MotorHAT.FORWARD)
-				self.motors[1].run(Adafruit_MotorHAT.FORWARD)
-			else:
-				self.motors[0].run(Adafruit_MotorHAT.BACKWARD)
-				self.motors[1].run(Adafruit_MotorHAT.BACKWARD)
-			if pwmY > 0:
-				self.motors[2].run(Adafruit_MotorHAT.FORWARD)
-				self.motors[3].run(Adafruit_MotorHAT.FORWARD)
-			else:
-				self.motors[2].run(Adafruit_MotorHAT.BACKWARD)
-				self.motors[3].run(Adafruit_MotorHAT.BACKWARD)
-			# Speed
-			for x in xrange(0,4):
-				self.motors[x].setSpeed(pwms[x])
-		self.setSpeedsExited = True
+    def __del__(self):
+        self.stopMotors()
+        GPIO.cleanup()
 
-	def getSpeeds(self):
-		ticks = np.array([encoders[0].ticksA, encoders[1].ticksA, 
-			encoders[2].ticksA, encoders[3].ticksA])
-		currTime = time.clock()
-		time.sleep(speedDelay)
-		ticks -= np.array([encoders[0].ticksA, encoders[1].ticksA, 
-			encoders[2].ticksA, encoders[3].ticksA])
-		timeDiff = currTime-time.clock()
-		return ((ticks/timeDiff)/CPR)/GEAR_RATIO
+    def setSpeed(self, targets):
+        self.stopFlag = True
+        self.stopMotors()
+        self.stopFlag = False
+        self.currThread = threading.Thread(target=self.pidSpeed, args=(targets,))
+        self.currThread.start()
 
+    def pidSpeed(self, targets):
+        '''
+        Set speeds for all motors.
+        speeds: numpy array of rpms for motors
+        '''
+        pwms = np.array([0.0, 0.0, 0.0, 0.0])
+        while self.stopFlag is False:
+            currSpeeds = self.getSpeeds()
+            print currSpeeds
+            # Compute new PWM values using PID control
+            errors = targets-currSpeeds
+            pwms += (errors*kP + (errors-self.prevErrors)*kD).astype(int)
+            self.prevErrors = errors
+            # Execute new PWM values
+            for motor in xrange(0,4):
+                self.commandMotor(motor, pwms[motor])
+        self.stopFlag = False
 
-	def followVector(self, x, y):
-		'''
-		x and y are 2 components of a vector that the robot will attempt to follow
-		'''
-		length = sqrt(x^2+y^2)
-		self.setSpeeds(x/constSpeed, y/constSpeed)
+    def getSpeeds(self):
+        return np.array([self.encoders[0].rpms(), self.encoders[1].rpms(),
+                         self.encoders[2].rpms(), self.encoders[3].rpms()])
 
+    def commandMotor(self, motorNum, cntrl):
+        '''
+        motorNum between 0-3
+        pwm between -100 and 100 percent duty cycle, negative means backwards rotation
+        '''
+        pwm = max(min(255, cntrl), -255)
+        currMotor = self.motors[motorNum]
+        if pwm < 0:
+            currMotor.run(Adafruit_MotorHAT.FORWARD)
+        else:
+            currMotor.run(Adafruit_MotorHAT.BACKWARD)
+        currMotor.setSpeed(pwm)
+
+    def stopMotors(self):
+        self.stopFlag = True
+        if self.currThread is not None:
+            self.currThread.join()
+        mh.getMotor(1).run(Adafruit_MotorHAT.RELEASE)
+    	mh.getMotor(2).run(Adafruit_MotorHAT.RELEASE)
+    	mh.getMotor(3).run(Adafruit_MotorHAT.RELEASE)
+    	mh.getMotor(4).run(Adafruit_MotorHAT.RELEASE)
+    	time.sleep(STOP_TIME)
