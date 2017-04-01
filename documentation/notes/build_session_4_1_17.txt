@@ -1,0 +1,44 @@
+PROGRESS -----------------------------------
+- got scrap 80/20
+- began construction of webcam mounting rig
+- wired up motors w/o encoders to rpi and motor controller
+- implemented mecanum code
+- got basic driving - all directions w/o rotation
+    - omnidirectional translational motion
+    - proof of concept for all path planning actions
+- demo video
+
+GOALS -----------------------------------
+- presentation
+- test writing implement
+
+MECHANICAL
+- apriltag support platform
+- electronics support platform
+- webcam mount rig
+
+CODE:
+- add demo classes for easier demo
+- enable sending motor commands from offboard to onboard
+- integrate with localization
+- integrate with planning
+
+- ongoing:
+    - collision avoidance
+    - finish UI
+
+GENERAL
+- acquire board for flat surface for demo
+
+ORDER -----------------------------------
+- acrylic
+- second robot parts
+- velcro
+- extra motor controllers
+- parts for camera rig
+    - 6ft 80/20 
+
+NEXT WEEK: -----------------------------------
+- integrate localization
+- test writing implement
+- change chalk tip from angled to round
