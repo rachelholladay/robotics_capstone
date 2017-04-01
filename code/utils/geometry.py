@@ -13,6 +13,15 @@ class Point(object):
     def __str__(self):
         return "Point: x:%f y:%f" % (self.x, self.y)
 
+    def __sub__(self, pt):
+        """
+        Subtracts Point from current object.
+        Returns Point containing the difference in x,y
+        @param pt Point object to subtract
+        @return Point(self.x - pt.x, self.y - pt.y)
+        """
+        return Point(self.x - pt.x, self.y - pt.y)
+
 class DirectedPoint(Point):
     """
     A DirectedPoint is a point with orientation. The expected use is for
@@ -23,4 +32,17 @@ class DirectedPoint(Point):
         self.theta = theta
 
     def __str__(self):
-        return "DirectedPoint x:%f y:%f theta:%f" % (self.x, self.y, self.theta)
+        return "DirectedPoint x:%f y:%f theta:%f" % \
+            (self.x, self.y, self.theta)
+
+    def __sub__(self, dpt):
+        """
+        Subtracts the DirectedPoint from the current object.
+        Returns a DirectedPoint containing the difference:
+        @param dpt Directed point to subtract
+        @return DirectedPoint(self.x-dpt.x, self.y-dpt.y, self.theta-dpt.theta)
+        """
+        return DirectedPoint(
+            self.x - dpt.x,
+            self.y - dpt.y,
+            self.theta - dpt.theta)
