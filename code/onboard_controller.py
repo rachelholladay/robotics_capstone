@@ -6,16 +6,11 @@ from __future__ import print_function
 import sys
 import math
 
-<<<<<<< HEAD
 #from messages import robot_commands_pb2
 #from onboard.robot_communication import RobotCommunication
 from onboard.motors import Motors
-=======
 import numpy as np
 
-from messages import robot_commands_pb2
-from onboard.robot_communication import RobotCommunication
->>>>>>> 0253f33120b3cf1d321922bcaf3e5779b589f329
 from utils.geometry import DirectedPoint
 
 
@@ -82,17 +77,14 @@ if __name__ == "__main__":
     target_pt = DirectedPoint(0, 1, 0)
     motor_powers = controller.getMotorCommands(start_pt, target_pt)
     print(motor_powers)
-<<<<<<< HEAD
 
     # Rescale 0-100
     min_scale = -255
     max_scale = 255
-=======
->>>>>>> 0253f33120b3cf1d321922bcaf3e5779b589f329
 
     for i in range(0, 4):
         motor_powers[i] = (motor_powers[i] - min_scale) / (max_scale - min_scale)
-
+        motor_powers[i] = (motor_powers[i]*(255*2)) - 255
     print(motor_powers)
     import sys
     sys.exit(0)
