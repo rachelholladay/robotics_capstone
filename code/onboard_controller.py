@@ -1,8 +1,12 @@
 '''
 Main onboard controller.
 '''
+from __future__ import print_function
+
 import sys
 import math
+
+import numpy as np
 
 from messages import robot_commands_pb2
 from onboard.robot_communication import RobotCommunication
@@ -42,13 +46,16 @@ class OnboardController(object):
         @param target DirectedPoint of robot target position
         @return [V1, V2, V3, V4] list of motor powers for each robot
         """
-        vector_target = current - target
+        target_dpt = target - current
 
         # setup mecanum control params
         # angle to translate at, radians 0-2pi
-        target_angle = math.radians(vector_target.theta) % (2 * math.pi)
-        target_speed = 1 # speed robot moves at [-1, 1]
-        target_rot_speed = 0 # how quickly to change robot orientation [-1, 1]
+        # target_angle = math.radians(vector_target.theta) % (2.0 * math.pi)
+        target_angle = (math.atan2(target_dpt.y, target_dpt.x)) % (2 * math.pi)
+        target_speed = 1.0 # speed robot moves at [-1, 1]
+        target_rot_speed = 0.0 # how quickly to change robot orientation [-1, 1]
+
+        print("Target Angle:", math.degrees(target_angle))
 
         # Compute motors, 1-4, with forward direction as specified:
         pi4 = math.pi / 4.0
@@ -65,9 +72,9 @@ if __name__ == "__main__":
     controller = OnboardController(robot_ip="0.0.0.0")
     # TODO create Motors() class and add test targets
     start_pt = DirectedPoint(0, 0, 0)
-    target_pt = DirectedPoint(1, 1, 0)
+    target_pt = DirectedPoint(0, 1, 0)
     motor_powers = controller.getMotorCommands(start_pt, target_pt)
-
+    print(motor_powers)
 
     # robotcomm = RobotCommunication()
     # robotcomm.connectToOffboard()
