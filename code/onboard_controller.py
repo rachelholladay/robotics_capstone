@@ -5,10 +5,11 @@ from __future__ import print_function
 
 import sys
 import math
+import time
 
 #from messages import robot_commands_pb2
 #from onboard.robot_communication import RobotCommunication
-# from onboard.motors import Motors
+from onboard.motors import Motors
 import numpy as np
 
 from utils.geometry import DirectedPoint
@@ -66,8 +67,15 @@ class OnboardController(object):
         V3 = target_speed * math.cos(target_angle + pi4) + target_rot_speed
         V4 = target_speed * math.sin(target_angle + pi4) - target_rot_speed
 
-        return [V1, V2, V3, V4]
+        return self.rescaleMotorPower([V1, V2, V3, V4])
 
+    def rescaleMotorPower(self, motor_powers):
+        min_scale = -1
+        max_scale = 1
+        for i in range(0, 4):
+            motor_powers[i] = (motor_powers[i] - min_scale) / (max_scale - min_scale)
+            motor_powers[i] = int((motor_powers[i] * (255 * 2)) - 255)
+        return motor_powers
 
 if __name__ == "__main__":
 
@@ -78,20 +86,44 @@ if __name__ == "__main__":
     motor_powers = controller.getMotorCommands(start_pt, target_pt)
     print(motor_powers)
 
-    # Rescale 0-100
-    min_scale = -1
-    max_scale = 1
-
-    for i in range(0, 4):
-        motor_powers[i] = (motor_powers[i] - min_scale) / (max_scale - min_scale)
-        motor_powers[i] = (motor_powers[i]*(255*2)) - 255
-    print(motor_powers)
-    import sys
-    sys.exit(0)
+    up = controller.getMotorCommands(start_pt, DirectedPoint(0, 1, 0))
+    left = controller.getMotorCommands(start_pt, DirectedPoint(-1, 0, 0))
+    down = controller.getMotorCommands(start_pt, DirectedPoint(0, -1, 0))
+    right = controller.getMotorCommands(start_pt, DirectedPoint(1, 0, 0))
 
     m = Motors()
+    print("up", up)
     for i in range(0,4):
-        m.commandMotors(i, motor_powers[i])
+        power = up[i]
+        m.commandMotor(i, power)
+    time.sleep(2)
+
+    m.stopMotors()
+    time.sleep(1)
+
+    print("left", left)
+    for i in range(0,4):
+        m.commandMotor(i, left[i])
+    time.sleep(2)
+
+    m.stopMotors()
+    time.sleep(1)
+
+    print("down", down)
+    for i in range(0,4):
+        m.commandMotor(i, down[i])
+    time.sleep(2)
+
+    m.stopMotors()
+    time.sleep(1)
+
+    print("right")
+    for i in range(0,4):
+        m.commandMotor(i, right[i])
+    time.sleep(2)
+
+    m.stopMotors()
+    time.sleep(1)
 
     time.sleep(3)
     m.stopMotors()

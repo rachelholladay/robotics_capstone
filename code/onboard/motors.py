@@ -91,7 +91,7 @@ class Motors(object):
             currMotor.run(Adafruit_MotorHAT.FORWARD)
         else:
             currMotor.run(Adafruit_MotorHAT.BACKWARD)
-        currMotor.setSpeed(pwm)
+        currMotor.setSpeed(abs(pwm))
 
     def stopMotors(self):
         self.stopFlag = True
