@@ -8,7 +8,7 @@ import math
 
 #from messages import robot_commands_pb2
 #from onboard.robot_communication import RobotCommunication
-from onboard.motors import Motors
+# from onboard.motors import Motors
 import numpy as np
 
 from utils.geometry import DirectedPoint
@@ -79,8 +79,8 @@ if __name__ == "__main__":
     print(motor_powers)
 
     # Rescale 0-100
-    min_scale = -255
-    max_scale = 255
+    min_scale = -1
+    max_scale = 1
 
     for i in range(0, 4):
         motor_powers[i] = (motor_powers[i] - min_scale) / (max_scale - min_scale)
