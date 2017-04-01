@@ -6,6 +6,7 @@ import math
 
 from messages import robot_commands_pb2
 from onboard.robot_communication import RobotCommunication
+from utils.geometry import DirectedPoint
 
 
 class OnboardController(object):
@@ -14,9 +15,6 @@ class OnboardController(object):
         Instantiates main subsystems based on input parameters
         '''
         self.robot_ip = robot_ip
-
-
-
 
     def test(self):
         pass
@@ -62,10 +60,14 @@ class OnboardController(object):
         return [V1, V2, V3, V4]
 
 
-
 if __name__ == "__main__":
 
+    controller = OnboardController(robot_ip="0.0.0.0")
     # TODO create Motors() class and add test targets
+    start_pt = DirectedPoint(0, 0, 0)
+    target_pt = DirectedPoint(1, 1, 0)
+    motor_powers = controller.getMotorCommands(start_pt, target_pt)
+
 
     # robotcomm = RobotCommunication()
     # robotcomm.connectToOffboard()
@@ -76,3 +78,5 @@ if __name__ == "__main__":
     #     else:
     #         print msg
     #         break
+
+    
