@@ -98,5 +98,5 @@ class Motors(object):
         if self.currThread is not None:
             self.currThread.join()
         for motorNum in xrange(0,4):
-            self.motors[motorNum.run(Adafruit_MotorHAT.RELEASE)]
+            self.motors[motorNum].run(Adafruit_MotorHAT.RELEASE)
     	time.sleep(STOP_TIME)
