@@ -6,10 +6,16 @@ from __future__ import print_function
 import sys
 import math
 
+<<<<<<< HEAD
+#from messages import robot_commands_pb2
+#from onboard.robot_communication import RobotCommunication
+from onboard.motors import Motors
+=======
 import numpy as np
 
 from messages import robot_commands_pb2
 from onboard.robot_communication import RobotCommunication
+>>>>>>> 0253f33120b3cf1d321922bcaf3e5779b589f329
 from utils.geometry import DirectedPoint
 
 
@@ -28,7 +34,7 @@ class OnboardController(object):
         Uses mechanum control equations to compute motor powers for each motor
             to move along a vector between the provided current/target points
         This function does not take into account whether or not the robot has
-            reached the target, and does not scale speed based on distance to 
+            reached the target, and does not scale speed based on distance to
             target.
 
         Motor powers are ordered 1-4, given a robot with motors in the
@@ -76,7 +82,27 @@ if __name__ == "__main__":
     target_pt = DirectedPoint(0, 1, 0)
     motor_powers = controller.getMotorCommands(start_pt, target_pt)
     print(motor_powers)
+<<<<<<< HEAD
 
+    # Rescale 0-100
+    min_scale = -255
+    max_scale = 255
+=======
+>>>>>>> 0253f33120b3cf1d321922bcaf3e5779b589f329
+
+    for i in range(0, 4):
+        motor_powers[i] = (motor_powers[i] - min_scale) / (max_scale - min_scale)
+
+    print(motor_powers)
+    import sys
+    sys.exit(0)
+
+    m = Motors()
+    for i in range(0,4):
+        m.commandMotors(i, motor_powers[i])
+
+    time.sleep(3)
+    m.stopMotors()
     # robotcomm = RobotCommunication()
     # robotcomm.connectToOffboard()
     # while(1):
@@ -87,4 +113,4 @@ if __name__ == "__main__":
     #         print msg
     #         break
 
-    
+
