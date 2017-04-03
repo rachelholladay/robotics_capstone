@@ -67,9 +67,18 @@ class OnboardController(object):
         V3 = target_speed * math.cos(target_angle + pi4) + target_rot_speed
         V4 = target_speed * math.sin(target_angle + pi4) - target_rot_speed
 
-        return self.rescaleMotorPower([V1, V2, V3, V4])
+        return self._rescaleMotorPower([V1, V2, V3, V4])
 
-    def rescaleMotorPower(self, motor_powers):
+    def _rescaleMotorPower(self, motor_powers):
+        """
+        Internal function.
+        Scales motor powers from the range [-1, 1] to [-255, 255].
+        These motor powers can be directly used as inputs to the Motors class
+        to move the motors.
+
+        @param motor_powers List of 4 motor powers on the scale [-1, 1]
+        @return motor_powers Motor powers rescaled [-255, 255]
+        """
         min_scale = -1
         max_scale = 1
         for i in range(0, 4):
