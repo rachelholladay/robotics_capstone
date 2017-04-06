@@ -10,7 +10,7 @@ This section details system development and progress made since the last milesto
 
 \subsubsection{Electrical Updates}
 \label{sec:electrical_progress}
-Electrical progress is separated into two main parts: connecting the motors to the motor controller and Raspberry Pi, and powering the motors and Raspberry Pi controller. Each of the motors was wired up to an Adafruit Motor Controller for easy use, which mounts as a shield on top of the Pi. For the time being, we have chosen not to connect the motor encoders. Given that we are using localization for motions, and vector directions for the robots are updated at every control loop iteration, we have hypothesized that localization will be enough to ensure accurate motion. The robots will never be moving more than a few inches without updated directional commands, making fine tuned encoder-based motor control unnecessary. 
+Electrical progress is separated into two main parts: connecting the motors to the motor controller and Raspberry Pi, and powering the motors and Raspberry Pi controller. Each of the motors was wired up to an Adafruit Motor Controller for easy use, which mounts as a shield on top of the Pi. For the time being, we have chosen not to connect the motor encoders. Given that we are using localization for motions, and vector directions for the robots are updated at every control loop iteration, we have hypothesized that localization will be enough to ensure accurate motion. The robots will never be moving more than a few inches without updated directional commands, making fine tuned encoder-based motor control unnecessary.
 
 The battery packs for the Raspberry Pi and motors were directly connected to the respective pieces of hardware. Until the electronics mount is built, we have been placing the battery packs on the robot, or holding them during testing. We plan to attach them to the mount using velcro.
 
@@ -41,9 +41,10 @@ The localization subsystem has been completed, and is successfully able to use a
 \end{figure}
 
 \subsubsection{Scheduling, Distribution and Planning (SDP)}
+\rhnote{todo}
 
 \subsubsection{User Interface}
-
+\rhnote{todo}
 
 \subsection{Integration Updates}
 \label{sec:integration_progress}
