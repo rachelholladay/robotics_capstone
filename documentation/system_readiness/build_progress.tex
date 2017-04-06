@@ -10,7 +10,9 @@ This section details system development and progress made since the last milesto
 
 \subsubsection{Electrical Updates}
 \label{sec:electrical_progress}
-As shown below in \figref{fig:em1}, we have built a physical robot prototype that incorporates chassis, painting mechanism, and locomotion system. The chassis is made of laser patterned acrylic. It is designed to be compact, as possible because smaller robots are less likely to collide with each other during drawing operations. This prototype proves that the chassis’ current cutout sizes have no clearance issues with moving components. 
+Electrical progress is separated into two main parts: connecting the motors to the motor controller and Raspberry Pi, and powering the motors and Raspberry Pi controller. Each of the motors was wired up to an Adafruit Motor Controller for easy use, which mounts as a shield on top of the Pi. For the time being, we have chosen not to connect the motor encoders. Given that we are using localization for motions, and vector directions for the robots are updated at every control loop iteration, we have hypothesized that localization will be enough to ensure accurate motion. The robots will never be moving more than a few inches without updated directional commands, making fine tuned encoder-based motor control unnecessary. 
+
+The battery packs for the Raspberry Pi and motors were directly connected to the respective pieces of hardware. Until the electronics mount is built, we have been placing the battery packs on the robot, or holding them during testing. We plan to attach them to the mount using velcro.
 
 \subsubsection{Mechanical Updates}
 \label{sec:mechanical_progress}
@@ -26,10 +28,17 @@ We detail the software progress made across the following subsystems. Most subsy
 
 
 \subsubsection{Locomotion}
-The locomotion subsystem has been fully implemented as a part of the onboard controller code. The subsystem is capable of determining motor commands based on a target vector direction to move the robot along the specified vector.
+The locomotion subsystem has been fully implemented as a part of the onboard controller code. The subsystem is capable of determining motor commands based on a target vector direction to move the robot along the specified vector. The robots have mecanum wheels and can therefore move omnidirectionally. This fact, coupled with the fact that we plan to only have to move along fixed straight-line vectors as specified by the SDP subsystem, means the robots never have to rotate. The goal of locomotion is only to translate along vectors, and never rotate. However, implementation of the mecanum control equations includes the ability to have the robots rotate during operation. The main use of rotation will be to correct any rotational error detected by the localization subsystem.
 
 \subsubsection{Localization}
+The localization subsystem has been completed, and is successfully able to use a combination of the AprilTags library, and Boost Python to transmit position and orientation of each AprilTag back to the controller. The controller then computes an affine warp using the specified corner tags, and warps the coordinates into a fixed dimension space. For example, if the input space is from coordinates (0,0) to (10,10), the controller will warp the space from pixel coordinates to the (0,0), (10,10) frame. While this can potentially warp the image being drawn as it stretches to accomodate a fixed input space, the change in dimensions is small enough not to affect output quality. Orientation of the robots is also computed, and will be sent to the robots to correct any rotational error. \figref{fig:localization_sample} shows an annotated test image of the six AprilTags to be used, with their respective labels and tags marked for visualization.
 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.49\columnwidth]{figs/apriltag_test_annotated.png}
+\caption{Annotated AprilTag testing setup}
+\label{fig:localization_sample}
+\end{figure}
 
 \subsubsection{Scheduling, Distribution and Planning (SDP)}
 
@@ -38,5 +47,11 @@ The locomotion subsystem has been fully implemented as a part of the onboard con
 
 \subsection{Integration Updates}
 \label{sec:integration_progress}
+System integration has involved assembling the electronics - including the motors and Raspberry Pi controller, and attaching them correctly to the mechanical system. For now, we were able to combine the locomotion subsystem with the onboard controller to send vector commands to the motors. The robot is able to move omnidirectionally and correct for rotation, however without localization it is impossible to detect rotational error. After running some simple motion tests without the encoder, we found that the robot was well within our positional accuracy requirements, and we do not believe the encoders will be necessary. Once localization is connected to the onboard system, we will be able to confirm that the encoders are not necessary.
+
+Next steps involve integrating the communication and localization systems. Current tests used the onboard system only to run locomotion commands. The first task is to enable offboard communication to send locomotion commands to the robot. Once consistent and accurate communication is established, localization will be added. Using localization, we can begin running simple plans that move the robot from point to point within the designated drawing space.
+
+Parallel testing will involve the writing implement. Now that the robots can move individually, testing and improvements to writing while drawing will start. Tests of writing quality during various motions and writing speed limits will be done to ensure we can meet quality and consistency requirements for the final drawing.
+
 
 \clearpage
