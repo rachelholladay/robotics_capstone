@@ -31,6 +31,11 @@ class RobotCommunication(object):
         conn, addr = s.accept()
         self.offboard_conn = conn
 
+        if conn is None:
+            print("Failed to connect, trying again in 1...")
+            time.sleep(1)
+            self.connectToOffboard()
+
         return True
 
     def closeOffboardConnection(self):
