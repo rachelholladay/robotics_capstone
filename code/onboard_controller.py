@@ -36,7 +36,7 @@ class OnboardController(object):
             if msg is None:
                 continue
             else:
-                print msg
+                print (msg)
                 break
 
 

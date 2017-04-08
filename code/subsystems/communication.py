@@ -30,7 +30,7 @@ class CommunicationSystem(object):
         self.messages = []
 
 
-    def connectToRobot(self, robot_ip, robot_id):
+    def connectToRobot(self, robot_id, robot_ip):
         '''
         For offboard controller.
         Attempt to establish TCP connection with robot at specified
@@ -46,6 +46,7 @@ class CommunicationSystem(object):
         conn.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
         # Attempt to connect
+        print("ADDRESS:", address)
         try:
             conn.connect(address)
         except socket.error:
