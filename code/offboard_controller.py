@@ -14,11 +14,11 @@ class OffboardController(object):
         '''
         self.robot_ip = robot_ip
 
-        self.sys_planner = subsystems.PlannerSystem()
+        # self.sys_planner = subsystems.PlannerSystem()
         self.sys_localization = subsystems.LocalizationSystem(scaled_dims=[1,1])
         self.sys_locomotion = subsystems.LocomotionSystem()
         self.sys_comm = subsystems.CommunicationSystem()
-        self.sys_ui = subsystems.UISystem()
+        # self.sys_ui = subsystems.UISystem()
 
         # data = self.sys_ui.parseInputPaths('inputs/test{}'.format(drawing_number))
         # paths = self.sys_planner.planTrajectories(data)
@@ -45,6 +45,7 @@ class OffboardController(object):
         '''
         Main offboard controller loop
         '''
+        print("running offboard loop")
         while True:
             pass
 
@@ -78,7 +79,7 @@ class OffboardController(object):
 
 if __name__ == "__main__":
     robotIPs = ['111.111.1.1', '222.222.2.2']
-    
+
     controller = OffboardController(robot_ip=robotIPs, drawing_number=1)
     controller.robotSetup()
     # controller.loop()
