@@ -7,8 +7,8 @@ import sys
 import math
 import time
 
-#from messages import robot_commands_pb2
-#from onboard.robot_communication import RobotCommunication
+from messages import robot_commands_pb2
+from onboard.robot_communication import RobotCommunication
 from onboard.motors import Motors
 import numpy as np
 
@@ -21,6 +21,9 @@ class OnboardController(object):
         Instantiates main subsystems based on input parameters
         '''
         self.robot_ip = robot_ip
+
+    def setup(self):
+        pass
 
     def test(self):
         pass
@@ -89,53 +92,19 @@ class OnboardController(object):
 if __name__ == "__main__":
 
     controller = OnboardController(robot_ip="0.0.0.0")
+
     # TODO create Motors() class and add test targets
-    start_pt = DirectedPoint(0, 0, 0)
-    target_pt = DirectedPoint(0, 1, 0)
-    motor_powers = controller.getMotorCommands(start_pt, target_pt)
-    print(motor_powers)
+    # start_pt = DirectedPoint(0, 0, 0)
+    # target_pt = DirectedPoint(0, 1, 0)
+    # motor_powers = controller.getMotorCommands(start_pt, target_pt)
+    # print(motor_powers)
 
-    up = controller.getMotorCommands(start_pt, DirectedPoint(0, 1, 0))
-    left = controller.getMotorCommands(start_pt, DirectedPoint(-1, 0, 0))
-    down = controller.getMotorCommands(start_pt, DirectedPoint(0, -1, 0))
-    right = controller.getMotorCommands(start_pt, DirectedPoint(1, 0, 0))
+    # up = controller.getMotorCommands(start_pt, DirectedPoint(0, 1, 0))
+    # left = controller.getMotorCommands(start_pt, DirectedPoint(-1, 0, 0))
+    # down = controller.getMotorCommands(start_pt, DirectedPoint(0, -1, 0))
+    # right = controller.getMotorCommands(start_pt, DirectedPoint(1, 0, 0))
 
-    m = Motors()
-    print("up", up)
-    for i in range(0,4):
-        power = up[i]
-        m.commandMotor(i, power)
-    time.sleep(2)
-
-    m.stopMotors()
-    time.sleep(1)
-
-    print("left", left)
-    for i in range(0,4):
-        m.commandMotor(i, left[i])
-    time.sleep(2)
-
-    m.stopMotors()
-    time.sleep(1)
-
-    print("down", down)
-    for i in range(0,4):
-        m.commandMotor(i, down[i])
-    time.sleep(2)
-
-    m.stopMotors()
-    time.sleep(1)
-
-    print("right")
-    for i in range(0,4):
-        m.commandMotor(i, right[i])
-    time.sleep(2)
-
-    m.stopMotors()
-    time.sleep(1)
-
-    time.sleep(3)
-    m.stopMotors()
+   
     # robotcomm = RobotCommunication()
     # robotcomm.connectToOffboard()
     # while(1):
