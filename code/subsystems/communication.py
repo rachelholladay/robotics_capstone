@@ -3,6 +3,7 @@ Communication subsystem
 
 '''
 import socket
+import time
 
 from messages import robot_commands_pb2
 
@@ -46,12 +47,13 @@ class CommunicationSystem(object):
         conn.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
         # Attempt to connect
-        print("ADDRESS:", address)
         try:
             conn.connect(address)
         except socket.error:
             print "Unable to connect Robot ID: ",robot_id," at IP ",robot_ip
-            return False
+            time.sleep(1)
+            self.connectToRobot(robot_id, robot_ip)
+            # return False
 
         msg = robot_commands_pb2.robot_command()
         msg.robot_id = robot_id
