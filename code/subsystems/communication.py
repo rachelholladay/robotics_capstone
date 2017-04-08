@@ -52,8 +52,6 @@ class CommunicationSystem(object):
             conn.connect(address)
         except socket.error:
             print "Unable to connect Robot ID: ",robot_id," at IP ",robot_ip
-            # time.sleep(1)
-            # self.connectToRobot(robot_id, robot_ip)
             return False
 
         msg = robot_commands_pb2.robot_command()
