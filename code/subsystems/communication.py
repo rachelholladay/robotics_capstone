@@ -43,6 +43,7 @@ class CommunicationSystem(object):
         '''
         # Setup TCP socket
         address = (robot_ip, constants.PORT)
+        print address
         conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         conn.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
@@ -51,9 +52,9 @@ class CommunicationSystem(object):
             conn.connect(address)
         except socket.error:
             print "Unable to connect Robot ID: ",robot_id," at IP ",robot_ip
-            time.sleep(1)
-            self.connectToRobot(robot_id, robot_ip)
-            # return False
+            # time.sleep(1)
+            # self.connectToRobot(robot_id, robot_ip)
+            return False
 
         msg = robot_commands_pb2.robot_command()
         msg.robot_id = robot_id
