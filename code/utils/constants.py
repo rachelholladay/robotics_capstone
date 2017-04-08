@@ -7,7 +7,7 @@ SIGMA = 0.0001
 
 ################ COMMUNICATION SUBSYSTEM ################
 # Communication values - used both onboard and offboard
-OFFBOARD_IP = 172.16.164.197#'127.0.0.1'
+OFFBOARD_IP = '192.168.137.137' #'127.0.0.1'
 PORT = 5555
 BUFFER_SIZE = 1024
 
