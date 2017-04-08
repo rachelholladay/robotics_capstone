@@ -32,7 +32,7 @@ class OnboardController(object):
         offboard system, parses and runs appropriate motor command.
         """
         while(1):
-            msg = robotcomm.listenForMessage()
+            msg = self.comm.listenForMessage()
             if msg is None:
                 continue
             else:
