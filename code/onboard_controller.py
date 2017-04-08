@@ -104,6 +104,7 @@ class OnboardController(object):
 if __name__ == "__main__":
 
     controller = OnboardController(robot_ip="0.0.0.0")
+    controller.setup()
     controller.loop()
 
     # TODO create Motors() class and add test targets
