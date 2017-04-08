@@ -46,22 +46,27 @@ class OffboardController(object):
         Main offboard controller loop
         '''
         while True:
-            if self.sys_planner.drawingComplete():
-                break
+            pass
 
 
-            robot_messages = self.sys_comm.getTCPMessages()
-            localization = self.sys_localization.getLocalization()
+        # Original, untested loop
+        # while True:
+        #     if self.sys_planner.drawingComplete():
+        #         break
 
-            paths = self.sys_planner.updatePaths(localization)
 
-            locomotion_msg = self.sys_locomotion.generateCommand(localization, paths)
-            writing_msg = self.sys_writing.generateCommand(localization, paths)
-            error_msg = self.sys_comm.generateErrorCommand()
+        #     robot_messages = self.sys_comm.getTCPMessages()
+        #     localization = self.sys_localization.getLocalization()
 
-            self.sys_comm.sendMessage(locomotion_msg, writing_msg, error_msg)
+        #     paths = self.sys_planner.updatePaths(localization)
 
-            self.sys_ui.displayInfo(locomotion_msg, writing_msg, error_msg)
+        #     locomotion_msg = self.sys_locomotion.generateCommand(localization, paths)
+        #     writing_msg = self.sys_writing.generateCommand(localization, paths)
+        #     error_msg = self.sys_comm.generateErrorCommand()
+
+        #     self.sys_comm.sendMessage(locomotion_msg, writing_msg, error_msg)
+
+        #     self.sys_ui.displayInfo(locomotion_msg, writing_msg, error_msg)
 
 
     def close(self):
@@ -73,6 +78,12 @@ class OffboardController(object):
 
 if __name__ == "__main__":
     robotIPs = ['111.111.1.1', '222.222.2.2']
+    
+    controller = OffboardController(robot_ip=robotIPs, drawing_number=1)
+    controller.robotSetup()
+    # controller.loop()
+
+
 
     # from messages import robot_commands_pb2
     # import socket
@@ -81,13 +92,14 @@ if __name__ == "__main__":
     # commsys.connectToRobot('localhost', 0)
     # commsys.sendTCPMessages()
 
-    loc = subsystems.LocalizationSystem(scaled_dims=[1,1])
-    loc.setup()
-    loc.begin_loop(verbose=0)
-    while(True):
-        data = loc.getLocalizationData()
-        if data is not None:
-            embed()
+    # Localization test
+    # loc = subsystems.LocalizationSystem(scaled_dims=[1,1])
+    # loc.setup()
+    # loc.begin_loop(verbose=0)
+    # while(True):
+    #     data = loc.getLocalizationData()
+    #     if data is not None:
+    #         embed()
 
     # serialized = cmd.SerializeToString()
 
@@ -109,6 +121,3 @@ if __name__ == "__main__":
 
     # s.close()
 
-    controller = OffboardController(robot_ip=robotIPs, drawing_number=1)
-    controller.robotSetup()
-    # controller.loop()

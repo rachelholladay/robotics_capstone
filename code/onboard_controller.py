@@ -21,12 +21,24 @@ class OnboardController(object):
         Instantiates main subsystems based on input parameters
         '''
         self.robot_ip = robot_ip
+        self.comm = RobotCommunication()
 
     def setup(self):
-        pass
+        self.comm.connectToOffboard()
 
-    def test(self):
-        pass
+    def loop(self):
+        """
+        Main offboard control loop. Listens for protobuf messages from the
+        offboard system, parses and runs appropriate motor command.
+        """
+        while(1):
+            msg = robotcomm.listenForMessage()
+            if msg is None:
+                continue
+            else:
+                print msg
+                break
+
 
     def getMotorCommands(self, current, target, verbose=1):
         """
@@ -92,6 +104,7 @@ class OnboardController(object):
 if __name__ == "__main__":
 
     controller = OnboardController(robot_ip="0.0.0.0")
+    controller.loop()
 
     # TODO create Motors() class and add test targets
     # start_pt = DirectedPoint(0, 0, 0)

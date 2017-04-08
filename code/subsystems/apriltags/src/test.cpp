@@ -57,9 +57,9 @@ void detection_loop();
 int main(int argc, char *argv[])
 {   
     std::cout << "main" << endl;
-    detection_loop();
+    // detection_loop();
     // Given test example
-    // example(argc, char *argv[]);
+    example(argc, argv);
 }
 
 void detection_loop()
