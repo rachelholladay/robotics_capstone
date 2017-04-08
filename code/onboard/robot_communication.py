@@ -22,6 +22,7 @@ class RobotCommunication(object):
         @return status Success or failure of connection attempt
         """
         address = (constants.OFFBOARD_IP, constants.PORT)
+        print address
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
