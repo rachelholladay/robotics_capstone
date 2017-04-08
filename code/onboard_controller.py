@@ -9,7 +9,7 @@ import time
 
 from messages import robot_commands_pb2
 from onboard.robot_communication import RobotCommunication
-from onboard.motors import Motors
+# from onboard.motors import Motors
 import numpy as np
 
 from utils.geometry import DirectedPoint
