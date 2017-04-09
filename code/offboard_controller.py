@@ -80,7 +80,7 @@ class OffboardController(object):
 if __name__ == "__main__":
     robotIPs = ['111.111.1.1', '222.222.2.2']
     localhost = ['localhost']
-    testRobot = ['192.168.137.24']
+    testRobot = ['192.168.0.24']
     controller = OffboardController(robot_ip=testRobot, drawing_number=1)
     controller.robotSetup()
     # controller.loop()
