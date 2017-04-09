@@ -42,7 +42,7 @@ class OnboardController(object):
             else:
                 robot_pos = DirectedPoint(msg.robot_x, msg.robot_y, theta=0)
                 target_pos = DirectedPoint(msg.target_x, msg.target_y, theta=0)
-                self.moveMotorsTime(self.getMotorCommands(robot_pos, taret_pos))
+                # self.moveMotorsTime(self.getMotorCommands(robot_pos, target_pos))
                 
 
     def moveMotorsTime(command, t):
