@@ -82,7 +82,7 @@ TagDetector::TagDetector(std::string file)
 void TagDetector::setup()
 {
     if(filename == "")
-        cap = cv::VideoCapture(0);
+        cap = cv::VideoCapture(1);
     else
         cap = cv::VideoCapture(filename);
     if(!cap.isOpened())

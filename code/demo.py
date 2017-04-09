@@ -24,7 +24,21 @@ def demoMoveMotorsTime(motors, command, t):
     in seconds.
     @param motors Motors object
     @param command Motor command to run
+    @param t Time in seconds to mdef demoMoveMotorsTime(motors, command, t):
+    """
+    Commands all motors using a given command (such as DIR_UPLEFT) for a time
+    in seconds.
+    @param motors Motors object
+    @param command Motor command to run
     @param t Time in seconds to move for
+    """
+    print("Moving", command, " for", time, " seconds.")
+    for i in range(0, 4):
+        motors.commandMotor(i, command[i])
+    time.sleep(t)
+
+    motors.stopMotors()
+    time.sleep(0.5)ove for
     """
     print("Moving", command, " for", time, " seconds.")
     for i in range(0, 4):

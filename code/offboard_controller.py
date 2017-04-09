@@ -41,8 +41,8 @@ class OffboardController(object):
         # TODO connect to camera, ensure valid connection
 
         # TODO start localization, planner and UI in threads
-        # self.sys_localization.setup()
-        # self.sys_localization.begin_loop()
+        self.sys_localization.setup()
+        self.sys_localization.begin_loop(verbose=0)
 
     def loop(self):
         '''
@@ -52,16 +52,32 @@ class OffboardController(object):
         test_data = None
         t = 0
         while True:
-            if t is 0:
-                test_data = [0, 0, 0, 1]
-            elif t is 5:
-                test_data = [0, 1, 1, 1]
-            elif t is 10:
-                test_data = [1, 1, 0, 0]
+            # if t is 0:
+            #     test_data = [0, 0, 0, 1, 0]
+            # elif t is 5:
+            #     test_data = [0, 1, 1, 1, 0]
+            # elif t is 10:
+            #     test_data = [1, 1, 0, 0, 0]
+            # elif t >= 20:
+            #     test_data = [0, 0, 0, 0, 1]
+            
+            test_data = [0, 0, 1, 0, 0]
             self.sys_comm.generateMessage(0, None, None, test=test_data)
             self.sys_comm.sendTCPMessages()
-            time.sleep(0.5)
 
+            try:
+                data = self.sys_localization.getLocalizationData()
+                blue_pos = data.robots[cst.TAG_ROBOT1]
+                print("blue pos: ", str(blue_pos))
+                test_data = [blue_pos.x, blue_pos.y, 0.5, 0.5, 0]
+
+                self.sys_comm.generateMessage(0, None, None, test=test_data)
+                self.sys_comm.sendTCPMessages()
+                print("Sent message")
+            except:
+                print("Failed to localize")
+
+            time.sleep(0.5)
             t += 1
 
 

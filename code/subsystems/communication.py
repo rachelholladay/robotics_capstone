@@ -135,6 +135,7 @@ class CommunicationSystem(object):
             self.messages[robot_id].robot_y = test[1]
             self.messages[robot_id].target_x = test[2]
             self.messages[robot_id].target_y = test[3]
+            self.messages[robot_id].stop_status = test[4]
         except:
             pass
         

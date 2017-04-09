@@ -40,13 +40,17 @@ class OnboardController(object):
             if msg is None:
                 continue
             else:
+                if msg.stop_status is 1:
+                    self.motors.stopMotors()
+                    continue
+
                 robot_pos = DirectedPoint(msg.robot_x, msg.robot_y, theta=0)
                 target_pos = DirectedPoint(msg.target_x, msg.target_y, theta=0)
                 print("Moving from", robot_pos, " to", target_pos)
-                # self.moveMotorsTime(self.getMotorCommands(robot_pos, target_pos))
+                self.moveMotorsTime(self.getMotorCommands(robot_pos, target_pos))
                 
 
-    def moveMotorsTime(command, t):
+    def moveMotorsTime(self, command, t=1):
         """
         Commands all motors using a given command (such as DIR_UPLEFT) for a time
         in seconds.
