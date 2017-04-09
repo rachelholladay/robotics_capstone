@@ -47,7 +47,9 @@ class OffboardController(object):
         '''
         print("running offboard loop")
         while True:
-            pass
+            self.sys_comm.generateMessage(0, None, None)
+            self.sys_comm.sendTCPMessages()
+            time.sleep(0.5)
 
 
         # Original, untested loop

@@ -23,7 +23,6 @@ class RobotCommunication(object):
         """
         address = ('0.0.0.0', constants.PORT)
         # address = (constants.OFFBOARD_IP, constants.PORT)
-        print address
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 

@@ -13,7 +13,7 @@ from google.protobuf import descriptor_pb2
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='robot_commands.proto',
   package='robot_commands',
-  serialized_pb='\n\x14robot_commands.proto\x12\x0erobot_commands\"!\n\rrobot_command\x12\x10\n\x08robot_id\x18\x01 \x02(\x05')
+  serialized_pb='\n\x14robot_commands.proto\x12\x0erobot_commands\"/\n\rrobot_command\x12\x10\n\x08robot_id\x18\x01 \x02(\x05\x12\x0c\n\x04test\x18\x02 \x01(\x05')
 
 
 
@@ -32,6 +32,13 @@ _ROBOT_COMMAND = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    _descriptor.FieldDescriptor(
+      name='test', full_name='robot_commands.robot_command.test', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -42,7 +49,7 @@ _ROBOT_COMMAND = _descriptor.Descriptor(
   is_extendable=False,
   extension_ranges=[],
   serialized_start=40,
-  serialized_end=73,
+  serialized_end=87,
 )
 
 DESCRIPTOR.message_types_by_name['robot_command'] = _ROBOT_COMMAND

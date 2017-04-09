@@ -43,7 +43,6 @@ class CommunicationSystem(object):
         '''
         # Setup TCP socket
         address = (robot_ip, constants.PORT)
-        print address
         conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         conn.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
@@ -130,6 +129,7 @@ class CommunicationSystem(object):
         @param error ErrorData struct
         """
         self.messages[robot_id].Clear()
-        pass
+        self.messages[robot_id].test = 5
+        
 
 
