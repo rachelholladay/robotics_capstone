@@ -86,8 +86,8 @@ class CommunicationSystem(object):
         '''
         status = 0
         for i in range(len(self.connections)):
-            conn = self.connections[i]
             try:
+                conn = self.connections[i]
                 conn.send(self.messages[i].SerializeToString())
             except socket.error:
                 status += 1
@@ -116,7 +116,7 @@ class CommunicationSystem(object):
         self.messages[robot_id].Clear()
 
 
-    def generateMessage(self, robot_id, locomotion, error):
+    def generateMessage(self, robot_id, locomotion, error, test=None):
         """
         Builds the message for the specified robot consisting of locomotion,
         writing, and error data. Message is a proto3 message to be sent to
@@ -131,7 +131,10 @@ class CommunicationSystem(object):
         try:
             self.messages[robot_id].Clear()
             self.messages[robot_id].robot_id = robot_id
-            self.messages[robot_id].test = 5
+            self.messages[robot_id].robot_x = test[0]
+            self.messages[robot_id].robot_y = test[1]
+            self.messages[robot_id].target_x = test[2]
+            self.messages[robot_id].target_y = test[3]
         except:
             pass
         

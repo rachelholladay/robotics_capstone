@@ -49,11 +49,20 @@ class OffboardController(object):
         Main offboard controller loop
         '''
         print 'offboard main loop'
+        test_data = None
+        t = 0
         while True:
-            self.sys_comm.generateMessage(0, None, None)
-            self.sys_comm.generateMessage(1, None, None)
+            if t is 0:
+                test_data = [0, 0, 0, 1]
+            elif t is 5:
+                test_data = [0, 1, 1, 1]
+            elif t is 10:
+                test_data = [1, 1, 0, 0]
+            self.sys_comm.generateMessage(0, None, None, test=test_data)
             self.sys_comm.sendTCPMessages()
             time.sleep(0.5)
+
+            t += 1
 
 
         # Original, untested loop

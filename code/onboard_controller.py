@@ -7,10 +7,12 @@ import sys
 import math
 import time
 
+import numpy as np
+
 from messages import robot_commands_pb2
 from onboard.robot_communication import RobotCommunication
-# from onboard.motors import Motors
-import numpy as np
+from onboard.motors import Motors
+from utils.geometry import DirectedPoint
 
 from utils.geometry import DirectedPoint
 
@@ -22,6 +24,7 @@ class OnboardController(object):
         '''
         self.robot_ip = robot_ip
         self.comm = RobotCommunication()
+        self.motors = Motors()
 
     def setup(self):
         self.comm.connectToOffboard()
@@ -37,9 +40,26 @@ class OnboardController(object):
             if msg is None:
                 continue
             else:
-                print (msg)
-                pass
+                robot_pos = DirectedPoint(msg.robot_x, msg.robot_y, theta=0)
+                target_pos = DirectedPoint(msg.target_x, msg.target_y, theta=0)
+                self.moveMotorsTime(self.getMotorCommands(robot_pos, taret_pos))
+                
 
+    def moveMotorsTime(command, t):
+        """
+        Commands all motors using a given command (such as DIR_UPLEFT) for a time
+        in seconds.
+        @param motors Motors object
+        @param command Motor command to run
+        @param t Time in seconds to move for
+        """
+        print("Moving", command, " for", time, " seconds.")
+        for i in range(0, 4):
+            self.motors.commandMotor(i, command[i])
+        time.sleep(t)
+
+        self.motors.stopMotors()
+        time.sleep(0.01)
 
     def getMotorCommands(self, current, target, verbose=1):
         """
