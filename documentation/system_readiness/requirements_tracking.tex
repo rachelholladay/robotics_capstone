@@ -2,10 +2,71 @@
 \section{Requirements Tracking}
 \label{sec:requirements_tracking}
 
+\rhnote{Insert in our requirements}
+
 \subsection{Objectives Tree}
 \label{sec:objectives_tree}
 
-\njnote{Insert in images and some comment}
+We created an objectives tree to better organize our requirements, and prioritize them based on system purposes and goals. After analysis of our requirements, we
+formed the objectives tree in \figref{fig:obj_tree_full} with the following categories:
+
+\begin{enumerate}
+\item Is Safe (\figref{fig:obj_tree_safe})
+\item Is Portable (\figref{fig:obj_tree_portable})
+\item Drawing Tool is Easy to Operate (\figref{fig:obj_tree_tool})
+\item Is Mobile (\figref{fig:obj_tree_mobile})
+\item User-Friendly (\figref{fig:obj_tree_user})
+\item Performance Guarantees (\figref{fig:obj_tree_performance})
+\end{enumerate}
+
+The category for `Is Safe' (\figref{fig:obj_tree_safe}) encompasses requirements for the robot staying within bounds, maintaining reliable communication, existence of a kill switch, and overall safe operation. These requirements breakdown how safe usage of the robot can be achieved, through both system design and user operation.
+
+`Is Portable' (\figref{fig:obj_tree_portable}) specifies system constraints that enable the robots to be able to be transported easily. The battery-powered requirement ensures the robots do not need external power during operation. Weight and size requirements were further categorized into physical constraints, to emphasize the importance of those requirements on portability outside of system operation.
+
+Subtree `Drawing Tool is Easy to Operate' (\figref{fig:obj_tree_tool}) ensures the writing tool is easy to maintain and use both during and before or after system operation. The main subtree describes tool maintenance. Requirements under maintenance include inserting, removing, and replacing the tool, as well as duration requirements for replacing the writing tool. Other requirements in this category relate to having the ability to enage or disengage the writing tool. This requirement is involved with system operation, and ensures the robot can change the tool status so the robots can move regardless of whether it is drawing.
+
+The `Is Mobile' (\figref{fig:obj_tree_mobile}) tree categorizes mobility requirements and constraints for the robot agents. Both positional and rotational accuracy are categorized under their own Accuracy subtree. Other leaves in this subtree ensure the robot agents have their own drive control systems, can localize, and are able to move autonomously in any direction on a 2D plane.
+
+We also chose to separate out requirements that relate to engaging the user and  enable a user-friendly experience. These fall under the `User-Friendly' subtree (\figref{fig:obj_tree_user}). Both documentation and budget requirements were categorized here - these requirements are more likely to be for users interested in adapting or recreating our system. As a result, other requirements were further categorized into a user-interaction subtree. These constraints denote existence of a UI, error handling, and the ability for users to input their drawing plan.
+
+The final categorization, `Performance Guarantees' (\figref{fig:obj_tree_performance}) denotes overall system requirements to ensure the final drawing meets specifications. These requirements include ensuring the robots know their own progress, and coordinate with each other. In addition, requirements specifying system efficiency, reliability, and overall drawing quality fell into this category.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.98\columnwidth]{figs/objectives_tree/objectives_tree_4_2_17.png}
+\label{fig:obj_tree_full}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.98\columnwidth]{figs/objectives_tree/objectives_tree_safe.png}
+\label{fig:obj_tree_safe}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.98\columnwidth]{figs/objectives_tree/objectives_tree_portable.png}
+\label{fig:obj_tree_portable}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.98\columnwidth]{figs/objectives_tree/objectives_tree_easy_tool_ops.png}
+\label{fig:obj_tree_tool}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.98\columnwidth]{figs/objectives_tree/objectives_tree_mobile.png}
+\label{fig:obj_tree_mobile}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.98\columnwidth]{figs/objectives_tree/objectives_tree_user_friendly.png}
+\label{fig:obj_tree_user}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.98\columnwidth]{figs/objectives_tree/objectives_tree_performance.png}
+\label{fig:obj_tree_performance}
+\end{figure}
+
 \clearpage
 
 \subsection{Requirements Traceability Matrix}
