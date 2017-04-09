@@ -45,7 +45,7 @@ class OffboardController(object):
         '''
         Main offboard controller loop
         '''
-        print("running offboard loop")
+        print "running offboard loop"
         while True:
             self.sys_comm.generateMessage(0, None, None)
             self.sys_comm.generateMessage(1, None, None)
