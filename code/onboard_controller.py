@@ -31,7 +31,7 @@ class OnboardController(object):
         Main offboard control loop. Listens for protobuf messages from the
         offboard system, parses and runs appropriate motor command.
         """
-        print "onboard main loop"
+        print("onboard main loop")
         while(1):
             msg = self.comm.listenForMessage()
             if msg is None:
