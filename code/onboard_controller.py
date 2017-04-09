@@ -38,7 +38,7 @@ class OnboardController(object):
                 continue
             else:
                 print (msg)
-                break
+                pass
 
 
     def getMotorCommands(self, current, target, verbose=1):

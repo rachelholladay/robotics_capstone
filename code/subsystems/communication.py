@@ -108,7 +108,7 @@ class CommunicationSystem(object):
             self.messages.remove(self.messages[i])
 
 
-    def clearMessage(robot_id):
+    def clearMessage(self, robot_id):
         """
         Clears the protobuf message for the corresponding robot id
         @param robot_id The index/ID of the proto message to clear
@@ -116,7 +116,7 @@ class CommunicationSystem(object):
         self.messages[robot_id].Clear()
 
 
-    def generateMessage(robot_id, locomotion, error):
+    def generateMessage(self, robot_id, locomotion, error):
         """
         Builds the message for the specified robot consisting of locomotion,
         writing, and error data. Message is a proto3 message to be sent to
@@ -128,8 +128,12 @@ class CommunicationSystem(object):
         @param locomotion LocomotionData struct for wheels and writing tool
         @param error ErrorData struct
         """
-        self.messages[robot_id].Clear()
-        self.messages[robot_id].test = 5
+        try:
+            self.messages[robot_id].Clear()
+            self.messages[robot_id].robot_id = robot_id
+            self.messages[robot_id].test = 5
+        except:
+            pass
         
 
 

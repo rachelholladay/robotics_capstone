@@ -3,9 +3,12 @@ Main offboard controller.
 Runs fixed-rate loop that pulls data from subsystems
 '''
 import sys
+import time
+
+from IPython import embed
+
 import subsystems
 from utils import constants as cst
-from IPython import embed
 
 class OffboardController(object):
     def __init__(self, robot_ip, drawing_number):
@@ -38,8 +41,8 @@ class OffboardController(object):
         # TODO connect to camera, ensure valid connection
 
         # TODO start localization, planner and UI in threads
-        self.sys_localization.setup()
-        self.sys_localization.begin_loop()
+        # self.sys_localization.setup()
+        # self.sys_localization.begin_loop()
 
     def loop(self):
         '''
@@ -86,7 +89,7 @@ if __name__ == "__main__":
     testRobot = ['192.168.0.24']
     controller = OffboardController(robot_ip=testRobot, drawing_number=1)
     controller.robotSetup()
-    # controller.loop()
+    controller.loop()
 
 
 
