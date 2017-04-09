@@ -42,6 +42,7 @@ class OnboardController(object):
             else:
                 robot_pos = DirectedPoint(msg.robot_x, msg.robot_y, theta=0)
                 target_pos = DirectedPoint(msg.target_x, msg.target_y, theta=0)
+                print("Moving from", robot_pos, " to", target_pos)
                 # self.moveMotorsTime(self.getMotorCommands(robot_pos, target_pos))
                 
 
