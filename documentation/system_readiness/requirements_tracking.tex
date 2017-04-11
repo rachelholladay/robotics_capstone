@@ -2,13 +2,77 @@
 \section{Requirements Tracking}
 \label{sec:requirements_tracking}
 
-\rhnote{Insert in our requirements}
+For readbility we provide a summary of our requirements below. 
+
+\begin{center}
+ \begin{tabular}{||c c ||}
+ \hline
+ Requirement & Title \\ [0.5ex]
+ \hline\hline
+ FR1 & Omnidirectional Movement  \\
+ \hline
+ FR2 & Autonomous \\
+ \hline
+ FR3 & Robots Localize Globally and Locally \\
+ \hline
+ FR4 & Within Bounds \\
+ \hline
+ FR5 & Insert Writing Tools \\
+ \hline
+ FR6 & Remove Writing Tools \\
+ \hline
+ FR7 & Replace Writing Tools \\
+ \hline
+ FR8 & Coordination \\
+ \hline
+ FR9 & Drive Control System \\
+ \hline
+ F10 & Turn on or off writing tool \\
+ \hline
+ F11 & Input Drawing Plan \\
+ \hline
+ F12 & Robots Know Progress \\
+ \hline
+ F13 & Kill Switch \\
+ \hline
+ F14 & User Interface to Robot \\
+ \hline
+ NFR1 & Docmentation \\
+ \hline
+ NFR2 & Error Handling \\
+ \hline
+ NFR3 & Weight Restriction \\
+ \hline
+ NFR4 & Size Restriction \\
+ \hline
+ NFR5 & Efficiency \\
+ \hline
+ NFR6 & Quality \\
+ \hline
+ NFR7 & Battery Power \\
+ \hline 
+ NFR8 & Reliability \\
+ \hline 
+ NFR9 & Reliable Communication \\
+ \hline 
+ NFR10 & Budget \\
+ \hline 
+ NFR11 & Safe \\
+ \hline
+ NFR12 & Positional Accuracy \\
+ \hline
+ NFR13 & Rotation Accuracy \\
+ \hline
+ NFR14 & Tool Switching Duration \\
+\hline
+\end{tabular}
+\end{center}
 
 \subsection{Objectives Tree}
 \label{sec:objectives_tree}
 
 We created an objectives tree to better organize our requirements, and prioritize them based on system purposes and goals. After analysis of our requirements, we
-formed the objectives tree in \figref{fig:obj_tree_full} with the following categories:
+formed the objectives tree in \figref{fig:objTreeFull} with the following categories:
 
 \begin{enumerate}
 \item Is Safe (\figref{fig:obj_tree_safe})
@@ -31,39 +95,52 @@ We also chose to separate out requirements that relate to engaging the user and 
 
 The final categorization, `Performance Guarantees' (\figref{fig:obj_tree_performance}) denotes overall system requirements to ensure the final drawing meets specifications. These requirements include ensuring the robots know their own progress, and coordinate with each other. In addition, requirements specifying system efficiency, reliability, and overall drawing quality fell into this category.
 
-\begin{figure}[h!]
+\begin{figure}[!ht]
 \centering
 \includegraphics[width=0.98\columnwidth]{figs/objectives_tree/objectives_tree_4_2_17.png}
-\label{fig:obj_tree_full}
+\caption{Full Objectives Tree}
+\label{fig:objTreeFull}
 \end{figure}
-\begin{figure}[h!]
+
+\begin{figure}[!ht]
 \centering
 \includegraphics[width=0.98\columnwidth]{figs/objectives_tree/objectives_tree_safe.png}
-\label{fig:obj_tree_safe}
+\caption{Objectives Tree: Is Safe Branch}
+\label{fig:obj_tree_safe} 
 \end{figure}
-\begin{figure}[h!]
+
+\begin{figure}[!ht]
 \centering
 \includegraphics[width=0.98\columnwidth]{figs/objectives_tree/objectives_tree_portable.png}
+\caption{Objectives Tree: Is Portable Branch}
 \label{fig:obj_tree_portable}
 \end{figure}
-\begin{figure}[h!]
+
+\begin{figure}[!ht]
 \centering
 \includegraphics[width=0.98\columnwidth]{figs/objectives_tree/objectives_tree_easy_tool_ops.png}
+\caption{Objectives Tree: Drawing Tool is Easy to Operate Branch}
 \label{fig:obj_tree_tool}
 \end{figure}
-\begin{figure}[h!]
+
+\begin{figure}[!ht]
 \centering
 \includegraphics[width=0.98\columnwidth]{figs/objectives_tree/objectives_tree_mobile.png}
+\caption{Objectives Tree; Is Mobile Branch}
 \label{fig:obj_tree_mobile}
 \end{figure}
-\begin{figure}[h!]
+
+\begin{figure}[!ht]
 \centering
 \includegraphics[width=0.98\columnwidth]{figs/objectives_tree/objectives_tree_user_friendly.png}
+\caption{Objectives Tree: User-Friendly Branch}
 \label{fig:obj_tree_user}
 \end{figure}
-\begin{figure}[h!]
+
+\begin{figure}[!ht]
 \centering
 \includegraphics[width=0.98\columnwidth]{figs/objectives_tree/objectives_tree_performance.png}
+\caption{Objectives Tree: Performance Guarantees Branch}
 \label{fig:obj_tree_performance}
 \end{figure}
 
