@@ -2,5 +2,11 @@ package robot_commands;
 
 message robot_command {
   required int32 robot_id = 1;
+  required float robot_x = 2;
+  required float robot_y = 3;
+  required float target_x = 4;
+  required float target_y = 5;
+  required int32 stop_status = 6;
+
 
 }

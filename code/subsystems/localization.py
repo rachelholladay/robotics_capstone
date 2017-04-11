@@ -14,7 +14,7 @@ from utils.dataStorage import LocalizationData
 from utils.geometry import DirectedPoint
 from utils import constants as cst
 
-import apriltags.src.boost_apriltags as apriltags
+import subsystems.apriltags.src.boost_apriltags as apriltags
 
 class LocalizationSystem(object):
     '''
@@ -109,7 +109,8 @@ class LocalizationSystem(object):
         Calls C++ functions to instantiate AprilTags libary, activate camera,
         and run diagnostics
         """
-        self._detector = apriltags.TagDetector("/home/neil/data/apriltag_test.mp4")
+        # self._detector = apriltags.TagDetector("/home/neil/data/apriltag_test.mp4")
+        self._detector = apriltags.TagDetector("")
         self._detector.setup()
 
 
@@ -154,7 +155,7 @@ class LocalizationSystem(object):
         # Ensure points for affine tranform computation are valid
         if not bottom_left.valid or not bottom_right.valid or \
             not top_right.valid:
-            return
+            return self.data
         found_tags.append(cst.TAG_BOTTOM_LEFT)
         found_tags.append(cst.TAG_BOTTOM_RIGHT)
         found_tags.append(cst.TAG_TOP_RIGHT)
@@ -210,7 +211,6 @@ class LocalizationSystem(object):
                         self._raw_loc.robots[tag_key].theta)
 
         # TODO END MUTEX FOR RAW LOCALIZATION STRUCT
-
         return self.data
         # TODO ROTATE THETA
 

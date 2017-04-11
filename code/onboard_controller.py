@@ -7,10 +7,12 @@ import sys
 import math
 import time
 
-#from messages import robot_commands_pb2
-#from onboard.robot_communication import RobotCommunication
-from onboard.motors import Motors
 import numpy as np
+
+from messages import robot_commands_pb2
+from onboard.robot_communication import RobotCommunication
+from onboard.motors import Motors
+from utils.geometry import DirectedPoint
 
 from utils.geometry import DirectedPoint
 
@@ -21,9 +23,48 @@ class OnboardController(object):
         Instantiates main subsystems based on input parameters
         '''
         self.robot_ip = robot_ip
+        self.comm = RobotCommunication()
+        self.motors = Motors()
 
-    def test(self):
-        pass
+    def setup(self):
+        self.comm.connectToOffboard()
+
+    def loop(self):
+        """
+        Main offboard control loop. Listens for protobuf messages from the
+        offboard system, parses and runs appropriate motor command.
+        """
+        print("onboard main loop")
+        while(1):
+            msg = self.comm.listenForMessage()
+            if msg is None:
+                continue
+            else:
+                if msg.stop_status is 1:
+                    self.motors.stopMotors()
+                    continue
+
+                robot_pos = DirectedPoint(msg.robot_x, msg.robot_y, theta=0)
+                target_pos = DirectedPoint(msg.target_x, msg.target_y, theta=0)
+                print("Moving from", robot_pos, " to", target_pos)
+                self.moveMotorsTime(self.getMotorCommands(robot_pos, target_pos))
+                
+
+    def moveMotorsTime(self, command, t=1):
+        """
+        Commands all motors using a given command (such as DIR_UPLEFT) for a time
+        in seconds.
+        @param motors Motors object
+        @param command Motor command to run
+        @param t Time in seconds to move for
+        """
+        print("Moving", command, " for", time, " seconds.")
+        for i in range(0, 4):
+            self.motors.commandMotor(i, command[i])
+        time.sleep(t)
+
+        self.motors.stopMotors()
+        time.sleep(0.01)
 
     def getMotorCommands(self, current, target, verbose=1):
         """
@@ -89,53 +130,21 @@ class OnboardController(object):
 if __name__ == "__main__":
 
     controller = OnboardController(robot_ip="0.0.0.0")
+    controller.setup()
+    controller.loop()
+
     # TODO create Motors() class and add test targets
-    start_pt = DirectedPoint(0, 0, 0)
-    target_pt = DirectedPoint(0, 1, 0)
-    motor_powers = controller.getMotorCommands(start_pt, target_pt)
-    print(motor_powers)
+    # start_pt = DirectedPoint(0, 0, 0)
+    # target_pt = DirectedPoint(0, 1, 0)
+    # motor_powers = controller.getMotorCommands(start_pt, target_pt)
+    # print(motor_powers)
 
-    up = controller.getMotorCommands(start_pt, DirectedPoint(0, 1, 0))
-    left = controller.getMotorCommands(start_pt, DirectedPoint(-1, 0, 0))
-    down = controller.getMotorCommands(start_pt, DirectedPoint(0, -1, 0))
-    right = controller.getMotorCommands(start_pt, DirectedPoint(1, 0, 0))
+    # up = controller.getMotorCommands(start_pt, DirectedPoint(0, 1, 0))
+    # left = controller.getMotorCommands(start_pt, DirectedPoint(-1, 0, 0))
+    # down = controller.getMotorCommands(start_pt, DirectedPoint(0, -1, 0))
+    # right = controller.getMotorCommands(start_pt, DirectedPoint(1, 0, 0))
 
-    m = Motors()
-    print("up", up)
-    for i in range(0,4):
-        power = up[i]
-        m.commandMotor(i, power)
-    time.sleep(2)
-
-    m.stopMotors()
-    time.sleep(1)
-
-    print("left", left)
-    for i in range(0,4):
-        m.commandMotor(i, left[i])
-    time.sleep(2)
-
-    m.stopMotors()
-    time.sleep(1)
-
-    print("down", down)
-    for i in range(0,4):
-        m.commandMotor(i, down[i])
-    time.sleep(2)
-
-    m.stopMotors()
-    time.sleep(1)
-
-    print("right")
-    for i in range(0,4):
-        m.commandMotor(i, right[i])
-    time.sleep(2)
-
-    m.stopMotors()
-    time.sleep(1)
-
-    time.sleep(3)
-    m.stopMotors()
+   
     # robotcomm = RobotCommunication()
     # robotcomm.connectToOffboard()
     # while(1):

@@ -21,7 +21,8 @@ class RobotCommunication(object):
         Establishes TCP connection with offboard controller.
         @return status Success or failure of connection attempt
         """
-        address = (constants.OFFBOARD_IP, constants.PORT)
+        address = ('0.0.0.0', constants.PORT)
+        # address = (constants.OFFBOARD_IP, constants.PORT)
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 

@@ -3,6 +3,7 @@ Communication subsystem
 
 '''
 import socket
+import time
 
 from messages import robot_commands_pb2
 
@@ -30,7 +31,7 @@ class CommunicationSystem(object):
         self.messages = []
 
 
-    def connectToRobot(self, robot_ip, robot_id):
+    def connectToRobot(self, robot_id, robot_ip):
         '''
         For offboard controller.
         Attempt to establish TCP connection with robot at specified
@@ -85,8 +86,8 @@ class CommunicationSystem(object):
         '''
         status = 0
         for i in range(len(self.connections)):
-            conn = self.connections[i]
             try:
+                conn = self.connections[i]
                 conn.send(self.messages[i].SerializeToString())
             except socket.error:
                 status += 1
@@ -107,7 +108,7 @@ class CommunicationSystem(object):
             self.messages.remove(self.messages[i])
 
 
-    def clearMessage(robot_id):
+    def clearMessage(self, robot_id):
         """
         Clears the protobuf message for the corresponding robot id
         @param robot_id The index/ID of the proto message to clear
@@ -115,7 +116,7 @@ class CommunicationSystem(object):
         self.messages[robot_id].Clear()
 
 
-    def generateMessage(robot_id, locomotion, error):
+    def generateMessage(self, robot_id, locomotion, error, test=None):
         """
         Builds the message for the specified robot consisting of locomotion,
         writing, and error data. Message is a proto3 message to be sent to
@@ -127,7 +128,16 @@ class CommunicationSystem(object):
         @param locomotion LocomotionData struct for wheels and writing tool
         @param error ErrorData struct
         """
-        self.messages[robot_id].Clear()
-        pass
+        try:
+            self.messages[robot_id].Clear()
+            self.messages[robot_id].robot_id = robot_id
+            self.messages[robot_id].robot_x = test[0]
+            self.messages[robot_id].robot_y = test[1]
+            self.messages[robot_id].target_x = test[2]
+            self.messages[robot_id].target_y = test[3]
+            self.messages[robot_id].stop_status = test[4]
+        except:
+            pass
+        
 
 

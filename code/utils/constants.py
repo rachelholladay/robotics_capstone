@@ -7,8 +7,8 @@ SIGMA = 0.0001
 
 ################ COMMUNICATION SUBSYSTEM ################
 # Communication values - used both onboard and offboard
-OFFBOARD_IP = '127.0.0.1'
-PORT = 5555
+OFFBOARD_IP = '192.168.0.26' # NJ macbook IP
+PORT = 10000
 BUFFER_SIZE = 1024
 
 ################ LOCALIZATION SUBSYSTEM ################
