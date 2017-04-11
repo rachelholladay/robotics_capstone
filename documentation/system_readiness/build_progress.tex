@@ -41,10 +41,17 @@ The localization subsystem has been completed, and is successfully able to use a
 \end{figure}
 
 \subsubsection{Scheduling, Distribution and Planning (SDP)}
-\rhnote{todo}
+In advance of SDP integration we formatted our planner to take as input a standarized message type. Additionally, we added flexibility to the planning system by allowing inputs of arbitrary dimension. Given an input of size $M$ by $N$ the planner will re-scale the drawing to match the size of the drawing surface, $X$ by $Y$. Following these updates the current planner was integrated into main code base. We look forward to testing it and adding on-board collision prevention soon.  
 
 \subsubsection{User Interface}
-\rhnote{todo}
+We completed development of a UI that allows users to draw the lines they would like the robots to complete. The interface is shown in \figref{fig:drawing_interface}. The user drags their mouse to draw a series of lines. The user has the option to clear their current drawing, allowing them to start over. Once the user is finished they can input the filename under which they would like to save the drawing and exit the tool. The tool records the line drawing and saves it to our database. We envision using this tool to create our own drawings and to add an interactive element to our demo.   
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.49\columnwidth]{figs/drawingInterface.png}
+\caption{Drawing Interface for Inputting Requests}
+\label{fig:drawing_interface}
+\end{figure}
 
 \subsection{Integration Updates}
 \label{sec:integration_progress}
