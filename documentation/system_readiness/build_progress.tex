@@ -17,9 +17,9 @@ The battery packs for the Raspberry Pi and motors were directly connected to the
 \subsubsection{Mechanical Updates}
 \label{sec:mechanical_progress}
 
-As shown below in \figref{fig:em1}, we have integrated the structures for holding microcontroller and AprilTag. These two structures were built using laser patterned acrylic and bonded to the chassis using super glue. Their functionalities were tested during the locomotion and localization tests and were proven to be promising. The AprilTag and the Raspberry Pi are currently taped to the supporting structures, but they will be mounted using Velcro tape instead in the future. 
+As shown below in \figref{fig:em1}, we have integrated the structures for holding the microcontroller and AprilTag. These two structures were built using laser patterned acrylic and bonded to the chassis using super glue. Funtionality and usability were tested during the locomotion and localization tests and proved promising. The AprilTag and the Raspberry Pi are currently taped to the supporting structures, but they will be mounted using Velcro tape instead in the future. 
 
-Besides integrating holding structures, we also mounted batteries to the chassis to make all electronics onboard. In the last milestone, we presented the idea of mounting these batteries underneath the AprilTag. However, doing so caused the AprilTag to vibrate during motion, which decrease localization accuracy.  Instead, we are mounting the batteries on the two sides of the robot. These batteries were mounted to the chassis via 3M VHB tape. For the ease of switching, we will use Velcro tape instead in the next iteration. 
+Besides integrating holding structures, we also mounted batteries to the chassis such that all the electronics were onboard. In the last milestone, we presented the idea of mounting these batteries underneath the AprilTag. However, doing so caused the AprilTag to vibrate during motion, which decreased localization accuracy.  Instead, we mounted the batteries on the two sides of the robot. These batteries were mounted to the chassis via 3M VHB tape. For the ease of switching, we will use Velcro tape instead for the next iteration. 
 
 \begin{figure}[h!]
 \centering
@@ -28,9 +28,9 @@ Besides integrating holding structures, we also mounted batteries to the chassis
 \caption{Prototype Overview}
 \label{fig:em1}
 
-During the tests, one of the four 3D printed wheel adaptors broke. This part has been broken quite frequently. We are redesigning this piece and will present it in the next presentation. 
+During the tests, one of the four 3D printed wheel adapters broke. This part has  broken quite frequently. To address this issue, we are redesigning the piece to replace the existing adapters. 
 
-We have also designed the camera jig which is shown below in \figref{fig:em2}. It is constructed using 80/20 aluminum frames due to the frames’ usability and durability. The jig has a footprint of 6ft by 6ft and a height of 8ft. 8ft was determined to be the optimal height for camera mounting, to capture all corners of the 6ft by 6ft work space. The camera will be mounted to the jig using Velcro tape. Due to 80/20 structure’s ease of use, we can simply disassemble the jig into two pieces for transportation. Therefore, despite its large size, the camera jig is not restricted to any specific room.
+We have also designed the camera jig, which is shown below in \figref{fig:em2}. It is constructed using 80/20 aluminum frames, which were chosen due to the frames’ ease-of-use and durability. The jig has a footprint of 6ft by 6ft and a height of 8ft. 8ft was determined to be the optimal height for camera mounting, to capture all corners of the 6ft by 6ft work space. The camera will be mounted to the jig using Velcro tape. Due to 80/20 structure’s easy construction, we can simply disassemble the jig into two pieces for transportation. Therefore, despite its large size, the camera jig is not restricted to any specific space.
 
 \begin{figure}[h!]
 \centering
@@ -58,10 +58,10 @@ The localization subsystem has been completed, and is successfully able to use a
 \end{figure}
 
 \subsubsection{Scheduling, Distribution and Planning (SDP)}
-In advance of SDP integration we formatted our planner to take as input a standarized message type. Additionally, we added flexibility to the planning system by allowing inputs of arbitrary dimension. Given an input of size $M$ by $N$ the planner will re-scale the drawing to match the size of the drawing surface, $X$ by $Y$. Following these updates the current planner was integrated into main code base. We look forward to testing it and adding on-board collision prevention soon.  
+Before SDP integration, we have formatted our planner to take input in the form of a standarized message type. Additionally, we added flexibility to the planning system by allowing inputs of arbitrary dimension. Given an input of size $M$ by $N$ the planner will re-scale the drawing to match the size of the drawing surface, $X$ by $Y$. Following these updates the current planner was integrated into main code base. We will be testing and adding on-board collision prevention soon.  
 
 \subsubsection{User Interface}
-We completed development of a UI that allows users to draw the lines they would like the robots to complete. The interface is shown in \figref{fig:drawing_interface}. The user drags their mouse to draw a series of lines. The user has the option to clear their current drawing, allowing them to start over. Once the user is finished they can input the filename under which they would like to save the drawing and exit the tool. The tool records the line drawing and saves it to our database. We envision using this tool to create our own drawings and to add an interactive element to our demo.   
+We completed development of a UI that allows users to draw the lines they would like the robots to complete. The interface is shown in \figref{fig:drawing_interface}. The user drags their mouse to draw a series of lines. The user has the option to clear their current drawing, allowing them to start over. Once the user is finished they can input the filename under which they would like to save the drawing and exit the tool. The tool records the line drawing and saves it to our database. We envision using this tool to create our own drawings and to add an interactive element to the demo.   
 
 \begin{figure}[h!]
 \centering
@@ -77,6 +77,5 @@ System integration has involved assembling the electronics - including the motor
 Next steps involve integrating the communication and localization systems. Current tests used the onboard system only to run locomotion commands. The first task is to enable offboard communication to send locomotion commands to the robot. Once consistent and accurate communication is established, localization will be added. Using localization, we can begin running simple plans that move the robot from point to point within the designated drawing space.
 
 Parallel testing will involve the writing implement. Now that the robots can move individually, testing and improvements to writing while drawing will start. Tests of writing quality during various motions and writing speed limits will be done to ensure we can meet quality and consistency requirements for the final drawing.
-
 
 \clearpage
