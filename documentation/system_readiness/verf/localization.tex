@@ -22,7 +22,7 @@
 \subsubsection{Functional Test: Robot Position}
 \label{test:localization_ft_robopos}
 \textbf{Test Question:} Can the localization system find the robot?\\
-\textbf{Operational Procedure:} With a single robot within the working bounds, the localization system attempts to determine the robot's location. \added[remark={NJ,V2}]{Robot operation out of bounds is also considered out of scope, and is undefined behavior.}\\
+\textbf{Operational Procedure:} With a single robot within the working bounds, the localization system attempts to determine the robot's location. Robot operation out of bounds is also considered out of scope, and is undefined behavior.\\
 \textbf{Metric:} Whether or not a location is returned by the localization system.\\
 \textbf{Acceptance Criteria:} The system must return a location for the robot. \\
 \textbf{Requirement(s) Verified:} \frref{fr:in_bounds}, \nfrref{nfr:quality}, \frref{fr:localize}, \nfrref{nfr:rot_accuracy}

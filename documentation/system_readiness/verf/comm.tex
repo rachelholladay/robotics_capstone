@@ -5,24 +5,24 @@
 
 \subsubsection{Performance Test: Uptime}
 \label{test:comm_pt_reliability}
-\textbf{Test Question:} What is the uptime on our ability to communicate data to between the robots and the offboard system?  \\
+\textbf{Test Question:} What is the uptime on our ability to communicate data between the robots and the offboard system?  \\
 \textbf{Operational Procedure:} Run the system for a significant period of time (several hours) and record any communication downtime or data loss during communication. \\
 \textbf{Metric:} Time duration of down communication and packet loss. \\
 \textbf{Acceptance Criteria:} Operational 95\% of the time.\\
-\textbf{Requirement(s) Verified:} FR 12, NFR 8, NFR 9
+\textbf{Requirement(s) Verified:} FR12, NFR8, NFR9
 
 \subsubsection{Functional Test: Sending and Receiving Data}
 \label{test:comm_ft_send}
-\textbf{Test Question:} Can the robot send and receive data from the off-board device and can the off-board device send and receive data to the robot?\\
+\textbf{Test Question:} Can the robot send and receive data to and from the offboard device and can the offboard device send and receive data to and from the robot?\\
 \textbf{Operational Procedure:} Send data from the off-board device to the robot and verify the robot received it. Send data from the robot to the off-board device and verify the off-board device received it. \\
 \textbf{Metric:} Four booleans on whether the data is successfully sent and recieved on both ends. \\
 \textbf{Acceptance Criteria:} We must succeed on all four accounts. \\
-\textbf{Requirement(s) Verified:} NFR 9
+\textbf{Requirement(s) Verified:} NFR9
 
 \subsubsection{Functional Test: Data Parsing}
 \label{test:comm_ft_parse}
-\textbf{Test Question:}  Can the data on each side (robot, off-board device) be parsed by each other? \\
-\textbf{Operational Procedure:} Send data from the off-board device to the robot and verify the robot received it and can execute it. Send data from the robot to the off-board device and verify the off-board device received it and can respond to it. \\
+\textbf{Test Question:}  Can the data on each side (robot, offboard device) be parsed by each system? \\
+\textbf{Operational Procedure:} Send data from the offboard device to the robot and verify the robot received it and can execute and process the appropriate information. Send data from the robot to the offboard system and verify the offboard device received and can respond to it. \\
 \textbf{Metric:} Check whether the data was successfully parsed on all sides. \\
 \textbf{Acceptance Criteria:} We require all data be parsable. \\
-\textbf{Requirement(s) Verified:} NFR 9 \\
+\textbf{Requirement(s) Verified:} NFR9 \\
