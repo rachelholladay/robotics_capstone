@@ -17,10 +17,27 @@ The battery packs for the Raspberry Pi and motors were directly connected to the
 \subsubsection{Mechanical Updates}
 \label{sec:mechanical_progress}
 
-\yjnote{Talk about webcam jig}
-\yjnote{Building new robot, motor shafts, etc.}
+As shown below in \figref{fig:em1}, we have integrated the structures for holding microcontroller and AprilTag. These two structures were built using laser patterned acrylic and bonded to the chassis using super glue. Their functionalities were tested during the locomotion and localization tests and were proven to be promising. The AprilTag and the Raspberry Pi are currently taped to the supporting structures, but they will be mounted using Velcro tape instead in the future. 
 
+Besides integrating holding structures, we also mounted batteries to the chassis to make all electronics onboard. In the last milestone, we presented the idea of mounting these batteries underneath the AprilTag. However, doing so caused the AprilTag to vibrate during motion, which decrease localization accuracy.  Instead, we are mounting the batteries on the two sides of the robot. These batteries were mounted to the chassis via 3M VHB tape. For the ease of switching, we will use Velcro tape instead in the next iteration. 
 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.49\columnwidth]{figs/robot1.jpeg}
+\includegraphics[width=0.49\columnwidth]{figs/robot2.jpeg}
+\caption{Prototype Overview}
+\label{fig:em1}
+
+During the tests, one of the four 3D printed wheel adaptors broke. This part has been broken quite frequently. We are redesigning this piece and will present it in the next presentation. 
+
+We have also designed the camera jig which is shown below in \figref{fig:em2}. It is constructed using 80/20 aluminum frames due to the frames’ usability and durability. The jig has a footprint of 6ft by 6ft and a height of 8ft. 8ft was determined to be the optimal height for camera mounting, to capture all corners of the 6ft by 6ft work space. The camera will be mounted to the jig using Velcro tape. Due to 80/20 structure’s ease of use, we can simply disassemble the jig into two pieces for transportation. Therefore, despite its large size, the camera jig is not restricted to any specific room.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.98\columnwidth]{figs/jig.jpeg}
+\caption{Camera Jig CAD}
+\label{fig:em2}
+\end{figure}
 
 \subsection{Software Update}
 \label{sec:software_progress}
