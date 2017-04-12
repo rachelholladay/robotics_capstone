@@ -1,0 +1,12 @@
+% !TEX root = system_validation.tex
+
+\subsection{Power System}
+\label{sec:verification_power}
+
+\subsubsection{Performance Test: Battery Life}
+\label{test:power_pt_battery}
+\textbf{Test Question:} How long can an individual robot run for on a single battery charge? \\
+\textbf{Operational Procedure:} Charge a robot fully. Command the robot to complete an input drawing repeatedly until the robot is fully drained of power. Time how long this takes. \\
+\textbf{Metric:} The duration of operational time given one charge \\
+\textbf{Acceptance Criteria:} We accept this if the operational time exceeds the necessary duration time of 90\% of our test drawing inputs. \\
+\textbf{Requirement(s) Verified:} NFR 7
