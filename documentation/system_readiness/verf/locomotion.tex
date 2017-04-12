@@ -1,0 +1,28 @@
+% !TEX root = system_validation.tex
+
+\subsection{Locomotion}
+\label{sec:verification_locomotion}
+
+\subsubsection{Performance Test: Accuracy}
+\label{test:locomotion_pt_accuracy}
+\textbf{Test Question:} Is the robot able to drive with positional and rotational accuracy?\\
+\textbf{Operational Procedure:} The robot drives along a predetermined testing route consisting of driving forward at least 3 feet and driving to its left at least 1 feet.\\
+\textbf{Metric:} The difference of the robot's final position and orientation from the intended position and orientation. \\
+\textbf{Acceptance Criteria:} During the forward driving test, the robot's position must be less than 1 inch away from the intended position. During the left driving test, its orientation must be less 10 degrees from the commended perpendicular line. This result must be achieved 90 percent of the time.\\
+\textbf{Requirement(s) Verified:} NFR 12, NFR 13
+
+\subsubsection{Functional Test: Speed}
+\label{test:locomotion_ft_speed}
+\textbf{Test Question:} Can the robot reach a desired speed? \\
+\textbf{Operational Procedure:} The robot will drive along a straight line for 5 ft. during a timed trial.\\
+\textbf{Metric:} The time required for the robot to reach the end of the line.\\
+\textbf{Acceptance Criteria:} The robot must reach the end of the 5 ft. testing course in 20 seconds. This test must be repeatable 90 percent of the time. \\
+\textbf{Requirement(s) Verified:} NFR 5
+
+\subsubsection{Functional Test: Omnidirectional}
+\label{test:locomotion_ft_omni}
+\textbf{Test Question:} Can the robot drive omnidirectionally? \\
+\textbf{Operational Procedure:} The robot will drive along a rectangular path that is 10 inches by 10 inches.\\
+\textbf{Metric:} Whether or not the robot can complete the course with only linear motion.\\
+\textbf{Acceptance Criteria:} The robot must be able to complete the course with linear motion only.\
+\textbf{Requirement(s) Verified:} FR 1, FR 9 \\

@@ -1,0 +1,20 @@
+% !TEX root = system_validation.tex
+
+\subsection{Image Processing}
+\label{sec:verification_image}
+
+\subsubsection{Functional Test: Return Data}
+\label{test:image_ft_data}
+\textbf{Test Question:} Does the image processor return data usable to the planner?\\
+\textbf{Operational Procedure:} A user inputs valide drawings in UI and has the image processor attempts to generate motion commands.\\
+\textbf{Metric:} Whether or not usable motion output is produced.\\
+\textbf{Acceptance Criteria:} The image processor must be able to produce a series of legal motion commands.\\
+\textbf{Requirement(s) Verified:} FR 11
+
+\subsubsection{Functional Test: Reject Improper Input}
+\label{test:image_ft_reject}
+\textbf{Test Question:} Is the image processor able to detect and reject improper input?\\
+\textbf{Operational Procedure:} The image processor takes in an invalid input. For example, lines on top of each other or lines out of drawing boundaries. \\
+\textbf{Metric:} Whether or not input is rejected.\\
+\textbf{Acceptance Criteria:} The invalid input must be rejected.\\
+\textbf{Requirement(s) Verified:} FR 4, FR 11
