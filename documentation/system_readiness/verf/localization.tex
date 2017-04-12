@@ -9,7 +9,7 @@
 \textbf{Operational Procedure:} Both robots sit stationary within the working bounds. The localization system then attempts to determine their locations.\\
 \textbf{Metric:} The difference of the robot's actual position from the position reported by the localization system. \\
 \textbf{Acceptance Criteria:} The reported position must be within 1/10 in. of the actual position.\\
-\textbf{Requirement(s) Verified:} \nfrref{nfr:quality}, \frref{fr:in_bounds}
+\textbf{Requirement(s) Verified:} NF6, FR4
 
 \subsubsection{Performance Test: Bounds Accuracy}
 \label{test:localization_pt_bounds}
@@ -17,7 +17,7 @@
 \textbf{Operational Procedure:} The localization system attempts to determine the bounds of the workspace.\\
 \textbf{Metric:} The total difference in distance between the reported corners of the workspace and the distance between the actual corners.\\
 \textbf{Acceptance Criteria:} The total difference must not exceed 1 in.\\
-\textbf{Requirement(s) Verified:} \frref{fr:in_bounds}
+\textbf{Requirement(s) Verified:} FR4
 
 \subsubsection{Functional Test: Robot Position}
 \label{test:localization_ft_robopos}
@@ -25,7 +25,7 @@
 \textbf{Operational Procedure:} With a single robot within the working bounds, the localization system attempts to determine the robot's location. Robot operation out of bounds is also considered out of scope, and is undefined behavior.\\
 \textbf{Metric:} Whether or not a location is returned by the localization system.\\
 \textbf{Acceptance Criteria:} The system must return a location for the robot. \\
-\textbf{Requirement(s) Verified:} \frref{fr:in_bounds}, \nfrref{nfr:quality}, \frref{fr:localize}, \nfrref{nfr:rot_accuracy}
+\textbf{Requirement(s) Verified:} FR4, NFR6, FR3, NFR13
 
 \subsubsection{Functional Test: Bounds}
 \label{test:localization_ft_bounds}
@@ -33,25 +33,4 @@
 \textbf{Operational Procedure:} The localization system attempts to find all four corners of the working bounds while they are all in its field of view.\\
 \textbf{Metric:} Whether or not locations are returned for all four corners.\\
 \textbf{Acceptance Criteria:} The system must return locations for all four corners of the working bounds.\\
-\textbf{Requirement(s) Verified:} \frref{fr:in_bounds}, \nfrref{nfr:quality}, \frref{fr:localize}
-
-\deleted[remark={RH, V2}]{\textbf{Failure Mode: Camera Failure}}
-\deleted[remark={RH, V2}]{\textbf{Description:} A camera failure occurs when the localization camera, mounted above the drawing surface, is incapable of gathering and/or sending data to the off-board processor.}
-\deleted[remark={RH, V2}]{\textbf{Cause:} Two potential causes for a camera failure are insufficient power supplied to the camera, or improper mounting. Improper mounting can cause the camera to fall or hang, which results in skewed and mis-calibrated camera data.}
-\deleted[remark={RH, V2}]{\textbf{Effects:}  The effect of camera failure results in localization being poor or impossible, which can halt operation. This can be temporary, as a user-reported error would be generated to resolve this issue.}
-\deleted[remark={RH, V2}]{\textbf{Criticality:}  This failure is of medium importance, as, while it halts operation, it can be resolved by the user to continue the drawing process.}
-\deleted[remark={RH, V2}]{\textbf{Safety Hazards:} The only safety hazard exists if the camera falls entirely from its mount, in which case it may fall on a person below. }
-
-\deleted[remark={RH, V2}]{\textbf{Failure Mode: Unusable Localization Data}}
-\deleted[remark={RH, V2}]{\textbf{Description:} This failure mode exists when the off-board processing system is unable to localize.}
-\deleted[remark={RH, V2}]{\textbf{Cause:} Causes include mis-calibrated camera data or incorrectly placed bounds tags. For example, the bounds tags could be placed in a shape that does not reflect the drawing surface accurately, resulting in incorrect localization. Blurry data could also result in misreading localization tags.}
-\deleted[remark={RH, V2}]{\textbf{Effects:}  If localization cannot be completed, robot operation will halt to avoid performing undefined actions. This error can be resolved by the user recalibrating or fixing the source that causes bad data.}
-\deleted[remark={RH, V2}]{\textbf{Criticality:}  Similar to\sref{sec:localization_fm_cam}, this failure is of medium criticality and can be resolved by the user.}
-\deleted[remark={RH, V2}]{\textbf{Safety Hazards:} There are no safety hazards that result from this failure mode.}
-
-\deleted[remark={RH, V2}]{\textbf{Failure Mode: Vision Tag Occlusion}}
-\deleted[remark={RH, V2}]{\textbf{Description:} Occlusion of the vision tags is when the camera does not have direct line-of-sight of any vision tag used for localizing robots and bounds.}
-\deleted[remark={RH, V2}]{\textbf{Cause:} Tag occlusion is likely the result of an obstacle unexpectedly entering the scene. This could be a person walking over the drawing surface or over the edges of the camera view, where the vision tags representing the surface bounds are located.}
-\deleted[remark={RH, V2}]{\textbf{Effects:} Inability to find a tag results in incomplete localization, and will pause operation until the user can resolve the issue. This guarantees all robots are tracked continually during operation, as well as staying within bounds of the drawing surface.}
-\deleted[remark={RH, V2}]{\textbf{Criticality:}  This is a minor failure, as robot operation can easily be corrected and operation can continue.}
-\deleted[remark={RH, V2}]{\textbf{Safety Hazards:} There are no safety hazards that result from this failure mode.}
+\textbf{Requirement(s) Verified:} FR4, NFR6, FR3
