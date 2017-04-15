@@ -44,17 +44,27 @@ class OnboardController(object):
                     self.motors.stopMotors()
                     continue
 
-                robot_pos = DirectedPoint(msg.robot_x, msg.robot_y, theta=0)
-                target_pos = DirectedPoint(msg.target_x, msg.target_y, theta=0)
+                robot_pos = DirectedPoint(
+                    msg.robot_x, msg.robot_y, theta=msg.robot_th)
+                target_pos = DirectedPoint(
+                    msg.target_x, msg.target_y, theta=msg.target_th)
                 print("Moving from", robot_pos, " to", target_pos)
-                self.moveMotorsTime(self.getMotorCommands(robot_pos, target_pos))
+                self.moveMotors(self.getMotorCommands(robot_pos, target_pos))
                 
+
+    def moveMotors(self, command):
+        """
+        Commands all motors using given command (i.e. DIR_UPLEFT).
+        @param command Motor command to run
+        """
+        print("Moving:", command)
+        for i in range(0, 4):
+            self.motors.commandMotor(i, command[i])
 
     def moveMotorsTime(self, command, t=1):
         """
         Commands all motors using a given command (such as DIR_UPLEFT) for a time
         in seconds.
-        @param motors Motors object
         @param command Motor command to run
         @param t Time in seconds to move for
         """

@@ -50,26 +50,21 @@ class OffboardController(object):
         '''
         print 'offboard main loop'
         test_data = None
-        t = 0
+
         while True:
-            # if t is 0:
-            #     test_data = [0, 0, 0, 1, 0]
-            # elif t is 5:
-            #     test_data = [0, 1, 1, 1, 0]
-            # elif t is 10:
-            #     test_data = [1, 1, 0, 0, 0]
-            # elif t >= 20:
-            #     test_data = [0, 0, 0, 0, 1]
             
-            test_data = [0, 0, 1, 0, 0]
-            self.sys_comm.generateMessage(0, None, None, test=test_data)
-            self.sys_comm.sendTCPMessages()
+            # Simple test to move forward
+            # test_data = [0, 0, 1, 0, 0] # (x1,y1,th1), (x2,y2,th2), stop_status
+            # self.sys_comm.generateMessage(0, None, None, test=test_data)
+            # self.sys_comm.sendTCPMessages()
 
             try:
                 data = self.sys_localization.getLocalizationData()
-                blue_pos = data.robots[cst.TAG_ROBOT1]
-                print("blue pos: ", str(blue_pos))
-                test_data = [blue_pos.x, blue_pos.y, 0.5, 0.5, 0]
+                blue_tf = data.robots[cst.TAG_ROBOT1]
+                print("blue pos: ", str(blue_tf))
+                test_data = [blue_tf.x, blue_tf.y, blue_tf.theta, 
+                             0.5, 0.5, 0, 
+                             0]
 
                 self.sys_comm.generateMessage(0, None, None, test=test_data)
                 self.sys_comm.sendTCPMessages()
@@ -78,7 +73,6 @@ class OffboardController(object):
                 print("Failed to localize")
 
             time.sleep(0.5)
-            t += 1
 
 
         # Original, untested loop

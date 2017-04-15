@@ -22,6 +22,14 @@ class Point(object):
         """
         return Point(self.x - pt.x, self.y - pt.y)
 
+    def __add__(self, pt):
+        """
+        Adds pt to current object self + pt. Element-wise operation.
+        @param pt Point object to add
+        @return Point object
+        """
+        return Point(self.x + pt.x, self.y + pt.y)
+
 class DirectedPoint(Point):
     """
     A DirectedPoint is a point with orientation. The expected use is for
@@ -46,3 +54,14 @@ class DirectedPoint(Point):
             self.x - dpt.x,
             self.y - dpt.y,
             self.theta - dpt.theta)
+
+    def __add__(self, dpt):
+        """
+        Element-wise addition of DirectedPoint objects.
+        @param dpt DirectedPoint to add
+        @return DirectedPoint object
+        """
+        return DirectedPoint(
+            self.x + dpt.x, 
+            self.y + dpt.y,
+            self.theta + dpt.theta)

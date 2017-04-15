@@ -5,6 +5,10 @@ Contains constants required across subsystems
 # Small number for float comparison
 SIGMA = 0.0001
 
+################ SYSTEM-WIDE CONSTANTS ################
+BLUE_ID = 0
+BAD_ID = 1
+
 ################ COMMUNICATION SUBSYSTEM ################
 # Communication values - used both onboard and offboard
 OFFBOARD_IP = '192.168.0.26' # NJ macbook IP
