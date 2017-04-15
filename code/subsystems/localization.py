@@ -50,8 +50,8 @@ class LocalizationSystem(object):
         and update the localization struct
         """
         self._detector.detect_apriltags()
-        if self._detector.num_detected() is 0:
-            return
+        # if self._detector.num_detected() is 0:
+        #     return
 
         corners_detected = []
         robots_detected = []
@@ -104,13 +104,13 @@ class LocalizationSystem(object):
                 break
             self._localize(verbose=verbose)
 
-    def setup(self):
+    def setup(self, camera=0, filename=""):
         """
         Calls C++ functions to instantiate AprilTags libary, activate camera,
         and run diagnostics
         """
         # self._detector = apriltags.TagDetector("/home/neil/data/apriltag_test.mp4")
-        self._detector = apriltags.TagDetector("")
+        self._detector = apriltags.TagDetector(filename)
         self._detector.setup()
 
 
@@ -123,6 +123,8 @@ class LocalizationSystem(object):
                              args=(verbose,))
         self._localization_thread = t
         t.start()
+        if verbose > 0:
+            print("Localization thread started")
 
 
     def close(self):

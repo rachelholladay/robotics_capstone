@@ -66,9 +66,9 @@ class OffboardController(object):
                 blue_locomotion = LocomotionData(
                     blue_pos, 
                     DirectedPoint(0.5, 0,5, 0))
-                test_data = [blue_tf.x, blue_tf.y, blue_tf.theta, 
-                             0.5, 0.5, 0, 
-                             0]
+                # test_data = [blue_tf.x, blue_tf.y, blue_tf.theta, 
+                #              0.5, 0.5, 0, 
+                #              0]
 
                 self.sys_comm.generateMessage(
                     robot_id=cst.BLUE_ID, locomotion=blue_locomotion, 
@@ -118,7 +118,6 @@ if __name__ == "__main__":
     # controller.loop()
 
 
-
     # from messages import robot_commands_pb2
     # import socket
 
@@ -128,12 +127,13 @@ if __name__ == "__main__":
 
     # Localization test
     loc = subsystems.LocalizationSystem(scaled_dims=[1,1])
-    loc.setup()
-    loc.begin_loop(verbose=0)
+    print("created")
+    loc.setup(1)
+    loc.begin_loop(verbose=1)
+    print("main localization started")
     while(True):
-        data = loc.getLocalizationData()
-        if data is not None:
-    #         embed()
+            data = loc.getLocalizationData()
+            time.sleep(0.5)
 
     # serialized = cmd.SerializeToString()
 
@@ -154,4 +154,3 @@ if __name__ == "__main__":
     #     print data
 
     # s.close()
-
