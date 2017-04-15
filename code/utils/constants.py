@@ -12,6 +12,8 @@ BAD_ID = 1
 ################ COMMUNICATION SUBSYSTEM ################
 # Communication values - used both onboard and offboard
 OFFBOARD_IP = '192.168.0.26' # NJ macbook IP
+BLUE_IP = '192.168.0.23'
+BAD_IP = 'UPDATE_THIS'
 PORT = 10000
 BUFFER_SIZE = 1024
 

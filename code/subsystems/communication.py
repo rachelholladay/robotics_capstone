@@ -131,11 +131,13 @@ class CommunicationSystem(object):
         try:
             self.messages[robot_id].Clear()
             self.messages[robot_id].robot_id = robot_id
-            self.messages[robot_id].robot_x = test[0]
-            self.messages[robot_id].robot_y = test[1]
-            self.messages[robot_id].target_x = test[2]
-            self.messages[robot_id].target_y = test[3]
-            self.messages[robot_id].stop_status = test[4]
+            self.messages[robot_id].robot_x = locomotion.tf_robot.x
+            self.messages[robot_id].robot_y = locomotion.tf_robot.y
+            self.messages[robot_id].robot_th = locomotion.tf_robot.theta
+            self.messages[robot_id].target_x = locomotion.tf_target.x
+            self.messages[robot_id].target_y = locomotion.tf_target.y
+            self.messages[robot_id].target_th = locomotion.tf_target.theta
+            self.messages[robot_id].stop_status = locomotion.stop_status
         except:
             pass
         

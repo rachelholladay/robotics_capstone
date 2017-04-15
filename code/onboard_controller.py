@@ -48,6 +48,7 @@ class OnboardController(object):
                     msg.robot_x, msg.robot_y, theta=msg.robot_th)
                 target_pos = DirectedPoint(
                     msg.target_x, msg.target_y, theta=msg.target_th)
+                
                 print("Moving from", robot_pos, " to", target_pos)
                 self.moveMotors(self.getMotorCommands(robot_pos, target_pos))
                 

@@ -8,6 +8,7 @@ import time
 from IPython import embed
 
 import subsystems
+from utils.dataStorage import LocomotionData
 from utils import constants as cst
 
 class OffboardController(object):
@@ -62,11 +63,16 @@ class OffboardController(object):
                 data = self.sys_localization.getLocalizationData()
                 blue_tf = data.robots[cst.TAG_ROBOT1]
                 print("blue pos: ", str(blue_tf))
+                blue_locomotion = LocomotionData(
+                    blue_pos, 
+                    DirectedPoint(0.5, 0,5, 0))
                 test_data = [blue_tf.x, blue_tf.y, blue_tf.theta, 
                              0.5, 0.5, 0, 
                              0]
 
-                self.sys_comm.generateMessage(0, None, None, test=test_data)
+                self.sys_comm.generateMessage(
+                    robot_id=cst.BLUE_ID, locomotion=blue_locomotion, 
+                    error=None, test=test_data)
                 self.sys_comm.sendTCPMessages()
                 print("Sent message")
             except:
@@ -105,10 +111,11 @@ class OffboardController(object):
 if __name__ == "__main__":
     robotIPs = ['111.111.1.1', '222.222.2.2']
     localhost = ['localhost']
-    testRobot = ['192.168.0.23']
-    controller = OffboardController(robot_ip=testRobot, drawing_number=1)
-    controller.robotSetup()
-    controller.loop()
+    blueRobotIP = ['192.168.0.23']
+
+    # controller = OffboardController(robot_ip=blueRobotIP, drawing_number=1)
+    # controller.robotSetup()
+    # controller.loop()
 
 
 
@@ -120,12 +127,12 @@ if __name__ == "__main__":
     # commsys.sendTCPMessages()
 
     # Localization test
-    # loc = subsystems.LocalizationSystem(scaled_dims=[1,1])
-    # loc.setup()
-    # loc.begin_loop(verbose=0)
-    # while(True):
-    #     data = loc.getLocalizationData()
-    #     if data is not None:
+    loc = subsystems.LocalizationSystem(scaled_dims=[1,1])
+    loc.setup()
+    loc.begin_loop(verbose=0)
+    while(True):
+        data = loc.getLocalizationData()
+        if data is not None:
     #         embed()
 
     # serialized = cmd.SerializeToString()

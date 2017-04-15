@@ -8,11 +8,20 @@ from utils import constants as cst
 class LocomotionData(object):
     """
     Contains fields for locomotion data for a single robot
-    Locomotion data includes wheel motor commands as well as motor commands
-    for the writing implement
+    Locomotion data includes current and target position and orientations
     """
-    def __init__(self):
-      self.motor_command = [0, 0, 0, 0] # TODO rename 'command' more accurately
+    def __init__(self, tf_robot, tf_target, stop_status=0):
+        """
+        Creates LocomotionData object with target, current position, and stop
+        parameter.
+        @param tf_robot DirectedPoint for robot current pos/orientation
+        @param tf_target DirectedPoint for target current pos/orientation
+        @param stop_status Boolean whether the robot should stop moving or not
+        """
+        self.tf_robot = tf_robot
+        self.tf_target = tf_target
+        self.stop_status = stop_status
+        
 
 class LocalizationData:
     """
