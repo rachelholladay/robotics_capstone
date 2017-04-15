@@ -10,8 +10,8 @@ message robot_command {
   required float target_x = 5;
   required float target_y = 6;
   required float target_th = 7;
-  
-  required int32 stop_status = 6;
+
+  required int32 stop_status = 8;
 
 
 }

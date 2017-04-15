@@ -8,7 +8,7 @@ class LocomotionSystem(object):
     Contains locomotion subsystem.
     '''
     def __init__(self):
-        self.locomotionData = LocomotionData()
+        self.locomotionData = None #LocomotionData()
 
     def updateLocomotion(self, localizationData, pathData):
         """

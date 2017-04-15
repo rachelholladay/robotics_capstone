@@ -88,7 +88,7 @@ class LocalizationSystem(object):
 
             if verbose >= 2:
                 pt = 'x:{:0.2f} y:{:0.2f} theta:{:0.2f}'.format(
-                        tag.id, x_pixels, y_pixels, theta)
+                        x_pixels, y_pixels, theta)
                 print("id:",tag.id," ",pt,sep='')
         
         if verbose >= 1:
@@ -186,7 +186,6 @@ class LocalizationSystem(object):
         # Compute affine transform using only 3 corners
         transform = cv2.getAffineTransform(raw_pts[0:3,:], target_pts)
 
-        embed()
         # Transform raw tag points into scaled coordinates
         # num_tags = raw_pts.shape[0] # rows
         # Calibrated is of the form [x y], each row is a new coordinate

@@ -10,7 +10,7 @@ class LocomotionData(object):
     Contains fields for locomotion data for a single robot
     Locomotion data includes current and target position and orientations
     """
-    def __init__(self, tf_robot, tf_target, stop_status=0):
+    def __init__(self, tf_robot=None, tf_target=None, stop_status=0):
         """
         Creates LocomotionData object with target, current position, and stop
         parameter.
@@ -21,7 +21,7 @@ class LocomotionData(object):
         self.tf_robot = tf_robot
         self.tf_target = tf_target
         self.stop_status = stop_status
-        
+
 
 class LocalizationData:
     """

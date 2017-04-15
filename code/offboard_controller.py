@@ -65,7 +65,8 @@ class OffboardController(object):
                 print("blue pos: ", str(blue_tf))
                 blue_locomotion = LocomotionData(
                     blue_pos, 
-                    DirectedPoint(0.5, 0,5, 0))
+                    DirectedPoint(0.5, 0,5, 0),
+                    0)
                 # test_data = [blue_tf.x, blue_tf.y, blue_tf.theta, 
                 #              0.5, 0.5, 0, 
                 #              0]
@@ -134,6 +135,8 @@ if __name__ == "__main__":
     while(True):
             data = loc.getLocalizationData()
             time.sleep(0.5)
+
+
 
     # serialized = cmd.SerializeToString()
 

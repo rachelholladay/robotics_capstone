@@ -45,10 +45,10 @@ class OnboardController(object):
                     continue
 
                 robot_pos = DirectedPoint(
-                    msg.robot_x, msg.robot_y, theta=msg.robot_th)
+                    msg.robot_x, msg.robot_y, 0) # theta=msg.robot_th)
                 target_pos = DirectedPoint(
-                    msg.target_x, msg.target_y, theta=msg.target_th)
-                
+                    msg.target_x, msg.target_y, 0) # theta=msg.target_th)
+
                 print("Moving from", robot_pos, " to", target_pos)
                 self.moveMotors(self.getMotorCommands(robot_pos, target_pos))
                 
