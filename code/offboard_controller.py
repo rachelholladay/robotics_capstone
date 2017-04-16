@@ -8,6 +8,7 @@ import time
 from IPython import embed
 
 import subsystems
+from utils.geometry import DirectedPoint
 from utils.dataStorage import LocomotionData
 from utils import constants as cst
 
@@ -50,36 +51,54 @@ class OffboardController(object):
         Main offboard controller loop
         '''
         print 'offboard main loop'
-        test_data = None
+        counter = 0
+        stop_locomotion = LocomotionData(
+            DirectedPoint(0,0,0),
+            DirectedPoint(0,0,0),
+            1)
+        test_target = DirectedPoint(0.5, 0.5, 0)
 
         while True:
+            # #Simple test to move forward
+            test = LocomotionData(
+                DirectedPoint(0, 0, 0),
+                DirectedPoint(0, 1, 0),
+                0)
+            self.sys_comm.generateMessage(robot_id=cst.BLUE_ID, 
+                locomotion=test, error=None)
+            self.sys_comm.sendTCPMessages()
+            time.sleep(0.2)
+            continue
             
-            # Simple test to move forward
-            # test_data = [0, 0, 1, 0, 0] # (x1,y1,th1), (x2,y2,th2), stop_status
-            # self.sys_comm.generateMessage(0, None, None, test=test_data)
-            # self.sys_comm.sendTCPMessages()
+            if counter >= 3:  # stop robot
+                self.sys_comm.generateMessage(
+                    robot_id=cst.BLUE_ID, locomotion=stop_locomotion, 
+                    error=None)
+                self.sys_comm.sendTCPMessages()                
 
             try:
+                print("=========== new iteration ============")
                 data = self.sys_localization.getLocalizationData()
                 blue_tf = data.robots[cst.TAG_ROBOT1]
                 print("blue pos: ", str(blue_tf))
+                print(data)
+
+                test_target.theta = data.corners[cst.TAG_TOP_RIGHT].theta
                 blue_locomotion = LocomotionData(
-                    blue_pos, 
-                    DirectedPoint(0.5, 0,5, 0),
+                    blue_tf, 
+                    test_target,
                     0)
-                # test_data = [blue_tf.x, blue_tf.y, blue_tf.theta, 
-                #              0.5, 0.5, 0, 
-                #              0]
 
                 self.sys_comm.generateMessage(
                     robot_id=cst.BLUE_ID, locomotion=blue_locomotion, 
-                    error=None, test=test_data)
+                    error=None)
                 self.sys_comm.sendTCPMessages()
                 print("Sent message")
             except:
                 print("Failed to localize")
 
-            time.sleep(0.5)
+            time.sleep(0.2)
+            counter += 1
 
 
         # Original, untested loop
@@ -114,9 +133,9 @@ if __name__ == "__main__":
     localhost = ['localhost']
     blueRobotIP = ['192.168.0.23']
 
-    # controller = OffboardController(robot_ip=blueRobotIP, drawing_number=1)
-    # controller.robotSetup()
-    # controller.loop()
+    controller = OffboardController(robot_ip=blueRobotIP, drawing_number=1)
+    controller.robotSetup()
+    controller.loop()
 
 
     # from messages import robot_commands_pb2
@@ -127,14 +146,14 @@ if __name__ == "__main__":
     # commsys.sendTCPMessages()
 
     # Localization test
-    loc = subsystems.LocalizationSystem(scaled_dims=[1,1])
-    print("created")
-    loc.setup(1)
-    loc.begin_loop(verbose=1)
-    print("main localization started")
-    while(True):
-            data = loc.getLocalizationData()
-            time.sleep(0.5)
+    # loc = subsystems.LocalizationSystem(scaled_dims=[1,1])
+    # print("created")
+    # loc.setup(1)
+    # loc.begin_loop(verbose=1)
+    # print("main localization started")
+    # while(True):
+    #         data = loc.getLocalizationData()
+    #         time.sleep(0.5)
 
 
 

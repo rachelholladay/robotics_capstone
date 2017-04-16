@@ -52,10 +52,13 @@ class RobotCommunication(object):
         the command into a robot_command protobuf message and returns.
         @return data protobuf message, None if failed to read
         """
-        serial_data = self.offboard_conn.recv(constants.BUFFER_SIZE)
-
         data = robot_commands_pb2.robot_command()
-        data.ParseFromString(serial_data)
+
+        try:
+            serial_data = self.offboard_conn.recv(constants.BUFFER_SIZE)
+            data.ParseFromString(serial_data)
+        except:
+            pass
 
         if data.IsInitialized():
             return data

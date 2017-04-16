@@ -25,6 +25,9 @@ class OnboardController(object):
         self.robot_ip = robot_ip
         self.comm = RobotCommunication()
         self.motors = Motors()
+        self.motors.stopMotors()
+
+        self.command_timer = 0
 
     def setup(self):
         self.comm.connectToOffboard()
@@ -35,22 +38,35 @@ class OnboardController(object):
         offboard system, parses and runs appropriate motor command.
         """
         print("onboard main loop")
+        self.command_timer = time.time()
+
         while(1):
+
             msg = self.comm.listenForMessage()
             if msg is None:
                 continue
             else:
                 if msg.stop_status is 1:
                     self.motors.stopMotors()
-                    continue
+                else:
 
-                robot_pos = DirectedPoint(
-                    msg.robot_x, msg.robot_y, 0) # theta=msg.robot_th)
-                target_pos = DirectedPoint(
-                    msg.target_x, msg.target_y, 0) # theta=msg.target_th)
+                    robot_pos = DirectedPoint(
+                        msg.robot_x, msg.robot_y, theta=msg.robot_th)
+                    target_pos = DirectedPoint(
+                        msg.target_x, msg.target_y, theta=msg.target_th)
 
-                print("Moving from", robot_pos, " to", target_pos)
-                self.moveMotors(self.getMotorCommands(robot_pos, target_pos))
+                    # test_pos = DirectedPoint(
+                    #     0, 0, theta=msg.robot_th)
+                    # test_target = DirectedPoint(
+                    #     0, 0, 90)
+                    # robot_pos = test_pos
+                    # target_pos = test_target
+
+                    print("Moving from", robot_pos, " to", target_pos)
+                    self.moveMotorsTime(self.getMotorCommands(robot_pos, target_pos))
+
+                # reset state
+                msg = None
                 
 
     def moveMotors(self, command):
@@ -62,14 +78,14 @@ class OnboardController(object):
         for i in range(0, 4):
             self.motors.commandMotor(i, command[i])
 
-    def moveMotorsTime(self, command, t=1):
+    def moveMotorsTime(self, command, t=0.25):
         """
         Commands all motors using a given command (such as DIR_UPLEFT) for a time
         in seconds.
         @param command Motor command to run
         @param t Time in seconds to move for
         """
-        print("Moving", command, " for", time, " seconds.")
+        print("Moving", command, " for", t, " seconds.")
         for i in range(0, 4):
             self.motors.commandMotor(i, command[i])
         time.sleep(t)
@@ -101,14 +117,22 @@ class OnboardController(object):
         @param verbose Prints debugging output
         @return [V1, V2, V3, V4] list of motor powers for each robot
         """
+        # Motor directions of movement and the desired axes of movement are 
+        # misaligned. Swapping x and y fixes this problem for motor command
+        # computation.
+        current.x, current.y = current.y, current.x
+        target.x, target.y = target.y, target.x
+
+        # Convert thetas into radians for computation
         target_dpt = target - current
+        target_dpt.theta = math.radians(target_dpt.theta) % (2 * math.pi)
 
         # setup mecanum control params
         # angle to translate at, radians 0-2pi
         target_angle = (math.atan2(target_dpt.y, target_dpt.x)) % (2 * math.pi)
-        target_speed = 1.0 # speed robot moves at [-1, 1]
-        target_rot_speed = 0.0 # how quickly to change robot orientation [-1, 1]
-
+        target_speed = 0.25 # speed robot moves at [-1, 1], original 1
+        # how quickly to change robot orientation [-1, 1], original 0
+        target_rot_speed = 0.1 * (target_dpt.theta / (2 * math.pi))
         if verbose:
             print("Target Angle:", math.degrees(target_angle))
 

@@ -15,7 +15,7 @@ OFFBOARD_IP = '192.168.0.26' # NJ macbook IP
 BLUE_IP = '192.168.0.23'
 BAD_IP = 'UPDATE_THIS'
 PORT = 10000
-BUFFER_SIZE = 1024
+BUFFER_SIZE = 2048
 
 ################ LOCALIZATION SUBSYSTEM ################
 # Corners and robots are assigned to an AprilTag ID - this is to

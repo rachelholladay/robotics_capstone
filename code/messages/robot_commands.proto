@@ -5,13 +5,13 @@ message robot_command {
 
   required float robot_x = 2;
   required float robot_y = 3;
-  required float robot_th = 4;
+  required float robot_th = 7;
 
-  required float target_x = 5;
-  required float target_y = 6;
-  required float target_th = 7;
+  required float target_x = 4;
+  required float target_y = 5;
+  required float target_th = 8;
 
-  required int32 stop_status = 8;
+  required int32 stop_status = 6;
 
 
 }

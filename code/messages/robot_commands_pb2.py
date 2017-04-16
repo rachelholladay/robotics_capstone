@@ -13,7 +13,7 @@ from google.protobuf import descriptor_pb2
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='robot_commands.proto',
   package='robot_commands',
-  serialized_pb='\n\x14robot_commands.proto\x12\x0erobot_commands\"\xa1\x01\n\rrobot_command\x12\x10\n\x08robot_id\x18\x01 \x02(\x05\x12\x0f\n\x07robot_x\x18\x02 \x02(\x02\x12\x0f\n\x07robot_y\x18\x03 \x02(\x02\x12\x10\n\x08robot_th\x18\x04 \x02(\x02\x12\x10\n\x08target_x\x18\x05 \x02(\x02\x12\x10\n\x08target_y\x18\x06 \x02(\x02\x12\x11\n\ttarget_th\x18\x07 \x02(\x02\x12\x13\n\x0bstop_status\x18\x08 \x02(\x05')
+  serialized_pb='\n\x14robot_commands.proto\x12\x0erobot_commands\"\xa1\x01\n\rrobot_command\x12\x10\n\x08robot_id\x18\x01 \x02(\x05\x12\x0f\n\x07robot_x\x18\x02 \x02(\x02\x12\x0f\n\x07robot_y\x18\x03 \x02(\x02\x12\x10\n\x08robot_th\x18\x07 \x02(\x02\x12\x10\n\x08target_x\x18\x04 \x02(\x02\x12\x10\n\x08target_y\x18\x05 \x02(\x02\x12\x11\n\ttarget_th\x18\x08 \x02(\x02\x12\x13\n\x0bstop_status\x18\x06 \x02(\x05')
 
 
 
@@ -48,35 +48,35 @@ _ROBOT_COMMAND = _descriptor.Descriptor(
       options=None),
     _descriptor.FieldDescriptor(
       name='robot_th', full_name='robot_commands.robot_command.robot_th', index=3,
-      number=4, type=2, cpp_type=6, label=2,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='target_x', full_name='robot_commands.robot_command.target_x', index=4,
-      number=5, type=2, cpp_type=6, label=2,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='target_y', full_name='robot_commands.robot_command.target_y', index=5,
-      number=6, type=2, cpp_type=6, label=2,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    _descriptor.FieldDescriptor(
-      name='target_th', full_name='robot_commands.robot_command.target_th', index=6,
       number=7, type=2, cpp_type=6, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     _descriptor.FieldDescriptor(
+      name='target_x', full_name='robot_commands.robot_command.target_x', index=4,
+      number=4, type=2, cpp_type=6, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='target_y', full_name='robot_commands.robot_command.target_y', index=5,
+      number=5, type=2, cpp_type=6, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
+      name='target_th', full_name='robot_commands.robot_command.target_th', index=6,
+      number=8, type=2, cpp_type=6, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    _descriptor.FieldDescriptor(
       name='stop_status', full_name='robot_commands.robot_command.stop_status', index=7,
-      number=8, type=5, cpp_type=1, label=2,
+      number=6, type=5, cpp_type=1, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,

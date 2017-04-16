@@ -116,7 +116,7 @@ class CommunicationSystem(object):
         self.messages[robot_id].Clear()
 
 
-    def generateMessage(self, robot_id, locomotion, error, test=None):
+    def generateMessage(self, robot_id, locomotion, error):
         """
         Builds the message for the specified robot consisting of locomotion,
         writing, and error data. Message is a proto3 message to be sent to
@@ -131,12 +131,15 @@ class CommunicationSystem(object):
         try:
             self.messages[robot_id].Clear()
             self.messages[robot_id].robot_id = robot_id
+
             self.messages[robot_id].robot_x = locomotion.tf_robot.x
             self.messages[robot_id].robot_y = locomotion.tf_robot.y
             self.messages[robot_id].robot_th = locomotion.tf_robot.theta
+
             self.messages[robot_id].target_x = locomotion.tf_target.x
             self.messages[robot_id].target_y = locomotion.tf_target.y
             self.messages[robot_id].target_th = locomotion.tf_target.theta
+            
             self.messages[robot_id].stop_status = locomotion.stop_status
         except:
             pass
