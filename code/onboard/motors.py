@@ -52,8 +52,8 @@ class Motors(object):
         GPIO.cleanup()
 
     def setSpeed(self, targets):
-        self.stopFlag = True
-        self.stopMotors()
+        # self.stopFlag = True
+        # self.stopMotors()
         self.stopFlag = False
         self.currThread = threading.Thread(target=self.pidSpeed, args=(targets,))
         self.currThread.start()

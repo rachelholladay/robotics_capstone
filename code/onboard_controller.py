@@ -14,8 +14,7 @@ from onboard.robot_communication import RobotCommunication
 from onboard.motors import Motors
 from utils.geometry import DirectedPoint
 
-from utils.geometry import DirectedPoint
-
+import utils.constants as cst
 
 class OnboardController(object):
     def __init__(self, robot_ip):
@@ -63,7 +62,7 @@ class OnboardController(object):
                     # target_pos = test_target
 
                     print("Moving from", robot_pos, " to", target_pos)
-                    self.moveMotorsTime(self.getMotorCommands(robot_pos, target_pos))
+                    self.moveMotors(self.getMotorCommands(robot_pos, target_pos))
 
                 # reset state
                 msg = None
@@ -78,7 +77,7 @@ class OnboardController(object):
         for i in range(0, 4):
             self.motors.commandMotor(i, command[i])
 
-    def moveMotorsTime(self, command, t=0.25):
+    def moveMotorsTime(self, command, t=0.3):
         """
         Commands all motors using a given command (such as DIR_UPLEFT) for a time
         in seconds.
@@ -127,12 +126,22 @@ class OnboardController(object):
         target_dpt = target - current
         target_dpt.theta = math.radians(target_dpt.theta) % (2 * math.pi)
 
-        # setup mecanum control params
+
+        ### setup mecanum control params ###
         # angle to translate at, radians 0-2pi
         target_angle = (math.atan2(target_dpt.y, target_dpt.x)) % (2 * math.pi)
-        target_speed = 0.25 # speed robot moves at [-1, 1], original 1
+        
+        # speed robot moves at, [-1, 1], original 1
+        magnitude = target_dpt.x**2 + target_dpt.y**2
+        target_speed = 0.0
+        if magnitude > cst.SIGMA_LARGE:
+            target_speed = 0.3
+
         # how quickly to change robot orientation [-1, 1], original 0
-        target_rot_speed = 0.1 * (target_dpt.theta / (2 * math.pi))
+        target_rot_speed = 0.0
+        if target_dpt.theta > cst.SIGMA_LARGE:
+            target_rot_speed = 0.2
+
         if verbose:
             print("Target Angle:", math.degrees(target_angle))
 

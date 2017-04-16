@@ -4,6 +4,7 @@ Contains constants required across subsystems
 
 # Small number for float comparison
 SIGMA = 0.0001
+SIGMA_LARGE = 0.001
 
 ################ SYSTEM-WIDE CONSTANTS ################
 BLUE_ID = 0

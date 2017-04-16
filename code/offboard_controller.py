@@ -60,21 +60,16 @@ class OffboardController(object):
 
         while True:
             # #Simple test to move forward
-            test = LocomotionData(
-                DirectedPoint(0, 0, 0),
-                DirectedPoint(0, 1, 0),
-                0)
-            self.sys_comm.generateMessage(robot_id=cst.BLUE_ID, 
-                locomotion=test, error=None)
-            self.sys_comm.sendTCPMessages()
-            time.sleep(0.2)
-            continue
-            
-            if counter >= 3:  # stop robot
-                self.sys_comm.generateMessage(
-                    robot_id=cst.BLUE_ID, locomotion=stop_locomotion, 
-                    error=None)
-                self.sys_comm.sendTCPMessages()                
+            # test = LocomotionData(
+            #     DirectedPoint(0, 0, 0),
+            #     DirectedPoint(1, 0, 0),
+            #     0)
+            # self.sys_comm.generateMessage(robot_id=cst.BLUE_ID, 
+            #     locomotion=test, error=None)
+            # self.sys_comm.sendTCPMessages()
+            # time.sleep(0.2)
+            # continue
+                      
 
             try:
                 print("=========== new iteration ============")
@@ -83,7 +78,8 @@ class OffboardController(object):
                 print("blue pos: ", str(blue_tf))
                 print(data)
 
-                test_target.theta = data.corners[cst.TAG_TOP_RIGHT].theta
+                blue_tf.theta = 0
+                test_target.theta = 0 #data.corners[cst.TAG_TOP_RIGHT].theta
                 blue_locomotion = LocomotionData(
                     blue_tf, 
                     test_target,
@@ -97,8 +93,7 @@ class OffboardController(object):
             except:
                 print("Failed to localize")
 
-            time.sleep(0.2)
-            counter += 1
+            time.sleep(0.1)
 
 
         # Original, untested loop
