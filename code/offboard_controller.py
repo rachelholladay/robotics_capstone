@@ -123,6 +123,7 @@ class OffboardController(object):
 
     def close(self):
         # Send message to stop robot
+        print("Shutting down...")
         stop_locomotion = LocomotionData(
             DirectedPoint(0, 0, 0),
             DirectedPoint(0, 0, 0),
@@ -131,6 +132,7 @@ class OffboardController(object):
             robot_id=cst.BLUE_ID, locomotion=stop_locomotion, 
             error=None)
         self.sys_comm.sendTCPMessages()
+        self.sys_comm.closeTCPConnections()
 
         self.sys_localization.close()
 

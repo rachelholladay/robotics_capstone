@@ -30,11 +30,13 @@ class OnboardController(object):
 
         self.message_timer = 0
         self._watchdog_thread = None
+        self._stop_thread = False
 
         atexit.register(self.close)
 
     def setup(self):
         self.comm.connectToOffboard()
+        time.sleep(1)
 
         # start message watchdog timer to ensure motion does not occur without
         # receiving offboard messages
@@ -73,6 +75,7 @@ class OnboardController(object):
 
 
                     ###### Controller to fix accuracy #####
+                    # TODO make function, directional adjustment not necessary
                     # Use previous-message motion vector and actual robot
                     # position relative to previous vector to adjust target
                     # to account for any motion error
@@ -95,14 +98,16 @@ class OnboardController(object):
                             ((robot_pos - prev_robot).dot(prev_direction)) * prev_direction) \
                             - robot_pos
 
-                        print("error vec:", error_vector)
+                        # print("error vec:", error_vector)
 
-                        # Offset position by error to correct
-                        robot_pos = robot_pos - error_vector
+
 
                         # Update previous for next iteration
                         prev_robot = robot_pos
                         prev_target = target_pos
+
+                        # Offset position by error to correct
+                        # robot_pos = robot_pos + error_vector
 
                     # test_pos = DirectedPoint(
                     #     0, 0, theta=msg.robot_th)
@@ -142,7 +147,7 @@ class OnboardController(object):
         self.motors.stopMotors()
         time.sleep(0.01)
 
-    def getMotorCommands(self, current_dpt, target_dpt, verbose=1):
+    def getMotorCommands(self, current, target, verbose=1):
         """
         Uses mechanum control equations to compute motor powers for each motor
             to move along a vector between the provided current/target points
@@ -166,33 +171,50 @@ class OnboardController(object):
         @param verbose Prints debugging output
         @return [V1, V2, V3, V4] list of motor powers for each robot
         """
+
+        # current = DirectedPoint(current_dpt.x, current_dpt.y, current_dpt.theta)
+        # target = DirectedPoint(target_dpt.x, target_dpt.y, target_dpt.theta)
+        # current.x, current.y = current.y, current.x
+        # target.x, target.y = target.y, target.x
+
+        # Create global target directional vector
+        gtarget_dpt = target - current
         # Motor directions of movement and the desired axes of movement are 
         # misaligned. Swapping x and y fixes this problem for motor command
-        # computation.
-        current = DirectedPoint(current_dpt.x, current_dpt.y, current_dpt.theta)
-        target = DirectedPoint(target_dpt.x, target_dpt.y, target_dpt.theta)
-        current.x, current.y = current.y, current.x
-        target.x, target.y = target.y, target.x
+        # computation.     
+        gtarget_dpt.x, gtarget_dpt.y = gtarget_dpt.y, gtarget_dpt.x
+        gtarget_dpt.theta = -(math.radians(gtarget_dpt.theta) % (2 * math.pi))
+        print("global target dpt", gtarget_dpt)
 
-        # Convert thetas into radians for computation
-        target_dpt = target - current
-        target_dpt.theta = math.radians(target_dpt.theta) % (2 * math.pi)
+        # Create target_dpt in local coordinates, relative to robot axis
+        # Rotate target_dpt.x,y by target_dpt.theta
+        target_dpt = DirectedPoint(
+            gtarget_dpt.x*math.cos(gtarget_dpt.theta) - gtarget_dpt.y*math.sin(gtarget_dpt.theta),
+            gtarget_dpt.y*math.cos(gtarget_dpt.theta) + gtarget_dpt.x*math.sin(gtarget_dpt.theta),
+            gtarget_dpt.theta)
         print("target dpt", target_dpt)
-
         ### setup mecanum control params ###
         # angle to translate at, radians 0-2pi
         target_angle = (math.atan2(target_dpt.y, target_dpt.x)) % (2 * math.pi)
         
         # speed robot moves at, [-1, 1], original 1
-        magnitude = target_dpt.x**2 + target_dpt.y**2
+        # stop if close to global goal
+        magnitude = gtarget_dpt.x**2 + gtarget_dpt.y**2
         target_speed = 0.0
         if magnitude > cst.SIGMA_LARGE:
             target_speed = 0.3
 
         # how quickly to change robot orientation [-1, 1], original 0
         target_rot_speed = 0.0
-        if target_dpt.theta > 0.2 or target_dpt.theta < (2 * math.pi) - 0.2:
-            target_rot_speed = 0.1
+        print("target_dpt.theta:",abs(target_dpt.theta))
+        if abs(target_dpt.theta) > 0.15 and abs(target_dpt.theta) < (2 * math.pi) - 0.15:
+            rot_speed_multiplier = 0
+            if abs(target_dpt.theta) > math.pi:
+                rot_speed_multiplier = 1
+            else:
+                rot_speed_multiplier = -1
+            target_rot_speed = 0.15 * rot_speed_multiplier
+        print("rot speed:",target_rot_speed)
 
         if verbose:
             print("Target Angle:", math.degrees(target_angle))
@@ -203,8 +225,9 @@ class OnboardController(object):
         V2 = target_speed * math.cos(target_angle + pi4) - target_rot_speed
         V3 = target_speed * math.cos(target_angle + pi4) + target_rot_speed
         V4 = target_speed * math.sin(target_angle + pi4) - target_rot_speed
-
-        return self._rescaleMotorPower([V1, V2, V3, V4])
+        motor_powers = [V1, V2, V3, V4]
+        print("Unscaled motors", motor_powers)
+        return self._rescaleMotorPower(motor_powers)
 
     def _rescaleMotorPower(self, motor_powers):
         """
@@ -224,15 +247,21 @@ class OnboardController(object):
         return motor_powers
 
     def _message_watchdog(self):
-        if abs(time.time() - self.message_timer) > cst.MESSAGE_TIMEOUT:
-            self.motors.stopMotors()
+        while True:
+            if self._stop_thread is True:
+                return
+            if abs(time.time() - self.message_timer) > cst.MESSAGE_TIMEOUT:
+                print("Message timer overrun, stopping motors")
+                self.motors.stopMotors()
+                return
 
     def close(self):
         """
         Stops motor movement and ends any threads.
         """
+        print("Shutting down...")
         self.motors.stopMotors()
-
+        self._stop_thread = True
         if self._watchdog_thread is not None:
             self._watchdog_thread.join()
 

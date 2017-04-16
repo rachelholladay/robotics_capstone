@@ -101,7 +101,8 @@ class LocalizationSystem(object):
         """
         while(True):
             if self._stop_flag:
-                break
+                print("checking")
+                return
             self._localize(verbose=verbose)
 
     def setup(self, camera=0, filename=""):
@@ -131,7 +132,10 @@ class LocalizationSystem(object):
         self._stop_flag = True
         if self._localization_thread is not None:
             self._localization_thread.join()
-        # self._detector.close() # TODO fix this - crashes(?) on call
+        try:
+            self._detector.close() # TODO fix this - crashes(?) on call
+        except:
+            pass
 
     def getLocalizationData(self):
         """

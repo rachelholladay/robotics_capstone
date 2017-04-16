@@ -17,7 +17,7 @@ BLUE_IP = '192.168.0.23'
 BAD_IP = 'UPDATE_THIS'
 PORT = 10000
 BUFFER_SIZE = 2048
-MESSAGE_TIMEOUT = 2 # seconds
+MESSAGE_TIMEOUT = 1 # max delay in seconds between messages before onboard stops
 
 ################ LOCALIZATION SUBSYSTEM ################
 # Corners and robots are assigned to an AprilTag ID - this is to
