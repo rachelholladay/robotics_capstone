@@ -39,6 +39,8 @@ class DirectedPoint(Point):
         Point.__init__(self, x, y, valid)
         self.theta = theta
 
+        __rmul__ = self.__mul__  # define multiplication bidirectionaly
+
     def __str__(self):
         return "DirectedPoint x:%f y:%f theta:%f" % \
             (self.x, self.y, self.theta)
@@ -65,3 +67,33 @@ class DirectedPoint(Point):
             self.x + dpt.x, 
             self.y + dpt.y,
             self.theta + dpt.theta)
+
+    def dot(self, dpt):
+        """
+        Dot product of (x,y) components
+        @param dpt Directed Point to use in dot product
+        @return self.x * dpt.x + self.y + dpt.y
+        """
+        return (self.x * dpt.x) + (self.y * dpt.y)
+
+    def __mul__(self, cst):
+        """
+        Multiplies a constant by the (x,y) components.
+        @param cst Constant to multiply.
+        @return DirectedPoint with (x,y) scaled by cst
+        """
+        return DirectedPoint(
+            self.x * cst,
+            self.y * cst,
+            self.theta)
+
+    def __rmul__(self, cst):
+        """
+        Multiplies a constant by the (x,y) components.
+        @param cst Constant to multiply.
+        @return DirectedPoint with (x,y) scaled by cst
+        """
+        return DirectedPoint(
+            self.x * cst,
+            self.y * cst,
+            self.theta)

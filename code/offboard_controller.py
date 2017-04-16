@@ -44,7 +44,7 @@ class OffboardController(object):
 
         # TODO start localization, planner and UI in threads
         self.sys_localization.setup()
-        self.sys_localization.begin_loop(verbose=0)
+        self.sys_localization.begin_loop(verbose=1)
 
     def loop(self):
         '''

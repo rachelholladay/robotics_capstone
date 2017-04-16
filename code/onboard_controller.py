@@ -39,6 +39,9 @@ class OnboardController(object):
         print("onboard main loop")
         self.command_timer = time.time()
 
+        prev_robot = None
+        prev_target = None
+
         while(1):
 
             msg = self.comm.listenForMessage()
@@ -48,11 +51,39 @@ class OnboardController(object):
                 if msg.stop_status is 1:
                     self.motors.stopMotors()
                 else:
-
+                    # Specified target from offboard system
                     robot_pos = DirectedPoint(
                         msg.robot_x, msg.robot_y, theta=msg.robot_th)
                     target_pos = DirectedPoint(
                         msg.target_x, msg.target_y, theta=msg.target_th)
+
+
+                    ###### Controller to fix accuracy #####
+                    # Use previous-message motion vector and actual robot
+                    # position relative to previous vector to adjust target
+                    # to account for any motion error
+                    # Error vector based on 
+                    # http://stackoverflow.com/questions/5227373/minimal-perpendicular-vector-between-a-point-and-a-line
+                    if prev_target is None or prev_robot is None:
+                        # first message, set previous for next message
+                        prev_robot = robot_pos
+                        prev_target = target_pos
+                    else:
+                        # Use robot's current position and find offset from
+                        # ideal vector of prev_target - prev_robot
+                        prev_direction = prev_target - prev_robot
+                        prev_dir_mag = math.sqrt(prev_direction.x**2 + prev_direction.y**2)
+                        prev_direction.x = prev_direction.x / prev_dir_mag
+                        prev_direction.y = prev_direction.y / prev_dir_mag
+
+                        error_vector = (prev_robot + \
+                            ((robot_pos - prev_robot).dot(prev_direction)) * prev_direction) \
+                            - robot_pos
+                        print(error_vector)
+
+                        # Update previous for next iteration
+                        prev_robot = robot_pos
+                        prev_target = target_pos
 
                     # test_pos = DirectedPoint(
                     #     0, 0, theta=msg.robot_th)
