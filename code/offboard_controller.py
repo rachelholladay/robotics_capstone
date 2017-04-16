@@ -4,6 +4,7 @@ Runs fixed-rate loop that pulls data from subsystems
 '''
 import sys
 import time
+import atexit
 
 from IPython import embed
 
@@ -27,6 +28,8 @@ class OffboardController(object):
 
         # data = self.sys_ui.parseInputPaths('inputs/test{}'.format(drawing_number))
         # paths = self.sys_planner.planTrajectories(data)
+
+        atexit.register(self.close)
         
     def robotSetup(self):
         '''
@@ -44,7 +47,7 @@ class OffboardController(object):
 
         # TODO start localization, planner and UI in threads
         self.sys_localization.setup()
-        self.sys_localization.begin_loop(verbose=1)
+        self.sys_localization.begin_loop(verbose=0)
 
     def loop(self):
         '''
@@ -78,8 +81,10 @@ class OffboardController(object):
                 print("blue pos: ", str(blue_tf))
                 print(data)
 
-                blue_tf.theta = 0
-                test_target.theta = 0 #data.corners[cst.TAG_TOP_RIGHT].theta
+                # enable or disable theta correction
+                # blue_tf.theta = 0
+                test_target.theta = data.corners[cst.TAG_TOP_RIGHT].theta
+
                 blue_locomotion = LocomotionData(
                     blue_tf, 
                     test_target,
@@ -93,7 +98,7 @@ class OffboardController(object):
             except:
                 print("Failed to localize")
 
-            time.sleep(0.1)
+            time.sleep(0.01)
 
 
         # Original, untested loop
@@ -117,6 +122,16 @@ class OffboardController(object):
 
 
     def close(self):
+        # Send message to stop robot
+        stop_locomotion = LocomotionData(
+            DirectedPoint(0, 0, 0),
+            DirectedPoint(0, 0, 0),
+            1)
+        self.sys_comm.generateMessage(
+            robot_id=cst.BLUE_ID, locomotion=stop_locomotion, 
+            error=None)
+        self.sys_comm.sendTCPMessages()
+
         self.sys_localization.close()
 
     def _test(self):

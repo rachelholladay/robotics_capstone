@@ -129,7 +129,8 @@ class LocalizationSystem(object):
 
     def close(self):
         self._stop_flag = True
-        self._localization_thread.join()
+        if self._localization_thread is not None:
+            self._localization_thread.join()
         # self._detector.close() # TODO fix this - crashes(?) on call
 
     def getLocalizationData(self):

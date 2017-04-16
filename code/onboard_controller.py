@@ -6,6 +6,7 @@ from __future__ import print_function
 import sys
 import math
 import time
+import atexit 
 
 import numpy as np
 
@@ -28,6 +29,8 @@ class OnboardController(object):
 
         self.command_timer = 0
 
+        atexit.register(self.close)
+
     def setup(self):
         self.comm.connectToOffboard()
 
@@ -48,6 +51,7 @@ class OnboardController(object):
             if msg is None:
                 continue
             else:
+                print("======= new message =======")
                 if msg.stop_status is 1:
                     self.motors.stopMotors()
                 else:
@@ -73,13 +77,18 @@ class OnboardController(object):
                         # ideal vector of prev_target - prev_robot
                         prev_direction = prev_target - prev_robot
                         prev_dir_mag = math.sqrt(prev_direction.x**2 + prev_direction.y**2)
+
                         prev_direction.x = prev_direction.x / prev_dir_mag
                         prev_direction.y = prev_direction.y / prev_dir_mag
 
                         error_vector = (prev_robot + \
                             ((robot_pos - prev_robot).dot(prev_direction)) * prev_direction) \
                             - robot_pos
-                        print(error_vector)
+
+                        print("error vec:", error_vector)
+
+                        # Offset position by error to correct
+                        robot_pos = robot_pos - error_vector
 
                         # Update previous for next iteration
                         prev_robot = robot_pos
@@ -123,7 +132,7 @@ class OnboardController(object):
         self.motors.stopMotors()
         time.sleep(0.01)
 
-    def getMotorCommands(self, current, target, verbose=1):
+    def getMotorCommands(self, current_dpt, target_dpt, verbose=1):
         """
         Uses mechanum control equations to compute motor powers for each motor
             to move along a vector between the provided current/target points
@@ -150,13 +159,15 @@ class OnboardController(object):
         # Motor directions of movement and the desired axes of movement are 
         # misaligned. Swapping x and y fixes this problem for motor command
         # computation.
+        current = DirectedPoint(current_dpt.x, current_dpt.y, current_dpt.theta)
+        target = DirectedPoint(target_dpt.x, target_dpt.y, target_dpt.theta)
         current.x, current.y = current.y, current.x
         target.x, target.y = target.y, target.x
 
         # Convert thetas into radians for computation
         target_dpt = target - current
         target_dpt.theta = math.radians(target_dpt.theta) % (2 * math.pi)
-
+        print("target dpt", target_dpt)
 
         ### setup mecanum control params ###
         # angle to translate at, radians 0-2pi
@@ -170,8 +181,8 @@ class OnboardController(object):
 
         # how quickly to change robot orientation [-1, 1], original 0
         target_rot_speed = 0.0
-        if target_dpt.theta > cst.SIGMA_LARGE:
-            target_rot_speed = 0.2
+        if target_dpt.theta > 0.2 or target_dpt.theta < (2 * math.pi) - 0.2:
+            target_rot_speed = 0.1
 
         if verbose:
             print("Target Angle:", math.degrees(target_angle))
@@ -201,6 +212,14 @@ class OnboardController(object):
             motor_powers[i] = (motor_powers[i] - min_scale) / (max_scale - min_scale)
             motor_powers[i] = int((motor_powers[i] * (255 * 2)) - 255)
         return motor_powers
+
+
+    def close(self):
+        """
+        Stops motor movement and ends any threads.
+        """
+        self.motors.stopMotors()
+
 
 if __name__ == "__main__":
 
