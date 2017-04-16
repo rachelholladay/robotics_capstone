@@ -109,12 +109,6 @@ class OnboardController(object):
                         # Offset position by error to correct
                         # robot_pos = robot_pos + error_vector
 
-                    # test_pos = DirectedPoint(
-                    #     0, 0, theta=msg.robot_th)
-                    # test_target = DirectedPoint(
-                    #     0, 0, 90)
-                    # robot_pos = test_pos
-                    # target_pos = test_target
 
                     print("Moving from", robot_pos, " to", target_pos)
                     self.moveMotors(self.getMotorCommands(robot_pos, target_pos))
@@ -172,30 +166,32 @@ class OnboardController(object):
         @return [V1, V2, V3, V4] list of motor powers for each robot
         """
 
-        # current = DirectedPoint(current_dpt.x, current_dpt.y, current_dpt.theta)
-        # target = DirectedPoint(target_dpt.x, target_dpt.y, target_dpt.theta)
-        # current.x, current.y = current.y, current.x
-        # target.x, target.y = target.y, target.x
-
         # Create global target directional vector
         gtarget_dpt = target - current
         # Motor directions of movement and the desired axes of movement are 
         # misaligned. Swapping x and y fixes this problem for motor command
-        # computation.     
+        # computation. Theta is flipped to match global axes
         gtarget_dpt.x, gtarget_dpt.y = gtarget_dpt.y, gtarget_dpt.x
         gtarget_dpt.theta = -(math.radians(gtarget_dpt.theta) % (2 * math.pi))
-        print("global target dpt", gtarget_dpt)
+        if verbose:
+            print("global target dpt", gtarget_dpt)
 
-        # Create target_dpt in local coordinates, relative to robot axis
+        # Create target_dpt in local coordinates, relative to robot axis of
+        # movement. This is accomplished by rotating the (x,y) vector of the
+        # global axis to match that of the local one.
         # Rotate target_dpt.x,y by target_dpt.theta
         target_dpt = DirectedPoint(
             gtarget_dpt.x*math.cos(gtarget_dpt.theta) - gtarget_dpt.y*math.sin(gtarget_dpt.theta),
             gtarget_dpt.y*math.cos(gtarget_dpt.theta) + gtarget_dpt.x*math.sin(gtarget_dpt.theta),
             gtarget_dpt.theta)
-        print("target dpt", target_dpt)
+        if verbose:
+            print("local target dpt", target_dpt)
+
         ### setup mecanum control params ###
         # angle to translate at, radians 0-2pi
         target_angle = (math.atan2(target_dpt.y, target_dpt.x)) % (2 * math.pi)
+        if verbose > 0:
+            print("Target translation angle:", math.degrees(target_angle))
         
         # speed robot moves at, [-1, 1], original 1
         # stop if close to global goal
@@ -206,19 +202,15 @@ class OnboardController(object):
 
         # how quickly to change robot orientation [-1, 1], original 0
         target_rot_speed = 0.0
-        print("target_dpt.theta:",abs(target_dpt.theta))
         if abs(target_dpt.theta) > 0.15 and abs(target_dpt.theta) < (2 * math.pi) - 0.15:
             rot_speed_multiplier = 0
             if abs(target_dpt.theta) > math.pi:
                 rot_speed_multiplier = 1
             else:
                 rot_speed_multiplier = -1
-            target_rot_speed = 0.15 * rot_speed_multiplier
-        print("rot speed:",target_rot_speed)
+            target_rot_speed = 0.13 * rot_speed_multiplier
 
-        if verbose:
-            print("Target Angle:", math.degrees(target_angle))
-
+    
         # Compute motors, 1-4, with forward direction as specified:
         pi4 = math.pi / 4.0
         V1 = target_speed * math.sin(target_angle + pi4) + target_rot_speed
@@ -226,7 +218,6 @@ class OnboardController(object):
         V3 = target_speed * math.cos(target_angle + pi4) + target_rot_speed
         V4 = target_speed * math.sin(target_angle + pi4) - target_rot_speed
         motor_powers = [V1, V2, V3, V4]
-        print("Unscaled motors", motor_powers)
         return self._rescaleMotorPower(motor_powers)
 
     def _rescaleMotorPower(self, motor_powers):
