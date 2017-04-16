@@ -7,6 +7,7 @@ import sys
 import math
 import time
 import atexit 
+import threading 
 
 import numpy as np
 
@@ -27,12 +28,19 @@ class OnboardController(object):
         self.motors = Motors()
         self.motors.stopMotors()
 
-        self.command_timer = 0
+        self.message_timer = 0
+        self._watchdog_thread = None
 
         atexit.register(self.close)
 
     def setup(self):
         self.comm.connectToOffboard()
+
+        # start message watchdog timer to ensure motion does not occur without
+        # receiving offboard messages
+        self._watchdog_thread = threading.Thread(name='_message_watchdog',
+                             target=self._message_watchdog) 
+        self._watchdog_thread.start()      
 
     def loop(self):
         """
@@ -40,7 +48,7 @@ class OnboardController(object):
         offboard system, parses and runs appropriate motor command.
         """
         print("onboard main loop")
-        self.command_timer = time.time()
+        self.message_timer = time.time()
 
         prev_robot = None
         prev_target = None
@@ -55,6 +63,8 @@ class OnboardController(object):
                 if msg.stop_status is 1:
                     self.motors.stopMotors()
                 else:
+                    self.message_timer = time.time()
+
                     # Specified target from offboard system
                     robot_pos = DirectedPoint(
                         msg.robot_x, msg.robot_y, theta=msg.robot_th)
@@ -213,12 +223,18 @@ class OnboardController(object):
             motor_powers[i] = int((motor_powers[i] * (255 * 2)) - 255)
         return motor_powers
 
+    def _message_watchdog(self):
+        if abs(time.time() - self.message_timer) > cst.MESSAGE_TIMEOUT:
+            self.motors.stopMotors()
 
     def close(self):
         """
         Stops motor movement and ends any threads.
         """
         self.motors.stopMotors()
+
+        if self._watchdog_thread is not None:
+            self._watchdog_thread.join()
 
 
 if __name__ == "__main__":

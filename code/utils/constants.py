@@ -12,11 +12,12 @@ BAD_ID = 1
 
 ################ COMMUNICATION SUBSYSTEM ################
 # Communication values - used both onboard and offboard
-OFFBOARD_IP = '192.168.0.26' # NJ macbook IP
+OFFBOARD_IP = '192.168.0.26' # NJ macbook ubuntu vm IP
 BLUE_IP = '192.168.0.23'
 BAD_IP = 'UPDATE_THIS'
 PORT = 10000
 BUFFER_SIZE = 2048
+MESSAGE_TIMEOUT = 2 # seconds
 
 ################ LOCALIZATION SUBSYSTEM ################
 # Corners and robots are assigned to an AprilTag ID - this is to
