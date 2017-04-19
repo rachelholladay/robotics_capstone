@@ -3,8 +3,8 @@ Contains constants required across subsystems
 """
 
 # Small number for float comparison
-SIGMA = 0.0001
-SIGMA_LARGE = 0.001
+EPSILON = 0.0001
+EPSILON_LARGE = 0.001
 
 ################ SYSTEM-WIDE CONSTANTS ################
 BLUE_ID = 0
@@ -33,7 +33,10 @@ TAG_ROBOT2 = 6
 TAG_ROBOTS = [TAG_ROBOT1, TAG_ROBOT2]
 
 ################ PLANNING SUBSYSTEM ################
+# (top, right) border must be greater than (bottom, left) borders, respectively
 BOTTOM_BORDER = 0 
 TOP_BORDER = 10
 LEFT_BORDER = 0
 RIGHT_BORDER = 10
+assert(TOP_BORDER > BOTTOM_BORDER)
+assert(RIGHT_BORDER > LEFT_BORDER)

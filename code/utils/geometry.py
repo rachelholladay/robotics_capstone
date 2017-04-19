@@ -97,3 +97,10 @@ class DirectedPoint(Point):
             self.x * cst,
             self.y * cst,
             self.theta)
+
+    def dist(self, dpt):
+        """
+        Gets L2 norm between (x,y) of self and given directedpoint
+        @param dpt DirectedPoint to find L2 distance between
+        """
+        return math.sqrt(self.x * dpt.x + self.y * dpt.y)

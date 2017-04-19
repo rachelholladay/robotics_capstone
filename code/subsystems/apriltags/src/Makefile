@@ -23,7 +23,7 @@ BOOSTFLAGS = -shared -Wl,--export-dynamic -L$(BOOST_LIB) -lboost_python
 TARGETS := test boost_apriltags
 
 .PHONY: all
-all: test boost_apriltags
+all: boost_apriltags.so TagDetector.so
 
 TagDetector.so: TagDetector.o $(APRILTAG_LIB)
 	@echo "   [$@]"
