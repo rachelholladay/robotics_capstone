@@ -1,6 +1,8 @@
 '''
 Classes for geometric figures and representations
 '''
+import math
+
 class Point(object):
     """
     Class representing a point in 2D space
@@ -103,4 +105,5 @@ class DirectedPoint(Point):
         Gets L2 norm between (x,y) of self and given directedpoint
         @param dpt DirectedPoint to find L2 distance between
         """
-        return math.sqrt(self.x * dpt.x + self.y * dpt.y)
+        return math.sqrt(
+            math.pow(self.x - dpt.x, 2) + math.pow(self.y - dpt.y, 2))
