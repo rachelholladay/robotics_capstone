@@ -98,7 +98,8 @@ class DirectedPoint(Point):
         return DirectedPoint(
             self.x * cst,
             self.y * cst,
-            self.theta
+            self.theta)
+
     def dist(self, dpt):
         """
         Gets L2 norm between (x,y) of self and given directedpoint
@@ -106,6 +107,7 @@ class DirectedPoint(Point):
         """
         return math.sqrt(
             math.pow(self.x - dpt.x, 2) + math.pow(self.y - dpt.y, 2))
+
 
 class DirectedPath(object):
     """
