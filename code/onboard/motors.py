@@ -17,6 +17,9 @@ Constants
 # Motor pin numbers: 4x4 numpy matrix.
 # Each row is a motor [ENC_A1, ENC_A2 ENC_A3, ENC_A4]
 PINS = np.array([24, 23, 18, 20])
+WRITINGPINS = np.array([17,27,6])
+WRITINGPWR = 5
+WRITINGTIME = 0.5
 # How long to wait for motors to stop and reissue commands
 STOP_TIME = 0.01
 # Speed PID constants
@@ -39,6 +42,14 @@ class Motors(object):
             else:
                 e[motor] = Encoder(-1)
 
+        # Set GPIO pins for writing implement
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(WRITINGPINS[0], GPIO.OUT)
+        GPIO.setup(WRITINGPINS[1], GPIO.OUT)
+        GPIO.setup(WRITINGPINS[2], GPIO.OUT)
+        self.pwm = GPIO.PWM(WRITINGPINS[2], 490)
+        self.pwm.start(0)
+
         self.encoders = e
         self.prevErrors = np.array([0.0,0.0,0.0,0.0])
         # Thread exit flags
@@ -46,6 +57,8 @@ class Motors(object):
         self.currThread = None
         self.motors = [mh.getMotor(1), mh.getMotor(2), mh.getMotor(3), mh.getMotor(4)]
         atexit.register(self.stopMotors)
+        # Writing implement starts off unactuated
+        self.isWriting = False
 
     def __del__(self):
         self.stopMotors()
@@ -100,3 +113,23 @@ class Motors(object):
         for motorNum in xrange(0,4):
             self.motors[motorNum].run(Adafruit_MotorHAT.RELEASE)
     	time.sleep(STOP_TIME)
+
+    def write(self, state):
+        '''
+        @param state 0 is start writing, 1 is stop writing
+        '''
+        if (not state) and (not self.isWriting):
+            GPIO.output(WRITINGPINS[0], GPIO.HIGH)
+            GPIO.output(WRITINGPINS[1], GPIO.LOW)
+            self.pwm.ChangeDutyCycle(WRITINGPWR)
+            self.isWriting = True
+            return
+
+        if state and self.isWriting:
+            GPIO.output(WRITINGPINS[0], GPIO.LOW)
+            GPIO.output(WRITINGPINS[1], GPIO.HIGH)
+            self.pwm.ChangeDutyCycle(WRITINGPWR)
+            time.sleep(WRITINGTIME)
+            self.pwm.ChangeDutyCycle(0)
+            self.isWriting = False
+            return
