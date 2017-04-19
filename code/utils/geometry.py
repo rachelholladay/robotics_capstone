@@ -97,3 +97,19 @@ class DirectedPoint(Point):
             self.x * cst,
             self.y * cst,
             self.theta)
+
+class DirectedPath(object):
+    """
+    A DirectedPath is a list of DirectdPoints that make up the path
+    """
+    def __init__(self, path_array):
+        self.path = []
+        for i in xrange(len(path_array)):
+            d = DirectedPoint(x=path_array[i][0], y=path_array[i][1], theta=0)
+            self.path.append(d)
+
+    def __str__(self):
+        message = ''
+        for i in xrange(len(self.path)):
+            message += '{} : {}\n'.format(i, self.path[i])
+        return message
