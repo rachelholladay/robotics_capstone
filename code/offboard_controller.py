@@ -28,10 +28,11 @@ class OffboardController(object):
             scaled_dims=self.scaled_dims)
         self.sys_locomotion = subsystems.LocomotionSystem()
         self.sys_comm = subsystems.CommunicationSystem()
-        # self.sys_ui = subsystems.UISystem()
+        self.sys_ui = subsystems.UISystem()
+        self.sys_planner = subsystems.PlannerSystem()
 
-        # data = self.sys_ui.parseInputPaths('inputs/test{}'.format(drawing_number))
-        # paths = self.sys_planner.planTrajectories(data)
+        data = self.sys_ui.parseInputPaths('inputs/test{}'.format(drawing_number))
+        (bluePath, badPath) = self.sys_planner.planTrajectories(data)
 
         atexit.register(self.close)
         

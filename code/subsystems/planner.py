@@ -1,9 +1,8 @@
 '''
 Planner class
 '''
-from ui import UISystem
 from scipy.spatial import distance
-from utils import constants
+from utils import constants, geometry
 import numpy
 
 class PlannerSystem(object):
@@ -11,7 +10,6 @@ class PlannerSystem(object):
     Contains planner subsystem
     '''
     def __init__(self):
-        self.sys_ui = UISystem()
         self.start_r0 = [constants.BOTTOM_BORDER, constants.LEFT_BORDER]
         self.start_r1 = [constants.TOP_BORDER, constants.RIGHT_BORDER]
 
@@ -22,12 +20,16 @@ class PlannerSystem(object):
         pathData = self.scaleData(data)
         Distributor = DistributeWork(pathData, self.start_r0, self.start_r1)
         [path_r0, path_r1] = Distributor.getAllocation()
-        self.sys_ui.drawDistribution(path_r0, path_r1)
+        bluePath = geometry.DirectedPath(path_r0)
+        badPath = geometry.DirectedPath(path_r1)
+        return (bluePath, badPath)
+        # self.sys_ui.drawDistribution(path_r0, path_r1)
 
     def scaleData(self, data):
         '''
         Scale data to the bounds.
         '''
+        #TODO add padding
         [start_y, end_y] = data.vertical_bounds
         [start_x, end_x] = data.horizontal_bounds
         inputs = data.lines
@@ -64,18 +66,15 @@ class DistributeWork(object):
         '''
         cost_r0 = 0
         cost_r1 = 0
-        for i in xrange(len(self.lines)):
-            print self.lines
+        for i in xrange(len(self.lines)): 
             if cost_r0 > cost_r1:
                 line_idx = self.findClosestLine(self.r1_set[-1])
-                print 'R1', line_idx
                 closest_line = self.lines[line_idx]
                 self.lines = numpy.delete(self.lines, (line_idx), axis=0)
                 (self.r1_set, c) = self.incoporateNewSegment(self.r1_set, closest_line)
                 cost_r1 += c
             else:
                 line_idx = self.findClosestLine(self.r0_set[-1])
-                print 'R0', line_idx
                 closest_line = self.lines[line_idx]
                 self.lines = numpy.delete(self.lines, (line_idx), axis=0)
                 (self.r0_set, c) = self.incoporateNewSegment(self.r0_set, closest_line)
