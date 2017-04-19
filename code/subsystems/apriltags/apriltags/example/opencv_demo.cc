@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
 
     // Initialize camera
     // VideoCapture cap("/home/neil/data/apriltag_test.mp4");
-    VideoCapture cap(1); // webcam
+    VideoCapture cap(0); // webcam
 
     cap.set(CV_CAP_PROP_GAIN,50);
     if (!cap.isOpened()) {

@@ -1,6 +1,8 @@
 '''
 Classes for geometric figures and representations
 '''
+import math
+
 class Point(object):
     """
     Class representing a point in 2D space
@@ -96,7 +98,14 @@ class DirectedPoint(Point):
         return DirectedPoint(
             self.x * cst,
             self.y * cst,
-            self.theta)
+            self.theta
+    def dist(self, dpt):
+        """
+        Gets L2 norm between (x,y) of self and given directedpoint
+        @param dpt DirectedPoint to find L2 distance between
+        """
+        return math.sqrt(
+            math.pow(self.x - dpt.x, 2) + math.pow(self.y - dpt.y, 2))
 
 class DirectedPath(object):
     """
@@ -113,3 +122,4 @@ class DirectedPath(object):
         for i in xrange(len(self.path)):
             message += '{} : {}\n'.format(i, self.path[i])
         return message
+

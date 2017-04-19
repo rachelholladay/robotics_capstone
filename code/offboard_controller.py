@@ -20,8 +20,12 @@ class OffboardController(object):
         '''
         self.robot_ip = robot_ip
 
+        self.scaled_dims = [cst.TOP_BORDER - cst.BOTTOM_BORDER,
+                            cst.RIGHT_BORDER - cst.LEFT_BORDER]
+
         # self.sys_planner = subsystems.PlannerSystem()
-        self.sys_localization = subsystems.LocalizationSystem(scaled_dims=[1,1])
+        self.sys_localization = subsystems.LocalizationSystem(
+            scaled_dims=self.scaled_dims)
         self.sys_locomotion = subsystems.LocomotionSystem()
         self.sys_comm = subsystems.CommunicationSystem()
         self.sys_ui = subsystems.UISystem()
@@ -55,12 +59,16 @@ class OffboardController(object):
         Main offboard controller loop
         '''
         print 'offboard main loop'
-        counter = 0
         stop_locomotion = LocomotionData(
             DirectedPoint(0,0,0),
             DirectedPoint(0,0,0),
             1)
-        test_target = DirectedPoint(0.5, 0.5, 0)
+        waypoint1 = DirectedPoint(5, 5, 0)
+        waypoint2 = DirectedPoint(2.5, 2.5, 0)
+        test_target = waypoint1
+
+        debug_waypoint = 0
+        stop_status = 0
 
         while True:
             # #Simple test to move forward
@@ -76,20 +84,28 @@ class OffboardController(object):
                       
 
             try:
-                print("=========== new iteration ============")
+                # print("=========== new iteration ============")
                 data = self.sys_localization.getLocalizationData()
                 blue_tf = data.robots[cst.TAG_ROBOT1]
-                print("blue pos: ", str(blue_tf))
-                print(data)
+                # print("blue pos: ", str(blue_tf))
 
-                # enable or disable theta correction
-                # blue_tf.theta = 0
+                # if at waypoint 1, use waypoint 2
+                if debug_waypoint is 0 and blue_tf.dist(waypoint1) < 0.05:
+                    debug_waypoint = 1
+                    test_target = waypoint2
+                    print("At waypoint 1")
+                if debug_waypoint is 1 and blue_tf.dist(waypoint2) < 0.05:
+                    print("At waypoint 2, stopping")
+                    stop_status = 1
+                    debug_waypoint = 2
+
+                # Theta correction
                 test_target.theta = data.corners[cst.TAG_TOP_RIGHT].theta
 
                 blue_locomotion = LocomotionData(
                     blue_tf, 
                     test_target,
-                    0)
+                    stop_status)
 
                 self.sys_comm.generateMessage(
                     robot_id=cst.BLUE_ID, locomotion=blue_locomotion, 
@@ -97,7 +113,8 @@ class OffboardController(object):
                 self.sys_comm.sendTCPMessages()
                 print("Sent message")
             except:
-                print("Failed to localize")
+                pass
+                # print("Failed to localize")
 
             time.sleep(0.01)
 
@@ -148,7 +165,7 @@ if __name__ == "__main__":
 
     controller = OffboardController(robot_ip=blueRobotIP, drawing_number=1)
     controller.robotSetup()
-    controller.loop()
+    # controller.loop()
 
 
     # from messages import robot_commands_pb2

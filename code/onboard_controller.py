@@ -100,8 +100,6 @@ class OnboardController(object):
 
                         # print("error vec:", error_vector)
 
-
-
                         # Update previous for next iteration
                         prev_robot = robot_pos
                         prev_target = target_pos
@@ -197,7 +195,7 @@ class OnboardController(object):
         # stop if close to global goal
         magnitude = gtarget_dpt.x**2 + gtarget_dpt.y**2
         target_speed = 0.0
-        if magnitude > cst.SIGMA_LARGE:
+        if magnitude > cst.EPSILON_LARGE:
             target_speed = 0.3
 
         # how quickly to change robot orientation [-1, 1], original 0

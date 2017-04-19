@@ -66,9 +66,9 @@ class LocalizationSystem(object):
             # Similar to http://stackoverflow.com/questions/10935047/avoiding-weird-homography-values-when-normalizing
             h00 = tag.h00
             h01 = tag.h01
-            if abs(tag.h22 - tag.h00) > cst.SIGMA:
+            if abs(tag.h22 - tag.h00) > cst.EPSILON:
                 h00 = h00 / tag.h22
-            if abs(tag.h22 - tag.h01) > cst.SIGMA:
+            if abs(tag.h22 - tag.h01) > cst.EPSILON:
                 h01 = h01 / tag.h22
             
             x_pixels = tag.cx
