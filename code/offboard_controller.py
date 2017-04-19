@@ -111,7 +111,7 @@ class OffboardController(object):
                 # If at the waypoint, set next waypoint
                 if blue_tf.dist(blue_target) < 0.05:
                     print("WAYPOINT", path_index, " REACHED")
-                    print("Waypoint: ", self.bluePath[path_index])
+                    print("Waypoint: ", str(self.bluePath[path_index]))
                     path_index += 1
                     # CHECK LEN-1 BECAUSE ALWAYS RETURNS TO CORNER
                     if path_index >= self.bluePath.length - 1:
