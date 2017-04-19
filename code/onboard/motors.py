@@ -17,7 +17,7 @@ Constants
 # Motor pin numbers: 4x4 numpy matrix.
 # Each row is a motor [ENC_A1, ENC_A2 ENC_A3, ENC_A4]
 PINS = np.array([24, 23, 18, 20])
-WRITINGPINS = np.array([17,27,6])
+WRITINGPINS = np.array([20,19,21])
 WRITINGPWR = 5
 WRITINGTIME = 0.5
 # How long to wait for motors to stop and reissue commands
@@ -113,6 +113,11 @@ class Motors(object):
         for motorNum in xrange(0,4):
             self.motors[motorNum].run(Adafruit_MotorHAT.RELEASE)
     	time.sleep(STOP_TIME)
+
+    def enableWrite(self):
+        write(0)
+    def disableWrite(self):
+        write(1)
 
     def write(self, state):
         '''
