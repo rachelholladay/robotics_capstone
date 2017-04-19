@@ -3,7 +3,7 @@ UI subsystem
 '''
 
 import numpy
-from matplotlib import pyplot as plt
+#from matplotlib import pyplot as plt
 from utils import constants as cst
 from utils import dataStorage as ds
 
@@ -55,6 +55,7 @@ class UISystem(object):
         @param data_r0 Path for Robot 0
         @param data_d1 Path for Robot 1
         '''
+        from matplotlib import pyplot as plt
         path_r0 = numpy.array(data_r0)
         path_r1 = numpy.array(data_r1)
         fig = plt.figure()

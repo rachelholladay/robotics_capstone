@@ -7,6 +7,11 @@ Boost and Apriltags: See subsystems/apriltags setup.md
 OpenCV for python
 pip install opencv-python
 
+Other libraries:
+scipy
+
+
+
 Protobuf:
     pip install protobuf
 Protobuf Compiler:
@@ -18,3 +23,5 @@ Raspberry Pi GPIO usage:
 Compiling .proto files:
     protoc $SRC_FILE --python_out=$OUT_DIR
 Compilation should occur inside the messages/ folder, so $OUT_DIR=.
+
+

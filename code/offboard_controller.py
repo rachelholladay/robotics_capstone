@@ -32,7 +32,7 @@ class OffboardController(object):
         self.sys_planner = subsystems.PlannerSystem()
 
         data = self.sys_ui.parseInputPaths('inputs/test{}'.format(drawing_number))
-        (bluePath, badPath) = self.sys_planner.planTrajectories(data)
+        (self.bluePath, self.badPath) = self.sys_planner.planTrajectories(data)
 
         atexit.register(self.close)
         
@@ -59,6 +59,7 @@ class OffboardController(object):
         Main offboard controller loop
         '''
         print 'offboard main loop'
+        # Debugging and waypoint testing
         stop_locomotion = LocomotionData(
             DirectedPoint(0,0,0),
             DirectedPoint(0,0,0),
@@ -66,9 +67,13 @@ class OffboardController(object):
         waypoint1 = DirectedPoint(5, 5, 0)
         waypoint2 = DirectedPoint(2.5, 2.5, 0)
         test_target = waypoint1
-
         debug_waypoint = 0
+
+
         stop_status = 0
+
+        path_index = 1 # SKIPPING FIRST POINT B/C ALWAYS (0,0)
+        blue_target = self.bluePath[path_index]
 
         while True:
             # #Simple test to move forward
@@ -89,29 +94,46 @@ class OffboardController(object):
                 blue_tf = data.robots[cst.TAG_ROBOT1]
                 # print("blue pos: ", str(blue_tf))
 
-                # if at waypoint 1, use waypoint 2
-                if debug_waypoint is 0 and blue_tf.dist(waypoint1) < 0.05:
-                    debug_waypoint = 1
-                    test_target = waypoint2
-                    print("At waypoint 1")
-                if debug_waypoint is 1 and blue_tf.dist(waypoint2) < 0.05:
-                    print("At waypoint 2, stopping")
-                    stop_status = 1
-                    debug_waypoint = 2
+                # waypoint testing
+                # # if at waypoint 1, use waypoint 2
+                # if debug_waypoint is 0 and blue_tf.dist(waypoint1) < 0.05:
+                #     debug_waypoint = 1
+                #     test_target = waypoint2
+                #     print("At waypoint 1")
+                # if debug_waypoint is 1 and blue_tf.dist(waypoint2) < 0.05:
+                #     print("At waypoint 2, stopping")
+                #     stop_status = 1
+                #     debug_waypoint = 2
+
+                # # Theta correction
+                # test_target.theta = data.corners[cst.TAG_TOP_RIGHT].theta
+
+                # If at the waypoint, set next waypoint
+                if blue_tf.dist(blue_target) < 0.05:
+                    print("WAYPOINT", path_index, " REACHED")
+                    print("Waypoint: ", self.bluePath[path_index])
+                    path_index += 1
+                    # CHECK LEN-1 BECAUSE ALWAYS RETURNS TO CORNER
+                    if path_index >= self.bluePath.length - 1:
+                        stop_status = 1
+                        print("FINAL WAYPOINT REACHED")
+
+
+                    blue_target = self.bluePath[path_index]
 
                 # Theta correction
-                test_target.theta = data.corners[cst.TAG_TOP_RIGHT].theta
+                blue_target.theta = data.corners[cst.TAG_TOP_RIGHT].theta
 
                 blue_locomotion = LocomotionData(
                     blue_tf, 
-                    test_target,
+                    blue_target,
                     stop_status)
 
                 self.sys_comm.generateMessage(
                     robot_id=cst.BLUE_ID, locomotion=blue_locomotion, 
                     error=None)
                 self.sys_comm.sendTCPMessages()
-                print("Sent message")
+
             except:
                 pass
                 # print("Failed to localize")
@@ -163,9 +185,9 @@ if __name__ == "__main__":
     localhost = ['localhost']
     blueRobotIP = ['192.168.0.23']
 
-    controller = OffboardController(robot_ip=blueRobotIP, drawing_number=1)
+    controller = OffboardController(robot_ip=blueRobotIP, drawing_number=15)
     controller.robotSetup()
-    # controller.loop()
+    controller.loop()
 
 
     # from messages import robot_commands_pb2

@@ -119,9 +119,18 @@ class DirectedPath(object):
             d = DirectedPoint(x=path_array[i][0], y=path_array[i][1], theta=0)
             self.path.append(d)
 
+        self.length = len(self.path)
+
     def __str__(self):
         message = ''
         for i in xrange(len(self.path)):
             message += '{} : {}\n'.format(i, self.path[i])
         return message
+
+    def __getitem__(self, key):
+        """
+        Returns DirectedPoint path value at index key
+        @param key Index to get path at
+        """
+        return self.path[key]
 
