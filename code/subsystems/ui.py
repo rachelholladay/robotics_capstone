@@ -48,33 +48,41 @@ class UISystem(object):
         Ldata.horizontal_bounds = [int(x0), int(x1)]
         return Ldata
 
-    def drawDistribution(self, data_r0, data_r1):
+    def drawDistribution(self, bluePath, badPath):
         '''
         Draw the robot's paths, with solid as drawing and dotted
-        as transport. Red = Robot 0, Blue = Robot 1
-        @param data_r0 Path for Robot 0
-        @param data_d1 Path for Robot 1
+        as transport. 
+        @param bluePath Path for Blue the Robot
+        @param badPath Path for Bad the Robot
         '''
         from matplotlib import pyplot as plt
-        path_r0 = numpy.array(data_r0)
-        path_r1 = numpy.array(data_r1)
         fig = plt.figure()
         ax = plt.axes(xlim=(cst.LEFT_BORDER, cst.RIGHT_BORDER), 
                       ylim=(cst.BOTTOM_BORDER, cst.TOP_BORDER))
-        for i in xrange(len(path_r0)-1):
-            if i % 2 == 0:
-                ax.plot([path_r0[i, 0], path_r0[i+1, 0]], 
-                    [path_r0[i, 1], path_r0[i+1, 1]], lw=3, ls='--', color='red')
-            else:
-               ax.plot([path_r0[i, 0], path_r0[i+1, 0]],
-                    [path_r0[i, 1], path_r0[i+1, 1]], lw=5, color='red')
+        ls = ['--', '-']
+        lw = [3, 5]
+        for i in xrange(bluePath.length-1):
+            p0 = bluePath[i]
+            p1 = bluePath[i+1]
+            #if i % 2 == 0:
+                #ax.plot([path_r0[i, 0], path_r0[i+1, 0]], 
+                #    [path_r0[i, 1], path_r0[i+1, 1]], lw=3, ls='--', color='blue')
+            #else:
+                #ax.plot([path_r0[i, 0], path_r0[i+1, 0]],
+                #    [path_r0[i, 1], path_r0[i+1, 1]], lw=5, color='blue')
+            ax.plot([p0.x, p1.x], [p0.y, p1.y], lw=lw[(i % 2)],
+                    ls=ls[(i % 2)], color='blue')
 
-        for i in xrange(len(path_r1)-1):
-            if i % 2 == 0:
-                ax.plot([path_r1[i, 0], path_r1[i+1, 0]],
-                    [path_r1[i, 1], path_r1[i+1, 1]], lw=3, ls='--', color='blue')
-            else:
-               ax.plot([path_r1[i, 0], path_r1[i+1, 0]],
-                    [path_r1[i, 1], path_r1[i+1, 1]], lw=5, color='blue')
+        for i in xrange(badPath.length-1):
+            p0 = badPath[i]
+            p1 = badPath[i+1]
+            #if i % 2 == 0:
+                #ax.plot([path_r1[i, 0], path_r1[i+1, 0]],
+                #    [path_r1[i, 1], path_r1[i+1, 1]], lw=3, ls='--', color='red')
+            #else:
+                #ax.plot([path_r1[i, 0], path_r1[i+1, 0]],
+                #    [path_r1[i, 1], path_r1[i+1, 1]], lw=5, color='red')
+            ax.plot([p0.x, p1.x], [p0.y, p1.y], lw=lw[(i % 2)],
+                    ls=ls[(i % 2)], color='red')
 
         plt.show()
