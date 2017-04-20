@@ -57,10 +57,11 @@ class PlannerSystem(object):
 
 class DistributeWork(object):
     '''
-    Given drawing data, split it betweeo two robots
+    Given drawing data, split it between two robots
     '''
     def __init__(self, pathData, start_r0, start_r1):
         self.lines = pathData
+        #TODO what is the proper starting location?
         self.r0_set = [start_r0]
         self.r1_set = [start_r1]
 
@@ -85,7 +86,7 @@ class DistributeWork(object):
                 (self.r0_set, c) = self.incoporateNewSegment(self.r0_set, closest_line)
                 cost_r0 += c
 
-        # Return the end
+        # Return the end - FIXME do we want to do this?
         self.r0_set += [self.r0_set[0]]
         self.r1_set += [self.r1_set[0]]
  
