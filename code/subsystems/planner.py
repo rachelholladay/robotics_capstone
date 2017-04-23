@@ -9,21 +9,19 @@ class PlannerSystem(object):
     '''
     Contains planner subsystem
     '''
-    def __init__(self):
-        self.start_r0 = [constants.BOTTOM_BORDER, constants.LEFT_BORDER]
-        self.start_r1 = [constants.TOP_BORDER, constants.RIGHT_BORDER]
+    def __init__(self, data):
+        self.pathData = self.scaleData(data)
 
-    def planTrajectories(self, data):
+    def planTrajectories(self, dpt_start_r0, dpt_start_r1):
         '''
         Do lots of stuff..
         '''
-        pathData = self.scaleData(data)
-        Distributor = DistributeWork(pathData, self.start_r0, self.start_r1)
-        [path_r0, path_r1] = Distributor.getAllocation()
-        bluePath = geometry.DirectedPath(path_r0)
-        badPath = geometry.DirectedPath(path_r1)
+        start_r0 = [dpt_start_r0.x, dpt_start_r0.y]
+        start_r1 = [dpt_start_r1.x, dpt_start_r1.y]
+
+        Distributor = DistributeWork(self.pathData, start_r0, start_r1)
+        (bluePath, badPath) = Distributor.getAllocation()
         return (bluePath, badPath)
-        # self.sys_ui.drawDistribution(path_r0, path_r1)
 
     def scaleData(self, data):
         '''
@@ -61,9 +59,10 @@ class DistributeWork(object):
     '''
     def __init__(self, pathData, start_r0, start_r1):
         self.lines = pathData
-        #TODO what is the proper starting location?
         self.r0_set = [start_r0]
         self.r1_set = [start_r1]
+        self.writing_r0 = []
+        self.writing_r1 = []
 
     def getAllocation(self):
         '''
@@ -77,20 +76,28 @@ class DistributeWork(object):
                 line_idx = self.findClosestLine(self.r1_set[-1])
                 closest_line = self.lines[line_idx]
                 self.lines = numpy.delete(self.lines, (line_idx), axis=0)
-                (self.r1_set, c) = self.incoporateNewSegment(self.r1_set, closest_line)
+                (self.r1_set, drawingFlags, c) = self.addNewSegment(self.r1_set, closest_line)
+                self.writing_r1 += [drawingFlags]
                 cost_r1 += c
             else:
                 line_idx = self.findClosestLine(self.r0_set[-1])
                 closest_line = self.lines[line_idx]
                 self.lines = numpy.delete(self.lines, (line_idx), axis=0)
-                (self.r0_set, c) = self.incoporateNewSegment(self.r0_set, closest_line)
+                (self.r0_set, drawingFlags, c) = self.addNewSegment(self.r0_set, closest_line)
+                self.writing_r0 += [drawingFlags]
                 cost_r0 += c
 
-        # Return the end - FIXME do we want to do this?
-        self.r0_set += [self.r0_set[0]]
-        self.r1_set += [self.r1_set[0]]
- 
-        return (self.r0_set, self.r1_set)
+        # Flatten out list
+        write_r0 = [item for sublist in self.writing_r0 for item in sublist]
+        write_r1 = [item for sublist in self.writing_r1 for item in sublist]
+        # Remove the first point (because we are already there
+        self.r0_set = self.r0_set[1:]
+        self.r1_set = self.r1_set[1:]
+
+        bluePath = geometry.DirectedPath(self.r0_set, write_r0)
+        badPath = geometry.DirectedPath(self.r1_set, write_r1)
+
+        return (bluePath, badPath)
 
     def findClosestLine(self, current_point):
         '''
@@ -106,12 +113,13 @@ class DistributeWork(object):
             idx -= 1
         return (idx  / 2)
 
-    def incoporateNewSegment(self, line_set, new_line):
+    def addNewSegment(self, line_set, new_line):
         '''
         Take the line set, add the new line into the mix, include the
         transport from old line to new line.
         @param line_set The main set that we are incoporating into
         @param new_line The new line being added in
+        @param drawingFlags marks when to draw or not draw
         @param cost Add cost from the additional segments
         '''
         last_point = line_set[-1]
@@ -125,7 +133,8 @@ class DistributeWork(object):
         else:
             line_set += [end.tolist()]
             line_set += [start.tolist()]
-        return (line_set, (dist_start + dist_end))
+        drawingFlags = [constants.WRITE_DISABLE, constants.WRITE_ENABLE]
+        return (line_set, drawingFlags, (dist_start + dist_end))
 
 class PathGeneration(object):
     '''

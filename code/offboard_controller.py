@@ -2,8 +2,6 @@
 Main offboard controller.
 Runs fixed-rate loop that pulls data from subsystems
 '''
-from __future__ import print_function
-
 import sys
 import time
 import atexit
@@ -31,12 +29,10 @@ class OffboardController(object):
         self.sys_locomotion = subsystems.LocomotionSystem()
         self.sys_comm = subsystems.CommunicationSystem()
         self.sys_ui = subsystems.UISystem()
-        self.sys_planner = subsystems.PlannerSystem()
-
+   
         data = self.sys_ui.parseInputPaths('inputs/{}'.format(drawing_name))
-        (self.bluePath, self.badPath) = self.sys_planner.planTrajectories(data)
-        #self.sys_ui.drawDistribution(self.bluePath, self.badPath)
-
+        self.sys_planner = subsystems.PlannerSystem(data)
+   
         atexit.register(self.close)
         
     def robotSetup(self):
@@ -47,7 +43,7 @@ class OffboardController(object):
         for i in xrange(0, len(self.robot_ip)):
             success = self.sys_comm.connectToRobot(i, self.robot_ip[i])
             if not success:
-                print('FAILED TO CONNECT TO ROBOT')
+                print 'FAILED TO CONNECT TO ROBOT'
                 sys.exit(1)
 
 
@@ -56,6 +52,13 @@ class OffboardController(object):
         # TODO start localization, planner and UI in threads
         self.sys_localization.setup()
         self.sys_localization.begin_loop(verbose=0)
+
+        # Plan Paths
+        #FIXME @NEIL insert real values
+        badStart = DirectedPoint(0, 0, 0)
+        blueStart = DirectedPoint(10, 10, 0)
+        (self.bluePath, self.badPath) = self.sys_planner.planTrajectories(blueStart, badStat)
+        #self.sys_ui.drawDistribution(self.bluePath, self.badPath)
 
     def loop(self):
         '''
@@ -79,9 +82,10 @@ class OffboardController(object):
 
         stop_status = cst.ROBOT_MOVE
         write_status = cst.WRITE_DISABLE
-
-        # Setup initial waypoint
+        
+        stop_status = 0
         path_index = 1 # SKIPPING FIRST POINT B/C ALWAYS (0,0)
+
         # blue_target = self.bluePath[path_index].target
         # write_status = self.bluePath[path_index].write_status
 
@@ -139,10 +143,9 @@ class OffboardController(object):
 
             # try:
                 # print("=========== new iteration ============")
-
-                # Get localization data
                 data = self.sys_localization.getLocalizationData()
                 blue_tf = data.robots[cst.TAG_ROBOT1]
+                # print("blue pos: ", str(blue_tf))
 
                 # If at the waypoint, set next waypoint
                 if blue_tf.dist(blue_target) < cst.STOP_DIST:
@@ -157,15 +160,13 @@ class OffboardController(object):
 
                     # Set next waypoint
                     path_index += 1
-
-                    # CHECK LEN-1 BECAUSE LAST PT RETURNS TO CORNER (-1 to disable)
+                    # CHECK LEN-1 BECAUSE ALWAYS RETURNS TO CORNER
                     if path_index >= self.bluePath.length - 1:
-                        stop_status = cst.ROBOT_STOP
+                        stop_status = 1
                         print("FINAL WAYPOINT REACHED")
-                        print("Blue tf: ", str(blue_tf))
 
-                    blue_target = self.bluePath[path_index].target
-                    write_status = self.bluePath[path_index].write_status
+
+                    blue_target = self.bluePath[path_index]
 
                     time.sleep(1)
 
@@ -173,10 +174,9 @@ class OffboardController(object):
                 blue_target.theta = data.corners[cst.TAG_TOP_RIGHT].theta
 
                 blue_locomotion = LocomotionData(
-                    tf_robot=blue_tf, 
-                    tf_target=blue_target,
-                    write_status=write_status,
-                    stop_status=stop_status)
+                    blue_tf, 
+                    blue_target,
+                    stop_status)
 
                 self.sys_comm.generateMessage(
                     robot_id=cst.BLUE_ID, locomotion=blue_locomotion, 
@@ -186,7 +186,7 @@ class OffboardController(object):
             except:
                 pass
 
-            # time.sleep(0.01)
+            time.sleep(0.01)
 
 
     def close(self):
@@ -253,7 +253,7 @@ if __name__ == "__main__":
     # 	data = cmd.ParseFromString(serialized)
     # 	if data is None:
     #         continue
-    #     print('received echo: ')
-    #     print(data)
+    #     print 'received echo: '
+    #     print data
 
     # s.close()

@@ -2,6 +2,7 @@
 Classes for geometric figures and representations
 '''
 import math
+import constants as cst
 
 class Point(object):
     """
@@ -13,7 +14,7 @@ class Point(object):
         self.valid = valid
 
     def __str__(self):
-        return "Point: x:%f y:%f" % (self.x, self.y)
+        return "Point: x:{} y:{}".format(self.x, self.y)
 
     def __sub__(self, pt):
         """
@@ -44,8 +45,7 @@ class DirectedPoint(Point):
         __rmul__ = self.__mul__  # define multiplication bidirectionaly
 
     def __str__(self):
-        return "Dpt (%f, %f, %f)" % \
-            (self.x, self.y, self.theta)
+        return "DPT ({}, {}, {})".format(self.x, self.y, self.theta)
 
     def __sub__(self, dpt):
         """
@@ -113,11 +113,12 @@ class DirectedPath(object):
     """
     A DirectedPath is a list of DirectedPoints that make up the path
     """
-    def __init__(self, path_array):
+    def __init__(self, path_array, writing_array):
         self.path = []
         for i in xrange(len(path_array)):
             d = DirectedPoint(x=path_array[i][0], y=path_array[i][1], theta=0)
-            self.path.append(d)
+            w = Waypoint(d, writing_array[i])
+            self.path.append(w)
 
         self.length = len(self.path)
 
