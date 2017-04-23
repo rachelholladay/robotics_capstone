@@ -29,15 +29,10 @@ class OffboardController(object):
         self.sys_locomotion = subsystems.LocomotionSystem()
         self.sys_comm = subsystems.CommunicationSystem()
         self.sys_ui = subsystems.UISystem()
-
-        #FIXME @NEIL insert real values
-        badStart = DirectedPoint(0, 0, 0)
-        blueStart = DirectedPoint(10, 10, 0)
-        self.sys_planner = subsystems.PlannerSystem(blueStart, badStart)
+   
         data = self.sys_ui.parseInputPaths('inputs/test{}'.format(drawing_number))
-        (self.bluePath, self.badPath) = self.sys_planner.planTrajectories(data)
-        #self.sys_ui.drawDistribution(self.bluePath, self.badPath)
-
+        self.sys_planner = subsystems.PlannerSystem(data)
+   
         atexit.register(self.close)
         
     def robotSetup(self):
@@ -57,6 +52,13 @@ class OffboardController(object):
         # TODO start localization, planner and UI in threads
         self.sys_localization.setup()
         self.sys_localization.begin_loop(verbose=0)
+
+        # Plan Paths
+        #FIXME @NEIL insert real values
+        badStart = DirectedPoint(0, 0, 0)
+        blueStart = DirectedPoint(10, 10, 0)
+        (self.bluePath, self.badPath) = self.sys_planner.planTrajectories(blueStart, badStat)
+        #self.sys_ui.drawDistribution(self.bluePath, self.badPath)
 
     def loop(self):
         '''

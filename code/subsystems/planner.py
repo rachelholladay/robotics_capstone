@@ -9,16 +9,17 @@ class PlannerSystem(object):
     '''
     Contains planner subsystem
     '''
-    def __init__(self, dpt_start_r0, dpt_start_r1):
-        self.start_r0 = [dpt_start_r0.x, dpt_start_r0.y]
-        self.start_r1 = [dpt_start_r1.x, dpt_start_r1.y]
+    def __init__(self, data):
+        self.pathData = self.scaleData(data)
 
-    def planTrajectories(self, data):
+    def planTrajectories(self, dpt_start_r0, dpt_start_r1):
         '''
         Do lots of stuff..
         '''
-        pathData = self.scaleData(data)
-        Distributor = DistributeWork(pathData, self.start_r0, self.start_r1)
+        start_r0 = [dpt_start_r0.x, dpt_start_r0.y]
+        start_r1 = [dpt_start_r1.x, dpt_start_r1.y]
+
+        Distributor = DistributeWork(self.pathData, start_r0, start_r1)
         (bluePath, badPath) = Distributor.getAllocation()
         return (bluePath, badPath)
 
