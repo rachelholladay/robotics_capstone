@@ -111,7 +111,7 @@ class DirectedPoint(Point):
 
 class DirectedPath(object):
     """
-    A DirectedPath is a list of DirectdPoints that make up the path
+    A DirectedPath is a list of DirectedPoints that make up the path
     """
     def __init__(self, path_array):
         self.path = []

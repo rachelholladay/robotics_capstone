@@ -5,12 +5,28 @@ File containing data structs for passing information between subsystems
 from utils.geometry import DirectedPoint
 from utils import constants as cst
 
+class Waypoint(object):
+    """
+    Contains waypoint data, including the target XY point and the writing status
+    for the duration of motion towards that waypoint
+    """
+    def __init__(self, dpt, write_status):
+        """
+        @param dpt DirectedPoint containing XY coordinate for waypoint
+        @param status of writing implement - uses cst.WRITE_ENABLE or 
+                cst.WRITE_DISABLE
+        """
+        self.dpt = dpt
+        self.write_status = write_status
+
+
 class LocomotionData(object):
     """
     Contains fields for locomotion data for a single robot
     Locomotion data includes current and target position and orientations
     """
-    def __init__(self, tf_robot=None, tf_target=None, stop_status=0):
+    def __init__(self, tf_robot=None, tf_target=None, stop_status=0,
+        write_status=cst.WRITE_DISABLE):
         """
         Creates LocomotionData object with target, current position, and stop
         parameter.
@@ -20,6 +36,7 @@ class LocomotionData(object):
         """
         self.tf_robot = tf_robot
         self.tf_target = tf_target
+        self.write_status = write_status
         self.stop_status = stop_status
 
 

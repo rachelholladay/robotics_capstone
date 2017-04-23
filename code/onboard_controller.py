@@ -61,7 +61,7 @@ class OnboardController(object):
             if msg is None:
                 continue
             else:
-                print("======= new message =======")
+                # print("======= new message =======")
                 if msg.stop_status is 1:
                     self.motors.stopMotors()
                 else:
@@ -72,41 +72,50 @@ class OnboardController(object):
                         msg.robot_x, msg.robot_y, theta=msg.robot_th)
                     target_pos = DirectedPoint(
                         msg.target_x, msg.target_y, theta=msg.target_th)
+                    write_status = msg.write_status
 
 
-                    ###### Controller to fix accuracy #####
-                    # TODO make function, directional adjustment not necessary
-                    # Use previous-message motion vector and actual robot
-                    # position relative to previous vector to adjust target
-                    # to account for any motion error
-                    # Error vector based on 
-                    # http://stackoverflow.com/questions/5227373/minimal-perpendicular-vector-between-a-point-and-a-line
-                    if prev_target is None or prev_robot is None:
-                        # first message, set previous for next message
-                        prev_robot = robot_pos
-                        prev_target = target_pos
+                    # ###### Controller to fix accuracy #####
+                    # # TODO make function, directional adjustment not necessary
+                    # # Use previous-message motion vector and actual robot
+                    # # position relative to previous vector to adjust target
+                    # # to account for any motion error
+                    # # Error vector based on 
+                    # # http://stackoverflow.com/questions/5227373/minimal-perpendicular-vector-between-a-point-and-a-line
+                    # if prev_target is None or prev_robot is None:
+                    #     # first message, set previous for next message
+                    #     prev_robot = robot_pos
+                    #     prev_target = target_pos
+                    # else:
+                    #     # Use robot's current position and find offset from
+                    #     # ideal vector of prev_target - prev_robot
+                    #     prev_direction = prev_target - prev_robot
+                    #     prev_dir_mag = math.sqrt(prev_direction.x**2 + prev_direction.y**2)
+
+                    #     prev_direction.x = prev_direction.x / prev_dir_mag
+                    #     prev_direction.y = prev_direction.y / prev_dir_mag
+
+                    #     error_vector = (prev_robot + \
+                    #         ((robot_pos - prev_robot).dot(prev_direction)) * prev_direction) \
+                    #         - robot_pos
+
+                    #     # print("error vec:", error_vector)
+
+                    #     # Update previous for next iteration
+                    #     prev_robot = robot_pos
+                    #     prev_target = target_pos
+
+                    #     # Offset position by error to correct
+                    #     # robot_pos = robot_pos + error_vector
+
+
+                    if write_status is cst.WRITE_ENABLE:
+                        print("Enable writing")
+                        m.enableWrite()
                     else:
-                        # Use robot's current position and find offset from
-                        # ideal vector of prev_target - prev_robot
-                        prev_direction = prev_target - prev_robot
-                        prev_dir_mag = math.sqrt(prev_direction.x**2 + prev_direction.y**2)
-
-                        prev_direction.x = prev_direction.x / prev_dir_mag
-                        prev_direction.y = prev_direction.y / prev_dir_mag
-
-                        error_vector = (prev_robot + \
-                            ((robot_pos - prev_robot).dot(prev_direction)) * prev_direction) \
-                            - robot_pos
-
-                        # print("error vec:", error_vector)
-
-                        # Update previous for next iteration
-                        prev_robot = robot_pos
-                        prev_target = target_pos
-
-                        # Offset position by error to correct
-                        # robot_pos = robot_pos + error_vector
-
+                        print("Disable writing")
+                        assert(write_status is cst.WRITE_DISABLE)
+                        m.disableWrite()                        
 
                     print("Moving from", robot_pos, " to", target_pos)
                     self.moveMotors(self.getMotorCommands(robot_pos, target_pos))
@@ -200,6 +209,8 @@ class OnboardController(object):
 
         # how quickly to change robot orientation [-1, 1], original 0
         target_rot_speed = 0.0
+        # Calibrated values for reasonable performance
+        # 0.15 chosen for theta correction range, 0.13 is speed multiplier
         if abs(target_dpt.theta) > 0.15 and abs(target_dpt.theta) < (2 * math.pi) - 0.15:
             rot_speed_multiplier = 0
             if abs(target_dpt.theta) > math.pi:

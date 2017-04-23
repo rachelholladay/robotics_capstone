@@ -70,8 +70,8 @@ class OffboardController(object):
         test_target = waypoint1
         debug_waypoint = 0
 
-
-        stop_status = 0
+        write_status = cst.WRITE_DISABLE
+        stop_status = cst.ROBOT_MOVE
 
         path_index = 1 # SKIPPING FIRST POINT B/C ALWAYS (0,0)
         blue_target = self.bluePath[path_index]
@@ -110,17 +110,22 @@ class OffboardController(object):
                 # test_target.theta = data.corners[cst.TAG_TOP_RIGHT].theta
 
                 # If at the waypoint, set next waypoint
-                if blue_tf.dist(blue_target) < 0.05:
+                if blue_tf.dist(blue_target) < cst.STOP_DIST:
                     print("WAYPOINT", path_index, " REACHED")
                     print("Waypoint: ", str(self.bluePath[path_index]))
+
+                    # Set next waypoint
                     path_index += 1
-                    # CHECK LEN-1 BECAUSE ALWAYS RETURNS TO CORNER
+
+                    # CHECK LEN-1 BECAUSE LAST PT RETURNS TO CORNER (-1 to disable)
                     if path_index >= self.bluePath.length - 1:
-                        stop_status = 1
+                        stop_status = cst.ROBOT_STOP
                         print("FINAL WAYPOINT REACHED")
+                        print("Blue tf: ")
+                        print(blue_tf)
 
-
-                    blue_target = self.bluePath[path_index]
+                    blue_target = self.bluePath[path_index][0]
+                    write_status = self.bluePath[path_index][1]
 
                 # Theta correction
                 blue_target.theta = data.corners[cst.TAG_TOP_RIGHT].theta
@@ -128,6 +133,7 @@ class OffboardController(object):
                 blue_locomotion = LocomotionData(
                     blue_tf, 
                     blue_target,
+                    write_status
                     stop_status)
 
                 self.sys_comm.generateMessage(
@@ -139,7 +145,7 @@ class OffboardController(object):
                 pass
                 # print("Failed to localize")
 
-            time.sleep(0.01)
+            # time.sleep(0.01)
 
 
         # Original, untested loop

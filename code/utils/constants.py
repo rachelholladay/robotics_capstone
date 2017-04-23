@@ -19,6 +19,15 @@ PORT = 10000
 BUFFER_SIZE = 2048
 MESSAGE_TIMEOUT = 1 # max delay in seconds between messages before onboard stops
 
+################ LOCOMOTION SUBSYSTEM ################
+# Distance the robot will stop from a target waypoint. Increasing this value 
+# decreases overall accuracy, but setting it too low will cause the robot to
+# "vibrate" in place by trying to constantly correct for minor localization
+# errors.
+ROBOT_STOP = 0
+ROBOT_MOVE = 1
+STOP_DIST = 0.05
+
 ################ LOCALIZATION SUBSYSTEM ################
 # Corners and robots are assigned to an AprilTag ID - this is to
 # specify which corners correspond to specific Apriltags.
@@ -42,3 +51,8 @@ HORIZ_PAD = 0.1
 VERT_PAD = 0.1
 assert(TOP_BORDER > BOTTOM_BORDER)
 assert(RIGHT_BORDER > LEFT_BORDER)
+
+################ WRITING SUBSYSTEM ################
+# Writing status for communication messages
+WRITE_ENABLE = 0
+WRITE_DISABLE = 1
