@@ -61,7 +61,7 @@ class OffboardController(object):
         '''
         Main offboard controller loop
         '''
-        print 'offboard main loop'
+        print('offboard main loop')
         # Debugging and waypoint testing
         stop_locomotion = LocomotionData(
             DirectedPoint(0,0,0),
