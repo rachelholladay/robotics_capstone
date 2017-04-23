@@ -10,14 +10,23 @@ class Waypoint(object):
     Contains waypoint data, including the target XY point and the writing status
     for the duration of motion towards that waypoint
     """
-    def __init__(self, dpt, write_status):
+    def __init__(self, target, write_status):
         """
-        @param dpt DirectedPoint containing XY coordinate for waypoint
+        @param target DirectedPoint containing XY coordinate for waypoint
         @param status of writing implement - uses cst.WRITE_ENABLE or 
                 cst.WRITE_DISABLE
         """
-        self.dpt = dpt
+        self.target = target
         self.write_status = write_status
+
+    def __str__(self):
+        message = str(self.target)
+        message += ", "
+        if self.write_status is cst.WRITE_ENABLE:
+            message += "WRITE_ENABLED"
+        elif self.write_status is cst.WRITE_DISABLE:
+            message += "WRITE_DISABLED"
+        return message
 
 
 class LocomotionData(object):
