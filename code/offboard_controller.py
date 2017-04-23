@@ -29,8 +29,11 @@ class OffboardController(object):
         self.sys_locomotion = subsystems.LocomotionSystem()
         self.sys_comm = subsystems.CommunicationSystem()
         self.sys_ui = subsystems.UISystem()
-        self.sys_planner = subsystems.PlannerSystem()
 
+        #FIXME @NEIL insert real values
+        badStart = DirectedPoint(0, 0, 0)
+        blueStart = DirectedPoint(10, 10, 0)
+        self.sys_planner = subsystems.PlannerSystem(blueStart, badStart)
         data = self.sys_ui.parseInputPaths('inputs/test{}'.format(drawing_number))
         (self.bluePath, self.badPath) = self.sys_planner.planTrajectories(data)
 

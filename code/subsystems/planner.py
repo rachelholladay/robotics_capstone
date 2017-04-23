@@ -9,9 +9,9 @@ class PlannerSystem(object):
     '''
     Contains planner subsystem
     '''
-    def __init__(self):
-        self.start_r0 = [constants.BOTTOM_BORDER, constants.LEFT_BORDER]
-        self.start_r1 = [constants.TOP_BORDER, constants.RIGHT_BORDER]
+    def __init__(self, dpt_start_r0, dpt_start_r1):
+        self.start_r0 = [dpt_start_r0.x, dpt_start_r0.y]
+        self.start_r1 = [dpt_start_r1.x, dpt_start_r1.y]
 
     def planTrajectories(self, data):
         '''
@@ -58,7 +58,6 @@ class DistributeWork(object):
     '''
     def __init__(self, pathData, start_r0, start_r1):
         self.lines = pathData
-        #TODO what is the proper starting location?
         self.r0_set = [start_r0]
         self.r1_set = [start_r1]
         self.writing_r0 = []
