@@ -44,7 +44,7 @@ class DirectedPoint(Point):
         __rmul__ = self.__mul__  # define multiplication bidirectionaly
 
     def __str__(self):
-        return "DirectedPoint (%f, %f, %f)" % \
+        return "Dpt (%f, %f, %f)" % \
             (self.x, self.y, self.theta)
 
     def __sub__(self, dpt):

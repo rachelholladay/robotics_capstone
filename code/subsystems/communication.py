@@ -59,6 +59,7 @@ class CommunicationSystem(object):
         self.connections.append(conn)
         self.messages.append(msg)
         
+        print("Connected to robot")
         return True
 
 
