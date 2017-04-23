@@ -2,8 +2,6 @@
 Main offboard controller.
 Runs fixed-rate loop that pulls data from subsystems
 '''
-from __future__ import print_function
-
 import sys
 import time
 import atexit
@@ -16,7 +14,7 @@ from utils.dataStorage import LocomotionData
 from utils import constants as cst
 
 class OffboardController(object):
-    def __init__(self, robot_ip, drawing_name):
+    def __init__(self, robot_ip, drawing_number):
         '''
         Instantiates main subsystems based on input parameters
         '''
@@ -33,9 +31,8 @@ class OffboardController(object):
         self.sys_ui = subsystems.UISystem()
         self.sys_planner = subsystems.PlannerSystem()
 
-        data = self.sys_ui.parseInputPaths('inputs/{}'.format(drawing_name))
+        data = self.sys_ui.parseInputPaths('inputs/test{}'.format(drawing_number))
         (self.bluePath, self.badPath) = self.sys_planner.planTrajectories(data)
-        #self.sys_ui.drawDistribution(self.bluePath, self.badPath)
 
         atexit.register(self.close)
         
@@ -47,7 +44,7 @@ class OffboardController(object):
         for i in xrange(0, len(self.robot_ip)):
             success = self.sys_comm.connectToRobot(i, self.robot_ip[i])
             if not success:
-                print('FAILED TO CONNECT TO ROBOT')
+                print 'FAILED TO CONNECT TO ROBOT'
                 sys.exit(1)
 
 
@@ -67,17 +64,16 @@ class OffboardController(object):
             DirectedPoint(0,0,0),
             DirectedPoint(0,0,0),
             1)
-        dpt1 = DirectedPoint(5, 5, 0)
-        dpt2 = DirectedPoint(2.5, 2.5, 0)
-        test_target = dpt1
+        waypoint1 = DirectedPoint(5, 5, 0)
+        waypoint2 = DirectedPoint(2.5, 2.5, 0)
+        test_target = waypoint1
         debug_waypoint = 0
 
-        stop_status = cst.ROBOT_MOVE
 
-        # Setup initial waypoint
+        stop_status = 0
+
         path_index = 1 # SKIPPING FIRST POINT B/C ALWAYS (0,0)
-        blue_target = self.bluePath[path_index].target
-        write_status = self.bluePath[path_index].write_status
+        blue_target = self.bluePath[path_index]
 
         while True:
             # #Simple test to move forward
@@ -94,10 +90,9 @@ class OffboardController(object):
 
             try:
                 # print("=========== new iteration ============")
-
-                # Get localization data
                 data = self.sys_localization.getLocalizationData()
                 blue_tf = data.robots[cst.TAG_ROBOT1]
+                # print("blue pos: ", str(blue_tf))
 
                 # waypoint testing
                 # # if at waypoint 1, use waypoint 2
@@ -114,30 +109,25 @@ class OffboardController(object):
                 # test_target.theta = data.corners[cst.TAG_TOP_RIGHT].theta
 
                 # If at the waypoint, set next waypoint
-                if blue_tf.dist(blue_target) < cst.STOP_DIST:
-                    print("Waypoint", path_index, " reached:", 
-                            str(self.bluePath[path_index]))
-
-                    # Set next waypoint
+                if blue_tf.dist(blue_target) < 0.05:
+                    print("WAYPOINT", path_index, " REACHED")
+                    print("Waypoint: ", str(self.bluePath[path_index]))
                     path_index += 1
-
-                    # CHECK LEN-1 BECAUSE LAST PT RETURNS TO CORNER (-1 to disable)
+                    # CHECK LEN-1 BECAUSE ALWAYS RETURNS TO CORNER
                     if path_index >= self.bluePath.length - 1:
-                        stop_status = cst.ROBOT_STOP
+                        stop_status = 1
                         print("FINAL WAYPOINT REACHED")
-                        print("Blue tf: ", str(blue_tf))
 
-                    blue_target = self.bluePath[path_index].target
-                    write_status = self.bluePath[path_index].write_status
+
+                    blue_target = self.bluePath[path_index]
 
                 # Theta correction
                 blue_target.theta = data.corners[cst.TAG_TOP_RIGHT].theta
 
                 blue_locomotion = LocomotionData(
-                    tf_robot=blue_tf, 
-                    tf_target=blue_target,
-                    write_status=write_status,
-                    stop_status=stop_status)
+                    blue_tf, 
+                    blue_target,
+                    stop_status)
 
                 self.sys_comm.generateMessage(
                     robot_id=cst.BLUE_ID, locomotion=blue_locomotion, 
@@ -148,7 +138,7 @@ class OffboardController(object):
                 pass
                 # print("Failed to localize")
 
-            # time.sleep(0.01)
+            time.sleep(0.01)
 
 
         # Original, untested loop
@@ -195,7 +185,7 @@ if __name__ == "__main__":
     localhost = ['localhost']
     blueRobotIP = ['192.168.0.23']
 
-    controller = OffboardController(robot_ip=blueRobotIP, drawing_name='test15')
+    controller = OffboardController(robot_ip=blueRobotIP, drawing_number=15)
     controller.robotSetup()
     controller.loop()
 
@@ -234,7 +224,7 @@ if __name__ == "__main__":
     # 	data = cmd.ParseFromString(serialized)
     # 	if data is None:
     #         continue
-    #     print('received echo: ')
-    #     print(data)
+    #     print 'received echo: '
+    #     print data
 
     # s.close()

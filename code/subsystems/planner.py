@@ -61,6 +61,8 @@ class DistributeWork(object):
         #TODO what is the proper starting location?
         self.r0_set = [start_r0]
         self.r1_set = [start_r1]
+        self.writing_r0 = []
+        self.writing_r1 = []
 
     def getAllocation(self):
         '''
@@ -69,32 +71,31 @@ class DistributeWork(object):
         '''
         cost_r0 = 0
         cost_r1 = 0
-        writing_r0 = []
-        writing_r1 = []
         for i in xrange(len(self.lines)): 
             if cost_r0 > cost_r1:
                 line_idx = self.findClosestLine(self.r1_set[-1])
                 closest_line = self.lines[line_idx]
                 self.lines = numpy.delete(self.lines, (line_idx), axis=0)
                 (self.r1_set, drawingFlags, c) = self.addNewSegment(self.r1_set, closest_line)
-                writing_r1 += [drawingFlags]
+                self.writing_r1 += [drawingFlags]
                 cost_r1 += c
             else:
                 line_idx = self.findClosestLine(self.r0_set[-1])
                 closest_line = self.lines[line_idx]
                 self.lines = numpy.delete(self.lines, (line_idx), axis=0)
                 (self.r0_set, drawingFlags, c) = self.addNewSegment(self.r0_set, closest_line)
-                writing_r0 += [drawingFlags]
+                self.writing_r0 += [drawingFlags]
                 cost_r0 += c
 
-        # Return the end - FIXME do we want to do this?
-        self.r0_set += [self.r0_set[0]]
-        self.r1_set += [self.r1_set[0]]
-        writing_r0 += [False]
-        writing_r1 += [False]
+        # Flatten out list
+        write_r0 = [item for sublist in self.writing_r0 for item in sublist]
+        write_r1 = [item for sublist in self.writing_r1 for item in sublist]
+        # Remove the first point (because we are already there
+        self.r0_set = self.r0_set[1:]
+        self.r1_set = self.r1_set[1:]
 
-        bluePath = geometry.DirectedPath(path_r0, writing_r0)
-        badPath = geometry.DirectedPath(path_r1, writing_r1)
+        bluePath = geometry.DirectedPath(self.r0_set, write_r0)
+        badPath = geometry.DirectedPath(self.r1_set, write_r1)
 
         return (bluePath, badPath)
 
@@ -132,8 +133,7 @@ class DistributeWork(object):
         else:
             line_set += [end.tolist()]
             line_set += [start.tolist()]
-        #FIXME adjust to be accurate
-        drawingFlags = [False, True]
+        drawingFlags = [constants.WRITE_DISABLE, constants.WRITE_ENABLE]
         return (line_set, drawingFlags, (dist_start + dist_end))
 
 class PathGeneration(object):
