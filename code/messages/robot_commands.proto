@@ -11,7 +11,7 @@ message robot_command {
   required float target_y = 5;
   required float target_th = 8;
 
-  required float write_status = 9;
+  required int32 write_status = 9;
 
   required int32 stop_status = 6;
 

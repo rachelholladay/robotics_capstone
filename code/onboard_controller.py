@@ -61,9 +61,11 @@ class OnboardController(object):
             if msg is None:
                 continue
             else:
-                # print("======= new message =======")
+                print("======= new message =======")
                 if msg.stop_status is 1:
                     self.motors.stopMotors()
+                    if msg.write_status is cst.WRITE_DISABLE:
+                        self.motors.disableWrite()
                 else:
                     self.message_timer = time.time()
 
@@ -108,14 +110,14 @@ class OnboardController(object):
                     #     # Offset position by error to correct
                     #     # robot_pos = robot_pos + error_vector
 
-
-                    if write_status is cst.WRITE_ENABLE:
-                        print("Enable writing")
-                        m.enableWrite()
-                    else:
-                        print("Disable writing")
-                        assert(write_status is cst.WRITE_DISABLE)
-                        m.disableWrite()                        
+                    # print("write status", write_status)
+                    # if write_status is cst.WRITE_ENABLE:
+                    #     print("Enable writing")
+                    #     self.motors.enableWrite()
+                    # else:
+                    #     print("Disable writing")
+                    #     assert(write_status is cst.WRITE_DISABLE)
+                    #     self.motors.disableWrite()                        
 
                     print("Moving from", robot_pos, " to", target_pos)
                     self.moveMotors(self.getMotorCommands(robot_pos, target_pos))

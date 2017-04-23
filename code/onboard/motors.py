@@ -116,9 +116,9 @@ class Motors(object):
     	time.sleep(STOP_TIME)
 
     def enableWrite(self):
-        write(cst.WRITE_ENABLE)
+        self.write(cst.WRITE_ENABLE)
     def disableWrite(self):
-        write(cst.WRITE_DISABLE)
+        self.write(cst.WRITE_DISABLE)
 
     def write(self, state):
         '''

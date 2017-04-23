@@ -1,6 +1,7 @@
 """
 Contains constants required across subsystems
 """
+import utils.dataStorage
 
 # Small number for float comparison
 EPSILON = 0.0001
@@ -17,16 +18,17 @@ BLUE_IP = '192.168.0.23'
 BAD_IP = 'UPDATE_THIS'
 PORT = 10000
 BUFFER_SIZE = 2048
-MESSAGE_TIMEOUT = 1 # max delay in seconds between messages before onboard stops
+MESSAGE_TIMEOUT = 4 # max delay in seconds between messages before onboard stops
 
 ################ LOCOMOTION SUBSYSTEM ################
 # Distance the robot will stop from a target waypoint. Increasing this value 
 # decreases overall accuracy, but setting it too low will cause the robot to
 # "vibrate" in place by trying to constantly correct for minor localization
 # errors.
-ROBOT_STOP = 0
-ROBOT_MOVE = 1
-STOP_DIST = 0.05
+STOP_DIST = 0.25
+# locomotion stop_status parameter values
+ROBOT_MOVE = 0
+ROBOT_STOP = 1
 
 ################ LOCALIZATION SUBSYSTEM ################
 # Corners and robots are assigned to an AprilTag ID - this is to
