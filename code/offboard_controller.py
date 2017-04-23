@@ -36,6 +36,7 @@ class OffboardController(object):
         self.sys_planner = subsystems.PlannerSystem(blueStart, badStart)
         data = self.sys_ui.parseInputPaths('inputs/test{}'.format(drawing_number))
         (self.bluePath, self.badPath) = self.sys_planner.planTrajectories(data)
+        #self.sys_ui.drawDistribution(self.bluePath, self.badPath)
 
         atexit.register(self.close)
         

@@ -62,14 +62,14 @@ class UISystem(object):
         ls = ['--', '-']
         lw = [3, 5]
         for i in xrange(bluePath.length-1):
-            p0 = bluePath[i]
-            p1 = bluePath[i+1]
+            p0 = (bluePath[i]).target
+            p1 = (bluePath[i+1]).target
             ax.plot([p0.x, p1.x], [p0.y, p1.y], lw=lw[(i % 2)],
                     ls=ls[(i % 2)], color='blue')
 
         for i in xrange(badPath.length-1):
-            p0 = badPath[i]
-            p1 = badPath[i+1]
+            p0 = (badPath[i]).target
+            p1 = (badPath[i+1]).target
             ax.plot([p0.x, p1.x], [p0.y, p1.y], lw=lw[(i % 2)],
                     ls=ls[(i % 2)], color='red')
 
