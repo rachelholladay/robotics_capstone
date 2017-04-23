@@ -14,7 +14,7 @@ from utils.dataStorage import LocomotionData
 from utils import constants as cst
 
 class OffboardController(object):
-    def __init__(self, robot_ip, drawing_number):
+    def __init__(self, robot_ip, drawing_name):
         '''
         Instantiates main subsystems based on input parameters
         '''
@@ -30,7 +30,7 @@ class OffboardController(object):
         self.sys_comm = subsystems.CommunicationSystem()
         self.sys_ui = subsystems.UISystem()
    
-        data = self.sys_ui.parseInputPaths('inputs/test{}'.format(drawing_number))
+        data = self.sys_ui.parseInputPaths('inputs/{}'.format(drawing_name))
         self.sys_planner = subsystems.PlannerSystem(data)
    
         atexit.register(self.close)
@@ -191,7 +191,7 @@ if __name__ == "__main__":
     localhost = ['localhost']
     blueRobotIP = ['192.168.0.23']
 
-    controller = OffboardController(robot_ip=blueRobotIP, drawing_number=15)
+    controller = OffboardController(robot_ip=blueRobotIP, drawing_number='test15')
     controller.robotSetup()
     controller.loop()
 
