@@ -108,13 +108,15 @@ class OffboardController(object):
         # send initial command to disable writing implement
         cmd_disable = self.stop_locomotion
         cmd_disable.stop_status = cst.ROBOT_MOVE
-        cmd_disable.write_status = cst.WRITE_DISABLE
+        cmd_disable.write_status = cst.WRITE_ENABLE
         self.sys_comm.generateMessage(
             robot_id=cst.BLUE_ID, locomotion=cmd_disable, 
             error=None)
         self.sys_comm.sendTCPMessages()
         time.sleep(1)
+
         return
+        
         while True:
 
             ########## DEBUG WAYPOINT TESTING ############

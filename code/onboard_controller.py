@@ -114,11 +114,12 @@ class OnboardController(object):
                     print("write status", write_status)
                     if write_status is cst.WRITE_ENABLE:
                         print("Enable writing")
-                        self.motors.enableWrite()
+                        self.motors.write(cst.WRITE_ENABLE)
                     else:
                         print("Disable writing")
                         assert(write_status is cst.WRITE_DISABLE)
-                        self.motors.disableWrite()                        
+                        self.motors.write(cst.WRITE_DISABLE)
+
 
                     print("Moving from", robot_pos, " to", target_pos)
                     self.moveMotors(self.getMotorCommands(robot_pos, target_pos))
