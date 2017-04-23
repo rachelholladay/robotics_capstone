@@ -53,10 +53,21 @@ class OffboardController(object):
         self.sys_localization.setup()
         self.sys_localization.begin_loop(verbose=0)
 
+        data = self.sys_localization.getLocalizationData()
+        blue_tf = data.robots[cst.TAG_ROBOT1]
+
         # Plan Paths
-        #FIXME @NEIL insert real values
+        blueStart = DirectedPoint(0, 0, 0)
         badStart = DirectedPoint(0, 0, 0)
-        blueStart = DirectedPoint(10, 10, 0)
+        try:
+            blueStart = data.robots[cst.TAG_ROBOT1]
+        except:
+            print("blue position not found on setup()")
+        try:
+            badStart = data.robots[cst.TAG_ROBOT2]
+        except:
+            print("bad position not found on setup()")
+
         (self.bluePath, self.badPath) = self.sys_planner.planTrajectories(blueStart, badStat)
         #self.sys_ui.drawDistribution(self.bluePath, self.badPath)
 
@@ -86,8 +97,8 @@ class OffboardController(object):
         stop_status = 0
         path_index = 1 # SKIPPING FIRST POINT B/C ALWAYS (0,0)
 
-        # blue_target = self.bluePath[path_index].target
-        # write_status = self.bluePath[path_index].write_status
+        blue_target = self.bluePath[path_index].target
+        write_status = self.bluePath[path_index].write_status
 
         while True:
 
