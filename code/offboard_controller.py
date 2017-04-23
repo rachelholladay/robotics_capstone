@@ -83,19 +83,18 @@ class OffboardController(object):
             write_status=cst.WRITE_DISABLE,
             stop_status=cst.ROBOT_STOP)
 
-        # waypoint debug setup
+        ######## DEBUG WAYPOINT TESTING ##########
         wp1 = Waypoint(DirectedPoint(5, 5, 0), cst.WRITE_DISABLE)
         wp2 = Waypoint(DirectedPoint(5, 8, 0), cst.WRITE_ENABLE)
         test_target = wp1.target
         test_write = wp1.write_status
         debug_waypoint = 0
-
+        ########## END DEBUG WAYPOINT TESTING #########
 
         stop_status = cst.ROBOT_MOVE
         write_status = cst.WRITE_DISABLE
         
-        stop_status = 0
-        path_index = 1 # SKIPPING FIRST POINT B/C ALWAYS (0,0)
+        path_index = 0
 
         blue_target = self.bluePath[path_index].target
         write_status = self.bluePath[path_index].write_status
@@ -152,7 +151,7 @@ class OffboardController(object):
             #     continue
             ################# END WAYPOINT WITH WRITING TEST #########
 
-            # try:
+            try:
                 # print("=========== new iteration ============")
                 data = self.sys_localization.getLocalizationData()
                 blue_tf = data.robots[cst.TAG_ROBOT1]
@@ -228,43 +227,3 @@ if __name__ == "__main__":
     controller = OffboardController(robot_ip=blueRobotIP, drawing_name='test15')
     controller.robotSetup()
     controller.loop()
-
-
-    # from messages import robot_commands_pb2
-    # import socket
-
-    # commsys = subsystems.CommunicationSystem()
-    # commsys.connectToRobot('localhost', 0)
-    # commsys.sendTCPMessages()
-
-    # Localization test
-    # loc = subsystems.LocalizationSystem(scaled_dims=[1,1])
-    # print("created")
-    # loc.setup(1)
-    # loc.begin_loop(verbose=1)
-    # print("main localization started")
-    # while(True):
-    #         data = loc.getLocalizationData()
-    #         time.sleep(0.5)
-
-
-
-    # serialized = cmd.SerializeToString()
-
-    # commsys = CommunicationSystem()
-    # address=('localhost', 5555)
-    # buf_size = 1024
-    # s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-
-    # s.connect(address)
-    # s.send(serialized)
-    # while 1:
-    # 	serialized = s.recv(buf_size)
-    # 	data = cmd.ParseFromString(serialized)
-    # 	if data is None:
-    #         continue
-    #     print 'received echo: '
-    #     print data
-
-    # s.close()
