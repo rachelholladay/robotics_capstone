@@ -33,6 +33,15 @@ class OffboardController(object):
         data = self.sys_ui.parseInputPaths('inputs/{}'.format(drawing_name))
         self.sys_planner = subsystems.PlannerSystem(data)
    
+        # LocomotionData to stop robot and disable writing implement
+        self.stop_locomotion = LocomotionData(
+            tf_robot=DirectedPoint(0,0,0),
+            tf_target=DirectedPoint(0,0,0),
+            write_status=cst.WRITE_DISABLE,
+            stop_status=cst.ROBOT_STOP)
+
+
+
         atexit.register(self.close)
         
     def robotSetup(self):
@@ -52,13 +61,14 @@ class OffboardController(object):
         # TODO start localization, planner and UI in threads
         self.sys_localization.setup()
         self.sys_localization.begin_loop(verbose=0)
-
+        time.sleep(1)
         data = self.sys_localization.getLocalizationData()
         blue_tf = data.robots[cst.TAG_ROBOT1]
 
         # Plan Paths
         blueStart = DirectedPoint(0, 0, 0)
         badStart = DirectedPoint(0, 0, 0)
+        print("blue start", str(blueStart))
         try:
             blueStart = data.robots[cst.TAG_ROBOT1]
         except:
@@ -68,7 +78,9 @@ class OffboardController(object):
         except:
             print("bad position not found on setup()")
 
-        (self.bluePath, self.badPath) = self.sys_planner.planTrajectories(blueStart, badStat)
+        (self.bluePath, self.badPath) = self.sys_planner.planTrajectories(
+            blueStart, badStart)
+        print(self.bluePath)
         #self.sys_ui.drawDistribution(self.bluePath, self.badPath)
 
     def loop(self):
@@ -76,12 +88,6 @@ class OffboardController(object):
         Main offboard controller loop
         '''
         print('offboard main loop')
-        # LocomotionData to stop robot and disable writing implement
-        stop_locomotion = LocomotionData(
-            tf_robot=DirectedPoint(0,0,0),
-            tf_target=DirectedPoint(0,0,0),
-            write_status=cst.WRITE_DISABLE,
-            stop_status=cst.ROBOT_STOP)
 
         ######## DEBUG WAYPOINT TESTING ##########
         wp1 = Waypoint(DirectedPoint(5, 5, 0), cst.WRITE_DISABLE)
@@ -99,6 +105,16 @@ class OffboardController(object):
         blue_target = self.bluePath[path_index].target
         write_status = self.bluePath[path_index].write_status
 
+        # send initial command to disable writing implement
+        cmd_disable = self.stop_locomotion
+        cmd_disable.stop_status = cst.ROBOT_MOVE
+        cmd_disable.write_status = cst.WRITE_DISABLE
+        self.sys_comm.generateMessage(
+            robot_id=cst.BLUE_ID, locomotion=cmd_disable, 
+            error=None)
+        self.sys_comm.sendTCPMessages()
+        time.sleep(1)
+        return
         while True:
 
             ########## DEBUG WAYPOINT TESTING ############
@@ -119,7 +135,7 @@ class OffboardController(object):
 
             #         # send stop command
             #         self.sys_comm.generateMessage(
-            #             robot_id=cst.BLUE_ID, locomotion=stop_locomotion,
+            #             robot_id=cst.BLUE_ID, locomotion=self.stop_locomotion,
             #             error=None)
             #         self.sys_comm.sendTCPMessages()
             #         time.sleep(1)
@@ -161,32 +177,39 @@ class OffboardController(object):
                 if blue_tf.dist(blue_target) < cst.STOP_DIST:
                     print("Waypoint", path_index, " reached:", 
                             str(self.bluePath[path_index]))
-
-                    # send temporary stop command
-                    self.sys_comm.generateMessage(
-                        robot_id=cst.BLUE_ID, locomotion=test_locomotion, 
-                        error=None)
-                    self.sys_comm.sendTCPMessages()
+                    print("Blue tf: ", str(blue_tf))
 
                     # Set next waypoint
                     path_index += 1
-                    # CHECK LEN-1 BECAUSE ALWAYS RETURNS TO CORNER
-                    if path_index >= self.bluePath.length - 1:
+
+                    # Check if at the last waypoint, then stop
+                    if path_index >= self.bluePath.length:
                         stop_status = 1
                         print("FINAL WAYPOINT REACHED")
 
-
-                    blue_target = self.bluePath[path_index]
-
+                    blue_target = self.bluePath[path_index].target
+                    write_status = self.bluePath[path_index].write_status
+                    
+                    # send temporary stop command and also actuate writing
+                    # tool to new position
+                    stop_wp = self.stop_locomotion
+                    stop_wp.write_status = write_status
+                    self.sys_comm.generateMessage(
+                        robot_id=cst.BLUE_ID, locomotion=stop_wp, 
+                        error=None)
+                    self.sys_comm.sendTCPMessages()
                     time.sleep(1)
 
+                # print(str(blue_tf),"| ",blue_tf.dist(blue_target))
+                    
                 # Theta correction
                 blue_target.theta = data.corners[cst.TAG_TOP_RIGHT].theta
 
                 blue_locomotion = LocomotionData(
-                    blue_tf, 
-                    blue_target,
-                    stop_status)
+                    tf_robot=blue_tf, 
+                    tf_target=blue_target,
+                    write_status=write_status,
+                    stop_status=stop_status)
 
                 self.sys_comm.generateMessage(
                     robot_id=cst.BLUE_ID, locomotion=blue_locomotion, 
@@ -202,13 +225,9 @@ class OffboardController(object):
     def close(self):
         # Send message to stop robot
         print("Shutting down...")
-        stop_locomotion = LocomotionData(
-            DirectedPoint(0, 0, 0),
-            DirectedPoint(0, 0, 0),
-            cst.WRITE_DISABLE,
-            cst.ROBOT_STOP)
+        
         self.sys_comm.generateMessage(
-            robot_id=cst.BLUE_ID, locomotion=stop_locomotion, 
+            robot_id=cst.BLUE_ID, locomotion=self.stop_locomotion, 
             error=None)
         self.sys_comm.sendTCPMessages()
         self.sys_comm.closeTCPConnections()
@@ -224,6 +243,6 @@ if __name__ == "__main__":
     localhost = ['localhost']
     blueRobotIP = ['192.168.0.23']
 
-    controller = OffboardController(robot_ip=blueRobotIP, drawing_name='test15')
+    controller = OffboardController(robot_ip=blueRobotIP, drawing_name='centerLine')
     controller.robotSetup()
     controller.loop()

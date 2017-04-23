@@ -110,14 +110,15 @@ class OnboardController(object):
                     #     # Offset position by error to correct
                     #     # robot_pos = robot_pos + error_vector
 
-                    # print("write status", write_status)
-                    # if write_status is cst.WRITE_ENABLE:
-                    #     print("Enable writing")
-                    #     self.motors.enableWrite()
-                    # else:
-                    #     print("Disable writing")
-                    #     assert(write_status is cst.WRITE_DISABLE)
-                    #     self.motors.disableWrite()                        
+                    # Set writing status accordingly
+                    print("write status", write_status)
+                    if write_status is cst.WRITE_ENABLE:
+                        print("Enable writing")
+                        self.motors.enableWrite()
+                    else:
+                        print("Disable writing")
+                        assert(write_status is cst.WRITE_DISABLE)
+                        self.motors.disableWrite()                        
 
                     print("Moving from", robot_pos, " to", target_pos)
                     self.moveMotors(self.getMotorCommands(robot_pos, target_pos))

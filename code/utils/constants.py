@@ -1,7 +1,6 @@
 """
 Contains constants required across subsystems
 """
-import utils.dataStorage
 
 # Small number for float comparison
 EPSILON = 0.0001
@@ -49,8 +48,8 @@ BOTTOM_BORDER = 0
 TOP_BORDER = 10
 LEFT_BORDER = 0
 RIGHT_BORDER = 10
-HORIZ_PAD = 0.1
-VERT_PAD = 0.1
+HORIZ_PAD = 0.2
+VERT_PAD = 0.2
 assert(TOP_BORDER > BOTTOM_BORDER)
 assert(RIGHT_BORDER > LEFT_BORDER)
 

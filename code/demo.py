@@ -2,29 +2,31 @@
 Code for testing and demos
 
 """
+import time
 
 from onboard_controller import OnboardController
 from onboard.motors import Motors
 from utils.geometry import DirectedPoint
 
-START = DirectedPoint(0, 0, 0)
-DIR_UP = controller.getMotorCommands(start_pt, DirectedPoint(0, 1, 0))
-DIR_LEFT = controller.getMotorCommands(start_pt, DirectedPoint(-1, 0, 0))
-DIR_DOWN = controller.getMotorCommands(start_pt, DirectedPoint(0, -1, 0))
-DIR_RIGHT = controller.getMotorCommands(start_pt, DirectedPoint(1, 0, 0))
+# START = DirectedPoint(0, 0, 0)
+# DIR_UP = controller.getMotorCommands(start_pt, DirectedPoint(0, 1, 0))
+# DIR_LEFT = controller.getMotorCommands(start_pt, DirectedPoint(-1, 0, 0))
+# DIR_DOWN = controller.getMotorCommands(start_pt, DirectedPoint(0, -1, 0))
+# DIR_RIGHT = controller.getMotorCommands(start_pt, DirectedPoint(1, 0, 0))
 
-DIR_UPLEFT = controller.getMotorCommands(start_pt, DirectedPoint(-1, 1, 0))
-DIR_UPRIGHT = controller.getMotorCommands(start_pt, DirectedPoint(1, 1, 0))
-DIR_DOWNLEFT = controller.getMotorCommands(start_pt, DirectedPoint(-1, -1, 0))
-DIR_DOWNRIGHT = controller.getMotorCommands(start_pt, DirectedPoint(1, -1, 0))
+# DIR_UPLEFT = controller.getMotorCommands(start_pt, DirectedPoint(-1, 1, 0))
+# DIR_UPRIGHT = controller.getMotorCommands(start_pt, DirectedPoint(1, 1, 0))
+# DIR_DOWNLEFT = controller.getMotorCommands(start_pt, DirectedPoint(-1, -1, 0))
+# DIR_DOWNRIGHT = controller.getMotorCommands(start_pt, DirectedPoint(1, -1, 0))
+
+def writingImplementTest():
+    m = Motors()
+
+    m.write(0)
+    time.sleep(2.5)
+    m.write(1)
 
 def demoMoveMotorsTime(motors, command, t):
-    """
-    Commands all motors using a given command (such as DIR_UPLEFT) for a time
-    in seconds.
-    @param motors Motors object
-    @param command Motor command to run
-    @param t Time in seconds to mdef demoMoveMotorsTime(motors, command, t):
     """
     Commands all motors using a given command (such as DIR_UPLEFT) for a time
     in seconds.
@@ -38,15 +40,8 @@ def demoMoveMotorsTime(motors, command, t):
     time.sleep(t)
 
     motors.stopMotors()
-    time.sleep(0.5)ove for
-    """
-    print("Moving", command, " for", time, " seconds.")
-    for i in range(0, 4):
-        motors.commandMotor(i, command[i])
-    time.sleep(t)
-
-    motors.stopMotors()
     time.sleep(0.5)
+
 
 
 def demoOnboardSquare():
@@ -93,4 +88,4 @@ def demoOnboardSquare():
 
 
 if __name__ == "__main__":
-    pass
+    writingImplementTest()
