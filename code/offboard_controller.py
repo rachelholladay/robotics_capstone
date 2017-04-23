@@ -127,17 +127,17 @@ class OffboardController(object):
                         print("FINAL WAYPOINT REACHED")
                         print("Blue tf: ", str(blue_tf))
 
-                    blue_target = self.bluePath[path_index][0]
-                    write_status = self.bluePath[path_index][1]
+                    blue_target = self.bluePath[path_index].target
+                    write_status = self.bluePath[path_index].write_status
 
                 # Theta correction
                 blue_target.theta = data.corners[cst.TAG_TOP_RIGHT].theta
 
                 blue_locomotion = LocomotionData(
-                    blue_tf, 
-                    blue_target,
-                    write_status
-                    stop_status)
+                    tf_robot=blue_tf, 
+                    tf_target=blue_target,
+                    write_status=write_status,
+                    stop_status=stop_status)
 
                 self.sys_comm.generateMessage(
                     robot_id=cst.BLUE_ID, locomotion=blue_locomotion, 
