@@ -64,24 +64,12 @@ class UISystem(object):
         for i in xrange(bluePath.length-1):
             p0 = bluePath[i]
             p1 = bluePath[i+1]
-            #if i % 2 == 0:
-                #ax.plot([path_r0[i, 0], path_r0[i+1, 0]], 
-                #    [path_r0[i, 1], path_r0[i+1, 1]], lw=3, ls='--', color='blue')
-            #else:
-                #ax.plot([path_r0[i, 0], path_r0[i+1, 0]],
-                #    [path_r0[i, 1], path_r0[i+1, 1]], lw=5, color='blue')
             ax.plot([p0.x, p1.x], [p0.y, p1.y], lw=lw[(i % 2)],
                     ls=ls[(i % 2)], color='blue')
 
         for i in xrange(badPath.length-1):
             p0 = badPath[i]
             p1 = badPath[i+1]
-            #if i % 2 == 0:
-                #ax.plot([path_r1[i, 0], path_r1[i+1, 0]],
-                #    [path_r1[i, 1], path_r1[i+1, 1]], lw=3, ls='--', color='red')
-            #else:
-                #ax.plot([path_r1[i, 0], path_r1[i+1, 0]],
-                #    [path_r1[i, 1], path_r1[i+1, 1]], lw=5, color='red')
             ax.plot([p0.x, p1.x], [p0.y, p1.y], lw=lw[(i % 2)],
                     ls=ls[(i % 2)], color='red')
 
