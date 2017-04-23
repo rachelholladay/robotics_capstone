@@ -19,11 +19,8 @@ class PlannerSystem(object):
         '''
         pathData = self.scaleData(data)
         Distributor = DistributeWork(pathData, self.start_r0, self.start_r1)
-        [path_r0, path_r1] = Distributor.getAllocation()
-        bluePath = geometry.DirectedPath(path_r0)
-        badPath = geometry.DirectedPath(path_r1)
+        (bluePath, badPath) = Distributor.getAllocation()
         return (bluePath, badPath)
-        # self.sys_ui.drawDistribution(path_r0, path_r1)
 
     def scaleData(self, data):
         '''
@@ -66,25 +63,34 @@ class DistributeWork(object):
         '''
         cost_r0 = 0
         cost_r1 = 0
+        writing_r0 = []
+        writing_r1 = []
         for i in xrange(len(self.lines)): 
             if cost_r0 > cost_r1:
                 line_idx = self.findClosestLine(self.r1_set[-1])
                 closest_line = self.lines[line_idx]
                 self.lines = numpy.delete(self.lines, (line_idx), axis=0)
-                (self.r1_set, c) = self.incoporateNewSegment(self.r1_set, closest_line)
+                (self.r1_set, drawingFlags, c) = self.addNewSegment(self.r1_set, closest_line)
+                writing_r1 += [drawingFlags]
                 cost_r1 += c
             else:
                 line_idx = self.findClosestLine(self.r0_set[-1])
                 closest_line = self.lines[line_idx]
                 self.lines = numpy.delete(self.lines, (line_idx), axis=0)
-                (self.r0_set, c) = self.incoporateNewSegment(self.r0_set, closest_line)
+                (self.r0_set, drawingFlags, c) = self.addNewSegment(self.r0_set, closest_line)
+                writing_r0 += [drawingFlags]
                 cost_r0 += c
 
         # Return the end
         self.r0_set += [self.r0_set[0]]
         self.r1_set += [self.r1_set[0]]
- 
-        return (self.r0_set, self.r1_set)
+        writing_r0 += [False]
+        writing_r1 += [False]
+
+        bluePath = geometry.DirectedPath(path_r0, writing_r0)
+        badPath = geometry.DirectedPath(path_r1, writing_r1)
+
+        return (bluePath, badPath)
 
     def findClosestLine(self, current_point):
         '''
@@ -100,12 +106,13 @@ class DistributeWork(object):
             idx -= 1
         return (idx  / 2)
 
-    def incoporateNewSegment(self, line_set, new_line):
+    def addNewSegment(self, line_set, new_line):
         '''
         Take the line set, add the new line into the mix, include the
         transport from old line to new line.
         @param line_set The main set that we are incoporating into
         @param new_line The new line being added in
+        @param drawingFlags marks when to draw or not draw
         @param cost Add cost from the additional segments
         '''
         last_point = line_set[-1]
@@ -119,7 +126,9 @@ class DistributeWork(object):
         else:
             line_set += [end.tolist()]
             line_set += [start.tolist()]
-        return (line_set, (dist_start + dist_end))
+        #FIXME adjust to be accurate
+        drawingFlags = [False, True]
+        return (line_set, drawingFlags, (dist_start + dist_end))
 
 class PathGeneration(object):
     '''
