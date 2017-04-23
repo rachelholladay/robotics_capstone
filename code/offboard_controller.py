@@ -191,7 +191,7 @@ if __name__ == "__main__":
     localhost = ['localhost']
     blueRobotIP = ['192.168.0.23']
 
-    controller = OffboardController(robot_ip=blueRobotIP, drawing_number='test15')
+    controller = OffboardController(robot_ip=blueRobotIP, drawing_name='test15')
     controller.robotSetup()
     controller.loop()
 
