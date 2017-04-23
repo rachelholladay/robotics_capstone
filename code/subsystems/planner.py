@@ -26,33 +26,39 @@ class PlannerSystem(object):
         '''
         Scale data to the bounds.
         '''
-        #TODO add padding
         [start_y, end_y] = data.vertical_bounds
         [start_x, end_x] = data.horizontal_bounds
         inputs = data.lines
         pathData = numpy.zeros((inputs.shape))
+        constants.HORIZ_PAD
+        constants.VERT_PAD
         for i in xrange(4):
            pts = inputs[:, i]
            if i % 2 == 0:
               init = float(end_x - start_x)
               final = float(constants.RIGHT_BORDER - constants.LEFT_BORDER)
+              final *= 1.0-constants.HORIZ_PAD
               pts_d = numpy.divide(pts, init)
               pts_m = numpy.multiply(pts_d, final)
-              pathData[:, i] = numpy.add(pts_m, constants.LEFT_BORDER)
+              pathData[:, i] = numpy.add(pts_m, 
+                                  constants.LEFT_BORDER+(constants.HORIZ_PAD/2.0))
            else:
               init = float(end_y - start_y)
               final = float(constants.TOP_BORDER - constants.BOTTOM_BORDER)
+              final *= 1.0-constants.VERT_PAD
               pts_d = numpy.divide(pts, init)
               pts_m = numpy.multiply(pts_d, final)
-              pathData[:, i] = numpy.add(pts_m, constants.BOTTOM_BORDER) 
+              pathData[:, i] = numpy.add(pts_m,
+                                  constants.BOTTOM_BORDER+(constants.VERT_PAD/2.0)) 
         return pathData
 
 class DistributeWork(object):
     '''
-    Given drawing data, split it betweeo two robots
+    Given drawing data, split it between two robots
     '''
     def __init__(self, pathData, start_r0, start_r1):
         self.lines = pathData
+        #TODO what is the proper starting location?
         self.r0_set = [start_r0]
         self.r1_set = [start_r1]
 
@@ -81,7 +87,7 @@ class DistributeWork(object):
                 writing_r0 += [drawingFlags]
                 cost_r0 += c
 
-        # Return the end
+        # Return the end - FIXME do we want to do this?
         self.r0_set += [self.r0_set[0]]
         self.r1_set += [self.r1_set[0]]
         writing_r0 += [False]

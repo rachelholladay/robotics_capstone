@@ -44,7 +44,7 @@ class DirectedPoint(Point):
         __rmul__ = self.__mul__  # define multiplication bidirectionaly
 
     def __str__(self):
-        return "DirectedPoint x:%f y:%f theta:%f" % \
+        return "DirectedPoint (%f, %f, %f)" % \
             (self.x, self.y, self.theta)
 
     def __sub__(self, dpt):
@@ -111,7 +111,7 @@ class DirectedPoint(Point):
 
 class DirectedPath(object):
     """
-    A DirectedPath is a list of DirectdPoints that make up the path
+    A DirectedPath is a list of DirectedPoints that make up the path
     """
     def __init__(self, path_array):
         self.path = []

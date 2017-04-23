@@ -9,6 +9,7 @@ import atexit
 from math import sqrt
 from encoders import Encoder
 from Adafruit_MotorHAT import Adafruit_MotorHAT, Adafruit_DCMotor
+from utils import constants as cst
 
 
 '''
@@ -115,9 +116,9 @@ class Motors(object):
     	time.sleep(STOP_TIME)
 
     def enableWrite(self):
-        write(0)
+        write(cst.WRITE_ENABLE)
     def disableWrite(self):
-        write(1)
+        write(cst.WRITE_DISABLE)
 
     def write(self, state):
         '''

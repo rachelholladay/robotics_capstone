@@ -140,6 +140,8 @@ class CommunicationSystem(object):
             self.messages[robot_id].target_y = locomotion.tf_target.y
             self.messages[robot_id].target_th = locomotion.tf_target.theta
             
+            self.messages[robot_id].write_status = locomotion.write_status
+
             self.messages[robot_id].stop_status = locomotion.stop_status
         except:
             pass
