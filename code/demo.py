@@ -21,9 +21,10 @@ from utils.geometry import DirectedPoint
 
 def writingImplementTest():
     m = Motors()
-
+    print("lower tool")
     m.write(0)
     time.sleep(2.5)
+    print("raise tool")
     m.write(1)
 
 def demoMoveMotorsTime(motors, command, t):
