@@ -87,95 +87,104 @@ class OffboardController(object):
 
         while True:
 
-            # Test to move to 2 waypoints and write when moving to wp2
-            try:
-                # Get localization data
-                data = self.sys_localization.getLocalizationData()
-                blue_tf = data.robots[cst.TAG_ROBOT1]
-                # waypoint testing
-                # if at waypoint 1, use waypoint 2
-                if debug_waypoint is 0 and blue_tf.dist(wp1.target) < cst.STOP_DIST:
-                    print("At waypoint 1")  
-                    print(blue_tf,"| ",blue_tf.dist(wp1.target))
-                    print(blue_tf,"| ", blue_tf.dist(wp2.target))
-                    debug_waypoint = 1
-                    test_write = wp2.write_status
-                    test_target = wp2.target
-
-                    # send stop command
-                    # self.sys_comm.generateMessage(
-                    #     robot_id=cst.BLUE_ID, locomotion=stop_locomotion,
-                    #     error=None)
-                    # self.sys_comm.sendTCPMessages()
-                    # time.sleep(1)
-
-                if debug_waypoint is 1 and blue_tf.dist(wp2.target) < cst.STOP_DIST:
-                    print("At waypoint 2, stopping")
-                    print(blue_tf,"| ",blue_tf.dist(wp1.target))
-                    print(blue_tf,"| ", blue_tf.dist(wp2.target))
-                    stop_status = 1
-                    debug_waypoint = 2
-
-                # Theta correction
-                test_target.theta = data.corners[cst.TAG_TOP_RIGHT].theta                      
-                
-                test_locomotion = LocomotionData(
-                    tf_robot=blue_tf, 
-                    tf_target=test_target,
-                    write_status=cst.WRITE_DISABLE,
-                    stop_status=stop_status)
-
-                self.sys_comm.generateMessage(
-                    robot_id=cst.BLUE_ID, locomotion=test_locomotion, 
-                    error=None)
-
-                self.sys_comm.sendTCPMessages()
-                continue
-
-            except:
-                continue
-            ################# END WAYPOINT WITH WRITING TEST #########
-
+            ########## DEBUG WAYPOINT TESTING ############
+            # # Test to move to 2 waypoints and write when moving to wp2
             # try:
-            #     # print("=========== new iteration ============")
-
             #     # Get localization data
             #     data = self.sys_localization.getLocalizationData()
             #     blue_tf = data.robots[cst.TAG_ROBOT1]
+            #     # waypoint testing
+            #     # if at waypoint 1, use waypoint 2
+            #     if debug_waypoint is 0 and blue_tf.dist(wp1.target) < cst.STOP_DIST:
+            #         print("At waypoint 1")  
+            #         print(blue_tf,"| ",blue_tf.dist(wp1.target))
+            #         print(blue_tf,"| ", blue_tf.dist(wp2.target))
+            #         debug_waypoint = 1
+            #         test_write = wp2.write_status
+            #         test_target = wp2.target
 
-            #     # If at the waypoint, set next waypoint
-            #     if blue_tf.dist(blue_target) < cst.STOP_DIST:
-            #         print("Waypoint", path_index, " reached:", 
-            #                 str(self.bluePath[path_index]))
+            #         # send stop command
+            #         self.sys_comm.generateMessage(
+            #             robot_id=cst.BLUE_ID, locomotion=stop_locomotion,
+            #             error=None)
+            #         self.sys_comm.sendTCPMessages()
+            #         time.sleep(1)
 
-            #         # Set next waypoint
-            #         path_index += 1
-
-            #         # CHECK LEN-1 BECAUSE LAST PT RETURNS TO CORNER (-1 to disable)
-            #         if path_index >= self.bluePath.length - 1:
-            #             stop_status = cst.ROBOT_STOP
-            #             print("FINAL WAYPOINT REACHED")
-            #             print("Blue tf: ", str(blue_tf))
-
-            #         blue_target = self.bluePath[path_index].target
-            #         write_status = self.bluePath[path_index].write_status
+            #     if debug_waypoint is 1 and blue_tf.dist(wp2.target) < cst.STOP_DIST:
+            #         print("At waypoint 2, stopping")
+            #         print(blue_tf,"| ",blue_tf.dist(wp1.target))
+            #         print(blue_tf,"| ", blue_tf.dist(wp2.target))
+            #         stop_status = 1
+            #         debug_waypoint = 2
 
             #     # Theta correction
-            #     blue_target.theta = data.corners[cst.TAG_TOP_RIGHT].theta
-
-            #     blue_locomotion = LocomotionData(
+            #     test_target.theta = data.corners[cst.TAG_TOP_RIGHT].theta                      
+                
+            #     test_locomotion = LocomotionData(
             #         tf_robot=blue_tf, 
-            #         tf_target=blue_target,
-            #         write_status=write_status,
+            #         tf_target=test_target,
+            #         write_status=cst.WRITE_DISABLE,
             #         stop_status=stop_status)
 
             #     self.sys_comm.generateMessage(
-            #         robot_id=cst.BLUE_ID, locomotion=blue_locomotion, 
+            #         robot_id=cst.BLUE_ID, locomotion=test_locomotion, 
             #         error=None)
+
             #     self.sys_comm.sendTCPMessages()
+            #     continue
 
             # except:
-            #     pass
+            #     continue
+            ################# END WAYPOINT WITH WRITING TEST #########
+
+            # try:
+                # print("=========== new iteration ============")
+
+                # Get localization data
+                data = self.sys_localization.getLocalizationData()
+                blue_tf = data.robots[cst.TAG_ROBOT1]
+
+                # If at the waypoint, set next waypoint
+                if blue_tf.dist(blue_target) < cst.STOP_DIST:
+                    print("Waypoint", path_index, " reached:", 
+                            str(self.bluePath[path_index]))
+
+                    # send temporary stop command
+                    self.sys_comm.generateMessage(
+                        robot_id=cst.BLUE_ID, locomotion=test_locomotion, 
+                        error=None)
+                    self.sys_comm.sendTCPMessages()
+
+                    # Set next waypoint
+                    path_index += 1
+
+                    # CHECK LEN-1 BECAUSE LAST PT RETURNS TO CORNER (-1 to disable)
+                    if path_index >= self.bluePath.length - 1:
+                        stop_status = cst.ROBOT_STOP
+                        print("FINAL WAYPOINT REACHED")
+                        print("Blue tf: ", str(blue_tf))
+
+                    blue_target = self.bluePath[path_index].target
+                    write_status = self.bluePath[path_index].write_status
+
+                    time.sleep(1)
+
+                # Theta correction
+                blue_target.theta = data.corners[cst.TAG_TOP_RIGHT].theta
+
+                blue_locomotion = LocomotionData(
+                    tf_robot=blue_tf, 
+                    tf_target=blue_target,
+                    write_status=write_status,
+                    stop_status=stop_status)
+
+                self.sys_comm.generateMessage(
+                    robot_id=cst.BLUE_ID, locomotion=blue_locomotion, 
+                    error=None)
+                self.sys_comm.sendTCPMessages()
+
+            except:
+                pass
 
             # time.sleep(0.01)
 
