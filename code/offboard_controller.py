@@ -262,7 +262,7 @@ class OffboardController(object):
                 robot_id=rid, locomotion=self.stop_locomotion, 
                 error=None)
         self.sys_comm.sendTCPMessages()
-        time.sleep(1)
+        time.sleep(2)
         self.sys_comm.closeTCPConnections()
         self.sys_localization.close()
 

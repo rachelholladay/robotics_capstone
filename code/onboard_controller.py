@@ -224,7 +224,7 @@ class OnboardController(object):
                 rot_speed_multiplier = 1
             else:
                 rot_speed_multiplier = -1
-            target_rot_speed = 0.13 * rot_speed_multiplier
+            target_rot_speed = 0.13 * rot_speed_multiplier # default 0.13
 
     
         # Compute motors, 1-4, with forward direction as specified:
