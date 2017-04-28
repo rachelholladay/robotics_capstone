@@ -101,7 +101,6 @@ class LocalizationSystem(object):
         """
         while(True):
             if self._stop_flag:
-                print("checking")
                 return
             self._localize(verbose=verbose)
 
@@ -132,9 +131,9 @@ class LocalizationSystem(object):
         self._stop_flag = True
         if self._localization_thread is not None:
             self._localization_thread.join()
-        try:
-            self._detector.close() # TODO fix this - crashes(?) on call
-        except:
+        # try:
+        #     self._detector.close() # TODO fix this - crashes(?) on call
+        # except:
             pass
 
     def getLocalizationData(self):
