@@ -35,6 +35,8 @@ class OnboardController(object):
         atexit.register(self.close)
 
     def setup(self):
+        self.motors.disableWrite()
+
         self.comm.connectToOffboard()
         time.sleep(1)
 
@@ -61,12 +63,13 @@ class OnboardController(object):
             if msg is None:
                 continue
             else:
-                print("======= new message",time.time()," =======")
                 if msg.stop_status is 1:
                     self.motors.stopMotors()
                     if msg.write_status is cst.WRITE_DISABLE:
                         self.motors.disableWrite()
                 else:
+                    print("======= new message",time.time()," =======")
+
                     self.message_timer = time.time()
 
                     # Specified target from offboard system
@@ -114,11 +117,10 @@ class OnboardController(object):
                     print("write status", write_status)
                     if write_status is cst.WRITE_ENABLE:
                         print("Enable writing")
-                        self.motors.write(cst.WRITE_ENABLE)
+                        self.motors.enableWrite()
                     else:
                         print("Disable writing")
-                        assert(write_status is cst.WRITE_DISABLE)
-                        self.motors.write(cst.WRITE_DISABLE)
+                        self.motors.disableWrite()
 
 
                     print("Moving from", robot_pos, " to", target_pos)

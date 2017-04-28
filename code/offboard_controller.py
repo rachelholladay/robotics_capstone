@@ -96,6 +96,14 @@ class OffboardController(object):
         print('offboard main loop')#
 
         # Setup robot parameters for loop
+        # Drawing complete status - if a robot is not present, it can be
+        # considered already 'finished'
+        self.completed = [False, False]
+        if cst.BLUE_ID not in self.robot_ids:
+            self.completed[cst.BLUE_ID] = True
+        if cst.BAD_ID not in self.robot_ids:
+            self.completed[cst.BAD_ID] = True
+
         self.stop_status = [cst.ROBOT_MOVE, cst.ROBOT_MOVE]
         self.write_status = [cst.WRITE_DISABLE, cst.WRITE_DISABLE]
         
@@ -115,6 +123,8 @@ class OffboardController(object):
         cmd_disable.stop_status = cst.ROBOT_MOVE
         cmd_disable.write_status = cst.WRITE_DISABLE
 
+        # Send initial message to stop motion, setup completion
+        print("disable writing tool")
         for rid in self.robot_ids:
             self.sys_comm.generateMessage(
                 robot_id=rid, locomotion=cmd_disable,
@@ -122,14 +132,47 @@ class OffboardController(object):
             self.sys_comm.sendTCPMessages()
         time.sleep(1)
 
+        ### FIXME TODO DELETE THIS writing tool test
+        # print("enable writing tool")
+        # cmd_disable.write_status = cst.WRITE_ENABLE
+        # self.sys_comm.generateMessage(
+        #     robot_id=rid, locomotion=cmd_disable,
+        #     error=None)
+        # self.sys_comm.sendTCPMessages()
+        # time.sleep(1)
+
+        # print("disable writing tool")
+        # for rid in self.robot_ids:
+        #     self.sys_comm.generateMessage(
+        #         robot_id=rid, locomotion=cmd_disable,
+        #         error=None)
+        #     self.sys_comm.sendTCPMessages()
+        # time.sleep(1)
+        # return
+        ### END WRITING TOOL TEST
+
         # Run actual loop
         while True:
-            try:
                 data = self.sys_localization.getLocalizationData()
+                if self.completed is [True, True]:
+                    print("Drawing complete")
+                    return
+
+
+                # Robot-to-robot commands
+                # get blue tf, bad tf from localization data above
+                # if bluetf.dist(bad_tf) < collision_buffer:
+                #   send pause to bad tf
+                # process blue tf as normal
+
+                # Setup individual robot commands
                 for rid in self.robot_ids:
-                    self.commandRobot(rid, data)
-            except:
-                pass
+                    try:
+                        if self.completed[rid] is True:
+                            continue
+                        self.commandRobot(rid, data)
+                    except:
+                        pass
 
 
 
@@ -152,7 +195,7 @@ class OffboardController(object):
 
         # print(name, str(robot_tf),"| ",robot_tf.dist(self.targets[robot_id]))
         # print(str(robot_tf), str(self.targets[robot_id]))
-        print(str(robot_tf), "| dist2target", robot_tf.dist(self.targets[robot_id]))
+        # print(str(robot_tf), "| dist2target", robot_tf.dist(self.targets[robot_id]))
 
         # If at the waypoint, set next waypoint
         if robot_tf.dist(self.targets[robot_id]) < cst.STOP_DIST:
@@ -167,10 +210,11 @@ class OffboardController(object):
             # Check if at the last waypoint, then stop
             if self.path_index[robot_id] >= self.paths[robot_id].length:
                 self.stop_status[robot_id] = 1
+                self.completed[robot_id] = True
                 print("FINAL WAYPOINT REACHED")
 
             self.targets[robot_id] = self.paths[robot_id][self.path_index[robot_id]].target
-            write_status = self.paths[robot_id][self.path_index[robot_id]].write_status
+            self.write_status[robot_id] = self.paths[robot_id][self.path_index[robot_id]].write_status
             
             # send temporary stop command and also actuate writing
             # tool to new position
@@ -188,7 +232,7 @@ class OffboardController(object):
         robot_locomotion = LocomotionData(
             tf_robot=robot_tf, 
             tf_target=self.targets[robot_id],
-            write_status=cst.WRITE_DISABLE,#self.write_status[robot_id],
+            write_status=self.write_status[robot_id],
             stop_status=self.stop_status[robot_id])
 
         self.sys_comm.generateMessage(
@@ -208,7 +252,7 @@ class OffboardController(object):
         self.sys_comm.sendTCPMessages()
         self.sys_comm.closeTCPConnections()
 
-        self.sys_localization.close()
+        # self.sys_localization.close()
 
     def _test(self):
         pass
@@ -223,6 +267,7 @@ if __name__ == "__main__":
     oneLine = 'oneLine'
     centerLine = 'centerLine'
 
-    controller = OffboardController(robot_ids=badID, drawing_name=oneLine)
+    controller = OffboardController(robot_ids=blueID, drawing_name=centerLine)
     controller.robotSetup()
     controller.loop()
+    controller.close()

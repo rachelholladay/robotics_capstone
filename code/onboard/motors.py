@@ -20,7 +20,7 @@ Constants
 PINS = np.array([24, 23, 18, 20])
 WRITINGPINS = np.array([20,19,21])
 WRITINGPWR = 5
-WRITINGTIME = 0.5
+WRITINGTIME = 0.05 # default .25, .1 is improvement
 UNWRITINGTIME = 0.25
 # How long to wait for motors to stop and reissue commands
 STOP_TIME = 0.01
@@ -126,6 +126,7 @@ class Motors(object):
         @param state 0 is start writing, 1 is stop writing
         '''
         if (not state) and (not self.isWriting):
+            print("writing!!!")
             GPIO.output(WRITINGPINS[0], GPIO.HIGH)
             GPIO.output(WRITINGPINS[1], GPIO.LOW)
             self.pwm.ChangeDutyCycle(WRITINGPWR)
@@ -135,6 +136,7 @@ class Motors(object):
             return
 
         if state and self.isWriting:
+            print("stop writing :O")
             GPIO.output(WRITINGPINS[0], GPIO.LOW)
             GPIO.output(WRITINGPINS[1], GPIO.HIGH)
             self.pwm.ChangeDutyCycle(WRITINGPWR)
