@@ -61,7 +61,7 @@ class OnboardController(object):
             if msg is None:
                 continue
             else:
-                print("======= new message =======")
+                print("======= new message",time.time()," =======")
                 if msg.stop_status is 1:
                     self.motors.stopMotors()
                     if msg.write_status is cst.WRITE_DISABLE:

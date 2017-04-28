@@ -14,7 +14,7 @@ BAD_ID = 1
 # Communication values - used both onboard and offboard
 OFFBOARD_IP = '192.168.0.26' # NJ macbook ubuntu vm IP
 BLUE_IP = '192.168.0.23'
-BAD_IP = 'UPDATE_THIS'
+BAD_IP = '192.168.0.24'
 PORT = 10000
 BUFFER_SIZE = 2048
 MESSAGE_TIMEOUT = 4 # max delay in seconds between messages before onboard stops

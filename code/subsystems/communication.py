@@ -8,7 +8,7 @@ import time
 from messages import robot_commands_pb2
 
 from utils import dataStorage as storage
-from utils import constants
+from utils import constants as cst
 
 class CommunicationSystem(object):
     '''
@@ -27,22 +27,26 @@ class CommunicationSystem(object):
     '''
 
     def __init__(self):
-        self.connections = [] # List of existing robot connections
-        self.messages = []
+        self.connections = [None, None] # List of existing robot connections
+        self.messages = [None, None]
 
 
-    def connectToRobot(self, robot_id, robot_ip):
+    def connectToRobot(self, robot_id):
         '''
         For offboard controller.
         Attempt to establish TCP connection with robot at specified
         IP address.
 
         @param robot_id Integer ID to delineate individual robots
-        @param robot_ip The IP address of the robot to connect to
         @return status Success status of connect attempt
         '''
+        robot_ip = ''
+        if robot_id is cst.BLUE_ID:
+            robot_ip = cst.BLUE_IP
+        elif robot_id is cst.BAD_ID:
+            robot_ip = cst.BAD_IP
         # Setup TCP socket
-        address = (robot_ip, constants.PORT)
+        address = (robot_ip, cst.PORT)
         conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         conn.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
@@ -56,8 +60,8 @@ class CommunicationSystem(object):
         msg = robot_commands_pb2.robot_command()
         msg.robot_id = robot_id
 
-        self.connections.append(conn)
-        self.messages.append(msg)
+        self.connections[robot_id] = conn
+        self.messages[robot_id] = msg
         
         print("Connected to robot")
         return True
@@ -85,12 +89,13 @@ class CommunicationSystem(object):
             0: Successful transmission between all robots
             n: Number of robots for which message failed to send
         '''
+        from IPython import embed
         status = 0
         for i in range(len(self.connections)):
             try:
                 conn = self.connections[i]
                 conn.send(self.messages[i].SerializeToString())
-            except socket.error:
+            except:
                 status += 1
         return status
 
@@ -102,8 +107,11 @@ class CommunicationSystem(object):
         '''
         for i in range(len(self.connections)):
             # TODO close TCP connection
-            robot_connection = self.connections[i]
-            robot_connection.close()
+            try:
+                robot_connection = self.connections[i]
+                robot_connection.close()
+            except:
+                pass
 
             self.connections.remove(robot_connection)
             self.messages.remove(self.messages[i])
