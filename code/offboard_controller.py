@@ -184,7 +184,8 @@ class OffboardController(object):
             ################# END WAYPOINT WITH WRITING TEST #########
 
             try:
-                self.commandRobot(cst.BLUE_ID)
+                data = self.sys_localization.getLocalizationData()
+                self.commandRobot(cst.BLUE_ID, data)
                 # for rid in self.robot_ids:
                 #     self.commandRobot(rid)
                 
@@ -241,7 +242,7 @@ class OffboardController(object):
 
 
 
-    def commandRobot(self, robot_id):
+    def commandRobot(self, robot_id, localization_data):
         """
         Pulls localization for specified robot and sends message
         """
@@ -254,25 +255,31 @@ class OffboardController(object):
             tag = cst.TAG_ROBOT2
             name = 'Bad'
 
-        data = self.sys_localization.getLocalizationData()
+        data = localization_data
         robot_tf = data.robots[tag]
+
+
+        # print(name, str(robot_tf),"| ",robot_tf.dist(self.targets[robot_id]))
+        # print(str(robot_tf), str(self.targets[robot_id]))
+        print(str(robot_tf), "| dist2target", robot_tf.dist(self.targets[robot_id]))
 
         # If at the waypoint, set next waypoint
         if robot_tf.dist(self.targets[robot_id]) < cst.STOP_DIST:
-            print("Waypoint", path_index[robot_id], " reached:", 
-                    str(self.paths[robot_id][path_index]))
+            print("-----------waypoint reached------------")
+            print("Waypoint", self.path_index[robot_id], " reached:", 
+                    str(self.paths[robot_id][self.path_index[robot_id]]))
             print(name, "tf: ", str(robot_tf))
 
             # Set next waypoint
-            path_index[robot_id] += 1
+            self.path_index[robot_id] += 1
 
             # Check if at the last waypoint, then stop
-            if path_index[robot_id] >= self.paths[robot_id].length:
+            if self.path_index[robot_id] >= self.paths[robot_id].length:
                 self.stop_status[robot_id] = 1
                 print("FINAL WAYPOINT REACHED")
 
-            self.targets[robot_id] = self.paths[robot_id][path_index].target
-            write_status = self.paths[robot_id][path_index].write_status
+            self.targets[robot_id] = self.paths[robot_id][self.path_index[robot_id]].target
+            write_status = self.paths[robot_id][self.path_index[robot_id]].write_status
             
             # send temporary stop command and also actuate writing
             # tool to new position
@@ -284,8 +291,6 @@ class OffboardController(object):
             self.sys_comm.sendTCPMessages()
             time.sleep(1)
 
-        # print(name, str(robot_tf),"| ",robot_tf.dist(self.targets[robot_id]))
-        print(str(robot_tf), str(self.targets[robot_id]))
         # Theta correction
         self.targets[robot_id].theta = data.corners[cst.TAG_TOP_RIGHT].theta
 
@@ -319,10 +324,6 @@ class OffboardController(object):
 
 
 if __name__ == "__main__":
-    robotIPs = [cst.BLUE_IP, cst.BAD_IP]
-    localhost = ['localhost']
-    blueRobotIP = [cst.BLUE_IP]
-    badRobotIP = [cst.BAD_IP]
 
     blueID = [cst.BLUE_ID]
     badID = [cst.BAD_ID]

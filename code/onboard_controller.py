@@ -122,7 +122,8 @@ class OnboardController(object):
 
 
                     print("Moving from", robot_pos, " to", target_pos)
-                    self.moveMotors(self.getMotorCommands(robot_pos, target_pos))
+                    motor_commands = self.getMotorCommands(robot_pos, target_pos)
+                    self.moveMotors(motor_commands)
 
                 # reset state
                 msg = None
@@ -152,7 +153,7 @@ class OnboardController(object):
         self.motors.stopMotors()
         time.sleep(0.01)
 
-    def getMotorCommands(self, current, target, verbose=1):
+    def getMotorCommands(self, current, target, verbose=0):
         """
         Uses mechanum control equations to compute motor powers for each motor
             to move along a vector between the provided current/target points

@@ -14,7 +14,7 @@ class Point(object):
         self.valid = valid
 
     def __str__(self):
-        return "Point: x:{} y:{}".format(self.x, self.y)
+        return "Point: x:{:.3f} y:{:.3f}".format(self.x, self.y)
 
     def __sub__(self, pt):
         """
@@ -45,7 +45,7 @@ class DirectedPoint(Point):
         __rmul__ = self.__mul__  # define multiplication bidirectionaly
 
     def __str__(self):
-        return "DPT ({0:.3f}, {0:.3f}, {0:.3f})".format(self.x, self.y, self.theta)
+        return "DPT ({:.3f}, {:.3f}, {:.3f})".format(self.x, self.y, self.theta)
 
     def __sub__(self, dpt):
         """

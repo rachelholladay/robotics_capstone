@@ -110,11 +110,11 @@ class CommunicationSystem(object):
             try:
                 robot_connection = self.connections[i]
                 robot_connection.close()
+                self.connections.remove(robot_connection)
+                self.messages.remove(self.messages[i])
             except:
                 pass
-
-            self.connections.remove(robot_connection)
-            self.messages.remove(self.messages[i])
+           
 
 
     def clearMessage(self, robot_id):
