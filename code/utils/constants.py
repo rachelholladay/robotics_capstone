@@ -25,6 +25,12 @@ MESSAGE_TIMEOUT = 4 # max delay in seconds between messages before onboard stops
 # "vibrate" in place by trying to constantly correct for minor localization
 # errors.
 STOP_DIST = 0.25
+
+# Distance threshold for robot-robot collision detection. If the robots are
+# closer than this threshold, robots will adhere to incoming collision detection
+# rules.
+COLLISION_BUFFER = 2.5
+
 # locomotion stop_status parameter values
 ROBOT_MOVE = 0
 ROBOT_STOP = 1
