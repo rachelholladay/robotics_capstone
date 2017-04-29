@@ -222,6 +222,15 @@ class OffboardController(object):
                 self.stop_status[robot_id] = 1
                 self.completed[robot_id] = True
                 print("FINAL WAYPOINT REACHED")
+                # send stop
+                stop_wp = self.stop_locomotion
+                stop_wp.stop_status = cst.ROBOT_STOP
+                stop_wp.write_status = cst.WRITE_DISABLE
+                self.sys_comm.generateMessage(
+                    robot_id=robot_id, locomotion=stop_wp, 
+                    error=None)
+                self.sys_comm.sendTCPMessages()
+                time.sleep(1)
                 return
 
             self.targets[robot_id] = self.paths[robot_id][self.path_index[robot_id]].target
