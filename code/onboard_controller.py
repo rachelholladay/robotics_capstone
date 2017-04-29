@@ -80,39 +80,6 @@ class OnboardController(object):
                     write_status = msg.write_status
 
 
-                    # ###### Controller to fix accuracy #####
-                    # # TODO make function, directional adjustment not necessary
-                    # # Use previous-message motion vector and actual robot
-                    # # position relative to previous vector to adjust target
-                    # # to account for any motion error
-                    # # Error vector based on 
-                    # # http://stackoverflow.com/questions/5227373/minimal-perpendicular-vector-between-a-point-and-a-line
-                    # if prev_target is None or prev_robot is None:
-                    #     # first message, set previous for next message
-                    #     prev_robot = robot_pos
-                    #     prev_target = target_pos
-                    # else:
-                    #     # Use robot's current position and find offset from
-                    #     # ideal vector of prev_target - prev_robot
-                    #     prev_direction = prev_target - prev_robot
-                    #     prev_dir_mag = math.sqrt(prev_direction.x**2 + prev_direction.y**2)
-
-                    #     prev_direction.x = prev_direction.x / prev_dir_mag
-                    #     prev_direction.y = prev_direction.y / prev_dir_mag
-
-                    #     error_vector = (prev_robot + \
-                    #         ((robot_pos - prev_robot).dot(prev_direction)) * prev_direction) \
-                    #         - robot_pos
-
-                    #     # print("error vec:", error_vector)
-
-                    #     # Update previous for next iteration
-                    #     prev_robot = robot_pos
-                    #     prev_target = target_pos
-
-                    #     # Offset position by error to correct
-                    #     # robot_pos = robot_pos + error_vector
-
                     # # Set writing status accordingly
                     # print("write status", write_status)
                     # if write_status is cst.WRITE_ENABLE:
