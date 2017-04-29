@@ -174,6 +174,8 @@ class OffboardController(object):
                 # process blue tf as normal
 
                 
+                # Basic collision code
+                # TODO actuate bad if not in collision range
                 blue_tf = data.robots[cst.TAG_ROBOT1]
                 bad_tf = data.robots[cst.TAG_ROBOT2]
 
