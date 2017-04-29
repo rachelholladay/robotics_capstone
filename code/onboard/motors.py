@@ -20,8 +20,8 @@ Constants
 PINS = np.array([24, 23, 18, 20])
 WRITINGPINS = np.array([20,19,21])
 WRITINGPWR = 5
-WRITINGTIME = 0.05 # default .25, .1 is improvement
-UNWRITINGTIME = 0.25
+WRITINGTIME = 0.3 # default .25, .1 is improvement
+UNWRITINGTIME = 0.2
 # How long to wait for motors to stop and reissue commands
 STOP_TIME = 0.01
 # Speed PID constants
@@ -132,6 +132,7 @@ class Motors(object):
             self.pwm.ChangeDutyCycle(WRITINGPWR)
             time.sleep(WRITINGTIME)
             self.pwm.ChangeDutyCycle(0)
+            GPIO.output(WRITINGPINS[0], GPIO.LOW)
             self.isWriting = True
             return
 
@@ -142,5 +143,6 @@ class Motors(object):
             self.pwm.ChangeDutyCycle(WRITINGPWR)
             time.sleep(UNWRITINGTIME)
             self.pwm.ChangeDutyCycle(0)
+            GPIO.output(WRITINGPINS[1], GPIO.LOW)
             self.isWriting = False
             return
