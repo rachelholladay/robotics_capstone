@@ -7,6 +7,7 @@ import time
 from onboard_controller import OnboardController
 from onboard.motors import Motors
 from utils.geometry import DirectedPoint
+from utils import constants as cst
 
 # START = DirectedPoint(0, 0, 0)
 # DIR_UP = controller.getMotorCommands(start_pt, DirectedPoint(0, 1, 0))
@@ -18,6 +19,15 @@ from utils.geometry import DirectedPoint
 # DIR_UPRIGHT = controller.getMotorCommands(start_pt, DirectedPoint(1, 1, 0))
 # DIR_DOWNLEFT = controller.getMotorCommands(start_pt, DirectedPoint(-1, -1, 0))
 # DIR_DOWNRIGHT = controller.getMotorCommands(start_pt, DirectedPoint(1, -1, 0))
+
+
+def writingTest2():
+    m = Motors()
+    m.stopMotors()
+
+    m.write(0)
+    time.sleep(5)
+    m.write(1)
 
 def writingImplementTest():
     m = Motors()
@@ -89,4 +99,4 @@ def demoOnboardSquare():
 
 
 if __name__ == "__main__":
-    writingImplementTest()
+    writingTest2()

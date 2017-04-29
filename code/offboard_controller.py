@@ -122,7 +122,7 @@ class OffboardController(object):
         cmd_disable = self.stop_locomotion
         cmd_disable.stop_status = cst.ROBOT_MOVE
         cmd_disable.write_status = cst.WRITE_DISABLE
-
+        
         # Send initial message to stop motion, setup completion
         print("disable writing tool")
         for rid in self.robot_ids:
@@ -130,25 +130,26 @@ class OffboardController(object):
                 robot_id=rid, locomotion=cmd_disable,
                 error=None)
             self.sys_comm.sendTCPMessages()
-        time.sleep(1)
+        time.sleep(2)
 
         ### FIXME TODO DELETE THIS writing tool test
-        # print("enable writing tool")
-        # cmd_disable.write_status = cst.WRITE_ENABLE
-        # self.sys_comm.generateMessage(
-        #     robot_id=rid, locomotion=cmd_disable,
-        #     error=None)
-        # self.sys_comm.sendTCPMessages()
-        # time.sleep(1)
+        print("enable writing tool")
+        cmd_disable.write_status = cst.WRITE_ENABLE
+        self.sys_comm.generateMessage(
+            robot_id=rid, locomotion=cmd_disable,
+            error=None)
+        self.sys_comm.sendTCPMessages()
+        time.sleep(2)
 
-        # print("disable writing tool")
-        # for rid in self.robot_ids:
-        #     self.sys_comm.generateMessage(
-        #         robot_id=rid, locomotion=cmd_disable,
-        #         error=None)
-        #     self.sys_comm.sendTCPMessages()
-        # time.sleep(1)
-        # return
+        print("disable writing tool")
+        cmd_disable.write_status = cst.WRITE_DISABLE
+        for rid in self.robot_ids:
+            self.sys_comm.generateMessage(
+                robot_id=rid, locomotion=cmd_disable,
+                error=None)
+            self.sys_comm.sendTCPMessages()
+        time.sleep(2)
+        return
         ### END WRITING TOOL TEST
 
         # Run actual loop

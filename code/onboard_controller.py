@@ -35,10 +35,15 @@ class OnboardController(object):
         atexit.register(self.close)
 
     def setup(self):
-        self.motors.disableWrite()
+
+        # self.motors.disableWrite()
+        # self.motors.write(0)
+        # time.sleep(2)
+        # self.motors.write(1)
 
         self.comm.connectToOffboard()
         time.sleep(1)
+
 
         # start message watchdog timer to ensure motion does not occur without
         # receiving offboard messages
@@ -81,13 +86,13 @@ class OnboardController(object):
 
 
                     # # Set writing status accordingly
-                    # print("write status", write_status)
-                    # if write_status is cst.WRITE_ENABLE:
-                    #     print("Enable writing")
-                    #     self.motors.enableWrite()
-                    # else:
-                    #     print("Disable writing")
-                    #     self.motors.disableWrite()
+                    print("write status", write_status)
+                    if write_status is cst.WRITE_ENABLE:
+                        print("Enable writing")
+                        self.motors.enableWrite()
+                    else:
+                        print("Disable writing")
+                        self.motors.disableWrite()
 
 
                     print("Moving from", robot_pos, " to", target_pos)
