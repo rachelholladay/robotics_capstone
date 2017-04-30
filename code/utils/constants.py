@@ -31,6 +31,15 @@ STOP_DIST = 0.25
 # rules.
 COLLISION_BUFFER = 2.5
 
+# Workaround for demo space ~y=5 having gap in wood underneath due to uneven
+# floor. When within the GAP_BUFFER range the GAP_LOCATION, writing tool will
+# automatically disable itself for the duration, regardless of the drawing
+# state. This only occurs if GAP_ENABLED is true
+GAP_ENABLED = True
+GAP_LOCATION = 4.8 # along the y-axis of the demo space
+GAP_BUFFER = 0.5
+
+
 # locomotion stop_status parameter values
 ROBOT_MOVE = 0
 ROBOT_STOP = 1

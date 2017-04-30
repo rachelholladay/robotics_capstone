@@ -166,13 +166,6 @@ class OffboardController(object):
                         self.sys_comm.sendTCPMessages()
                     return
 
-
-                # Robot-to-robot commands
-                # get blue tf, bad tf from localization data above
-                # if bluetf.dist(bad_tf) < collision_buffer:
-                #   send pause to bad tf
-                # process blue tf as normal
-
                 
                 # Basic collision code
                 # TODO actuate bad if not in collision range
@@ -181,11 +174,12 @@ class OffboardController(object):
 
                 # ensure both tags are found before checking collision
                 if not (blue_tf.valid and bad_tf.valid):
-                    print("one robot not found")
+                    # print("one robot not found")
                     self.commandRobot(cst.BLUE_ID, data)
                     continue
 
                 # check collision buffer threshold
+                # NOTE THAT HERE, BLUE STOPS FOR BAD (for testing)
                 if blue_tf.dist(bad_tf) < cst.COLLISION_BUFFER:
                     print("IN COLLISION BY", blue_tf.dist(bad_tf))
 
@@ -274,11 +268,21 @@ class OffboardController(object):
         # Theta correction
         self.targets[robot_id].theta = data.corners[cst.TAG_TOP_RIGHT].theta
 
+
+
         robot_locomotion = LocomotionData(
             tf_robot=robot_tf, 
             tf_target=self.targets[robot_id],
             write_status=self.write_status[robot_id],
             stop_status=self.stop_status[robot_id])
+
+        # Disable drawing if within gap in floor - workaround for uneven demo
+        # space. Only need to disable if tool status should be enabled
+        if cst.GAP_ENABLED and robot_locomotion.write_status is cst.WRITE_ENABLE:
+            if abs(robot_tf.y - cst.GAP_LOCATION) < cst.GAP_BUFFER:
+                print("HACK ENABLED", str(robot_tf))
+                robot_locomotion.write_status = cst.WRITE_DISABLE
+
 
         self.sys_comm.generateMessage(
             robot_id=robot_id, locomotion=robot_locomotion, 
@@ -319,7 +323,7 @@ if __name__ == "__main__":
     twoBoxes = 'twoBoxes'
 
 
-    controller = OffboardController(robot_ids=blueID, drawing_name=twoBoxes)
+    controller = OffboardController(robot_ids=blueID, drawing_name=debug)
     controller.robotSetup()
     controller.loop()
     controller.close()
