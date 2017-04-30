@@ -20,8 +20,10 @@ Constants
 PINS = np.array([24, 23, 18, 20])
 WRITINGPINS = np.array([20,19,21])
 WRITINGPWR = 5
-WRITINGTIME = 0.3 # default .25, .1 is improvement
-UNWRITINGTIME = 0.2
+WRITINGTIME = 0.1 # default .25, .1 is improvement
+WRITINGPULSETIME = 0.01
+PULSEPERIOD = 1
+UNWRITINGTIME = 0.08
 # How long to wait for motors to stop and reissue commands
 STOP_TIME = 0.01
 # Speed PID constants
@@ -61,6 +63,7 @@ class Motors(object):
         atexit.register(self.stopMotors)
         # Writing implement starts off unactuated
         self.isWriting = False
+        self.writingThread = None
 
     def __del__(self):
         self.stopMotors()
@@ -121,6 +124,16 @@ class Motors(object):
     def disableWrite(self):
         self.write(cst.WRITE_DISABLE)
 
+    def pulseWrite(self):
+        while self.isWriting is True:
+            time.sleep(PULSEPERIOD)
+            GPIO.output(WRITINGPINS[0], GPIO.HIGH)
+            GPIO.output(WRITINGPINS[1], GPIO.LOW)
+            self.pwm.ChangeDutyCycle(WRITINGPWR)
+            time.sleep(WRITINGPULSETIME)
+            self.pwm.ChangeDutyCycle(0)
+            GPIO.output(WRITINGPINS[0], GPIO.LOW)
+
     def write(self, state):
         '''
         @param state 0 is start writing, 1 is stop writing
@@ -134,15 +147,20 @@ class Motors(object):
             self.pwm.ChangeDutyCycle(0)
             GPIO.output(WRITINGPINS[0], GPIO.LOW)
             self.isWriting = True
+            t = threading.Thread(target=self.pulseWrite)
+            self.writingThread = t
+            t.start()
             return
 
         if state and self.isWriting:
             print("stop writing :O")
+            # Wait for writing thread to quit
+            self.isWriting = False
+            self.writingThread.join()
             GPIO.output(WRITINGPINS[0], GPIO.LOW)
             GPIO.output(WRITINGPINS[1], GPIO.HIGH)
             self.pwm.ChangeDutyCycle(WRITINGPWR)
             time.sleep(UNWRITINGTIME)
             self.pwm.ChangeDutyCycle(0)
             GPIO.output(WRITINGPINS[1], GPIO.LOW)
-            self.isWriting = False
             return
