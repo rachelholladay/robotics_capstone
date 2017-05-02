@@ -85,7 +85,7 @@ class OnboardController(object):
                     write_status = msg.write_status
 
 
-                    # # Set writing status accordingly
+                    # Set writing status accordingly
                     print("write status", write_status)
                     if write_status is cst.WRITE_ENABLE:
                         print("Enable writing")

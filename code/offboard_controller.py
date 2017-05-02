@@ -5,6 +5,7 @@ Runs fixed-rate loop that pulls data from subsystems
 import sys
 import time
 import atexit
+import cProfile
 
 from IPython import embed
 
@@ -209,6 +210,7 @@ class OffboardController(object):
         """
         Pulls localization for specified robot and sends message
         """
+
         tag = None
         name = ''
         if robot_id is cst.BLUE_ID:
@@ -268,8 +270,6 @@ class OffboardController(object):
         # Theta correction
         self.targets[robot_id].theta = data.corners[cst.TAG_TOP_RIGHT].theta
 
-
-
         robot_locomotion = LocomotionData(
             tf_robot=robot_tf, 
             tf_target=self.targets[robot_id],
@@ -289,6 +289,7 @@ class OffboardController(object):
             error=None)
         self.sys_comm.sendTCPMessages()
 
+        # time.sleep(0.1)
 
     def close(self):
         # Send message to stop robot
@@ -325,5 +326,6 @@ if __name__ == "__main__":
 
     controller = OffboardController(robot_ids=blueID, drawing_name=debug)
     controller.robotSetup()
-    controller.loop()
+    cProfile.run('controller.loop()')
+    # controller.loop()
     controller.close()
