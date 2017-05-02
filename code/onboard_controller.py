@@ -49,7 +49,6 @@ class OnboardController(object):
         # receiving offboard messages
         self._watchdog_thread = threading.Thread(name='_message_watchdog',
                              target=self._message_watchdog) 
-        self._watchdog_thread.start()      
 
     def loop(self):
         """
@@ -58,9 +57,7 @@ class OnboardController(object):
         """
         print("onboard main loop")
         self.message_timer = time.time()
-
-        prev_robot = None
-        prev_target = None
+        self._watchdog_thread.start()      
 
         while(1):
 
@@ -249,7 +246,11 @@ if __name__ == "__main__":
 
     controller = OnboardController(robot_ip="0.0.0.0")
     controller.setup()
+
+    # import cProfile
+    # cProfile.run('controller.loop()')
     controller.loop()
+    controller.close()
 
     # TODO create Motors() class and add test targets
     # start_pt = DirectedPoint(0, 0, 0)

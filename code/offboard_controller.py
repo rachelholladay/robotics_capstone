@@ -41,7 +41,6 @@ class OffboardController(object):
             write_status=cst.WRITE_DISABLE,
             stop_status=cst.ROBOT_STOP)
 
-        atexit.register(self.close)
         
     def robotSetup(self):
         '''
@@ -59,6 +58,7 @@ class OffboardController(object):
         self.sys_localization.setup()
         self.sys_localization.begin_loop(verbose=0)
         time.sleep(1)
+
         data = self.sys_localization.getLocalizationData()
         blue_tf = data.robots[cst.TAG_ROBOT1]
 
@@ -223,13 +223,8 @@ class OffboardController(object):
         data = localization_data
         robot_tf = data.robots[tag]
 
-
-        # print(name, str(robot_tf),"| ",robot_tf.dist(self.targets[robot_id]))
-        # print(str(robot_tf), str(self.targets[robot_id]))
-        # print(str(robot_tf), "| dist2target", robot_tf.dist(self.targets[robot_id]))
-
         # If at the waypoint, set next waypoint
-        if robot_tf.dist(self.targets[robot_id]) < cst.STOP_DIST:
+        if robot_tf.distsq(self.targets[robot_id]) < cst.STOP_DIST_SQ:
             print("-----------waypoint reached------------")
             print("Waypoint", self.path_index[robot_id], " reached:", 
                     str(self.paths[robot_id][self.path_index[robot_id]]))
@@ -326,6 +321,6 @@ if __name__ == "__main__":
 
     controller = OffboardController(robot_ids=blueID, drawing_name=debug)
     controller.robotSetup()
-    cProfile.run('controller.loop()')
-    # controller.loop()
+    # cProfile.run('controller.loop()')
+    controller.loop()
     controller.close()

@@ -25,6 +25,7 @@ MESSAGE_TIMEOUT = 4 # max delay in seconds between messages before onboard stops
 # "vibrate" in place by trying to constantly correct for minor localization
 # errors.
 STOP_DIST = 0.25
+STOP_DIST_SQ = (STOP_DIST * STOP_DIST) # distance squared for faster calculation
 
 # Distance threshold for robot-robot collision detection. If the robots are
 # closer than this threshold, robots will adhere to incoming collision detection

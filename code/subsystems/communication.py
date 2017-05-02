@@ -50,6 +50,11 @@ class CommunicationSystem(object):
         conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         conn.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
+        # Removes sending delay based on
+        # http://stackoverflow.com/questions/19741196/recv-function-too-slow
+        conn.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+
+
         # Attempt to connect
         try:
             conn.connect(address)
@@ -94,7 +99,7 @@ class CommunicationSystem(object):
         for i in range(len(self.connections)):
             try:
                 conn = self.connections[i]
-                conn.send(self.messages[i].SerializeToString())
+                conn.send(self.messages[i].SerializePartialToString())
             except:
                 status += 1
         return status
