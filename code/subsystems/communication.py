@@ -30,6 +30,20 @@ class CommunicationSystem(object):
         self.connections = [None, None] # List of existing robot connections
         self.messages = [None, None]
 
+        # Thread for sending messages
+        self._stop_flags = [False, False]
+        self._send_message_threads = [None, None]
+        self._send_thread_active = [False, False]
+        self.thread_serial_msgs = [None, None]
+
+        self._send_message_threads = [
+            threading.Thread(name='blue_comm',
+                             target=self._send_thread_blue),
+            threading.Thread(name='bad_comm',
+                             target=self._send_thread_bad) ]
+        self._send_message_threads[0].start()
+        self._send_message_threads[1].start()
+
 
     def connectToRobot(self, robot_id):
         '''
@@ -94,7 +108,6 @@ class CommunicationSystem(object):
             0: Successful transmission between all robots
             n: Number of robots for which message failed to send
         '''
-        from IPython import embed
         status = 0
         for i in range(len(self.connections)):
             try:
@@ -120,7 +133,10 @@ class CommunicationSystem(object):
             except:
                 pass
            
-
+        self._stop_flags = [True, True]
+        for t in self._send_message_threads:
+            if t is not None:
+                t.join()
 
     def clearMessage(self, robot_id):
         """
@@ -160,5 +176,35 @@ class CommunicationSystem(object):
         except:
             pass
         
+
+    def set_serialized_message(self, robot_id, locomotion):
+        """
+        Creates serialized message to the given robot id
+        """
+        self.thread_serial_msgs[robot_id] = self.generateMessage(robot_id,
+            locomotion, error=None)
+
+    def _send_thread_blue(self):
+        """
+        When active, takes self.thread_message and attempts to send to 
+        connection
+        """
+        while True:
+            if self._stop_flags[cst.BLUE_ID] is True:
+                return
+
+            if self._send_thread_active[cst.BLUE_ID] is True:
+                conn = self.connections[cst.BLUE_ID]
+                conn.send(self.thread_serial_msgs[cst.BLUE_ID])
+
+                # set send to false
+                self._send_thread_active[cst.BLUE_ID] = False
+
+    def _send_thread_bad(self):
+        if self._stop_flags[cst.BAD_ID] is True:
+            return
+        if self._send_thread_active[cst.BAD_ID] is True:
+            conn = self.connections[cst.BAD_ID]
+            conn.send(self.thread_serial_msgs[cst.BAD_ID])
 
 

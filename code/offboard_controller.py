@@ -280,10 +280,13 @@ class OffboardController(object):
                 robot_locomotion.write_status = cst.WRITE_DISABLE
 
 
-        self.sys_comm.generateMessage(
-            robot_id=robot_id, locomotion=robot_locomotion, 
-            error=None)
-        self.sys_comm.sendTCPMessages()
+        self.sys_comm.set_serialized_message(robot_id, robot_locomotion)
+        self.sys_comm._send_thread_active[robot_id] = True
+        
+        # self.sys_comm.generateMessage(
+        #     robot_id=robot_id, locomotion=robot_locomotion, 
+        #     error=None)
+        # self.sys_comm.sendTCPMessages()
 
 
     def close(self):
