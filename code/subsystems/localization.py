@@ -30,7 +30,10 @@ class LocalizationSystem(object):
 
         # Calibrated LocalizationData values. Corner and robot
         # locations are normalized on a (0,0) to (1,1) scale.
+        # external_data is used outside of the class to pass information
+        # between subsystems
         self.data = LocalizationData()
+        self.external_data = LocalizationData()
 
         # LocalizationData struct with raw pixel location values
         self._raw_loc = LocalizationData()
@@ -42,6 +45,8 @@ class LocalizationSystem(object):
         self._localization_thread = None
         # Stop flag for thread
         self._stop_flag = False
+
+        self._global_localization_status = False
 
  
     def _localize(self, verbose=0):
@@ -103,6 +108,7 @@ class LocalizationSystem(object):
             if self._stop_flag:
                 return
             self._localize(verbose=verbose)
+            self._getLocalizationData()
 
     def setup(self, camera=0, filename=""):
         """
@@ -136,7 +142,7 @@ class LocalizationSystem(object):
         # except:
             pass
 
-    def getLocalizationData(self):
+    def _getLocalizationData(self):
         """
         Returns LocalizationData struct with points scaled to specified
         rectangle size.
@@ -161,7 +167,7 @@ class LocalizationSystem(object):
         # Ensure points for affine tranform computation are valid
         if not bottom_left.valid or not bottom_right.valid or \
             not top_right.valid:
-            return self.data
+            return #self.data
         found_tags.append(cst.TAG_BOTTOM_LEFT)
         found_tags.append(cst.TAG_BOTTOM_RIGHT)
         found_tags.append(cst.TAG_TOP_RIGHT)
@@ -216,7 +222,19 @@ class LocalizationSystem(object):
                         calibrated[row_idx][1],
                         self._raw_loc.robots[tag_key].theta)
 
+        self._global_localization_status = True
+        self.external_data = self.data
+        self._global_localization_status = False
         # TODO END MUTEX FOR RAW LOCALIZATION STRUCT
-        return self.data
+        return #self.data
         # TODO ROTATE THETA
 
+
+    def getLocalizationData(self):
+        """
+        External function to gather self.data only when it is not being
+        updated
+        """
+        while self._global_localization_status:
+            continue
+        return self.external_data
