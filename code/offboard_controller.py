@@ -177,6 +177,7 @@ class OffboardController(object):
                 if not (blue_tf.valid and bad_tf.valid):
                     # print("one robot not found")
                     self.commandRobot(cst.BLUE_ID, data)
+                    time.sleep(0.1)
                     continue
 
                 # check collision buffer threshold
@@ -284,7 +285,6 @@ class OffboardController(object):
             error=None)
         self.sys_comm.sendTCPMessages()
 
-        # time.sleep(0.1)
 
     def close(self):
         # Send message to stop robot
@@ -321,6 +321,6 @@ if __name__ == "__main__":
 
     controller = OffboardController(robot_ids=blueID, drawing_name=debug)
     controller.robotSetup()
-    # cProfile.run('controller.loop()')
-    controller.loop()
+    cProfile.run('controller.loop()')
+    # controller.loop()
     controller.close()

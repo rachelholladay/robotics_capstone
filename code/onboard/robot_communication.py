@@ -54,11 +54,12 @@ class RobotCommunication(object):
         """
         data = robot_commands_pb2.robot_command()
 
-        try:
-            serial_data = self.offboard_conn.recv(constants.BUFFER_SIZE)
-            data.ParseFromString(serial_data)
-        except:
-            pass
+        # try:
+        # self.offboard_conn.settimeout(0.25)
+        serial_data = self.offboard_conn.recv(constants.BUFFER_SIZE)
+        data.ParseFromString(serial_data)
+        # except:
+        #     pass
 
         if data.IsInitialized():
             return data

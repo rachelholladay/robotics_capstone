@@ -16,8 +16,8 @@ OFFBOARD_IP = '192.168.0.26' # NJ macbook ubuntu vm IP
 BLUE_IP = '192.168.0.23'
 BAD_IP = '192.168.0.24'
 PORT = 10000
-BUFFER_SIZE = 2048
-MESSAGE_TIMEOUT = 4 # max delay in seconds between messages before onboard stops
+BUFFER_SIZE = 1024
+MESSAGE_TIMEOUT = 1 # max delay in seconds between messages before onboard stops
 
 ################ LOCOMOTION SUBSYSTEM ################
 # Distance the robot will stop from a target waypoint. Increasing this value 
