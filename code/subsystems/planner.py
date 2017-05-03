@@ -2,7 +2,8 @@
 Planner class
 '''
 from scipy.spatial import distance
-from utils import constants, geometry
+from utils import geometry
+from utils import constants as cst
 import numpy
 
 class PlannerSystem(object):
@@ -31,26 +32,22 @@ class PlannerSystem(object):
         [start_x, end_x] = data.horizontal_bounds
         inputs = data.lines
         pathData = numpy.zeros((inputs.shape))
-        constants.HORIZ_PAD
-        constants.VERT_PAD
         for i in xrange(4):
            pts = inputs[:, i]
            if i % 2 == 0:
               init = float(end_x - start_x)
-              final = float(constants.RIGHT_BORDER - constants.LEFT_BORDER)
-              final *= 1.0-constants.HORIZ_PAD
+              final = float(cst.RIGHT_BORDER - cst.LEFT_BORDER - (2*cst.HORIZ_PAD))
               pts_d = numpy.divide(pts, init)
               pts_m = numpy.multiply(pts_d, final)
               pathData[:, i] = numpy.add(pts_m, 
-                                  constants.LEFT_BORDER+(constants.HORIZ_PAD/2.0))
+                                  (cst.LEFT_BORDER+cst.HORIZ_PAD)) 
            else:
               init = float(end_y - start_y)
-              final = float(constants.TOP_BORDER - constants.BOTTOM_BORDER)
-              final *= 1.0-constants.VERT_PAD
+              final = float(cst.TOP_BORDER - cst.BOTTOM_BORDER - (2*cst.VERT_PAD))
               pts_d = numpy.divide(pts, init)
               pts_m = numpy.multiply(pts_d, final)
               pathData[:, i] = numpy.add(pts_m,
-                                  constants.BOTTOM_BORDER+(constants.VERT_PAD/2.0)) 
+                                  (cst.BOTTOM_BORDER+cst.VERT_PAD))
         return pathData
 
 class DistributeWork(object):
@@ -133,13 +130,5 @@ class DistributeWork(object):
         else:
             line_set += [end.tolist()]
             line_set += [start.tolist()]
-        drawingFlags = [constants.WRITE_DISABLE, constants.WRITE_ENABLE]
+        drawingFlags = [cst.WRITE_DISABLE, cst.WRITE_ENABLE]
         return (line_set, drawingFlags, (dist_start + dist_end))
-
-class PathGeneration(object):
-    '''
-    Contain functions go from line coordinates
-    to a path. I think we want this
-    '''
-    def __init__(self):
-        pass
