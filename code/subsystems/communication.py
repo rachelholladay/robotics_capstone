@@ -4,6 +4,7 @@ Communication subsystem
 '''
 import socket
 import time
+import threading
 
 from messages import robot_commands_pb2
 
@@ -181,8 +182,9 @@ class CommunicationSystem(object):
         """
         Creates serialized message to the given robot id
         """
-        self.thread_serial_msgs[robot_id] = self.generateMessage(robot_id,
-            locomotion, error=None)
+        self.generateMessage(robot_id, locomotion, error=None)
+        self.thread_serial_msgs[robot_id] = \
+            self.messages[robot_id].SerializePartialToString()
 
     def _send_thread_blue(self):
         """
@@ -193,7 +195,11 @@ class CommunicationSystem(object):
             if self._stop_flags[cst.BLUE_ID] is True:
                 return
 
+            if self.thread_serial_msgs[cst.BLUE_ID] is None:
+                continue
+
             if self._send_thread_active[cst.BLUE_ID] is True:
+
                 conn = self.connections[cst.BLUE_ID]
                 conn.send(self.thread_serial_msgs[cst.BLUE_ID])
 
@@ -201,10 +207,16 @@ class CommunicationSystem(object):
                 self._send_thread_active[cst.BLUE_ID] = False
 
     def _send_thread_bad(self):
-        if self._stop_flags[cst.BAD_ID] is True:
-            return
-        if self._send_thread_active[cst.BAD_ID] is True:
-            conn = self.connections[cst.BAD_ID]
-            conn.send(self.thread_serial_msgs[cst.BAD_ID])
+        while True:
+            if self._stop_flags[cst.BAD_ID] is True:
+                return
 
+            if self.thread_serial_msgs[cst.BAD_ID] is None:
+                continue
 
+            if self._send_thread_active[cst.BAD_ID] is True:
+                conn = self.connections[cst.BAD_ID]
+                conn.send(self.thread_serial_msgs[cst.BAD_ID])
+
+                # set send to false
+                self._send_thread_active[cst.BAD_ID] = False

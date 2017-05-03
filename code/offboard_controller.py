@@ -282,8 +282,10 @@ class OffboardController(object):
                 robot_locomotion.write_status = cst.WRITE_DISABLE
 
 
-        self.sys_comm.set_serialized_message(robot_id, robot_locomotion)
-        self.sys_comm._send_thread_active[robot_id] = True
+        if self.sys_comm._send_thread_active[robot_id] is False:
+            # print("activating", robot_id)
+            self.sys_comm.set_serialized_message(robot_id, robot_locomotion)
+            self.sys_comm._send_thread_active[robot_id] = True
         
         # self.sys_comm.generateMessage(
         #     robot_id=robot_id, locomotion=robot_locomotion, 
