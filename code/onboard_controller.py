@@ -262,8 +262,6 @@ if __name__ == "__main__":
     controller = OnboardController(robot_ip="0.0.0.0")
     controller.setup()
 
-    # controller.test()
-
     # import cProfile
     # cProfile.run('controller.loop()')
     controller.loop()

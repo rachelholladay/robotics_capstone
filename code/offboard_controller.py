@@ -172,15 +172,13 @@ class OffboardController(object):
                 # TODO actuate bad if not in collision range
                 blue_tf = data.robots[cst.TAG_ROBOT1]
                 bad_tf = data.robots[cst.TAG_ROBOT2]
-                print("blue |", str(blue_tf))
-                print("bad |", str(bad_tf))
-                print("tr |", str(data.corners[cst.TAG_TOP_RIGHT]))
-                continue
+
+
                 # ensure both tags are found before checking collision
                 if not (blue_tf.valid and bad_tf.valid):
                     # print("one robot not found")
-                    self.commandRobot(cst.BLUE_ID, data)
-                    time.sleep(0.1)
+                    self.commandRobot(cst.BAD_ID, data) # TODO REMOVE
+                    # time.sleep(0.1)
                     continue
 
                 # check collision buffer threshold
@@ -197,7 +195,8 @@ class OffboardController(object):
                     self.sys_comm.sendTCPMessages()
 
                 else:
-                    self.commandRobot(cst.BLUE_ID, data)
+                    # self.commandRobot(cst.BLUE_ID, data)
+                    self.commandRobot(cst.BAD_ID, data)
 
 
 
@@ -315,6 +314,7 @@ if __name__ == "__main__":
 
     oneLine = 'oneLine'
     centerLine = 'centerLine'
+    centerShortLine = 'centerShortLine'
     shortLine = 'shortLine'
     threeShortLines = 'threeShortLines'
     connectedLines = 'connectedLines'
@@ -322,7 +322,7 @@ if __name__ == "__main__":
     twoBoxes = 'twoBoxes'
 
 
-    controller = OffboardController(robot_ids=badID, drawing_name=debug)
+    controller = OffboardController(robot_ids=badID, drawing_name=centerShortLine)
     controller.robotSetup()
     cProfile.run('controller.loop()')
     # controller.loop()
