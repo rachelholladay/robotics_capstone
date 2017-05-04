@@ -2,12 +2,12 @@
 Main offboard controller.
 Runs fixed-rate loop that pulls data from subsystems
 '''
-import sys
-import time
-import atexit
-import cProfile
+from __future__ import print_function
 
-from IPython import embed
+import sys
+import signal
+import time
+import cProfile
 
 import subsystems
 from utils.geometry import DirectedPoint, Waypoint
@@ -41,7 +41,7 @@ class OffboardController(object):
             write_status=cst.WRITE_DISABLE,
             stop_status=cst.ROBOT_STOP)
 
-        
+
     def robotSetup(self):
         '''
         Sets up communication links with robot agents.
@@ -50,9 +50,8 @@ class OffboardController(object):
         for i in xrange(0, len(self.robot_ids)):
             success = self.sys_comm.connectToRobot(self.robot_ids[i])
             if not success:
-                print 'FAILED TO CONNECT TO ROBOT'
+                print("FAILED TO CONNECT TO ROBOT")
                 sys.exit(1)
-
 
         # TODO start localization, planner and UI in threads
         self.sys_localization.setup()
@@ -116,36 +115,11 @@ class OffboardController(object):
                     self.paths[cst.BAD_ID][self.path_index[cst.BAD_ID]].write_status
                     ]
 
-        # send initial command to disable writing implement
-        cmd_disable = self.stop_locomotion
-        cmd_disable.stop_status = cst.ROBOT_MOVE
-        cmd_disable.write_status = cst.WRITE_DISABLE
-
         # Send initial message to stop motion, setup completion
         print("disable writing tool")
         for rid in self.robot_ids:
             self.sys_comm.sendTCPMessage(rid, self.stop_locomotion)
-        time.sleep(1)
-
-        ### FIXME TODO DELETE THIS writing tool test
-        # print("enable writing tool")
-        # cmd_disable.write_status = cst.WRITE_ENABLE
-        # self.sys_comm.generateMessage(
-        #     robot_id=rid, locomotion=cmd_disable,
-        #     error=None)
-        # self.sys_comm.sendTCPMessages()
-        # time.sleep(2)
-
-        # print("disable writing tool")
-        # cmd_disable.write_status = cst.WRITE_DISABLE
-        # for rid in self.robot_ids:
-        #     self.sys_comm.generateMessage(
-        #         robot_id=rid, locomotion=cmd_disable,
-        #         error=None)
-        #     self.sys_comm.sendTCPMessages()
-        # time.sleep(2)
-        # return
-        ### END WRITING TOOL TEST
+        time.sleep(0.5)
 
         # Run actual loop
         while True:
@@ -157,12 +131,10 @@ class OffboardController(object):
                     self.sys_comm.sendTCPMessage(rid, self.stop_locomotion)
                 return
 
-
             # Basic collision code
             # TODO actuate bad if not in collision range
             blue_tf = data.robots[cst.TAG_ROBOT1]
             bad_tf = data.robots[cst.TAG_ROBOT2]
-
 
             # ensure both tags are found before checking collision
             # if both robots not found, stop execution
@@ -173,12 +145,10 @@ class OffboardController(object):
                 continue
 
             # check collision buffer threshold
-            # NOTE THAT HERE, BLUE STOPS FOR BAD (for testing)
             if blue_tf.dist(bad_tf) < cst.COLLISION_BUFFER:
                 print("IN COLLISION BY", blue_tf.dist(bad_tf))
                 self.sys_comm.sendTCPMessage(cst.BAD_ID,
                     self.stop_locomotion)
-
             else:
                 # Only command robot if it is not done drawing
                 if self.completed[cst.BAD_ID] is not True:
@@ -186,15 +156,7 @@ class OffboardController(object):
                 if self.completed[cst.BLUE_ID] is not True:
                     self.commandRobot(cst.BLUE_ID, data)
 
-
-
-            # Default commands, no collision detection
-            # # Setup individual robot commands
-            # for rid in self.robot_ids:
-            #     if self.completed[rid] is True:
-            #         continue
-            #     self.commandRobot(rid, data)
-
+            time.sleep(0.1)
 
     def commandRobot(self, robot_id, localization_data):
         """
@@ -216,12 +178,7 @@ class OffboardController(object):
         # If at the waypoint, set next waypoint
         if robot_tf.distsq(self.targets[robot_id]) < cst.STOP_DIST_SQ:
             print("-----------Waypoint reached (Robot", 
-                    robot_id, " ------------")
-           
-            print("path index: ", self.path_index[robot_id])
-            print("path index: ", self.path_index[robot_id])
-            print("path: ", str(self.paths[robot_id][self.path_index[robot_id]]))
-            
+                    robot_id, ") ------------")
             print("Waypoint", self.path_index[robot_id], " reached:", 
                     str(self.paths[robot_id][self.path_index[robot_id]]))            
             print(name, "tf: ", str(robot_tf))
@@ -269,7 +226,7 @@ class OffboardController(object):
         # space. Only need to disable if tool status should be enabled
         if cst.GAP_ENABLED and robot_locomotion.write_status is cst.WRITE_ENABLE:
             if abs(robot_tf.y - cst.GAP_LOCATION) < cst.GAP_BUFFER:
-                print("HACK ENABLED", str(robot_tf))
+                # print("HACK ENABLED", str(robot_tf))
                 robot_locomotion.write_status = cst.WRITE_DISABLE
 
         self.sys_comm.sendTCPMessage(robot_id, robot_locomotion)
@@ -277,18 +234,19 @@ class OffboardController(object):
 
     def close(self):
         # Send message to stop robot
-        print("Shutting down...")
-        
+        print("Shutting down...")        
         for rid in self.robot_ids:
             self.sys_comm.sendTCPMessage(rid, self.stop_locomotion)
 
-        time.sleep(1)
+        time.sleep(2)
         self.sys_comm.closeTCPConnections()
         self.sys_localization.close()
 
 
 
+
 if __name__ == "__main__":
+
 
     blueID = [cst.BLUE_ID]
     badID = [cst.BAD_ID]
@@ -304,11 +262,15 @@ if __name__ == "__main__":
     debug = 'debug'
     twoBoxes = 'twoBoxes'
     horizLine = 'horizLine'
+    x = 'x'
 
 
     controller = OffboardController(robot_ids=robotIDs, 
         drawing_name=twoLines)
     controller.robotSetup()
-    cProfile.run('controller.loop()')
-    # controller.loop()
-    controller.close()
+    # cProfile.run('controller.loop()')
+    try:
+        controller.loop()
+        controller.close()
+    except KeyboardInterrupt:
+        controller.close()

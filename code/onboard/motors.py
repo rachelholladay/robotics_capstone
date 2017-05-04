@@ -21,8 +21,8 @@ PINS = np.array([24, 23, 18, 20])
 WRITINGPINS = np.array([20,19,21])
 WRITINGPWR = 5
 WRITINGTIME = 0.1 # default .25, .1 is improvement
-WRITINGPULSETIME = 0.01
-PULSEPERIOD = 1
+WRITINGPULSETIME = 0.005
+PULSEPERIOD = 2
 UNWRITINGTIME = 0.08
 # How long to wait for motors to stop and reissue commands
 STOP_TIME = 0.01

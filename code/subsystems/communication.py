@@ -3,7 +3,6 @@ Communication subsystem
 
 '''
 import socket
-import time
 import threading
 
 from messages import robot_commands_pb2
