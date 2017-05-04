@@ -82,7 +82,7 @@ class OffboardController(object):
         if len(self.badPath.path) is 0:
             self.badPath.path.append(Waypoint(badStart, cst.WRITE_DISABLE))
 
-        self.paths = [self.bluePath, self.bluePath]
+        self.paths = [self.bluePath, self.badPath]
         print("blue path")
         print(self.bluePath)
         print("bad path")
@@ -149,47 +149,51 @@ class OffboardController(object):
 
         # Run actual loop
         while True:
-                data = self.sys_localization.getLocalizationData()
+            data = self.sys_localization.getLocalizationData()
 
-                if self.completed == [True, True]:
-                    print("Drawing complete")
-                    for rid in self.robot_ids:
-                        self.sys_comm.sendTCPMessage(rid, self.stop_locomotion)
-                    return
-
-
-                # Basic collision code
-                # TODO actuate bad if not in collision range
-                blue_tf = data.robots[cst.TAG_ROBOT1]
-                bad_tf = data.robots[cst.TAG_ROBOT2]
+            if self.completed == [True, True]:
+                print("Drawing complete")
+                for rid in self.robot_ids:
+                    self.sys_comm.sendTCPMessage(rid, self.stop_locomotion)
+                return
 
 
-                # ensure both tags are found before checking collision
-                # if both robots not found, stop execution
-                if not (blue_tf.valid and bad_tf.valid):
-                    for rid in self.robot_ids:
-                        self.sys_comm.sendTCPMessage(rid,
-                            self.stop_locomotion)
-                    continue
+            # Basic collision code
+            # TODO actuate bad if not in collision range
+            blue_tf = data.robots[cst.TAG_ROBOT1]
+            bad_tf = data.robots[cst.TAG_ROBOT2]
 
-                # check collision buffer threshold
-                # NOTE THAT HERE, BLUE STOPS FOR BAD (for testing)
-                if blue_tf.dist(bad_tf) < cst.COLLISION_BUFFER:
-                    print("IN COLLISION BY", blue_tf.dist(bad_tf))
 
-                else:
-                    # self.commandRobot(cst.BAD_ID, data)
+            # ensure both tags are found before checking collision
+            # if both robots not found, stop execution
+            if not (blue_tf.valid and bad_tf.valid):
+                for rid in self.robot_ids:
+                    self.sys_comm.sendTCPMessage(rid,
+                        self.stop_locomotion)
+                continue
+
+            # check collision buffer threshold
+            # NOTE THAT HERE, BLUE STOPS FOR BAD (for testing)
+            if blue_tf.dist(bad_tf) < cst.COLLISION_BUFFER:
+                print("IN COLLISION BY", blue_tf.dist(bad_tf))
+                self.sys_comm.sendTCPMessage(cst.BAD_ID,
+                    self.stop_locomotion)
+
+            else:
+                # Only command robot if it is not done drawing
+                if self.completed[cst.BAD_ID] is not True:
+                    self.commandRobot(cst.BAD_ID, data)
+                if self.completed[cst.BLUE_ID] is not True:
                     self.commandRobot(cst.BLUE_ID, data)
 
 
 
-
-                # Default commands, no collision detection
-                # # Setup individual robot commands
-                # for rid in self.robot_ids:
-                #     if self.completed[rid] is True:
-                #         continue
-                #     self.commandRobot(rid, data)
+            # Default commands, no collision detection
+            # # Setup individual robot commands
+            # for rid in self.robot_ids:
+            #     if self.completed[rid] is True:
+            #         continue
+            #     self.commandRobot(rid, data)
 
 
     def commandRobot(self, robot_id, localization_data):
@@ -211,9 +215,15 @@ class OffboardController(object):
 
         # If at the waypoint, set next waypoint
         if robot_tf.distsq(self.targets[robot_id]) < cst.STOP_DIST_SQ:
-            print("-----------waypoint reached------------")
+            print("-----------Waypoint reached (Robot", 
+                    robot_id, " ------------")
+           
+            print("path index: ", self.path_index[robot_id])
+            print("path index: ", self.path_index[robot_id])
+            print("path: ", str(self.paths[robot_id][self.path_index[robot_id]]))
+            
             print("Waypoint", self.path_index[robot_id], " reached:", 
-                    str(self.paths[robot_id][self.path_index[robot_id]]))
+                    str(self.paths[robot_id][self.path_index[robot_id]]))            
             print(name, "tf: ", str(robot_tf))
 
             # Set next waypoint
@@ -223,7 +233,7 @@ class OffboardController(object):
             if self.path_index[robot_id] >= self.paths[robot_id].length:
                 self.stop_status[robot_id] = 1
                 self.completed[robot_id] = True
-                print("FINAL WAYPOINT REACHED")
+                print("FINAL WAYPOINT REACHED ROBOT", robot_id)
                 # send stop
 
                 self.sys_comm.sendTCPMessage(robot_id, 
@@ -285,6 +295,7 @@ if __name__ == "__main__":
     robotIDs = [cst.BLUE_ID, cst.BAD_ID]
 
     oneLine = 'oneLine'
+    twoLines = 'twoLines'
     centerLine = 'centerLine'
     centerShortLine = 'centerShortLine'
     shortLine = 'shortLine'
@@ -295,8 +306,8 @@ if __name__ == "__main__":
     horizLine = 'horizLine'
 
 
-    controller = OffboardController(robot_ids=blueID, 
-        drawing_name=horizLine)
+    controller = OffboardController(robot_ids=robotIDs, 
+        drawing_name=twoLines)
     controller.robotSetup()
     cProfile.run('controller.loop()')
     # controller.loop()
