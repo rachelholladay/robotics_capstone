@@ -53,7 +53,6 @@ class OffboardController(object):
                 print("FAILED TO CONNECT TO ROBOT")
                 sys.exit(1)
 
-        # TODO start localization, planner and UI in threads
         self.sys_localization.setup()
         self.sys_localization.begin_loop(verbose=0)
         time.sleep(1)
@@ -149,7 +148,7 @@ class OffboardController(object):
                 print("IN COLLISION BY", blue_tf.dist(bad_tf))
                 self.sys_comm.sendTCPMessage(cst.BAD_ID,
                     self.stop_locomotion)
-                
+
                 if self.completed[cst.BLUE_ID] is not True:
                     self.commandRobot(cst.BLUE_ID, data)
             else:
@@ -165,7 +164,6 @@ class OffboardController(object):
         """
         Pulls localization for specified robot and sends message
         """
-
         tag = None
         name = ''
         if robot_id is cst.BLUE_ID:
@@ -229,7 +227,6 @@ class OffboardController(object):
         # space. Only need to disable if tool status should be enabled
         if cst.GAP_ENABLED and robot_locomotion.write_status is cst.WRITE_ENABLE:
             if abs(robot_tf.y - cst.GAP_LOCATION) < cst.GAP_BUFFER:
-                # print("HACK ENABLED", str(robot_tf))
                 robot_locomotion.write_status = cst.WRITE_DISABLE
 
         self.sys_comm.sendTCPMessage(robot_id, robot_locomotion)
@@ -244,8 +241,6 @@ class OffboardController(object):
         time.sleep(2)
         self.sys_comm.closeTCPConnections()
         self.sys_localization.close()
-
-
 
 
 if __name__ == "__main__":
@@ -281,7 +276,7 @@ if __name__ == "__main__":
     demo_twoLines = 'demo_twoLines'
 
     controller = OffboardController(robot_ids=robotIDs, 
-        drawing_name=demo_plus)
+        drawing_name=demo_twoLines)
     controller.robotSetup()
     # cProfile.run('controller.loop()')
     try:
