@@ -24,21 +24,21 @@ MESSAGE_TIMEOUT = 1 # max delay in seconds between messages before onboard stops
 # decreases overall accuracy, but setting it too low will cause the robot to
 # "vibrate" in place by trying to constantly correct for minor localization
 # errors.
-STOP_DIST = 0.25
+STOP_DIST = 0.2
 STOP_DIST_SQ = (STOP_DIST * STOP_DIST) # distance squared for faster calculation
 
 # Distance threshold for robot-robot collision detection. If the robots are
 # closer than this threshold, robots will adhere to incoming collision detection
 # rules.
-COLLISION_BUFFER = 2.5
+COLLISION_BUFFER = 4
 
 # Workaround for demo space ~y=5 having gap in wood underneath due to uneven
 # floor. When within the GAP_BUFFER range the GAP_LOCATION, writing tool will
 # automatically disable itself for the duration, regardless of the drawing
 # state. This only occurs if GAP_ENABLED is true
 GAP_ENABLED = True
-GAP_LOCATION = 4.8 # along the y-axis of the demo space
-GAP_BUFFER = 0.5
+GAP_LOCATION = 4.7 # along the y-axis of the demo space
+GAP_BUFFER = 0.3
 
 
 # locomotion stop_status parameter values

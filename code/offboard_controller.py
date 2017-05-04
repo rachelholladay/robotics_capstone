@@ -149,6 +149,9 @@ class OffboardController(object):
                 print("IN COLLISION BY", blue_tf.dist(bad_tf))
                 self.sys_comm.sendTCPMessage(cst.BAD_ID,
                     self.stop_locomotion)
+                
+                if self.completed[cst.BLUE_ID] is not True:
+                    self.commandRobot(cst.BLUE_ID, data)
             else:
                 # Only command robot if it is not done drawing
                 if self.completed[cst.BAD_ID] is not True:
@@ -263,10 +266,22 @@ if __name__ == "__main__":
     twoBoxes = 'twoBoxes'
     horizLine = 'horizLine'
     x = 'x'
+    cu = 'cu0'
 
+    # start blue in bottom center ~(5,2)
+    # start bad ~bottom left ~(2,3)
+    demo_plus = 'demo_plus'
+
+    # start blue top center offset left ~(3, 9)
+    # start bad top right ~(9, 9)
+    demo_cu = 'demo_cu'
+
+    # start blue bottom left ~(2,2)
+    # start bad top right ~(8,8)
+    demo_twoLines = 'demo_twoLines'
 
     controller = OffboardController(robot_ids=robotIDs, 
-        drawing_name=twoLines)
+        drawing_name=demo_plus)
     controller.robotSetup()
     # cProfile.run('controller.loop()')
     try:

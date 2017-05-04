@@ -73,7 +73,6 @@ class OnboardController(object):
                     if msg.write_status is cst.WRITE_DISABLE:
                         self.motors.disableWrite()
                 else:
-
                     self.message_timer = time.time()
 
                     # Specified target from offboard system
@@ -183,7 +182,7 @@ class OnboardController(object):
         magnitude = gtarget_dpt.x**2 + gtarget_dpt.y**2
         target_speed = 0.0
         if magnitude > cst.EPSILON_LARGE:
-            target_speed = 0.3
+            target_speed = 0.2
 
         # how quickly to change robot orientation [-1, 1], original 0
         target_rot_speed = 0.0
@@ -229,9 +228,8 @@ class OnboardController(object):
             if self._stop_thread is True:
                 return
             if abs(time.time() - self.message_timer) > cst.MESSAGE_TIMEOUT:
-                print("Message timer overrun, stopping motors")
                 self.motors.stopMotors()
-                return
+                
 
     def close(self):
         """
