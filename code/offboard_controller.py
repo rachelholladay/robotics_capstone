@@ -276,7 +276,7 @@ if __name__ == "__main__":
     demo_twoLines = 'demo_twoLines'
 
     controller = OffboardController(robot_ids=robotIDs, 
-        drawing_name=demo_twoLines)
+        drawing_name=demo_cu)
     controller.robotSetup()
     # cProfile.run('controller.loop()')
     try:

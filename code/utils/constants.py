@@ -30,7 +30,7 @@ STOP_DIST_SQ = (STOP_DIST * STOP_DIST) # distance squared for faster calculation
 # Distance threshold for robot-robot collision detection. If the robots are
 # closer than this threshold, robots will adhere to incoming collision detection
 # rules.
-COLLISION_BUFFER = 4
+COLLISION_BUFFER = 2
 
 # Workaround for demo space ~y=5 having gap in wood underneath due to uneven
 # floor. When within the GAP_BUFFER range the GAP_LOCATION, writing tool will
