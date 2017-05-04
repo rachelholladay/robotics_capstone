@@ -31,7 +31,7 @@ class CommunicationSystem(object):
         self.connections = [None, None] # List of existing robot connections
         self.messages = [None, None]
 
-        # Thread for sending messages
+        # Threads for sending messages to each robot
         self._stop_flags = [False, False]
         self._send_message_threads = [None, None]
         self._send_thread_active = [False, False]
@@ -39,11 +39,13 @@ class CommunicationSystem(object):
 
         self._send_message_threads = [
             threading.Thread(name='blue_comm',
-                             target=self._send_thread_blue),
+                             target=self._send_thread,
+                             args=(cst.BLUE_ID,)),
             threading.Thread(name='bad_comm',
-                             target=self._send_thread_bad) ]
-        self._send_message_threads[0].start()
-        self._send_message_threads[1].start()
+                             target=self._send_thread,
+                             args=(cst.BAD_ID,)) ]
+        for t in self._send_message_threads:
+            t.start()
 
 
     def connectToRobot(self, robot_id):
@@ -101,29 +103,13 @@ class CommunicationSystem(object):
         return messages
 
 
-    def sendTCPMessages(self):
-        '''
-        For offboard controller.
-        Sends both protobuf messages to the respective robots via TCP connection
-        @return status Int status of sending messages to individual robots. 
-            0: Successful transmission between all robots
-            n: Number of robots for which message failed to send
-        '''
-        status = 0
-        for i in range(len(self.connections)):
-            try:
-                conn = self.connections[i]
-                conn.send(self.messages[i].SerializePartialToString())
-            except:
-                status += 1
-        return status
-
-
     def closeTCPConnections(self):
         '''
         Closes any existing TCP messages
         @return status Success or failure of ending communications
         '''
+        self._stop_flags = [True, True] # end send message threads
+
         for i in range(len(self.connections)):
             # TODO close TCP connection
             try:
@@ -134,7 +120,6 @@ class CommunicationSystem(object):
             except:
                 pass
            
-        self._stop_flags = [True, True]
         for t in self._send_message_threads:
             if t is not None:
                 t.join()
@@ -178,7 +163,16 @@ class CommunicationSystem(object):
             pass
         
 
-    def set_serialized_message(self, robot_id, locomotion):
+    def sendTCPMessage(self, robot_id, robot_locomotion):
+        """
+        Sends TCP message for given locomotion data to the specified
+        robot_id
+        """
+        if self._send_thread_active[robot_id] is False:
+            self._set_serialized_message(robot_id, robot_locomotion)
+            self._send_thread_active[robot_id] = True
+
+    def _set_serialized_message(self, robot_id, locomotion):
         """
         Creates serialized message to the given robot id
         """
@@ -186,37 +180,23 @@ class CommunicationSystem(object):
         self.thread_serial_msgs[robot_id] = \
             self.messages[robot_id].SerializePartialToString()
 
-    def _send_thread_blue(self):
+
+    def _send_thread(self, robot_id):
         """
         When active, takes self.thread_message and attempts to send to 
         connection
         """
         while True:
-            if self._stop_flags[cst.BLUE_ID] is True:
+            if self._stop_flags[robot_id] is True:
                 return
 
-            if self.thread_serial_msgs[cst.BLUE_ID] is None:
+            if self.thread_serial_msgs[robot_id] is None:
                 continue
 
-            if self._send_thread_active[cst.BLUE_ID] is True:
+            if self._send_thread_active[robot_id] is True:
 
-                conn = self.connections[cst.BLUE_ID]
-                conn.send(self.thread_serial_msgs[cst.BLUE_ID])
-
-                # set send to false
-                self._send_thread_active[cst.BLUE_ID] = False
-
-    def _send_thread_bad(self):
-        while True:
-            if self._stop_flags[cst.BAD_ID] is True:
-                return
-
-            if self.thread_serial_msgs[cst.BAD_ID] is None:
-                continue
-
-            if self._send_thread_active[cst.BAD_ID] is True:
-                conn = self.connections[cst.BAD_ID]
-                conn.send(self.thread_serial_msgs[cst.BAD_ID])
+                conn = self.connections[robot_id]
+                conn.send(self.thread_serial_msgs[robot_id])
 
                 # set send to false
-                self._send_thread_active[cst.BAD_ID] = False
+                self._send_thread_active[robot_id] = False

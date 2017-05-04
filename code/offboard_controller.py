@@ -60,9 +60,8 @@ class OffboardController(object):
         time.sleep(1)
 
         data = self.sys_localization.getLocalizationData()
-        blue_tf = data.robots[cst.TAG_ROBOT1]
 
-        # Plan Paths
+        # Plan Paths based on initial localization
         blueStart = DirectedPoint(0, 0, 0)
         badStart = DirectedPoint(0, 0, 0)
         if data.robots[cst.TAG_ROBOT1].valid is True:
@@ -91,11 +90,9 @@ class OffboardController(object):
         #self.sys_ui.drawDistribution(self.bluePath, self.badPath)
 
     def loop(self):
-        '''
+        """
         Main offboard controller loop
-        '''
-        print('offboard main loop')#
-
+        """
         # Setup robot parameters for loop
         # Drawing complete status - if a robot is not present, it can be
         # considered already 'finished'
@@ -127,11 +124,8 @@ class OffboardController(object):
         # Send initial message to stop motion, setup completion
         print("disable writing tool")
         for rid in self.robot_ids:
-            self.sys_comm.generateMessage(
-                robot_id=rid, locomotion=cmd_disable,
-                error=None)
-            self.sys_comm.sendTCPMessages()
-        time.sleep(2)
+            self.sys_comm.sendTCPMessage(rid, self.stop_locomotion)
+        time.sleep(1)
 
         ### FIXME TODO DELETE THIS writing tool test
         # print("enable writing tool")
@@ -160,14 +154,10 @@ class OffboardController(object):
                 if self.completed == [True, True]:
                     print("Drawing complete")
                     for rid in self.robot_ids:
-                        cmd_disable.stop_status = cst.ROBOT_STOP
-                        self.sys_comm.generateMessage(
-                            robot_id=rid, locomotion=cmd_disable,
-                            error=None)
-                        self.sys_comm.sendTCPMessages()
+                        self.sys_comm.sendTCPMessage(rid, self.stop_locomotion)
                     return
 
-                
+
                 # Basic collision code
                 # TODO actuate bad if not in collision range
                 blue_tf = data.robots[cst.TAG_ROBOT1]
@@ -175,10 +165,11 @@ class OffboardController(object):
 
 
                 # ensure both tags are found before checking collision
+                # if both robots not found, stop execution
                 if not (blue_tf.valid and bad_tf.valid):
-                    # print("one robot not found")
-                    self.commandRobot(cst.BAD_ID, data) # TODO REMOVE
-                    # time.sleep(0.1)
+                    for rid in self.robot_ids:
+                        self.sys_comm.sendTCPMessage(rid,
+                            self.stop_locomotion)
                     continue
 
                 # check collision buffer threshold
@@ -186,17 +177,9 @@ class OffboardController(object):
                 if blue_tf.dist(bad_tf) < cst.COLLISION_BUFFER:
                     print("IN COLLISION BY", blue_tf.dist(bad_tf))
 
-                    stop_wp = self.stop_locomotion
-                    stop_wp.stop_status = cst.ROBOT_STOP
-                    stop_wp.write_status = cst.WRITE_DISABLE
-                    self.sys_comm.generateMessage(
-                        robot_id=cst.BLUE_ID, locomotion=stop_wp, 
-                        error=None)
-                    self.sys_comm.sendTCPMessages()
-
                 else:
-                    # self.commandRobot(cst.BLUE_ID, data)
-                    self.commandRobot(cst.BAD_ID, data)
+                    # self.commandRobot(cst.BAD_ID, data)
+                    self.commandRobot(cst.BLUE_ID, data)
 
 
 
@@ -242,28 +225,26 @@ class OffboardController(object):
                 self.completed[robot_id] = True
                 print("FINAL WAYPOINT REACHED")
                 # send stop
-                stop_wp = self.stop_locomotion
-                stop_wp.stop_status = cst.ROBOT_STOP
-                stop_wp.write_status = cst.WRITE_DISABLE
-                self.sys_comm.generateMessage(
-                    robot_id=robot_id, locomotion=stop_wp, 
-                    error=None)
-                self.sys_comm.sendTCPMessages()
-                time.sleep(1)
+
+                self.sys_comm.sendTCPMessage(robot_id, 
+                    self.stop_locomotion)
+                time.sleep(0.5)
                 return
 
             self.targets[robot_id] = self.paths[robot_id][self.path_index[robot_id]].target
             self.write_status[robot_id] = self.paths[robot_id][self.path_index[robot_id]].write_status
             
-            # send temporary stop command and also actuate writing
-            # tool to new position
+            # Send stop command, then raise writing implement up after
+            # stopping
             stop_wp = self.stop_locomotion
             stop_wp.write_status = self.write_status[robot_id]
-            self.sys_comm.generateMessage(
-                robot_id=robot_id, locomotion=stop_wp, 
-                error=None)
-            self.sys_comm.sendTCPMessages()
+
+            self.sys_comm.sendTCPMessage(robot_id,
+                self.stop_locomotion)
             time.sleep(1)
+            self.sys_comm.sendTCPMessage(robot_id, stop_wp)
+            time.sleep(0.5)
+
 
         # Theta correction
         self.targets[robot_id].theta = data.corners[cst.TAG_TOP_RIGHT].theta
@@ -281,34 +262,20 @@ class OffboardController(object):
                 print("HACK ENABLED", str(robot_tf))
                 robot_locomotion.write_status = cst.WRITE_DISABLE
 
-
-        if self.sys_comm._send_thread_active[robot_id] is False:
-            # print("activating", robot_id)
-            self.sys_comm.set_serialized_message(robot_id, robot_locomotion)
-            self.sys_comm._send_thread_active[robot_id] = True
-        
-        # self.sys_comm.generateMessage(
-        #     robot_id=robot_id, locomotion=robot_locomotion, 
-        #     error=None)
-        # self.sys_comm.sendTCPMessages()
+        self.sys_comm.sendTCPMessage(robot_id, robot_locomotion)
 
 
     def close(self):
         # Send message to stop robot
         print("Shutting down...")
         
-        self.stop_locomotion.stop_status = cst.ROBOT_STOP
         for rid in self.robot_ids:
-            self.sys_comm.generateMessage(
-                robot_id=rid, locomotion=self.stop_locomotion, 
-                error=None)
-        self.sys_comm.sendTCPMessages()
-        time.sleep(2)
+            self.sys_comm.sendTCPMessage(rid, self.stop_locomotion)
+
+        time.sleep(1)
         self.sys_comm.closeTCPConnections()
         self.sys_localization.close()
 
-    def _test(self):
-        pass
 
 
 if __name__ == "__main__":
@@ -325,9 +292,11 @@ if __name__ == "__main__":
     connectedLines = 'connectedLines'
     debug = 'debug'
     twoBoxes = 'twoBoxes'
+    horizLine = 'horizLine'
 
 
-    controller = OffboardController(robot_ids=badID, drawing_name=centerShortLine)
+    controller = OffboardController(robot_ids=blueID, 
+        drawing_name=horizLine)
     controller.robotSetup()
     cProfile.run('controller.loop()')
     # controller.loop()

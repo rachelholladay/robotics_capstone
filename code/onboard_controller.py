@@ -241,22 +241,7 @@ class OnboardController(object):
         if self._watchdog_thread is not None:
             self._watchdog_thread.join()
 
-    def test(self):
 
-        START = DirectedPoint(0, 0, 0)
-        DIR_UP = self.getMotorCommands(START, DirectedPoint(0, 1, 0))
-        DIR_LEFT = self.getMotorCommands(START, DirectedPoint(-1, 0, 0))
-        DIR_DOWN = self.getMotorCommands(START, DirectedPoint(0, -1, 0))
-        DIR_RIGHT = self.getMotorCommands(START, DirectedPoint(1, 0, 0))
-        DIR_UPLEFT = controller.getMotorCommands(START, DirectedPoint(-1, 1, 0))
-        DIR_UPRIGHT = controller.getMotorCommands(START, DirectedPoint(1, 1, 0))
-        DIR_DOWNLEFT = controller.getMotorCommands(START, DirectedPoint(-1, -1, 0))
-        DIR_DOWNRIGHT = controller.getMotorCommands(START, DirectedPoint(1, -1, 0))
-
-        print("moving forward")
-        self.moveMotorsTime(DIR_UPLEFT, 1)
-        
-        return
 if __name__ == "__main__":
 
     controller = OnboardController(robot_ip="0.0.0.0")
