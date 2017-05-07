@@ -15,12 +15,14 @@ from utils import constants as cst
 
 import subsystems.apriltags.src.boost_apriltags as apriltags
 
+
 class LocalizationSystem(object):
     '''
     Contains localization subsystem. Most localization code is handled via the
     AprilTags C++ library
     '''
-    def __init__(self, scaled_dims=[1,1]):
+
+    def __init__(self, scaled_dims=[1, 1]):
 
         # Fixed [width, height] dimensions to scale localization tags to.
         # Calibrated LocalizationData struct scales the corners between
@@ -47,7 +49,6 @@ class LocalizationSystem(object):
 
         self._global_localization_status = False
 
- 
     def _localize(self, verbose=0):
         """
         Call C++ AprilTags function to get updated localization information
@@ -62,22 +63,23 @@ class LocalizationSystem(object):
         for x in range(self._detector.num_detected()):
 
             tag = self._detector.getTag(x)
-        
+
             # Normalize cos(theta) and sin(theta) elements of H
             # Normalization by H(i,j) / H(2,2)
-            # Avoids normalization bugs by only dividing if 
+            # Avoids normalization bugs by only dividing if
             #   abs(H(2,2)-H(i,j)) > sigma
-            # Similar to http://stackoverflow.com/questions/10935047/avoiding-weird-homography-values-when-normalizing
+            # Similar to
+            # http://stackoverflow.com/questions/10935047/avoiding-weird-homography-values-when-normalizing
             h00 = tag.h00
             h01 = tag.h01
             if abs(tag.h22 - tag.h00) > cst.EPSILON:
                 h00 = h00 / tag.h22
             if abs(tag.h22 - tag.h01) > cst.EPSILON:
                 h01 = h01 / tag.h22
-            
+
             x_pixels = tag.cx
             y_pixels = tag.cy
-            theta = math.degrees(math.atan2(h01,h00))
+            theta = math.degrees(math.atan2(h01, h00))
 
             # Fill in raw_loc struct with found corners and robots
             if tag.id in cst.TAG_CORNERS:
@@ -89,16 +91,15 @@ class LocalizationSystem(object):
                 self._raw_loc.robots[tag.id] = \
                     DirectedPoint(x_pixels, y_pixels, theta)
 
-
             if verbose >= 2:
                 pt = 'x:{:0.2f} y:{:0.2f} theta:{:0.2f}'.format(
-                        x_pixels, y_pixels, theta)
-                print("id:",tag.id," ",pt,sep='')
-        
+                     x_pixels, y_pixels, theta)
+                print("id:", tag.id, " ", pt, sep='')
+
         if verbose >= 1:
-            print("Corners found:", corners_detected, 
+            print("Corners found:", corners_detected,
                   "Robots found:", robots_detected)
-    
+
     def _worker_localization(self, verbose=0):
         """
         Worker function to begin localization
@@ -114,23 +115,22 @@ class LocalizationSystem(object):
         Calls C++ functions to instantiate AprilTags libary, activate camera,
         and run diagnostics
         """
-        # self._detector = apriltags.TagDetector("/home/neil/data/apriltag_test.mp4")
+        # self._detector =
+        #   apriltags.TagDetector("/home/neil/data/apriltag_test.mp4")
         self._detector = apriltags.TagDetector(filename)
         self._detector.setup()
-
 
     def begin_loop(self, verbose=0):
         """
         Main localization loop, spawns thread
         """
         t = threading.Thread(name='localization',
-                             target=self._worker_localization, 
+                             target=self._worker_localization,
                              args=(verbose,))
         self._localization_thread = t
         t.start()
         if verbose > 0:
             print("Localization thread started")
-
 
     def close(self):
         self._stop_flag = True
@@ -165,24 +165,24 @@ class LocalizationSystem(object):
 
         # Ensure points for affine tranform computation are valid
         if not bottom_left.valid or not bottom_right.valid or \
-            not top_right.valid:
-            return #self.data
+           not top_right.valid:
+            return  # self.data
         found_tags.append(cst.TAG_BOTTOM_LEFT)
         found_tags.append(cst.TAG_BOTTOM_RIGHT)
         found_tags.append(cst.TAG_TOP_RIGHT)
 
         raw_pts = np.float32([[bottom_left.x, bottom_left.y],
-                           [bottom_right.x, bottom_right.y],
-                           # [top_left.x, top_left.y]])
-                           [top_right.x, top_right.y]])
-        target_pts = np.float32([[0,0],
+                              [bottom_right.x, bottom_right.y],
+                              # [top_left.x, top_left.y]])
+                              [top_right.x, top_right.y]])
+        target_pts = np.float32([[0, 0],
                                  [self.scaled_dims[0], 0],
                                  # [0, self.scaled_dims[1]]])
                                  [self.scaled_dims[0], self.scaled_dims[1]]])
 
         # Append other valid tags onto raw_pts
         if top_left.valid:
-            raw_pts = np.vstack((raw_pts,[top_left.x,top_left.y]))
+            raw_pts = np.vstack((raw_pts, [top_left.x, top_left.y]))
             found_tags.append(cst.TAG_TOP_LEFT)
         if robot1.valid:
             raw_pts = np.vstack((raw_pts, [robot1.x, robot1.y]))
@@ -193,7 +193,7 @@ class LocalizationSystem(object):
         raw_pts = raw_pts.astype(np.float32)
 
         # Compute affine transform using only 3 corners
-        transform = cv2.getAffineTransform(raw_pts[0:3,:], target_pts)
+        transform = cv2.getAffineTransform(raw_pts[0:3, :], target_pts)
 
         # Transform raw tag points into scaled coordinates
         # num_tags = raw_pts.shape[0] # rows
@@ -203,15 +203,15 @@ class LocalizationSystem(object):
         calibrated = np.transpose(np.matmul(transform, new_pts))
 
         # Clamp calibrated values from 0 to the respective dimension
-        calibrated[:,0] = np.clip(calibrated[:,0], 0, self.scaled_dims[0])
-        calibrated[:,1] = np.clip(calibrated[:,1], 0, self.scaled_dims[1])
+        calibrated[:, 0] = np.clip(calibrated[:, 0], 0, self.scaled_dims[0])
+        calibrated[:, 1] = np.clip(calibrated[:, 1], 0, self.scaled_dims[1])
 
         # Push calibrated points into localization struct
         for row_idx, tag_key in enumerate(found_tags):
             if tag_key in cst.TAG_CORNERS:
                 self.data.corners[tag_key] = \
                     DirectedPoint(
-                        calibrated[row_idx][0], 
+                        calibrated[row_idx][0],
                         calibrated[row_idx][1],
                         self._raw_loc.corners[tag_key].theta)
             elif tag_key in cst.TAG_ROBOTS:
@@ -224,10 +224,8 @@ class LocalizationSystem(object):
         self._global_localization_status = True
         self.external_data = self.data
         self._global_localization_status = False
-        # TODO END MUTEX FOR RAW LOCALIZATION STRUCT
-        return #self.data
-        # TODO ROTATE THETA
 
+        return  # self.data
 
     def getLocalizationData(self):
         """

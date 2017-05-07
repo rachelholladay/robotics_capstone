@@ -2,6 +2,8 @@
 Communication subsystem
 
 '''
+from __future__ import print_function
+
 import socket
 import threading
 
@@ -9,6 +11,7 @@ from messages import robot_commands_pb2
 
 from utils import dataStorage as storage
 from utils import constants as cst
+
 
 class CommunicationSystem(object):
     '''
@@ -21,13 +24,13 @@ class CommunicationSystem(object):
     connections, or robots.
 
     For example, in a 2 robot system, a CommunicationSystem will hold and fill
-    2 unique protobuf messages. When the message is sent, it will flush the 
-    protobuf message and begin again. It then waits for updates from other 
+    2 unique protobuf messages. When the message is sent, it will flush the
+    protobuf message and begin again. It then waits for updates from other
     subsystems with new and updated information for the messages.
     '''
 
     def __init__(self):
-        self.connections = [None, None] # List of existing robot connections
+        self.connections = [None, None]  # List of existing robot connections
         self.messages = [None, None]
 
         # Threads for sending messages to each robot
@@ -42,10 +45,9 @@ class CommunicationSystem(object):
                              args=(cst.BLUE_ID,)),
             threading.Thread(name='bad_comm',
                              target=self._send_thread,
-                             args=(cst.BAD_ID,)) ]
+                             args=(cst.BAD_ID, ))]
         for t in self._send_message_threads:
             t.start()
-
 
     def connectToRobot(self, robot_id):
         '''
@@ -70,12 +72,12 @@ class CommunicationSystem(object):
         # http://stackoverflow.com/questions/19741196/recv-function-too-slow
         conn.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
 
-
         # Attempt to connect
         try:
             conn.connect(address)
         except socket.error:
-            print "Unable to connect Robot ID: ",robot_id," at IP ",robot_ip
+            print("Unable to connect Robot ID: ", robot_id,
+                  " at IP ", robot_ip)
             return False
 
         msg = robot_commands_pb2.robot_command()
@@ -83,31 +85,30 @@ class CommunicationSystem(object):
 
         self.connections[robot_id] = conn
         self.messages[robot_id] = msg
-        
+
         print("Connected to robot")
         return True
-
 
     def getTCPMessages(self):
         '''
         For offboard controller.
-        Request message from each robot from the list of established connections
+        Request message from each robot from the list of established
+        connections
         @return messages List of proto3 message objects from each robot
         '''
         messages = []
         for robot in self.connections:
-            robot_msg = None # TODO request and receive message from robot
+            robot_msg = None
             messages.append(robot_msg)
 
         return messages
-
 
     def closeTCPConnections(self):
         '''
         Closes any existing TCP messages
         @return status Success or failure of ending communications
         '''
-        self._stop_flags = [True, True] # end send message threads
+        self._stop_flags = [True, True]  # end send message threads
 
         for i in range(len(self.connections)):
             # TODO close TCP connection
@@ -116,9 +117,9 @@ class CommunicationSystem(object):
                 robot_connection.close()
                 self.connections.remove(robot_connection)
                 self.messages.remove(self.messages[i])
-            except:
+            except IndexError:
                 pass
-           
+
         for t in self._send_message_threads:
             if t is not None:
                 t.join()
@@ -129,7 +130,6 @@ class CommunicationSystem(object):
         @param robot_id The index/ID of the proto message to clear
         """
         self.messages[robot_id].Clear()
-
 
     def generateMessage(self, robot_id, locomotion, error):
         """
@@ -154,13 +154,12 @@ class CommunicationSystem(object):
             self.messages[robot_id].target_x = locomotion.tf_target.x
             self.messages[robot_id].target_y = locomotion.tf_target.y
             self.messages[robot_id].target_th = locomotion.tf_target.theta
-            
+
             self.messages[robot_id].write_status = locomotion.write_status
 
             self.messages[robot_id].stop_status = locomotion.stop_status
-        except:
+        except RuntimeError:
             pass
-        
 
     def sendTCPMessage(self, robot_id, robot_locomotion):
         """
@@ -179,10 +178,9 @@ class CommunicationSystem(object):
         self.thread_serial_msgs[robot_id] = \
             self.messages[robot_id].SerializePartialToString()
 
-
     def _send_thread(self, robot_id):
         """
-        When active, takes self.thread_message and attempts to send to 
+        When active, takes self.thread_message and attempts to send to
         connection
         """
         while True:

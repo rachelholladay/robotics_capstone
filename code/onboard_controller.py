@@ -3,20 +3,16 @@ Main onboard controller.
 '''
 from __future__ import print_function
 
-import sys
 import math
 import time
-import atexit 
-import threading 
+import atexit
+import threading
 
-import numpy as np
-
-from messages import robot_commands_pb2
 from onboard.robot_communication import RobotCommunication
 from onboard.motors import Motors
 from utils.geometry import DirectedPoint
-
 import utils.constants as cst
+
 
 class OnboardController(object):
     def __init__(self, robot_ip):
@@ -35,20 +31,14 @@ class OnboardController(object):
         atexit.register(self.close)
 
     def setup(self):
-
-        # self.motors.disableWrite()
-        # self.motors.write(0)
-        # time.sleep(2)
-        # self.motors.write(1)
-
         self.comm.connectToOffboard()
         time.sleep(1)
 
-
         # start message watchdog timer to ensure motion does not occur without
         # receiving offboard messages
-        self._watchdog_thread = threading.Thread(name='_message_watchdog',
-                             target=self._message_watchdog) 
+        self._watchdog_thread = threading.Thread(
+            name='_message_watchdog',
+            target=self._message_watchdog)
 
     def loop(self):
         """
@@ -57,7 +47,7 @@ class OnboardController(object):
         """
         print("onboard main loop")
         self.message_timer = time.time()
-        self._watchdog_thread.start()      
+        self._watchdog_thread.start()
 
         while(1):
 
@@ -65,7 +55,7 @@ class OnboardController(object):
             if msg is None:
                 continue
             else:
-                print("======= new message",time.time()," =======")
+                print("======= new message", time.time(), " =======")
 
                 if msg.stop_status is 1:
                     print("Stopping motors")
@@ -82,8 +72,7 @@ class OnboardController(object):
                         msg.target_x, msg.target_y, theta=msg.target_th)
                     write_status = msg.write_status
 
-
-                    # # Set writing status accordingly
+                    # Set writing status accordingly
                     print("write status", write_status)
                     if write_status is cst.WRITE_ENABLE:
                         print("Enable writing")
@@ -92,14 +81,13 @@ class OnboardController(object):
                         print("Disable writing")
                         self.motors.disableWrite()
 
-
                     print("Moving from", robot_pos, " to", target_pos)
-                    motor_commands = self.getMotorCommands(robot_pos, target_pos)
+                    motor_commands = self.getMotorCommands(
+                        robot_pos, target_pos)
                     self.moveMotors(motor_commands)
 
                 # reset state
                 msg = None
-                
 
     def moveMotors(self, command):
         """
@@ -112,8 +100,8 @@ class OnboardController(object):
 
     def moveMotorsTime(self, command, t=0.3):
         """
-        Commands all motors using a given command (such as DIR_UPLEFT) for a time
-        in seconds.
+        Commands all motors using a given command (such as DIR_UPLEFT) for a
+        time in seconds.
         @param command Motor command to run
         @param t Time in seconds to move for
         """
@@ -142,7 +130,8 @@ class OnboardController(object):
 
         # Mecanum Control:
         # https://www.roboteq.com/index.php/component/easyblog/entry/driving-mecanum-wheels-omnidirectional-robots?Itemid=1208
-        # This pdf has accurate equations: http://thinktank.wpi.edu/resources/346/ControllingMecanumDrive.pdf
+        # This pdf has accurate equations:
+        # http://thinktank.wpi.edu/resources/346/ControllingMecanumDrive.pdf
 
         @param current DirectedPoint of robot current position
         @param target DirectedPoint of robot target position
@@ -152,7 +141,7 @@ class OnboardController(object):
 
         # Create global target directional vector
         gtarget_dpt = target - current
-        # Motor directions of movement and the desired axes of movement are 
+        # Motor directions of movement and the desired axes of movement are
         # misaligned. Swapping x and y fixes this problem for motor command
         # computation. Theta is flipped to match global axes
         gtarget_dpt.x, gtarget_dpt.y = gtarget_dpt.y, gtarget_dpt.x
@@ -165,18 +154,22 @@ class OnboardController(object):
         # global axis to match that of the local one.
         # Rotate target_dpt.x,y by target_dpt.theta
         target_dpt = DirectedPoint(
-            gtarget_dpt.x*math.cos(gtarget_dpt.theta) - gtarget_dpt.y*math.sin(gtarget_dpt.theta),
-            gtarget_dpt.y*math.cos(gtarget_dpt.theta) + gtarget_dpt.x*math.sin(gtarget_dpt.theta),
+            gtarget_dpt.x * math.cos(gtarget_dpt.theta) -
+            gtarget_dpt.y * math.sin(gtarget_dpt.theta),
+
+            gtarget_dpt.y * math.cos(gtarget_dpt.theta) +
+            gtarget_dpt.x * math.sin(gtarget_dpt.theta),
+
             gtarget_dpt.theta)
         if verbose:
             print("local target dpt", target_dpt)
 
-        ### setup mecanum control params ###
+        # setup mecanum control params #
         # angle to translate at, radians 0-2pi
         target_angle = (math.atan2(target_dpt.y, target_dpt.x)) % (2 * math.pi)
         if verbose > 0:
             print("Target translation angle:", math.degrees(target_angle))
-        
+
         # speed robot moves at, [-1, 1], original 1
         # stop if close to global goal
         magnitude = gtarget_dpt.x**2 + gtarget_dpt.y**2
@@ -188,15 +181,15 @@ class OnboardController(object):
         target_rot_speed = 0.0
         # Calibrated values for reasonable performance
         # 0.15 chosen for theta correction range, 0.13 is speed multiplier
-        if abs(target_dpt.theta) > 0.15 and abs(target_dpt.theta) < (2 * math.pi) - 0.15:
+        if abs(target_dpt.theta) > 0.15 and \
+           abs(target_dpt.theta) < (2 * math.pi) - 0.15:
             rot_speed_multiplier = 0
             if abs(target_dpt.theta) > math.pi:
                 rot_speed_multiplier = 1
             else:
                 rot_speed_multiplier = -1
-            target_rot_speed = 0.13 * rot_speed_multiplier # default 0.13
+            target_rot_speed = 0.13 * rot_speed_multiplier  # default 0.13
 
-    
         # Compute motors, 1-4, with forward direction as specified:
         pi4 = math.pi / 4.0
         V1 = target_speed * math.sin(target_angle + pi4) + target_rot_speed
@@ -219,7 +212,8 @@ class OnboardController(object):
         min_scale = -1
         max_scale = 1
         for i in range(0, 4):
-            motor_powers[i] = (motor_powers[i] - min_scale) / (max_scale - min_scale)
+            motor_powers[i] = (motor_powers[i] - min_scale) / \
+                (max_scale - min_scale)
             motor_powers[i] = int((motor_powers[i] * (255 * 2)) - 255)
         return motor_powers
 
@@ -229,7 +223,6 @@ class OnboardController(object):
                 return
             if abs(time.time() - self.message_timer) > cst.MESSAGE_TIMEOUT:
                 self.motors.stopMotors()
-                
 
     def close(self):
         """
@@ -263,7 +256,6 @@ if __name__ == "__main__":
     # down = controller.getMotorCommands(start_pt, DirectedPoint(0, -1, 0))
     # right = controller.getMotorCommands(start_pt, DirectedPoint(1, 0, 0))
 
-   
     # robotcomm = RobotCommunication()
     # robotcomm.connectToOffboard()
     # while(1):
@@ -273,5 +265,3 @@ if __name__ == "__main__":
     #     else:
     #         print msg
     #         break
-
-

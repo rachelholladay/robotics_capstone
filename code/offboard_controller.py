@@ -5,14 +5,13 @@ Runs fixed-rate loop that pulls data from subsystems
 from __future__ import print_function
 
 import sys
-import signal
 import time
-import cProfile
 
 import subsystems
 from utils.geometry import DirectedPoint, Waypoint
 from utils.dataStorage import LocomotionData
 from utils import constants as cst
+
 
 class OffboardController(object):
     def __init__(self, robot_ids, drawing_name):
@@ -30,17 +29,16 @@ class OffboardController(object):
         self.sys_locomotion = subsystems.LocomotionSystem()
         self.sys_comm = subsystems.CommunicationSystem()
         self.sys_ui = subsystems.UISystem()
-   
+
         data = self.sys_ui.parseInputPaths('inputs/{}'.format(drawing_name))
         self.sys_planner = subsystems.PlannerSystem(data)
-   
+
         # LocomotionData to stop robot and disable writing implement
         self.stop_locomotion = LocomotionData(
-            tf_robot=DirectedPoint(0,0,0),
-            tf_target=DirectedPoint(0,0,0),
+            tf_robot=DirectedPoint(0, 0, 0),
+            tf_target=DirectedPoint(0, 0, 0),
             write_status=cst.WRITE_DISABLE,
             stop_status=cst.ROBOT_STOP)
-
 
     def robotSetup(self):
         '''
@@ -85,7 +83,7 @@ class OffboardController(object):
         print(self.bluePath)
         print("bad path")
         print(self.badPath)
-        #self.sys_ui.drawDistribution(self.bluePath, self.badPath)
+        # self.sys_ui.drawDistribution(self.bluePath, self.badPath)
 
     def loop(self):
         """
@@ -102,17 +100,15 @@ class OffboardController(object):
 
         self.stop_status = [cst.ROBOT_MOVE, cst.ROBOT_MOVE]
         self.write_status = [cst.WRITE_DISABLE, cst.WRITE_DISABLE]
-        
+
         self.path_index = [0, 0]
 
         self.targets = [
-                    self.paths[cst.BLUE_ID][self.path_index[cst.BLUE_ID]].target, 
-                    self.paths[cst.BAD_ID][self.path_index[cst.BAD_ID]].target
-                    ]
+            self.paths[cst.BLUE_ID][self.path_index[cst.BLUE_ID]].target,
+            self.paths[cst.BAD_ID][self.path_index[cst.BAD_ID]].target]
         self.write_status = [
-                    self.paths[cst.BLUE_ID][self.path_index[cst.BLUE_ID]].write_status,
-                    self.paths[cst.BAD_ID][self.path_index[cst.BAD_ID]].write_status
-                    ]
+            self.paths[cst.BLUE_ID][self.path_index[cst.BLUE_ID]].write_status,
+            self.paths[cst.BAD_ID][self.path_index[cst.BAD_ID]].write_status]
 
         # Send initial message to stop motion, setup completion
         print("disable writing tool")
@@ -140,14 +136,14 @@ class OffboardController(object):
             if not (blue_tf.valid and bad_tf.valid):
                 for rid in self.robot_ids:
                     self.sys_comm.sendTCPMessage(rid,
-                        self.stop_locomotion)
+                                                 self.stop_locomotion)
                 continue
 
             # check collision buffer threshold
             if blue_tf.dist(bad_tf) < cst.COLLISION_BUFFER:
                 print("IN COLLISION BY", blue_tf.dist(bad_tf))
                 self.sys_comm.sendTCPMessage(cst.BAD_ID,
-                    self.stop_locomotion)
+                                             self.stop_locomotion)
 
                 if self.completed[cst.BLUE_ID] is not True:
                     self.commandRobot(cst.BLUE_ID, data)
@@ -178,10 +174,10 @@ class OffboardController(object):
 
         # If at the waypoint, set next waypoint
         if robot_tf.distsq(self.targets[robot_id]) < cst.STOP_DIST_SQ:
-            print("-----------Waypoint reached (Robot", 
-                    robot_id, ") ------------")
-            print("Waypoint", self.path_index[robot_id], " reached:", 
-                    str(self.paths[robot_id][self.path_index[robot_id]]))            
+            print("-----------Waypoint reached (Robot",
+                  robot_id, ") ------------")
+            print("Waypoint", self.path_index[robot_id], " reached:",
+                  str(self.paths[robot_id][self.path_index[robot_id]]))
             print(name, "tf: ", str(robot_tf))
 
             # Set next waypoint
@@ -194,47 +190,48 @@ class OffboardController(object):
                 print("FINAL WAYPOINT REACHED ROBOT", robot_id)
                 # send stop
 
-                self.sys_comm.sendTCPMessage(robot_id, 
-                    self.stop_locomotion)
+                self.sys_comm.sendTCPMessage(robot_id,
+                                             self.stop_locomotion)
                 time.sleep(0.5)
                 return
 
-            self.targets[robot_id] = self.paths[robot_id][self.path_index[robot_id]].target
-            self.write_status[robot_id] = self.paths[robot_id][self.path_index[robot_id]].write_status
-            
+            self.targets[robot_id] = \
+                self.paths[robot_id][self.path_index[robot_id]].target
+            self.write_status[robot_id] = \
+                self.paths[robot_id][self.path_index[robot_id]].write_status
+
             # Send stop command, then raise writing implement up after
             # stopping
             stop_wp = self.stop_locomotion
             stop_wp.write_status = self.write_status[robot_id]
 
             self.sys_comm.sendTCPMessage(robot_id,
-                self.stop_locomotion)
+                                         self.stop_locomotion)
             time.sleep(1)
             self.sys_comm.sendTCPMessage(robot_id, stop_wp)
             time.sleep(0.5)
-
 
         # Theta correction
         self.targets[robot_id].theta = data.corners[cst.TAG_TOP_RIGHT].theta
 
         robot_locomotion = LocomotionData(
-            tf_robot=robot_tf, 
+            tf_robot=robot_tf,
             tf_target=self.targets[robot_id],
             write_status=self.write_status[robot_id],
             stop_status=self.stop_status[robot_id])
 
         # Disable drawing if within gap in floor - workaround for uneven demo
         # space. Only need to disable if tool status should be enabled
-        if cst.GAP_ENABLED and robot_locomotion.write_status is cst.WRITE_ENABLE:
+        if cst.GAP_ENABLED and \
+           robot_locomotion.write_status is cst.WRITE_ENABLE:
             if abs(robot_tf.y - cst.GAP_LOCATION) < cst.GAP_BUFFER:
                 robot_locomotion.write_status = cst.WRITE_DISABLE
 
         self.sys_comm.sendTCPMessage(robot_id, robot_locomotion)
 
-
     def close(self):
         # Send message to stop robot
-        print("Shutting down...")        
+        print("Shutting down...")
         for rid in self.robot_ids:
             self.sys_comm.sendTCPMessage(rid, self.stop_locomotion)
 
@@ -244,7 +241,6 @@ class OffboardController(object):
 
 
 if __name__ == "__main__":
-
 
     blueID = [cst.BLUE_ID]
     badID = [cst.BAD_ID]
@@ -275,8 +271,8 @@ if __name__ == "__main__":
     # start bad top right ~(8,8)
     demo_twoLines = 'demo_twoLines'
 
-    controller = OffboardController(robot_ids=robotIDs, 
-        drawing_name=demo_cu)
+    controller = OffboardController(robot_ids=robotIDs,
+                                    drawing_name=demo_cu)
     controller.robotSetup()
     # cProfile.run('controller.loop()')
     try:

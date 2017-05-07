@@ -9,10 +9,11 @@ from messages import robot_commands_pb2
 
 from utils import constants
 
+
 class RobotCommunication(object):
 
     def __init__(self):
-        
+
         self.offboard_conn = None
 
     def connectToOffboard(self):
@@ -58,7 +59,7 @@ class RobotCommunication(object):
             # self.offboard_conn.settimeout(0.25)
             serial_data = self.offboard_conn.recv(constants.BUFFER_SIZE)
             data.ParseFromString(serial_data)
-        except:
+        except RuntimeError:
             pass
 
         if data.IsInitialized():
