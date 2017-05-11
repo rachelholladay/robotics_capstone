@@ -9,7 +9,8 @@
 \textbf{Operational Procedure:} Using example input sets for the system to complete. After completion, overlap the input with the image of final drawing captured from overhead camera. Rescale the two images so that they are in the same size. Evaluate the coherence of the two images.\\
 \textbf{Metric:} The percentage of drawn lines that were within 3 pixels of difference compared to those of the original image.\\
 \textbf{Acceptance Criteria:} The system must successfully and accurately draw 95\% of the lines in the original input.\\
-\textbf{Requirement(s) Verified:} NFR6
+\textbf{Requirement(s) Verified:} NFR6 \\
+\result{When our assumptions were met we visually confirmed that our produced image matched the input. We did not perform a pixel based test.}
 
 \subsection{Performance Test: Reliability}
 \label{test:sys_pt_reliability}
@@ -17,7 +18,8 @@
 \textbf{Operational Procedure:} Command the system to finish a series of drawing tasks. Measure the number of consecutive successful completion. Successful completion is defined as the system autonomously finishes painting and the painting process is free of errors including but not limited to localization breakdown, motor breakdown, or painting mechanism breakdown. Calling human interference with switching battery and drawing utility does not count as unsuccessful run.\\
 \textbf{Metric:} Number of consecutive painting completion. \\
 \textbf{Acceptance Criteria:} The minimum acceptable number of consecutive completion is 5.\\
-\textbf{Requirement(s) Verified:} NFR8
+\textbf{Requirement(s) Verified:} NFR8 \\
+\result{Our system was reliable when our assumptions were met. We were able to place additional mechanisms in our system to insure some level of reliability when these assumptions were broken.}
 
 \subsection{Functional Test: Size}
 \label{test:sys_ft_size}
@@ -25,7 +27,8 @@
 \textbf{Operational Procedure:} Measure the physical dimensions of the robot in terms of width, length, and height or in terms of diameter and height. \\
 \textbf{Metric:} Numeric value of each length measurement; robot footprint; robot volume.\\
 \textbf{Acceptance Criteria:} Must be less than 80 in. x 36 in. x 36 in. \\
-\textbf{Requirement(s) Verified:} NFR4
+\textbf{Requirement(s) Verified:} NFR4 \\
+\result{We fit within our size requirement.}
 
 \subsection{Functional Test: Weight}
 \label{test:sys_ft_weight}
@@ -33,7 +36,8 @@
 \textbf{Operational Procedure:} Measure the mass of the robot. \\
 \textbf{Metric:} Numeric value of robot mass.\\
 \textbf{Acceptance Criteria:} Must be less than 50 pounds. \\
-\textbf{Requirement(s) Verified:} NFR3
+\textbf{Requirement(s) Verified:} NFR3 \\
+\result{We fit within our weight requirement.}
 
 \subsection{Functional Test: Budget}
 \label{test:sys_ft_budget}
@@ -41,7 +45,8 @@
 \textbf{Operational Procedure:} Document total amount of money spent for designing and constructing this robot system. This includes machining expense, part cost, and etc. \\
 \textbf{Metric:} Total amount of money spent.\\
 \textbf{Acceptance Criteria:} Total developing expense has to be less than \$2500. \\
-\textbf{Requirement(s) Verified:} NFR10
+\textbf{Requirement(s) Verified:} NFR10 \\
+\result{We fit withint our budget.}
 
 \subsection{Functional Test: Safety}
 \label{test:sys_ft_safety}
@@ -49,7 +54,8 @@
 \textbf{Operational Procedure:} Count the number of sharp edges on the exterior of the robot. Also, measure the time it takes from the overhead camera detects collision to robot agent stops moving motors. Intermediate steps involved are: camera sends collision signal to system controller and system controller commands involved robot agent to stop its current action. \\
 \textbf{Metric:} Number of sharp edges (angles less than 90 degrees); amount of time takes from detection to action.\\
 \textbf{Acceptance Criteria:} Values for these two metrics need to be as small as possible. Zero sharp edges can be on the exterior - any edges from, for example, a rectangular chassis, should be rounded. The maximum amount of time is 1.5 seconds. \\
-\textbf{Requirement(s) Verified:} NFR11
+\textbf{Requirement(s) Verified:} NFR11 \\
+\result{We had zero dangerous sharp edges.}
 
 \subsection{Functional Test: Documentation}
 \label{test:sys_ft_Documentation}
@@ -57,4 +63,5 @@
 \textbf{Operational Procedure:} Give the full documentation to another design group or stakeholder and inquiry if they can duplicate the project with those documents.\\
 \textbf{Metric:} Boolean on whether or not reviewers can replicate the system development process.\\
 \textbf{Acceptance Criteria:} Reviewers are confident to replicate system development process based on the documentation.\\
-\textbf{Requirement(s) Verified:} NFR1
+\textbf{Requirement(s) Verified:} NFR1 \\
+\result{We produced an acceptable amount of documentation.}
