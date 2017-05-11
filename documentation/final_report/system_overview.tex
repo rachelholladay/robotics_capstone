@@ -10,6 +10,7 @@ This section details individual subsystems and how they function together to for
 
 \subsection{Electrical System}
 \label{sec:electrical}
+The electrical systems for both robots are identical. A Raspberry Pi is used as the main controller, with individual motor controllers for each of the four wheels, and the writing implement motor. Power is provided to the Raspberry Pi via power bank, and the motors have separate power provided via a series of batteries. Use of battery power for the Raspberry Pi and motors allows for each robot to be completely autonomous, without the need for external power during operation.
 
 \subsection{Software System}
 \label{sec:software}
@@ -36,6 +37,10 @@ Locomotion subsystem processing is mainly done onboard each individual robot. At
 Robot localization is done via the offboard system, which parses data from the overhead webcam to track Apriltags. Apriltag detection is done for the four corners of the drawing space, and for the robots, via a C++ Apriltag library. Data is passed up to the main Python control layer using Boost Python, and returned to the main controller. Apriltag data is received and oriented back from the webcam's pixel coordinate frame to a coordinate space relative to the corner Apriltags. This coordinate space transformation is necessary to ensure the robots can continually orient themselves with a forward heading.
 
 Similar to other subsystems, localization is run in a separate thread from the main controller. When the controller calls for localization data, the most recently processed robot transform data is returned. Localization runs at a consistent 30Hz.
+
+\subsubsection{Writing Tool}
+\label{sec:sw_writing}
+Writing tool control is done via the onboard systems. The offboard controller passes an enable or disable status to the onboard system, which then controls the tool. To ensure the tool maintains a consistent force on the ground, it will send a pulsing signal to the motor when enabled. This ensures that the tool is always on the ground, even when small bumps or uneven terrain pushes the tool upwards during operation.
 
 \subsubsection{Scheduling, Distribution, and Planning (SDP)}
 \label{sec:sw_sdp}
