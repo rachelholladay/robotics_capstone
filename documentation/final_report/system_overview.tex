@@ -2,28 +2,43 @@
 \section{System Overview}
 \label{sec:system_overview}
 
+This section details individual subsystems and how they function together to form the complete robot system. It is split into descriptions of the mechanical design, electrical components, and software subsystem architecture. System design is described for a single robot, with some software subsystems utilizing information for both robots at once.
+
 \subsection{Mechanical System}
 \label{sec:mechanical}
+\yjnote{TODO}
 
 \subsection{Electrical System}
 \label{sec:electrical}
 
 \subsection{Software System}
 \label{sec:software}
+The software system is mainly run offboard, where most system processing occurs. The onboard software systems process directional commands to direct the motors for movement and controlling the writing implement.
 
 \subsubsection{Controller}
 \label{sec:sw_controller}
+The controller takes information from all software subsystems, both onboard and offboard, and combines it to command the system as a whole. The offboard controller takes waypoint input from the planner, as described in \sref{sec:sw_sdp}, and combines it with localization data to determine each robot's next action. This includes collision response, and standard locomotion targets. This data is processed and combined into a message sent via the communication subsystem to the onboard system. The onboard system is significantly simpler: it waits for new messages from the offboard system, and upon receiving, processes the target into motor commands which are then directly sent to each motor. Motor commands include wheel locomotion and movement of the writing implement.
+
+At a fixed interval of 20Hz, the offboard controller runs an update loop. This update loop contains all processing, which pulls data from the various subsystems as described above. All blocking subsystems and functions are processed in separate threads, to minimize latency between messages sent to the robots, and to maintain a constant update loop speed.
 
 \subsubsection{Communication}
 \label{sec:sw_comm}
+The communication subsystem has been static in design throughout the project. As input, it receives data consisting of locomotion and onboard processes, and sends them over TCP wireless connection. Locomotion data is simplified for each robot. It contains the robot's current transform (2D position and orientation), and target waypoint transform. It also includes a stop parameter, and the expected status of the writing implement. These parameters are packaged into the Protobuf message format, which is serialized and passed wirelessly. The onboard system takes advantage of the communication subsystem by polling for new messages, which provide updates to the robot's mechanical status. Processing of these messages are done by the onboard controller, and the locomotion subsystem (\sref{sec:sw_locomotion}).
+
+Messages are processed and sent asynchronously from the offboard controller. The subsystem holds partially completed messages as they are constructed in a single update loop, and then a message thread is activated upon receiving a message-ready status. Each robot has its own message thread, which will send the message while the controller continues on to its next update loop.
 
 \subsubsection{Locomotion}
 \label{sec:sw_locomotion}
+Locomotion subsystem processing is mainly done onboard each individual robot. At each onboard update loop, a message with the robot's current transform and target transform is computed. The vector between them is used to compute mecanum wheel motor powers. Translational motion uses the planar 2-dimensional vector, using standard mecanum wheel equations with a calibrated speed. Rotational motion is used as a correction factor, to help the robots maintain a forward heading throughout operation. When the robot's current orientation exceeds a threshold over the desired forward heading, a slow rotational factor is accumulated to the mecanum wheel powers to correct heading. This correction is purposefully slow, to prevent it from overshadowing translational motion, which could result in curved motions when straight lines are preferred.
 
 \subsubsection{Localization}
 \label{sec:sw_localization}
+Robot localization is done via the offboard system, which parses data from the overhead webcam to track Apriltags. Apriltag detection is done for the four corners of the drawing space, and for the robots, via a C++ Apriltag library. Data is passed up to the main Python control layer using Boost Python, and returned to the main controller. Apriltag data is received and oriented back from the webcam's pixel coordinate frame to a coordinate space relative to the corner Apriltags. This coordinate space transformation is necessary to ensure the robots can continually orient themselves with a forward heading.
+
+Similar to other subsystems, localization is run in a separate thread from the main controller. When the controller calls for localization data, the most recently processed robot transform data is returned. Localization runs at a consistent 30Hz.
 
 \subsubsection{Scheduling, Distribution, and Planning (SDP)}
 \label{sec:sw_sdp}
+\rhnote{TODO}
 
 
