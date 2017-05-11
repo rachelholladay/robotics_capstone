@@ -1,0 +1,36 @@
+% !TEX root = system_validation.tex
+
+\subsection{Localization}
+\label{sec:verification_localization}
+
+\subsubsection{Performance Test: Robot Position Accuracy}
+\label{test:localization_pt_accuracy}
+\textbf{Test Question:} Is the localization system able to accurately determine the position of each robot?\\
+\textbf{Operational Procedure:} Both robots sit stationary within the working bounds. The localization system then attempts to determine their locations.\\
+\textbf{Metric:} The difference of the robot's actual position from the position reported by the localization system. \\
+\textbf{Acceptance Criteria:} The reported position must be within 1/10 in. of the actual position.\\
+\textbf{Requirement(s) Verified:} NF6, FR4
+
+\subsubsection{Performance Test: Bounds Accuracy}
+\label{test:localization_pt_bounds}
+\textbf{Test Question:} Is the localization system able to accurately determine the boundaries of the workspace?\\
+\textbf{Operational Procedure:} The localization system attempts to determine the bounds of the workspace.\\
+\textbf{Metric:} The total difference in distance between the reported corners of the workspace and the distance between the actual corners.\\
+\textbf{Acceptance Criteria:} The total difference must not exceed 1 in.\\
+\textbf{Requirement(s) Verified:} FR4
+
+\subsubsection{Functional Test: Robot Position}
+\label{test:localization_ft_robopos}
+\textbf{Test Question:} Can the localization system find the robot?\\
+\textbf{Operational Procedure:} With a single robot within the working bounds, the localization system attempts to determine the robot's location. Robot operation out of bounds is also considered out of scope, and is undefined behavior.\\
+\textbf{Metric:} Whether or not a location is returned by the localization system.\\
+\textbf{Acceptance Criteria:} The system must return a location for the robot. \\
+\textbf{Requirement(s) Verified:} FR4, NFR6, FR3, NFR13
+
+\subsubsection{Functional Test: Bounds}
+\label{test:localization_ft_bounds}
+\textbf{Test Question:} Can the localization system find the working bounds?\\
+\textbf{Operational Procedure:} The localization system attempts to find all four corners of the working bounds while they are all in its field of view.\\
+\textbf{Metric:} Whether or not locations are returned for all four corners.\\
+\textbf{Acceptance Criteria:} The system must return locations for all four corners of the working bounds.\\
+\textbf{Requirement(s) Verified:} FR4, NFR6, FR3

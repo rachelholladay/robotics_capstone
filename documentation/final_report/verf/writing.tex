@@ -1,0 +1,36 @@
+% !TEX root = system_validation.tex
+
+\subsection{Writing Implement}
+\label{sec:verification_writing_implement}
+
+\subsubsection{Performance Test: Loading}
+\label{test:writing_pt_load}
+\textbf{Test Question:} Is a human operator able to reload the writing tool within the required time limit of 10s, how long does it take? \\
+\textbf{Operational Procedure:} With a writing tool already installed in the writing assembly, a human test subject will perform 3 reload tests which are separately timed. \\
+\textbf{Metric:} Average duration of the reload time. \\
+\textbf{Acceptance Criteria:} The average reload time is under 10s. \\
+\textbf{Requirement(s) Verified:} NFR14, FR5, FR6, FR7
+
+\subsubsection{Performance Test: Writing Quality}
+\label{test:writing_pt_qual}
+\textbf{Test Question:} Is the drawing produced by the robot of acceptable quality? \\
+\textbf{Operational Procedure:} Using a fully loaded writing tool, the robot attempts to draw along a route with at least 4 ft. of travel distance and 3 turns exceeding 50 degrees. Verify that the resulting drawing is of acceptable quality. \\
+\textbf{Metric:} Percent thickness of the route at its narrowest point compared to the maximum thickness of a line created with the writing tool. Boolean on whether or not there are complete breaks in the line. \\
+\textbf{Acceptance Criteria:} The percent thickness is at least 70\%, and there are no complete breaks in the line. \\
+\textbf{Requirement(s) Verified:} NFR6
+
+\subsubsection{Functional Test: Simultaneous Driving and Writing}
+\label{test:writing_ft_both}
+\textbf{Test Question:} Can the writing tool make a mark while driving? \\
+\textbf{Operational Procedure:} With a fully loaded writing implement, the robot will mark a 1 ft. line on the writing surface.\\
+\textbf{Metric:} Whether or not any discernible mark is made and the full distance is covered. \\
+\textbf{Acceptance Criteria:} A discernible mark must be made and the full distance must be travelled without the robot becoming stuck or breaking.\\
+\textbf{Requirement(s) Verified:} NFR6
+
+\subsubsection{Functional Test: Marking}
+\label{test:writing_ft_mark}
+\textbf{Test Question:} Does the writing tool make a mark when pushed down? \\
+\textbf{Operational Procedure:} The robot will press down on a writing surface with a fully loaded writing implement. Robot must mark with pressure necessary to mark the surface without damaging the surface or writing tool.\\
+\textbf{Metric:} Whether or not a any discerible mark is made. \\
+\textbf{Acceptance Criteria:} A discernible mark must be made.\\
+\textbf{Requirement(s) Verified:} NFR6
