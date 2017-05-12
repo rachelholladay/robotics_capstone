@@ -6,7 +6,7 @@ This section details individual subsystems and how they function together to for
 
 \subsection{Mechanical System}
 \label{sec:mechanical}
-As shown below in \figref{fig:so1}, our system contains two identical robots. Each robot is 23 cm in diameter, 19 cm tall, and weights 1.5lb with all electronics installed. Details for mechanical components are explained below. Besides the two robots, mechanical system also contains a camera jig, constructed using 8020 aluminum extrusions. 
+As shown below in \figref{fig:so1}, our system contains two identical robots. Each robot is 23 cm in diameter, 19 cm tall, and weights 1.5lb with all electronics installed. Details for mechanical components are explained below. Besides the two robots, mechanical system also contains a camera jig, constructed using 8020 aluminum extrusions.
 
 \begin{figure}[h!]
 \centering
@@ -17,7 +17,7 @@ As shown below in \figref{fig:so1}, our system contains two identical robots. Ea
 
 \subsubsection{Locomotion}
 \label{sec:me_locomotion}
-For locomotion system, each robot drives with four Mecanum wheels. Due to the nature of drawing, we expect our robots to turn in sharp corners quite often. Therefore, Mecanum wheel become the best locomotion mechanism, for its high mobility and high controllability. As shown in the photo of wheel assemble (\figref{fig:so2} left), each Mecanum wheel is powered by a metal micro gearmotor which is mounted to the chassis via an off-the-shelf motor bracket. Mecanum wheel is connected to the motor through a customized wheel adaptor, as shown in \figref{fig:so2} right. These wheel adaptors were fabricated using 3D printer so that we could optimize through many design iterations in a short period of time.
+For locomotion, each robot drives with four Mecanum wheels. Due to the linear nature of the drawing inputs, we expect our robots to make sharp turns quite often. Therefore, Mecanum wheels proved the best locomotion mechanism, for their high mobility and high controllability. As shown in the photo of wheel assembly (\figref{fig:so2} left), each Mecanum wheel is powered by a metal micro gearmotor, which is mounted to the chassis via an off-the-shelf motor bracket. Each Mecanum wheel is connected to the motor through a customized wheel adaptor, as shown in \figref{fig:so2} right. These wheel adaptors were fabricated using 3D printing so that we could optimize their design iteratively in a short period of time.
 
 \begin{figure}[h!]
 \centering
@@ -29,11 +29,11 @@ For locomotion system, each robot drives with four Mecanum wheels. Due to the na
 
 \subsubsection{Writing Tool}
 \label{sec:me_writing}
-The robot writes using a lever-like writing mechanism. The chalk marker is slipped into a customized marker holder (\figref{fig:so3} left) which has a tight D-shaft cutout for connecting the micro gearmotor. As the motor rotates, the marker holder would lift or drop the marker which creates or discontinues drawing lines. The assembled mechanism in shown below in \figref{fig:so3} middle. Again, the customized marker holder is fabricated using 3D printer for rapid prototyping purpose. 
+The robot writes using a lever-like writing mechanism. The chalk marker is slipped into a customized marker holder (\figref{fig:so3} left) which has a tight D-shaft cutout for connecting the micro gearmotor. As the motor rotates, the marker holder raises or lowers the marker which enables or disables drawing lines. The assembled mechanism in shown below in \figref{fig:so3} middle. Similar to the motor adaptors, the customized marker holder is fabricated using 3D printing for rapid prototyping.
 
-Compared to other drawing utilities, like spray paint, wet paint, or regular markers, we used chalk based drawing tool because, in this way, we can easily reuse drawing surface and its finish mark has unique look and texture. We choose liquid chalk marker, instead of regular chalk, because we do not need to account for the issue brought by drawing utility shortens as being consumed. 
+Compared to other drawing utilities like spray paint, wet paint, or regular markers, we used chalk based drawing tool because so we could easily reuse the drawing surface, and the mark has a unique look and texture. We choose a liquid chalk marker instead of regular chalk so we did not have to account for the size of the tool decreasing during consumption.
 
-\figref{fig:so3} right shows a screenshot of drawing mechanism working in action. 
+\figref{fig:so3} right shows a screenshot of drawing mechanism working in action.
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.33\columnwidth]{figs/writing1.png}
@@ -45,9 +45,9 @@ Compared to other drawing utilities, like spray paint, wet paint, or regular mar
 
 \subsubsection{Chassis}
 \label{sec:me_chassis}
-Since we are mounting a lot of electronics and mechanical components onto the chassis and the whole robot is rather lightweight, we choose laser cutting as the fabrication technique for producing the chassis (\figref{fig:so4} left). Chassis is laser cut using acrylic because it has a good combination of durability and machinability. 
+Since we mounted a significant amount of electronics and mechanical components onto the chassis, we choose laser cutting as the fabrication technique to produce the chassis (\figref{fig:so4} left). The chassis is laser cut using acrylic because the material has a good combination of durability and machinability.
 
-Supporting structures for Raspberry Pi and April Tag are also assembled using laser cut acrylic pieces. They are attached to the chassis through slot joints, as shown below in \figref{fig:so4} right. Batteries for Raspberry Pi and motors are attached to the chassis using Velcro tapes so that we can easily switch them. 
+Supporting structures for Raspberry Pi and AprilTag are also assembled using laser cut acrylic pieces. They are attached to the chassis through slot joints, as shown below in \figref{fig:so4} right. Batteries for Raspberry Pi and motors are attached to the chassis using Velcro tape so that we can easily swap them during testing.
 
 \begin{figure}[h!]
 \centering
@@ -59,9 +59,9 @@ Supporting structures for Raspberry Pi and April Tag are also assembled using la
 
 \subsubsection{Infrastructure}
 \label{sec:me_infrastructure}
-As shown in \figref{fig:so5}, the camera jig is designed and machined using 8020 aluminum extrusion which are chosen due to the frames’ ease-of-use and durability. The jig has a footprint of 6ft by 6ft and a height of 5ft.  5ft is determined to the optimal height for capturing all corners of the 6ft by 6ft work space. The camera will be mounted to the jig using Velcro tape. Due to 80/20 structure’s easy construction, we can simply disassemble the jig into two pieces for transportation. Therefore, despite its large size, the camera jig is not restricted to any specific space. 
+As shown in \figref{fig:so5}, the camera jig is designed and machined using 8020 aluminum extrusion, chosen due to the frames’ ease-of-use and durability. The jig has a footprint of 6ft by 6ft and a height of 5ft.  5ft was determined to be the optimal height for capturing all corners of the 6ft by 6ft work space with the overhead camera. The camera was mounted to the jig using Velcro tape. Due to 80/20 structure’s easy construction, we were able to easily disassemble the jig into two pieces for transportation. Despite its large size, the camera jig is not restricted to any specific space.
 
-The work space is constructed by laying chalk board paper on sheets of plywood board. Using plywood ensures that the robots always operate on flat surface. Due to the size constrain of available plywood sheets, the work space is assembled using two 3ft by 6ft sheets. These two sheets can then be folded for ease of transportation. 
+The work space is constructed by laying chalk board paper on sheets of plywood board. Using plywood ensures that the robots always operate on flat surface. Due to the size constraints of available plywood sheets, the work space is assembled using two 3ft by 6ft sheets. These two sheets are then folded for straightforward transportation.
 
 \begin{figure}
 \centering
@@ -110,15 +110,13 @@ Writing tool control is done via the onboard systems. The offboard controller pa
 The first step of our planner is to parse the inputted lines.
 Given our set of lines we want to efficiently divide the work between the two robots.
 The locomotion system takes as input a set of lines with a flag on whether or not we are drawing.
-Additionally, collision is handled on-line.
-Therefore we only need to split the lines and perform no timing planning.
+Additionally, collision is handled on-line, so we only need to split the lines and perform no timing-based trajectory planning.
 
 We distribute lines in a greedy manner.
-For each robot we maintain a cost.
-The cost corresponds to how much work the robot has done.
-We initialize this to zero and start with either robot.
+For each robot we maintain a cost, which corresponds to how much work the robot has done.
+This cost is initialized to zero, and start planning with either robot.
 For the this robot we pick the nearest line to its current location.
 We then assign that line to the robot and increment the cost to include the cost of driving to that line and the drawing that line.
-We update the drawing flags accordingly.
+We update the drawing flags accordingly, and repeat until all lines have been assigned.
 
 
