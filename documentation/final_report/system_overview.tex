@@ -6,7 +6,37 @@ This section details individual subsystems and how they function together to for
 
 \subsection{Mechanical System}
 \label{sec:mechanical}
-\yjnote{TODO}
+As shown below in \figref{fig:so1}, our system contains two identical robots. Each robot is 23 cm in diameter, 19 cm tall, and weights 1.5lb with all electronics installed. Details for mechanical components are explained below. Besides the two robots, mechanical system also contains a camera jig, constructed using 8020 aluminum extrusions. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.98\columnwidth]{figs/full_system.png}
+\caption{Robots Overview}
+\label{fig:so1}
+\end{figure}
+
+\subsubsection{Locomotion}
+\label{sec:me_locomotion}
+For locomotion system, each robot drives with four Mecanum wheels. Due to the nature of drawing, we expect our robots to turn in sharp corners quite often. Therefore, Mecanum wheel become the best locomotion mechanism, for its high mobility and high controllability. As shown in the photo of wheel assemble (Figure… left), each Mecanum wheel is powered by a metal micro gearmotor which is mounted to the chassis via an off-the-shelf motor bracket. Mecanum wheel is connected to the motor through a customized wheel adaptor, as shown in Figure… right. These wheel adaptors were fabricated using 3D printer so that we could optimize through many design iterations in a short period of time.
+
+
+\subsubsection{Writing Tool}
+\label{sec:me_writing}
+The robot writes using a lever-like writing mechanism. The chalk marker is slipped into a customized marker holder (Figure.. left) which has a tight D-shaft cutout for connecting the micro gearmotor. As the motor rotates, the marker holder would lift or drop the marker which creates or discontinues drawing lines. The assembled mechanism in shown below in Figure .. middle. Again, the customized marker holder is fabricated using 3D printer for rapid prototyping purpose. 
+
+Compared to other drawing utilities, like spray paint, wet paint, or regular markers, we used chalk based drawing tool because, in this way, we can easily reuse drawing surface and its finish mark has unique look and texture. We choose liquid chalk marker, instead of regular chalk, because we do not need to account for the issue brought by drawing utility shortens as being consumed. 
+
+\subsubsection{Chassis}
+\label{sec:me_chassis}
+Since we are mounting a lot of electronics and mechanical components onto the chassis and the whole robot is rather lightweight, we choose laser cutting as the fabrication technique for producing the chassis (Figure.. left). Chassis is laser cut using acrylic because it has a good combination of durability and machinability. 
+
+Supporting structures for Raspberry Pi and April Tag are also assembled using laser cut acrylic pieces. They are attached to the chassis through slot joints, as shown below in Figure … right. Batteries for Raspberry Pi and motors are attached to the chassis using Velcro tapes so that we can easily switch them. 
+
+\subsubsection{Infrastructure}
+\label{sec:me_infrastructure}
+As shown in Figure…, the camera jig is designed and machined using 8020 aluminum extrusion which are chosen due to the frames’ ease-of-use and durability. The jig has a footprint of 6ft by 6ft and a height of 5ft.  5ft is determined to the optimal height for capturing all corners of the 6ft by 6ft work space. The camera will be mounted to the jig using Velcro tape. Due to 80/20 structure’s easy construction, we can simply disassemble the jig into two pieces for transportation. Therefore, despite its large size, the camera jig is not restricted to any specific space. 
+
+The work space is constructed by laying chalk board paper on sheets of plywood board. Using plywood ensures that the robots always operate on flat surface. Due to the size constrain of available plywood sheets, the work space is assembled using two 3ft by 6ft sheets. These two sheets can then be folded for ease of transportation. 
 
 \subsection{Electrical System}
 \label{sec:electrical}
