@@ -17,26 +17,57 @@ As shown below in \figref{fig:so1}, our system contains two identical robots. Ea
 
 \subsubsection{Locomotion}
 \label{sec:me_locomotion}
-For locomotion system, each robot drives with four Mecanum wheels. Due to the nature of drawing, we expect our robots to turn in sharp corners quite often. Therefore, Mecanum wheel become the best locomotion mechanism, for its high mobility and high controllability. As shown in the photo of wheel assemble (Figure… left), each Mecanum wheel is powered by a metal micro gearmotor which is mounted to the chassis via an off-the-shelf motor bracket. Mecanum wheel is connected to the motor through a customized wheel adaptor, as shown in Figure… right. These wheel adaptors were fabricated using 3D printer so that we could optimize through many design iterations in a short period of time.
+For locomotion system, each robot drives with four Mecanum wheels. Due to the nature of drawing, we expect our robots to turn in sharp corners quite often. Therefore, Mecanum wheel become the best locomotion mechanism, for its high mobility and high controllability. As shown in the photo of wheel assemble (\figref{fig:so2} left), each Mecanum wheel is powered by a metal micro gearmotor which is mounted to the chassis via an off-the-shelf motor bracket. Mecanum wheel is connected to the motor through a customized wheel adaptor, as shown in \figref{fig:so2} right. These wheel adaptors were fabricated using 3D printer so that we could optimize through many design iterations in a short period of time.
 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.49\columnwidth]{figs/locomotion1.png}
+\includegraphics[width=0.49\columnwidth]{figs/locomotion2.png}
+\caption{Wheel Assembly (left),  Wheel Adaptor (right)}
+\label{fig:so2}
+\end{figure}
 
 \subsubsection{Writing Tool}
 \label{sec:me_writing}
-The robot writes using a lever-like writing mechanism. The chalk marker is slipped into a customized marker holder (Figure.. left) which has a tight D-shaft cutout for connecting the micro gearmotor. As the motor rotates, the marker holder would lift or drop the marker which creates or discontinues drawing lines. The assembled mechanism in shown below in Figure .. middle. Again, the customized marker holder is fabricated using 3D printer for rapid prototyping purpose. 
+The robot writes using a lever-like writing mechanism. The chalk marker is slipped into a customized marker holder (\figref{fig:so3} left) which has a tight D-shaft cutout for connecting the micro gearmotor. As the motor rotates, the marker holder would lift or drop the marker which creates or discontinues drawing lines. The assembled mechanism in shown below in \figref{fig:so3} middle. Again, the customized marker holder is fabricated using 3D printer for rapid prototyping purpose. 
 
 Compared to other drawing utilities, like spray paint, wet paint, or regular markers, we used chalk based drawing tool because, in this way, we can easily reuse drawing surface and its finish mark has unique look and texture. We choose liquid chalk marker, instead of regular chalk, because we do not need to account for the issue brought by drawing utility shortens as being consumed. 
 
+\figref{fig:so3} right shows a screenshot of drawing mechanism working in action. 
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.33\columnwidth]{figs/writing1.png}
+\includegraphics[width=0.33\columnwidth]{figs/writing2.png}
+\includegraphics[width=0.33\columnwidth]{figs/writing3.png}
+\caption{Marker Holder (left), Writing Assembly (middle), Robot Drawing (right)}
+\label{fig:so3}
+\end{figure}
+
 \subsubsection{Chassis}
 \label{sec:me_chassis}
-Since we are mounting a lot of electronics and mechanical components onto the chassis and the whole robot is rather lightweight, we choose laser cutting as the fabrication technique for producing the chassis (Figure.. left). Chassis is laser cut using acrylic because it has a good combination of durability and machinability. 
+Since we are mounting a lot of electronics and mechanical components onto the chassis and the whole robot is rather lightweight, we choose laser cutting as the fabrication technique for producing the chassis (\figref{fig:so4} left). Chassis is laser cut using acrylic because it has a good combination of durability and machinability. 
 
-Supporting structures for Raspberry Pi and April Tag are also assembled using laser cut acrylic pieces. They are attached to the chassis through slot joints, as shown below in Figure … right. Batteries for Raspberry Pi and motors are attached to the chassis using Velcro tapes so that we can easily switch them. 
+Supporting structures for Raspberry Pi and April Tag are also assembled using laser cut acrylic pieces. They are attached to the chassis through slot joints, as shown below in \figref{fig:so4} right. Batteries for Raspberry Pi and motors are attached to the chassis using Velcro tapes so that we can easily switch them. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.49\columnwidth]{figs/chassis1.png}
+\includegraphics[width=0.49\columnwidth]{figs/chassis2.png}
+\caption{Laser Cut Chassis (left), Chassis Assembly (right)}
+\label{fig:so4}
+\end{figure}
 
 \subsubsection{Infrastructure}
 \label{sec:me_infrastructure}
-As shown in Figure…, the camera jig is designed and machined using 8020 aluminum extrusion which are chosen due to the frames’ ease-of-use and durability. The jig has a footprint of 6ft by 6ft and a height of 5ft.  5ft is determined to the optimal height for capturing all corners of the 6ft by 6ft work space. The camera will be mounted to the jig using Velcro tape. Due to 80/20 structure’s easy construction, we can simply disassemble the jig into two pieces for transportation. Therefore, despite its large size, the camera jig is not restricted to any specific space. 
+As shown in \figref{fig:so5}, the camera jig is designed and machined using 8020 aluminum extrusion which are chosen due to the frames’ ease-of-use and durability. The jig has a footprint of 6ft by 6ft and a height of 5ft.  5ft is determined to the optimal height for capturing all corners of the 6ft by 6ft work space. The camera will be mounted to the jig using Velcro tape. Due to 80/20 structure’s easy construction, we can simply disassemble the jig into two pieces for transportation. Therefore, despite its large size, the camera jig is not restricted to any specific space. 
 
 The work space is constructed by laying chalk board paper on sheets of plywood board. Using plywood ensures that the robots always operate on flat surface. Due to the size constrain of available plywood sheets, the work space is assembled using two 3ft by 6ft sheets. These two sheets can then be folded for ease of transportation. 
+
+\centering
+\includegraphics[width=0.98\columnwidth]{figs/infrastructure.png}
+\caption{8020 Camera Jig}
+\label{fig:so5}
+\end{figure}
 
 \subsection{Electrical System}
 \label{sec:electrical}
