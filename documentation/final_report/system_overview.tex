@@ -63,6 +63,7 @@ As shown in \figref{fig:so5}, the camera jig is designed and machined using 8020
 
 The work space is constructed by laying chalk board paper on sheets of plywood board. Using plywood ensures that the robots always operate on flat surface. Due to the size constrain of available plywood sheets, the work space is assembled using two 3ft by 6ft sheets. These two sheets can then be folded for ease of transportation. 
 
+\begin{figure}
 \centering
 \includegraphics[width=0.98\columnwidth]{figs/infrastructure.png}
 \caption{8020 Camera Jig}
@@ -105,6 +106,19 @@ Writing tool control is done via the onboard systems. The offboard controller pa
 
 \subsubsection{Scheduling, Distribution, and Planning (SDP)}
 \label{sec:sw_sdp}
-\rhnote{TODO}
+
+The first step of our planner is to parse the inputted lines.
+Given our set of lines we want to efficiently divide the work between the two robots.
+The locomotion system takes as input a set of lines with a flag on whether or not we are drawing.
+Additionally, collision is handled on-line.
+Therefore we only need to split the lines and perform no timing planning.
+
+We distribute lines in a greedy manner.
+For each robot we maintain a cost.
+The cost corresponds to how much work the robot has done.
+We initialize this to zero and start with either robot.
+For the this robot we pick the nearest line to its current location.
+We then assign that line to the robot and increment the cost to include the cost of driving to that line and the drawing that line.
+We update the drawing flags accordingly.
 
 
