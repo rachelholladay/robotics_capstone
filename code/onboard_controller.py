@@ -1,6 +1,9 @@
-'''
-Main onboard controller.
-'''
+"""
+Main onboard controller for individual robots. Each robot involved in drawing
+runs this controller. The controller's main goal is to receive position and
+orientation targets from the offboard controller, compute correct motor
+commands for the robot, and actuate the robots.
+"""
 from __future__ import print_function
 
 import math
@@ -15,11 +18,24 @@ import utils.constants as cst
 
 
 class OnboardController(object):
-    def __init__(self, robot_ip):
-        '''
-        Instantiates main subsystems based on input parameters
-        '''
-        self.robot_ip = robot_ip
+    """
+    The onboard controller is run as a single instance for each indivdual
+    robot used for drawing. The controller's main purpose is to process
+    incoming messages, and power the motors accordingly.
+
+    Sample operation of this class is as follows:
+        controller = OnboardController()
+        controller.setup()
+        controller.loop()
+        controller.close()
+
+    """
+    def __init__(self):
+        """
+        Instantiates the communication and motor subsystems. System 
+        initialization does is nonblocking and does not attempt to connect
+        to the offboard controller.
+        """
         self.comm = RobotCommunication()
         self.motors = Motors()
         self.motors.stopMotors()
@@ -27,6 +43,8 @@ class OnboardController(object):
         self.message_timer = 0
         self._watchdog_thread = None
         self._stop_thread = False
+
+        self._debug = 0
 
         atexit.register(self.close)
 
@@ -44,8 +62,12 @@ class OnboardController(object):
         """
         Main offboard control loop. Listens for protobuf messages from the
         offboard system, parses and runs appropriate motor command.
+
+        Loop will be run continually until exit command is processed
+        as sent by the offboard controller.
         """
-        print("onboard main loop")
+        # Start watchdog to ensure robot does not move if connection
+        # drops or is inconsistent.
         self.message_timer = time.time()
         self._watchdog_thread.start()
 
@@ -55,7 +77,8 @@ class OnboardController(object):
             if msg is None:
                 continue
             else:
-                print("======= new message", time.time(), " =======")
+                if self._debug:
+                    print("======= new message", time.time(), " =======")
 
                 if msg.stop_status is 1:
                     print("Stopping motors")
@@ -102,6 +125,7 @@ class OnboardController(object):
         """
         Commands all motors using a given command (such as DIR_UPLEFT) for a
         time in seconds.
+
         @param command Motor command to run
         @param t Time in seconds to move for
         """
@@ -236,16 +260,23 @@ class OnboardController(object):
 
 
 if __name__ == "__main__":
-
-    controller = OnboardController(robot_ip="0.0.0.0")
+    """
+    Onboard controller main. Runs initialization for an individual
+    robot and begins running the main processing loop. Onboard
+    operation continues until closed by offboard controller
+    commands.
+    """
+    controller = OnboardController()
     controller.setup()
 
+    # Onboard profiling code
     # import cProfile
     # cProfile.run('controller.loop()')
+
     controller.loop()
     controller.close()
 
-    # TODO create Motors() class and add test targets
+    # Hardcoded testing procedures
     # start_pt = DirectedPoint(0, 0, 0)
     # target_pt = DirectedPoint(0, 1, 0)
     # motor_powers = controller.getMotorCommands(start_pt, target_pt)

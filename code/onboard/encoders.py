@@ -1,6 +1,6 @@
-'''
-Encoders for the motors
-'''
+"""
+Processes data for motor encoders running via Raspberry Pi
+"""
 
 import RPi.GPIO as GPIO
 import time
@@ -12,16 +12,22 @@ MIN_TICKS = 20
 # Encoder shaft rotations per motive shaft rotation
 GEAR_RATIO = 297.92
 # Counts per revolution
-CPR = 6*GEAR_RATIO
+CPR = 6 * GEAR_RATIO
 # Seconds per minute
 SPM = 60
-class Encoder(object):
 
+class Encoder(object):
+    """
+    Manages processing and rpm calculation for encoders
+    """
     def __init__(self, outA, outB=-1):
-        '''
+        """
         Instantiates an encoder object
         If outA is negative, we're not using this encoder
-        '''
+
+        @param outA first of two encoders per motor to setup
+        @param outB second of two encoders per motor to setup
+        """
         GPIO.setmode(GPIO.BCM)
         if outA > 0:
             GPIO.setup(outA, GPIO.IN)
@@ -32,9 +38,10 @@ class Encoder(object):
         self.outB = outB
 
     def rpms(self):
-        '''
+        """
         Function for getting RPM of motor
-        '''
+        @return Motor RPM, else -1 if encoder is unused
+        """
         # If encoder is not being used, return -1
         if self.outA < 0:
             return -1
@@ -49,7 +56,7 @@ class Encoder(object):
                 ((prevState is 1) and (currState is 0)):
                 ticks += 1
             prevState = currState
-            if (time.clock()-startTime) > MAX_WAIT:
+            if (time.clock() - startTime) > MAX_WAIT:
                 return 0.0
         timeDiff = time.clock() - startTime
-        return (ticks/CPR)/(timeDiff/SPM)
+        return (ticks / CPR) / (timeDiff / SPM)

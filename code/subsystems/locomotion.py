@@ -1,13 +1,15 @@
-'''
+"""
+Class deprecated and unused in favor of onboard locomotion processing for
+lower latency in error correction for location and orientation.
 Locomotion subsystem
-'''
+"""
 from utils.dataStorage import LocomotionData
 
 
 class LocomotionSystem(object):
-    '''
+    """
     Contains locomotion subsystem.
-    '''
+    """
 
     def __init__(self):
         self.locomotionData = None  # LocomotionData()

@@ -15,6 +15,7 @@ OPENCV_LIB = `pkg-config --libs opencv`
 PYTHON_VERSION = 2.7
 PYTHON_INCLUDE = /usr/include/python$(PYTHON_VERSION)
 PYTHONFLAGS = -L/usr/lib/python$(PYTHON_VERSION)/config -lpython$(PYTHON_VERSION) -I /usr/include/python2.7/
+
 # Location of Boost Python include files/library
 BOOST_INC = /usr/include
 BOOST_LIB = /usr/lib
@@ -36,14 +37,6 @@ test: test.o $(APRILTAG_LIB) TagDetector.o
 boost_apriltags.so: boost_apriltags.o TagDetector.o $(APRILTAG_LIB)
 	@echo "   [$@]"
 	@$(CXX) -o $@ $^ $(LDFLAGS) $(OPENCV_LIB) $(BOOSTFLAGS) $(PYTHONFLAGS) 
-
-# %.o: %.c
-# 	@echo "   $@"
-# 	@$(CC) -o $@ -c $< $(CFLAGS) $(CPPFLAGS)
-
-# %.o: %.cc
-# 	@echo "   $@"
-# 	@$(CXX) -o $@ -c $< $(CXXFLAGS) $(CPPFLAGS)
 
 %.o: %.cpp
 	@echo "   $@"

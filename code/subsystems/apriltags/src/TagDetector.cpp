@@ -12,6 +12,10 @@
 using namespace cv;
 using namespace std;
 
+/**
+ * Default constructor, set up default camera reading parameters, as well
+ * as the tag family to detect.
+ */
 TagDetector::TagDetector()
 {
     std::cout << "default constructor" << std::endl;
@@ -47,6 +51,10 @@ TagDetector::TagDetector()
 
 }
 
+/**
+ * Constructor for detecting from file - mainly for testing to use a provided
+ * input file. Uses the tag36h11 tag family.
+ */
 TagDetector::TagDetector(std::string file)
 {
     if (_family == "tag36h11")
@@ -63,6 +71,7 @@ TagDetector::TagDetector(std::string file)
         printf("Unrecognized tag family name. Use e.g. \"tag36h11\".\n");
         exit(-1);
     }
+
     tf->black_border = _border;
 
     td = apriltag_detector_create();
@@ -79,6 +88,9 @@ TagDetector::TagDetector(std::string file)
     filename = file;
 }
 
+/**
+ * Initializes the camera, or attempts to open the video file provided
+ */
 void TagDetector::setup()
 {
     if(filename == "")
@@ -93,6 +105,9 @@ void TagDetector::setup()
     }
 }
 
+/**
+ * uses the apriltag library to detect apriltags from incoming camera data
+ */
 void TagDetector::detect_apriltags()
 {    
     // Convert raw frame to image_u8_t header for detection
@@ -115,6 +130,9 @@ void TagDetector::detect_apriltags()
 
 }
 
+/**
+ * Helper function for detect_apriltags()
+ */
 void TagDetector::_convert_detections(zarray_t *detections)
 {    
     int size = zarray_size(detections);
@@ -131,6 +149,9 @@ void TagDetector::_convert_detections(zarray_t *detections)
 }
 
 
+/**
+ * Attempts to read the index of detected apriltags
+ */
 TagData TagDetector::getTag(int n)
 {
     // Get nth TagData object, else return invalid tag
@@ -145,7 +166,9 @@ TagData TagDetector::getTag(int n)
     return TagData(-1);    
 }
 
-
+/**
+ * Ends tag family and detector operation
+ */
 void TagDetector::close()
 {
     apriltag_detector_destroy(td);

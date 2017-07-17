@@ -1,3 +1,7 @@
+"""
+File for testing motor actuation
+"""
+
 from motors import Motors
 
 import time

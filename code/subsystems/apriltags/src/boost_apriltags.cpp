@@ -4,6 +4,9 @@
 // Boost Python test function
 using namespace std;
 
+/**
+ * Boost python test function
+ */
 int test_fn()
 {
     TagDetector d;
@@ -21,7 +24,15 @@ int test_fn()
     return 0;
 }
 
-
+/**
+ * Defines boost module for apriltags. Apriltag data is transmit with
+ * four main parameter sets:
+ *      id, representing the ID of the apriltag detected
+ *      cx, width of the camera data
+ *      cy, height of the camera data
+ *      H, the 3x3 transformation matrix of the detected tag from an
+ *          "ideal" tag as defined in TagDetector.h
+ */
 BOOST_PYTHON_MODULE(boost_apriltags)
 {
     using namespace boost::python;
@@ -41,8 +52,6 @@ BOOST_PYTHON_MODULE(boost_apriltags)
         .add_property("h21", &TagData::h21)
         .add_property("h22", &TagData::h22);
 
-
-    // TODO need a way to pull TagData struct
     class_<TagDetector>("TagDetector",
         init<>())
         .def(init<std::string>())

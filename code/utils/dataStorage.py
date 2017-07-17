@@ -31,13 +31,16 @@ class LocalizationData:
     Struct containing localization data for each of the 4 corners and 2 robots
     """
     def __init__(self):
-        # Dictionary mapping AprilTag IDs to DirectedPoint objects.
-        # Keys best accessed via constants.TAG_[BOTTOM/TOP]_[LEFT/RIGHT]
-        #   ex. constants.TAG_BOTTOM_LEFT
-        # Separate dictionaries exist for corner tags (constant during
-        # system operation) and robot tags (volatile during operation)
-        # self.corners = dict()
-        # self.robots = dict()
+        """
+        Dictionary mapping AprilTag IDs to DirectedPoint objects.
+        Keys best accessed via constants.TAG_[BOTTOM/TOP]_[LEFT/RIGHT]
+          ex. constants.TAG_BOTTOM_LEFT
+
+        Separate dictionaries exist for corner tags (constant during
+        system operation) and robot tags (volatile during operation)
+            self.corners = dict()
+            self.robots = dict()
+        """
         self.corners = {cst.TAG_BOTTOM_LEFT: DirectedPoint(valid=False),
                         cst.TAG_BOTTOM_RIGHT: DirectedPoint(valid=False),
                         cst.TAG_TOP_LEFT: DirectedPoint(valid=False),

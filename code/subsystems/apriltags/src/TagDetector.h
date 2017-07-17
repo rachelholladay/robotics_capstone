@@ -1,13 +1,13 @@
-/* AprilTag detector class
+/* 
+ * AprilTag detector class
  * Class to abstract Apriltag detection into simple steps, and
  * interface with Python wrappers via Boost
  */
 
-#ifndef  TAGDETECTOR_H
+#ifndef TAGDETECTOR_H
 #define TAGDETECTOR_H
 
 #include <iostream>
-// #include <boost/python.hpp>
 
 #include "opencv2/opencv.hpp"
 
@@ -17,7 +17,8 @@
 
 class TagData
 {
-    /* Data storage type, used to map apriltag IDs to 
+    /* 
+     * Data storage type, used to map apriltag IDs to 
      * relvant data - corner and center positions, and homography
      * matrix.
      */
@@ -46,22 +47,21 @@ public:
 
     // Tag ID
     int id; 
+
     // The center of the detection in image pixel coordinates.
     double cy,cx;
+
     // The 3x3 homography matrix describing the projection from an
     // "ideal" tag (with corners at (-1,-1), (1,-1), (1,1), and (-1,
     // 1)) to pixels in the imag  e  
     double h00,h01,h02,h10,h11,h12,h20,h21,h22;
-
-    // The corners of the tag in image pixel coordinates. These always
-    // wrap counter-clock wise around the tag.
-    // Always 4x2
-    // std::vector<std::vector<double>> tag_corners;
-    // std::vector<std::vector<double>> get_corners() { return tag_corners; };
-
 };
 
 
+/**
+ * TagDetector class containing all functionality of gathering and processing
+ * localization for the main offboard controller
+ */
 class TagDetector
 {
 public:
@@ -88,7 +88,6 @@ public:
     void test() { std::cout << "TagDetector test" << std::endl; };
 
 private:
-
     // Takes the detection output and fills TagData with it
     void _convert_detections(zarray_t* detections);
 

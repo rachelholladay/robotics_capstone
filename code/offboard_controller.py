@@ -1,23 +1,53 @@
-'''
-Main offboard controller.
-Runs fixed-rate loop that pulls data from subsystems
-'''
+"""
+Main offboard controller. This class gets run to operate the offboard 
+subsystems and control the robots to successfully complete specified drawings.
+
+Pulls information continually from other subsystems to send locomotion
+information to the onboard robot controllers. Also shows debugging data
+and system status during operation.
+"""
 from __future__ import print_function
 
 import sys
 import time
 
 import subsystems
+from utils import constants as cst
 from utils.geometry import DirectedPoint, Waypoint
 from utils.dataStorage import LocomotionData
-from utils import constants as cst
 
 
 class OffboardController(object):
+    """
+    This class represents the main control system for the robot system. During
+    system operation, a single intance of this class is initialized and run
+    to control worker robots. 
+
+    The offboard controller processes localization and current robot state
+    to plan and send commands via TCP connection to the onboard controllers
+    on each individual robot.
+
+    Sample operation of this class is as follows:
+        controller = OffboardController(robot_ids=['robot_ip1', robot_ip2'],
+                                        drawing_name='drawing_name_file')
+        controller.robotSetup()
+        controller.loop()
+        controller.close()
+    """
     def __init__(self, robot_ids, drawing_name):
-        '''
-        Instantiates main subsystems based on input parameters
-        '''
+        """
+        Instantiates main subsystems based on input parameters.
+        Initializes various subsystems and runs preprocessing and
+            initial planning for robot motions. Note that as a part
+            of offboard initialization, no attempt at connecting
+            to the physical robots via TCP is made. This is done
+            at runtime within the robotSetup() function.
+
+        @param robot_ids The robot ID as specified by constants.py
+            to denote which robots will be running.
+        @param drawing_name String representing the input drawing
+            to be planned and created by the robots.
+        """
         self.robot_ids = robot_ids
 
         self.scaled_dims = [cst.TOP_BORDER - cst.BOTTOM_BORDER,
@@ -33,19 +63,28 @@ class OffboardController(object):
         data = self.sys_ui.parseInputPaths('inputs/{}'.format(drawing_name))
         self.sys_planner = subsystems.PlannerSystem(data)
 
-        # LocomotionData to stop robot and disable writing implement
+        # LocomotionData struct to stop robot and disable writing
+        # implement
         self.stop_locomotion = LocomotionData(
             tf_robot=DirectedPoint(0, 0, 0),
             tf_target=DirectedPoint(0, 0, 0),
             write_status=cst.WRITE_DISABLE,
             stop_status=cst.ROBOT_STOP)
 
+        self._debug = 1
+
     def robotSetup(self):
-        '''
-        Sets up communication links with robot agents.
-        Setup step for drawing loop
-        '''
-        for i in xrange(0, len(self.robot_ids)):
+        """
+        Sets up communication links with robot agents, and uses
+        intitial localization data to refine robot path planning.
+
+        Robot position and orientation is used to append waypoints
+        to the planner to allow the robots to reach their intended
+        targets. This feature allows the robots to be placed anywhere
+        in the drawing space, but still have the ability to move to
+        their first waypoint and complete the drawing.
+        """
+        for i in range(0, len(self.robot_ids)):
             success = self.sys_comm.connectToRobot(self.robot_ids[i])
             if not success:
                 print("FAILED TO CONNECT TO ROBOT")
@@ -68,8 +107,10 @@ class OffboardController(object):
             badStart = data.robots[cst.TAG_ROBOT2]
         else:
             print("bad position not found on setup()")
-        print("blue start", str(blueStart))
-        print("bad start", str(badStart))
+
+        if self._debug:
+            print("blue start", str(blueStart))
+            print("bad start", str(badStart))
 
         (self.bluePath, self.badPath) = self.sys_planner.planTrajectories(
             blueStart, badStart)
@@ -79,17 +120,23 @@ class OffboardController(object):
             self.badPath.path.append(Waypoint(badStart, cst.WRITE_DISABLE))
 
         self.paths = [self.bluePath, self.badPath]
-        print("blue path")
-        print(self.bluePath)
-        print("bad path")
-        print(self.badPath)
+        if self._debug:
+            print("blue path")
+            print(self.bluePath)
+            print("bad path")
+            print(self.badPath)
+
         # self.sys_ui.drawDistribution(self.bluePath, self.badPath)
 
     def loop(self):
         """
-        Main offboard controller loop
+        Main offboard controller loop. Continually polls for incoming
+        localization data, then processes into a goal position for
+        the robot. Errors and other safety-related information is
+        incorporated into robot positional targeting. This includes
+        robot-robot collision avoidance, and well as bounds awareness.
         """
-        # Setup robot parameters for loop
+        # Setup robot parameters for constructing messages
         # Drawing complete status - if a robot is not present, it can be
         # considered already 'finished'
         self.completed = [False, False]
@@ -110,8 +157,9 @@ class OffboardController(object):
             self.paths[cst.BLUE_ID][self.path_index[cst.BLUE_ID]].write_status,
             self.paths[cst.BAD_ID][self.path_index[cst.BAD_ID]].write_status]
 
-        # Send initial message to stop motion, setup completion
-        print("disable writing tool")
+        # Send initial message to stop motion, indicating setup completion
+        if self._debug:
+            print("loop setup: disable writing tool")
         for rid in self.robot_ids:
             self.sys_comm.sendTCPMessage(rid, self.stop_locomotion)
         time.sleep(0.5)
@@ -121,27 +169,31 @@ class OffboardController(object):
             data = self.sys_localization.getLocalizationData()
 
             if self.completed == [True, True]:
-                print("Drawing complete")
+                if self._debug:
+                    print("Drawing complete")
+
                 for rid in self.robot_ids:
                     self.sys_comm.sendTCPMessage(rid, self.stop_locomotion)
                 return
 
             # Basic collision code
-            # TODO actuate bad if not in collision range
             blue_tf = data.robots[cst.TAG_ROBOT1]
             bad_tf = data.robots[cst.TAG_ROBOT2]
 
-            # ensure both tags are found before checking collision
-            # if both robots not found, stop execution
+            # Both robots must be discovered on the drawing surface
+            # to acucurately check collision. If either is not found,
+            # assume an error state and stop robot locomotion for
+            # both robots.
             if not (blue_tf.valid and bad_tf.valid):
                 for rid in self.robot_ids:
                     self.sys_comm.sendTCPMessage(rid,
                                                  self.stop_locomotion)
                 continue
 
-            # check collision buffer threshold
+            # check collision buffer threshold for actual collision
             if blue_tf.dist(bad_tf) < cst.COLLISION_BUFFER:
-                print("IN COLLISION BY", blue_tf.dist(bad_tf))
+                if self._debug:
+                    print("IN COLLISION BY", blue_tf.dist(bad_tf))
                 self.sys_comm.sendTCPMessage(cst.BAD_ID,
                                              self.stop_locomotion)
 
@@ -158,7 +210,29 @@ class OffboardController(object):
 
     def commandRobot(self, robot_id, localization_data):
         """
-        Pulls localization for specified robot and sends message
+        Given the target location for the robot, uses localization
+        data to compute the next goal position and sends the data
+        to the robot's onboard controller.
+
+        Current robot positional information and the expected target
+        information is combined to determine if the robot is within
+        predetermined range of its next waypoint. If a waypoint is
+        reached, the next waypoint in the path is selected and used
+        as a goal.
+
+        For the project demo, the writing surface had a small gap
+        underneath approximately halfway across. This caused uneven
+        writing and often the robots became stuck when attempting
+        to write while crossing the gap. To account for this, this
+        function also lifts the writing implement when the robot would
+        otherwise be attempting to write while crossing the gap.
+
+        Finalized localization and targeting data is sent via TCP
+        connection to the onboard controller for processsing.
+
+        @param robot_id ID of the robot to control
+        @param localization_data Most recent localization information
+            for both robots.
         """
         tag = None
         name = ''
@@ -174,11 +248,12 @@ class OffboardController(object):
 
         # If at the waypoint, set next waypoint
         if robot_tf.distsq(self.targets[robot_id]) < cst.STOP_DIST_SQ:
-            print("-----------Waypoint reached (Robot",
-                  robot_id, ") ------------")
-            print("Waypoint", self.path_index[robot_id], " reached:",
-                  str(self.paths[robot_id][self.path_index[robot_id]]))
-            print(name, "tf: ", str(robot_tf))
+            if self._debug:
+                print("-----------Waypoint reached (Robot",
+                      robot_id, ") ------------")
+                print("Waypoint", self.path_index[robot_id], " reached:",
+                      str(self.paths[robot_id][self.path_index[robot_id]]))
+                print(name, "tf: ", str(robot_tf))
 
             # Set next waypoint
             self.path_index[robot_id] += 1
@@ -187,21 +262,23 @@ class OffboardController(object):
             if self.path_index[robot_id] >= self.paths[robot_id].length:
                 self.stop_status[robot_id] = 1
                 self.completed[robot_id] = True
-                print("FINAL WAYPOINT REACHED ROBOT", robot_id)
-                # send stop
 
+                if self._debug:
+                    print("FINAL WAYPOINT REACHED ROBOT", robot_id)
+
+                # send stop
                 self.sys_comm.sendTCPMessage(robot_id,
                                              self.stop_locomotion)
                 time.sleep(0.5)
                 return
 
+            # Retrieve valid target and writing status information
             self.targets[robot_id] = \
                 self.paths[robot_id][self.path_index[robot_id]].target
             self.write_status[robot_id] = \
                 self.paths[robot_id][self.path_index[robot_id]].write_status
 
-            # Send stop command, then raise writing implement up after
-            # stopping
+            # Send stop command, then raise writing implement after stopping
             stop_wp = self.stop_locomotion
             stop_wp.write_status = self.write_status[robot_id]
 
@@ -211,7 +288,8 @@ class OffboardController(object):
             self.sys_comm.sendTCPMessage(robot_id, stop_wp)
             time.sleep(0.5)
 
-        # Theta correction
+        # Retrieve theta correction information - pushes robot locomotion
+        # controller to always maintain heading with the fixed top right tag.
         self.targets[robot_id].theta = data.corners[cst.TAG_TOP_RIGHT].theta
 
         robot_locomotion = LocomotionData(
@@ -231,10 +309,12 @@ class OffboardController(object):
 
     def close(self):
         # Send message to stop robot
-        print("Shutting down...")
+        if self._debug:
+            print("Shutting down...")
         for rid in self.robot_ids:
             self.sys_comm.sendTCPMessage(rid, self.stop_locomotion)
 
+        # End subsystem operation
         time.sleep(2)
         self.sys_comm.closeTCPConnections()
         self.sys_localization.close()
@@ -246,6 +326,7 @@ if __name__ == "__main__":
     badID = [cst.BAD_ID]
     robotIDs = [cst.BLUE_ID, cst.BAD_ID]
 
+    # Demo and testing filenames and calibration
     oneLine = 'oneLine'
     twoLines = 'twoLines'
     centerLine = 'centerLine'
@@ -271,10 +352,11 @@ if __name__ == "__main__":
     # start bad top right ~(8,8)
     demo_twoLines = 'demo_twoLines'
 
+    # Setup and run controller until drawing completion or early exit by user
     controller = OffboardController(robot_ids=robotIDs,
                                     drawing_name=demo_cu)
     controller.robotSetup()
-    # cProfile.run('controller.loop()')
+
     try:
         controller.loop()
         controller.close()

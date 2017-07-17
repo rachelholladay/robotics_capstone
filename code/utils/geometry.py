@@ -1,6 +1,6 @@
-'''
+"""
 Classes for geometric figures and representations
-'''
+"""
 import math
 import constants as cst
 
@@ -9,11 +9,19 @@ class Point(object):
     Class representing a point in 2D space
     """
     def __init__(self, x=None, y=None, valid=True):
+        """
+        @param x X-position for the point
+        @param y Y-position for the point
+        @param valid Boolean to represent correctness of the data
+        """
         self.x = x
         self.y = y
         self.valid = valid
 
     def __str__(self):
+        """
+        @return String serialization of point data
+        """
         return "Point: x:{:.3f} y:{:.3f}".format(self.x, self.y)
 
     def __sub__(self, pt):
@@ -39,13 +47,26 @@ class DirectedPoint(Point):
     localization data, in which objects are represented by an (x,y,theta)
     """
     def __init__(self, x=None, y=None, theta=None, valid=True):
+        """
+        Initializes parent Point and theta
+        @param x X-position
+        @param y Y-position
+        @param theta Orientation theta
+        @valid Boolean to represent correctness of the data
+        """
         Point.__init__(self, x, y, valid)
         self.theta = theta
 
-        __rmul__ = self.__mul__  # define multiplication bidirectionaly
+        # define bidirectional multiplication
+        __rmul__ = self.__mul__
 
     def __str__(self):
-        return "DPT ({:.3f}, {:.3f}, {:.3f})".format(self.x, self.y, self.theta)
+        """
+        @return string serialization of DirectedPoint
+        """
+        return "DPT ({:.3f}, {:.3f}, {:.3f})".format(self.x, 
+                                                     self.y, 
+                                                     self.theta)
 
     def __sub__(self, dpt):
         """
@@ -100,20 +121,21 @@ class DirectedPoint(Point):
             self.y * cst,
             self.theta)
 
-
     def distsq(self, dpt):
         """
-        Returns L2 distnace squared between self and given directed point
+        Returns L2 distance squared between self and given directed point
         @param dpt Directed point to find distance squared from
+        @return L2 distance squared between self and provided dpt
         """
         return math.pow(self.x - dpt.x, 2) + math.pow(self.y - dpt.y, 2)
+
     def dist(self, dpt):
         """
         Gets L2 norm between (x,y) of self and given directedpoint
         @param dpt DirectedPoint to find L2 distance between
+        @return L2 norm between self and provided DirectedPoint
         """
         return math.sqrt(self.distsq(dpt))
-            
 
 
 class DirectedPath(object):
@@ -121,6 +143,12 @@ class DirectedPath(object):
     A DirectedPath is a list of DirectedPoints that make up the path
     """
     def __init__(self, path_array, writing_array):
+        """
+        Initializes struct using input data
+        @param path_array list of path points
+        @param writing_array list of writing status points corresponding
+            to path_array
+        """
         self.path = []
         for i in xrange(len(path_array)):
             d = DirectedPoint(x=path_array[i][0], y=path_array[i][1], theta=0)
@@ -130,6 +158,9 @@ class DirectedPath(object):
         self.length = len(self.path)
 
     def __str__(self):
+        """
+        @return String serialization of the DirectedPath
+        """
         message = ''
         for i in xrange(len(self.path)):
             message += '{} : {}\n'.format(i, self.path[i])
@@ -139,6 +170,7 @@ class DirectedPath(object):
         """
         Returns DirectedPoint path value at index key
         @param key Index to get path at
+        @return DirectedPath[key]
         """
         return self.path[key]
 
@@ -157,6 +189,9 @@ class Waypoint(object):
         self.write_status = write_status
 
     def __str__(self):
+        """
+        @return String serialization of Waypoint
+        """
         message = str(self.target)
         message += ", "
         if self.write_status is cst.WRITE_ENABLE:

@@ -1,23 +1,11 @@
 """
 Code for testing and demos
 
+Deprecated tests for incremental testing onboard the robot.
 """
 import time
 
 from onboard.motors import Motors
-
-# START = DirectedPoint(0, 0, 0)
-# DIR_UP = controller.getMotorCommands(start_pt, DirectedPoint(0, 1, 0))
-# DIR_LEFT = controller.getMotorCommands(start_pt, DirectedPoint(-1, 0, 0))
-# DIR_DOWN = controller.getMotorCommands(start_pt, DirectedPoint(0, -1, 0))
-# DIR_RIGHT = controller.getMotorCommands(start_pt, DirectedPoint(1, 0, 0))
-
-# DIR_UPLEFT = controller.getMotorCommands(start_pt, DirectedPoint(-1, 1, 0))
-# DIR_UPRIGHT = controller.getMotorCommands(start_pt, DirectedPoint(1, 1, 0))
-# DIR_DOWNLEFT = controller.getMotorCommands(start_pt,
-#    DirectedPoint(-1, -1, 0))
-# DIR_DOWNRIGHT = controller.getMotorCommands(start_pt,
-#    DirectedPoint(1, -1, 0))
 
 
 def writingTest2():
@@ -60,6 +48,20 @@ def demoMoveMotorsTime(motors, command, t):
 #     Commands the motors to move in a timing-based square, no rotation.
 #     Uses only onboard controller and does not attempt to connect via TCP
 #     """
+#     # Setup constants
+#     START = DirectedPoint(0, 0, 0)
+#     DIR_UP = controller.getMotorCommands(start_pt, DirectedPoint(0, 1, 0))
+#     DIR_LEFT = controller.getMotorCommands(start_pt, DirectedPoint(-1, 0, 0))
+#     DIR_DOWN = controller.getMotorCommands(start_pt, DirectedPoint(0, -1, 0))
+#     DIR_RIGHT = controller.getMotorCommands(start_pt, DirectedPoint(1, 0, 0))
+
+#     DIR_UPLEFT = controller.getMotorCommands(start_pt, DirectedPoint(-1, 1, 0))
+#     DIR_UPRIGHT = controller.getMotorCommands(start_pt, DirectedPoint(1, 1, 0))
+#     DIR_DOWNLEFT = controller.getMotorCommands(start_pt,
+#        DirectedPoint(-1, -1, 0))
+#     DIR_DOWNRIGHT = controller.getMotorCommands(start_pt,
+#        DirectedPoint(1, -1, 0))
+
 #     m = Motors()
 #     print("up", DIR_UP)
 #     for i in range(0,4):
@@ -99,4 +101,5 @@ def demoMoveMotorsTime(motors, command, t):
 
 
 if __name__ == "__main__":
+    # Run current testing code
     writingTest2()

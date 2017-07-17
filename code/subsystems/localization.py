@@ -1,7 +1,8 @@
 #!/user/bin/python
-'''
-Localization subsystem
-'''
+"""
+Localization subsystem. Calls C++ Apriltags library for raw localization data,
+then processes into data usable by the offboard controller.
+"""
 from __future__ import print_function
 import math
 import threading
@@ -12,15 +13,17 @@ import cv2
 from utils.dataStorage import LocalizationData
 from utils.geometry import DirectedPoint
 from utils import constants as cst
-
 import subsystems.apriltags.src.boost_apriltags as apriltags
 
 
 class LocalizationSystem(object):
-    '''
+    """
     Contains localization subsystem. Most localization code is handled via the
     AprilTags C++ library
-    '''
+
+    Processed localization is pulled from the C++ library and processed into
+    usable data for the offboard controller.
+    """
 
     def __init__(self, scaled_dims=[1, 1]):
 
@@ -53,10 +56,10 @@ class LocalizationSystem(object):
         """
         Call C++ AprilTags function to get updated localization information
         and update the localization struct
+
+        @param verbose Debug level to display for runtime logging
         """
         self._detector.detect_apriltags()
-        # if self._detector.num_detected() is 0:
-        #     return
 
         corners_detected = []
         robots_detected = []
@@ -114,7 +117,14 @@ class LocalizationSystem(object):
         """
         Calls C++ functions to instantiate AprilTags libary, activate camera,
         and run diagnostics
+
+        @param camera OpenCV Camera object to use during initialization in
+            the C++ AprilTag library
+        @param filename If empty, uses camera value. If filled, attempts
+            to read the filename as input camera data. Filename is assumed
+            to be a .mp4 video file
         """
+        # Detector for hardcoded test file
         # self._detector =
         #   apriltags.TagDetector("/home/neil/data/apriltag_test.mp4")
         self._detector = apriltags.TagDetector(filename)
@@ -123,6 +133,8 @@ class LocalizationSystem(object):
     def begin_loop(self, verbose=0):
         """
         Main localization loop, spawns thread
+
+        @param verbose Debug level for runtime logging
         """
         t = threading.Thread(name='localization',
                              target=self._worker_localization,
@@ -136,9 +148,6 @@ class LocalizationSystem(object):
         self._stop_flag = True
         if self._localization_thread is not None:
             self._localization_thread.join()
-        # try:
-        #     self._detector.close() # TODO fix this - crashes(?) on call
-        # except:
             pass
 
     def _getLocalizationData(self):
@@ -149,11 +158,10 @@ class LocalizationSystem(object):
         and the specified scaled_dims, and applies to all corners.
 
         Only uses 3 fixed corners (all but 1,0) corner
-        TODO: Use dynamic 3 corners
+        TODO: Use dynamic 3 corners (possible improvement for consistency)
         """
         found_tags = []
 
-        # TODO BEGIN MUTEX FOR RAW LOCALIZATION STRUCT
         # Uses all but top_right for now TODO update dynamically
         bottom_left = self._raw_loc.corners[cst.TAG_BOTTOM_LEFT]
         bottom_right = self._raw_loc.corners[cst.TAG_BOTTOM_RIGHT]
@@ -167,6 +175,7 @@ class LocalizationSystem(object):
         if not bottom_left.valid or not bottom_right.valid or \
            not top_right.valid:
             return  # self.data
+
         found_tags.append(cst.TAG_BOTTOM_LEFT)
         found_tags.append(cst.TAG_BOTTOM_RIGHT)
         found_tags.append(cst.TAG_TOP_RIGHT)
@@ -196,7 +205,6 @@ class LocalizationSystem(object):
         transform = cv2.getAffineTransform(raw_pts[0:3, :], target_pts)
 
         # Transform raw tag points into scaled coordinates
-        # num_tags = raw_pts.shape[0] # rows
         # Calibrated is of the form [x y], each row is a new coordinate
         new_row = np.ones((1, raw_pts.shape[0]))
         new_pts = np.vstack((np.transpose(raw_pts), new_row))
@@ -234,4 +242,5 @@ class LocalizationSystem(object):
         """
         while self._global_localization_status:
             continue
+
         return self.external_data

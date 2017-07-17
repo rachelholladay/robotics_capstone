@@ -1,22 +1,23 @@
-'''
-Communication subsystem
-
-'''
+"""
+Communication subsystem for the offboard controller. Handles communication
+from the offboard controller to individual onboard controllers on each robot.
+"""
 from __future__ import print_function
 
 import socket
 import threading
 
 from messages import robot_commands_pb2
-
 from utils import dataStorage as storage
 from utils import constants as cst
 
 
 class CommunicationSystem(object):
-    '''
+    """
     Contains communication subsystem. Allows for TCP communication using
-    protbuf to and from the offboard and onboard systems.
+    protbuf to onboard systems. This class will connect the offboard system
+    to onboard robots, then generate and send messages built by other 
+    subsystems.
 
     Message design: This class keeps track of the most recently unsent protobuf
     message, filling it with data as various other subsystems send updates. On
@@ -27,9 +28,17 @@ class CommunicationSystem(object):
     2 unique protobuf messages. When the message is sent, it will flush the
     protobuf message and begin again. It then waits for updates from other
     subsystems with new and updated information for the messages.
-    '''
+
+    This class uses at threaded message send system. Sending the messages via
+    TCP has some latency on the server side. To reduce this, fully-built 
+    messages are added to a nonblocking thread to be sent separately from
+    the message-building procedure.
+    """
 
     def __init__(self):
+        """
+        Initializes all parameters used for offboard communication
+        """
         self.connections = [None, None]  # List of existing robot connections
         self.messages = [None, None]
 
@@ -50,14 +59,14 @@ class CommunicationSystem(object):
             t.start()
 
     def connectToRobot(self, robot_id):
-        '''
+        """
         For offboard controller.
         Attempt to establish TCP connection with robot at specified
         IP address.
 
         @param robot_id Integer ID to delineate individual robots
         @return status Success status of connect attempt
-        '''
+        """
         robot_ip = ''
         if robot_id is cst.BLUE_ID:
             robot_ip = cst.BLUE_IP
@@ -90,12 +99,12 @@ class CommunicationSystem(object):
         return True
 
     def getTCPMessages(self):
-        '''
+        """
         For offboard controller.
         Request message from each robot from the list of established
         connections
         @return messages List of proto3 message objects from each robot
-        '''
+        """
         messages = []
         for robot in self.connections:
             robot_msg = None
@@ -104,14 +113,13 @@ class CommunicationSystem(object):
         return messages
 
     def closeTCPConnections(self):
-        '''
+        """
         Closes any existing TCP messages
         @return status Success or failure of ending communications
-        '''
+        """
         self._stop_flags = [True, True]  # end send message threads
 
         for i in range(len(self.connections)):
-            # TODO close TCP connection
             try:
                 robot_connection = self.connections[i]
                 robot_connection.close()
@@ -165,6 +173,9 @@ class CommunicationSystem(object):
         """
         Sends TCP message for given locomotion data to the specified
         robot_id
+
+        @param robot_id The robot to send the message to
+        @param robot_locomotion Data struct to parse into message and send
         """
         if self._send_thread_active[robot_id] is False:
             self._set_serialized_message(robot_id, robot_locomotion)
@@ -173,6 +184,9 @@ class CommunicationSystem(object):
     def _set_serialized_message(self, robot_id, locomotion):
         """
         Creates serialized message to the given robot id
+
+        @param robot_id The robot to serialize the message for
+        @param locomotion Protobuf message to generate and serialize
         """
         self.generateMessage(robot_id, locomotion, error=None)
         self.thread_serial_msgs[robot_id] = \
@@ -182,6 +196,8 @@ class CommunicationSystem(object):
         """
         When active, takes self.thread_message and attempts to send to
         connection
+
+        @param robot_id The robot to activate a message send thread for
         """
         while True:
             if self._stop_flags[robot_id] is True:
