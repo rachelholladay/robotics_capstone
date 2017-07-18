@@ -5,11 +5,8 @@ Group Members: Don Zheng, Neil Jassal, Yichu Jin, Rachel Holladay
 
 ## File Structure
 
-To be filled in
-
-## Running Code
-
-To be filled in 
+The codebase is separated into the two main controllers, and subsystems
+for both onboard and offboard operation.
 
 ## Linting Code
 
